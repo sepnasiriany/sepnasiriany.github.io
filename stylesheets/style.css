@@ -1,0 +1,124 @@
+html, body {
+    height: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+/* html {
+    margin-left: 13%;
+    margin-right: 13%;
+} */
+
+body {
+    /* display: table-cell; */
+    /* vertical-align: middle; */
+}
+
+body{
+	/* font-family: 'Lato', Verdana, Helvetica, sans-serif; */
+  font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+
+}
+
+h1 {
+  /* font-weight:normal; */
+	/* color:#ffff00; */
+	/*margin-top: 25px;
+	margin-bottom: 30px;*/
+	/* font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif; */
+}
+
+h2 span {
+	background-color: rgba(163, 194, 194, 0.6);
+	border:1px solid #021a40;
+}
+
+hr.thin {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    width:1000px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.header {
+  font-weight:normal;
+  text-align:center;
+}
+
+#profile-pic{
+	width: 250px;
+	height: 250px;
+	background-image: url('../img/profile.png');
+	background-size: cover;
+	display: block;
+	border-radius: 125px;
+	-webkit-border-radius: 125px;
+	-moz-border-radius: 125px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	border:1px solid #021a40;
+  max-width:100%;
+  white-space:nowrap;
+}
+
+#footer {
+	margin-top:20px;
+	margin-bottom:30px;
+	/* bottom:2px;
+	color:#000000;
+	text-shadow: 2px 2px #ffffff;
+	font-weight: bold;
+	font-family: monaco, Consolas, "Lucida Console", monospace; */
+  text-align: center;
+  height:80px;
+}
+
+.paper-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.paper-line {
+  margin-top: 3px;
+}
+
+.paper-desc {
+  margin-top: 20px;
+}
+
+tr.spaceUnder>td {
+  padding-bottom: 25px;
+}
+
+a.imageLink{
+    text-decoration:none;
+}
+a.imageLink:hover{
+    text-decoration:none;
+}
+
+a {
+   text-decoration: none;
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+
+.row {
+  /* display: flex; */
+  width:850px;
+  margin: auto;
+}
+
+.column {
+  /* flex: 50%; */
+  padding: 25px;
+  float: left;
+}
