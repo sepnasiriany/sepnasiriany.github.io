@@ -137,3 +137,7 @@ a:hover {
   object-fit: contain;
   display: block;
 }
+
+.icon-bar img.linkedin-icon {
+  height: 30px;     /* smaller than the others */
+}
