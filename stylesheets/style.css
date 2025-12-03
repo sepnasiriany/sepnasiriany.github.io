@@ -141,3 +141,7 @@ a:hover {
 .icon-bar img.linkedin-icon {
   height: 30px;     /* smaller than the others */
 }
+
+.icon-bar img.resume-icon {
+  height: 38px;
+}
