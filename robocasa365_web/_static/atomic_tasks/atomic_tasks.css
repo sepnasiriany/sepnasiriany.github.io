@@ -124,6 +124,17 @@ body.rc-atomic-tasks .rc-task-tag-atomic-seen {
   min-width: 320px;
 }
 
+.rc-atomic-sort {
+  flex: 0 0 auto;
+}
+
+.rc-atomic-sort select {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--pst-color-border, #e0e0e0);
+  background: var(--pst-color-surface, #ffffff);
+}
+
 .rc-atomic-fixture-select select {
   width: 100%;
   padding: 0.35rem 0.5rem;
@@ -237,7 +248,6 @@ body.rc-atomic-tasks .rc-atomic-horizon-dropdown {
 }
 
 .rc-atomic-count {
-  flex-basis: 100%;
   color: rgba(17, 24, 39, 0.7);
   font-weight: 500;
 }
@@ -248,6 +258,16 @@ body.rc-atomic-tasks .rc-atomic-horizon-dropdown {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.rc-atomic-controls-footer .rc-atomic-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.rc-atomic-controls-footer .rc-atomic-count {
+  margin-left: 0.5rem; /* sits just to the right of Sort dropdown */
 }
 
 /* Reset button: match Composite Tasks */
@@ -348,6 +368,12 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 .rc-atomic-fixture-body {
   padding: 0.75rem 0.85rem 0.85rem 0.85rem;
   background: #f8fafc;
+}
+
+.rc-atomic-empty {
+  color: rgba(17, 24, 39, 0.68);
+  font-weight: 600;
+  padding: 0.35rem 0.1rem;
 }
 
 .rc-atomic-table {
