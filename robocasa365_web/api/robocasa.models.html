@@ -1,0 +1,1127 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>robocasa.models package &#8212; RoboCasa 1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b9a5b07b" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3a25ba87" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a681ed88"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/robocasa.models';</script>
+    <script src="../_static/composite_tasks/composite_task_attributes.js?v=35e92e8c"></script>
+    <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=0eeaf6d8"></script>
+    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
+    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
+    <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=c28cf0af"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="robocasa.models.fixtures package" href="robocasa.models.fixtures.html" />
+    <link rel="prev" title="robocasa.environments.kitchen.single_stage package" href="robocasa.environments.kitchen.single_stage.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/codebase_overview.html">Codebase Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tasks/atomic_tasks.html">Atomic Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks/composite_tasks.html">Composite Tasks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../datasets/datasets_overview.html">Overview of Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/using_datasets.html">Using Datasets</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="robocasa.html">robocasa package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.environments.html">robocasa.environments package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="robocasa.environments.kitchen.html">robocasa.environments.kitchen package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.environments.kitchen.multi_stage.html">robocasa.environments.kitchen.multi_stage package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.environments.kitchen.single_stage.html">robocasa.environments.kitchen.single_stage package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">robocasa.models package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html">robocasa.models.fixtures package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html">robocasa.models.objects package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html">robocasa.models.scenes package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.utils.html">robocasa.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.model_zoo.html">robocasa.utils.model_zoo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.usd.html">robocasa.utils.usd package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/robocasa.models.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>robocasa.models package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="robocasa-models-package">
+<h1>robocasa.models package<a class="headerlink" href="#robocasa-models-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="robocasa.models.fixtures.html">robocasa.models.fixtures package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.accessories">robocasa.models.fixtures.accessories module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.accessories.Accessory"><code class="docutils literal notranslate"><span class="pre">Accessory</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.accessories.Stool"><code class="docutils literal notranslate"><span class="pre">Stool</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.accessories.Stool.nat_lang"><code class="docutils literal notranslate"><span class="pre">Stool.nat_lang</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.accessories.WallAccessory"><code class="docutils literal notranslate"><span class="pre">WallAccessory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.blender">robocasa.models.fixtures.blender module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender"><code class="docutils literal notranslate"><span class="pre">Blender</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.add_auxiliary_fixture"><code class="docutils literal notranslate"><span class="pre">Blender.add_auxiliary_fixture()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.get_curr_lid_pos"><code class="docutils literal notranslate"><span class="pre">Blender.get_curr_lid_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.get_lid_closed_pos"><code class="docutils literal notranslate"><span class="pre">Blender.get_lid_closed_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.get_state"><code class="docutils literal notranslate"><span class="pre">Blender.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.nat_lang"><code class="docutils literal notranslate"><span class="pre">Blender.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.Blender.update_state"><code class="docutils literal notranslate"><span class="pre">Blender.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.BlenderLid"><code class="docutils literal notranslate"><span class="pre">BlenderLid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.blender.BlenderLid.nat_lang"><code class="docutils literal notranslate"><span class="pre">BlenderLid.nat_lang</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.cabinet_panels">robocasa.models.fixtures.cabinet_panels module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.CabinetPanel"><code class="docutils literal notranslate"><span class="pre">CabinetPanel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.CabinetPanel.exclude_from_prefixing"><code class="docutils literal notranslate"><span class="pre">CabinetPanel.exclude_from_prefixing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.CabinetShelf"><code class="docutils literal notranslate"><span class="pre">CabinetShelf</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.CabinetShelf.exclude_from_prefixing"><code class="docutils literal notranslate"><span class="pre">CabinetShelf.exclude_from_prefixing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.DividedWindowCabinetPanel"><code class="docutils literal notranslate"><span class="pre">DividedWindowCabinetPanel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.FullWindowedCabinetPanel"><code class="docutils literal notranslate"><span class="pre">FullWindowedCabinetPanel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.RaisedCabinetPanel"><code class="docutils literal notranslate"><span class="pre">RaisedCabinetPanel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.ShakerCabinetPanel"><code class="docutils literal notranslate"><span class="pre">ShakerCabinetPanel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.SlabCabinetPanel"><code class="docutils literal notranslate"><span class="pre">SlabCabinetPanel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinet_panels.VisualMeshPanel"><code class="docutils literal notranslate"><span class="pre">VisualMeshPanel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.cabinets">robocasa.models.fixtures.cabinets module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Cabinet"><code class="docutils literal notranslate"><span class="pre">Cabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Cabinet.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Cabinet.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Cabinet.nat_lang"><code class="docutils literal notranslate"><span class="pre">Cabinet.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Cabinet.set_door_state"><code class="docutils literal notranslate"><span class="pre">Cabinet.set_door_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer"><code class="docutils literal notranslate"><span class="pre">Drawer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.door_joint_names"><code class="docutils literal notranslate"><span class="pre">Drawer.door_joint_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.get_door_state"><code class="docutils literal notranslate"><span class="pre">Drawer.get_door_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Drawer.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.handle_name"><code class="docutils literal notranslate"><span class="pre">Drawer.handle_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.nat_lang"><code class="docutils literal notranslate"><span class="pre">Drawer.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.open_door"><code class="docutils literal notranslate"><span class="pre">Drawer.open_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.set_door_state"><code class="docutils literal notranslate"><span class="pre">Drawer.set_door_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.Drawer.update_state"><code class="docutils literal notranslate"><span class="pre">Drawer.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet"><code class="docutils literal notranslate"><span class="pre">HingeCabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet.get_door_state"><code class="docutils literal notranslate"><span class="pre">HingeCabinet.get_door_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet.get_state"><code class="docutils literal notranslate"><span class="pre">HingeCabinet.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet.left_handle_name"><code class="docutils literal notranslate"><span class="pre">HingeCabinet.left_handle_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet.right_handle_name"><code class="docutils literal notranslate"><span class="pre">HingeCabinet.right_handle_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HingeCabinet.set_door_state"><code class="docutils literal notranslate"><span class="pre">HingeCabinet.set_door_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HousingCabinet"><code class="docutils literal notranslate"><span class="pre">HousingCabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.HousingCabinet.set_pos"><code class="docutils literal notranslate"><span class="pre">HousingCabinet.set_pos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.OpenCabinet"><code class="docutils literal notranslate"><span class="pre">OpenCabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.OpenCabinet.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">OpenCabinet.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.OpenCabinet.nat_lang"><code class="docutils literal notranslate"><span class="pre">OpenCabinet.nat_lang</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.PanelCabinet"><code class="docutils literal notranslate"><span class="pre">PanelCabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.PanelCabinet.get_state"><code class="docutils literal notranslate"><span class="pre">PanelCabinet.get_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.SingleCabinet"><code class="docutils literal notranslate"><span class="pre">SingleCabinet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.SingleCabinet.door_name"><code class="docutils literal notranslate"><span class="pre">SingleCabinet.door_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.cabinets.SingleCabinet.handle_name"><code class="docutils literal notranslate"><span class="pre">SingleCabinet.handle_name</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.coffee_machine">robocasa.models.fixtures.coffee_machine module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.check_receptacle_placement_for_pouring"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.check_receptacle_placement_for_pouring()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.get_state"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.gripper_button_far"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.gripper_button_far()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.nat_lang"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.coffee_machine.CoffeeMachine.update_state"><code class="docutils literal notranslate"><span class="pre">CoffeeMachine.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.counter">robocasa.models.fixtures.counter module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter"><code class="docutils literal notranslate"><span class="pre">Counter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter.depth"><code class="docutils literal notranslate"><span class="pre">Counter.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Counter.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter.height"><code class="docutils literal notranslate"><span class="pre">Counter.height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter.set_pos"><code class="docutils literal notranslate"><span class="pre">Counter.set_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.counter.Counter.width"><code class="docutils literal notranslate"><span class="pre">Counter.width</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.dish_rack">robocasa.models.fixtures.dish_rack module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dish_rack.DishRack"><code class="docutils literal notranslate"><span class="pre">DishRack</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dish_rack.DishRack.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">DishRack.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dish_rack.DishRack.nat_lang"><code class="docutils literal notranslate"><span class="pre">DishRack.nat_lang</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.dishwasher">robocasa.models.fixtures.dishwasher module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher"><code class="docutils literal notranslate"><span class="pre">Dishwasher</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.check_rack_contact"><code class="docutils literal notranslate"><span class="pre">Dishwasher.check_rack_contact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Dishwasher.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.get_state"><code class="docutils literal notranslate"><span class="pre">Dishwasher.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.nat_lang"><code class="docutils literal notranslate"><span class="pre">Dishwasher.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.slide_rack"><code class="docutils literal notranslate"><span class="pre">Dishwasher.slide_rack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.dishwasher.Dishwasher.update_state"><code class="docutils literal notranslate"><span class="pre">Dishwasher.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.electric_kettle">robocasa.models.fixtures.electric_kettle module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle"><code class="docutils literal notranslate"><span class="pre">ElectricKettle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.get_state"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.nat_lang"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.set_joint_state"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.set_joint_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.set_lid"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.set_lid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.set_power_state"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.set_power_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.electric_kettle.ElectricKettle.update_state"><code class="docutils literal notranslate"><span class="pre">ElectricKettle.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.fixture">robocasa.models.fixtures.fixture module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture"><code class="docutils literal notranslate"><span class="pre">Fixture</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.BASE_TO_AUXILIARY_FIXTURES"><code class="docutils literal notranslate"><span class="pre">Fixture.BASE_TO_AUXILIARY_FIXTURES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.bottom_offset"><code class="docutils literal notranslate"><span class="pre">Fixture.bottom_offset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.close_door"><code class="docutils literal notranslate"><span class="pre">Fixture.close_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.depth"><code class="docutils literal notranslate"><span class="pre">Fixture.depth</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.door_joint_names"><code class="docutils literal notranslate"><span class="pre">Fixture.door_joint_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.euler"><code class="docutils literal notranslate"><span class="pre">Fixture.euler</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_bbox_points"><code class="docutils literal notranslate"><span class="pre">Fixture.get_bbox_points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_ext_sites"><code class="docutils literal notranslate"><span class="pre">Fixture.get_ext_sites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_int_sites"><code class="docutils literal notranslate"><span class="pre">Fixture.get_int_sites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_joint_state"><code class="docutils literal notranslate"><span class="pre">Fixture.get_joint_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Fixture.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Fixture.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_site_info"><code class="docutils literal notranslate"><span class="pre">Fixture.get_site_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.get_state"><code class="docutils literal notranslate"><span class="pre">Fixture.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.height"><code class="docutils literal notranslate"><span class="pre">Fixture.height</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.horizontal_radius"><code class="docutils literal notranslate"><span class="pre">Fixture.horizontal_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.is_closed"><code class="docutils literal notranslate"><span class="pre">Fixture.is_closed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.is_open"><code class="docutils literal notranslate"><span class="pre">Fixture.is_open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.nat_lang"><code class="docutils literal notranslate"><span class="pre">Fixture.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.open_door"><code class="docutils literal notranslate"><span class="pre">Fixture.open_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.pos"><code class="docutils literal notranslate"><span class="pre">Fixture.pos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.quat"><code class="docutils literal notranslate"><span class="pre">Fixture.quat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.sample_reset_region"><code class="docutils literal notranslate"><span class="pre">Fixture.sample_reset_region()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.set_door_state"><code class="docutils literal notranslate"><span class="pre">Fixture.set_door_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.set_joint_state"><code class="docutils literal notranslate"><span class="pre">Fixture.set_joint_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.set_origin"><code class="docutils literal notranslate"><span class="pre">Fixture.set_origin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.set_scale_from_size"><code class="docutils literal notranslate"><span class="pre">Fixture.set_scale_from_size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.update_regions"><code class="docutils literal notranslate"><span class="pre">Fixture.update_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.update_state"><code class="docutils literal notranslate"><span class="pre">Fixture.update_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture.width"><code class="docutils literal notranslate"><span class="pre">Fixture.width</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType"><code class="docutils literal notranslate"><span class="pre">FixtureType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.BLENDER"><code class="docutils literal notranslate"><span class="pre">FixtureType.BLENDER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.CABINET"><code class="docutils literal notranslate"><span class="pre">FixtureType.CABINET</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.CABINET_DOUBLE_DOOR"><code class="docutils literal notranslate"><span class="pre">FixtureType.CABINET_DOUBLE_DOOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.CABINET_SINGLE_DOOR"><code class="docutils literal notranslate"><span class="pre">FixtureType.CABINET_SINGLE_DOOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.CABINET_WITH_DOOR"><code class="docutils literal notranslate"><span class="pre">FixtureType.CABINET_WITH_DOOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.COFFEE_MACHINE"><code class="docutils literal notranslate"><span class="pre">FixtureType.COFFEE_MACHINE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.COUNTER"><code class="docutils literal notranslate"><span class="pre">FixtureType.COUNTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.COUNTER_NON_CORNER"><code class="docutils literal notranslate"><span class="pre">FixtureType.COUNTER_NON_CORNER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.COUNTER_NON_DINING"><code class="docutils literal notranslate"><span class="pre">FixtureType.COUNTER_NON_DINING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.DINING_COUNTER"><code class="docutils literal notranslate"><span class="pre">FixtureType.DINING_COUNTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.DISHWASHER"><code class="docutils literal notranslate"><span class="pre">FixtureType.DISHWASHER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.DISH_RACK"><code class="docutils literal notranslate"><span class="pre">FixtureType.DISH_RACK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.DRAWER"><code class="docutils literal notranslate"><span class="pre">FixtureType.DRAWER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.ELECTRIC_KETTLE"><code class="docutils literal notranslate"><span class="pre">FixtureType.ELECTRIC_KETTLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.FRIDGE"><code class="docutils literal notranslate"><span class="pre">FixtureType.FRIDGE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.ISLAND"><code class="docutils literal notranslate"><span class="pre">FixtureType.ISLAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.MICROWAVE"><code class="docutils literal notranslate"><span class="pre">FixtureType.MICROWAVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.OVEN"><code class="docutils literal notranslate"><span class="pre">FixtureType.OVEN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.SHELF"><code class="docutils literal notranslate"><span class="pre">FixtureType.SHELF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.SINK"><code class="docutils literal notranslate"><span class="pre">FixtureType.SINK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.STAND_MIXER"><code class="docutils literal notranslate"><span class="pre">FixtureType.STAND_MIXER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.STOOL"><code class="docutils literal notranslate"><span class="pre">FixtureType.STOOL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.STOVE"><code class="docutils literal notranslate"><span class="pre">FixtureType.STOVE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.TOASTER"><code class="docutils literal notranslate"><span class="pre">FixtureType.TOASTER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.TOASTER_OVEN"><code class="docutils literal notranslate"><span class="pre">FixtureType.TOASTER_OVEN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.TOP_DRAWER"><code class="docutils literal notranslate"><span class="pre">FixtureType.TOP_DRAWER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType.WINDOW"><code class="docutils literal notranslate"><span class="pre">FixtureType.WINDOW</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.ProcGenFixture"><code class="docutils literal notranslate"><span class="pre">ProcGenFixture</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.ProcGenFixture.exclude_from_prefixing"><code class="docutils literal notranslate"><span class="pre">ProcGenFixture.exclude_from_prefixing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.get_texture_name_from_file"><code class="docutils literal notranslate"><span class="pre">get_texture_name_from_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.fixture_stack">robocasa.models.fixtures.fixture_stack module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture_stack.FixtureStack"><code class="docutils literal notranslate"><span class="pre">FixtureStack</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.fixture_utils">robocasa.models.fixtures.fixture_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture_utils.fixture_is_type"><code class="docutils literal notranslate"><span class="pre">fixture_is_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture_utils.is_fxtr_valid"><code class="docutils literal notranslate"><span class="pre">is_fxtr_valid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.fridge">robocasa.models.fixtures.fridge module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge"><code class="docutils literal notranslate"><span class="pre">Fridge</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.check_rack_contact"><code class="docutils literal notranslate"><span class="pre">Fridge.check_rack_contact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.close_door"><code class="docutils literal notranslate"><span class="pre">Fridge.close_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Fridge.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Fridge.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.is_closed"><code class="docutils literal notranslate"><span class="pre">Fridge.is_closed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.is_open"><code class="docutils literal notranslate"><span class="pre">Fridge.is_open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.nat_lang"><code class="docutils literal notranslate"><span class="pre">Fridge.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.open_door"><code class="docutils literal notranslate"><span class="pre">Fridge.open_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.Fridge.update_state"><code class="docutils literal notranslate"><span class="pre">Fridge.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.FridgeBottomFreezer"><code class="docutils literal notranslate"><span class="pre">FridgeBottomFreezer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.FridgeFrenchDoor"><code class="docutils literal notranslate"><span class="pre">FridgeFrenchDoor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fridge.FridgeSideBySide"><code class="docutils literal notranslate"><span class="pre">FridgeSideBySide</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.handles">robocasa.models.fixtures.handles module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.BarHandle"><code class="docutils literal notranslate"><span class="pre">BarHandle</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.BoxedHandle"><code class="docutils literal notranslate"><span class="pre">BoxedHandle</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.Handle"><code class="docutils literal notranslate"><span class="pre">Handle</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.Handle.exclude_from_prefixing"><code class="docutils literal notranslate"><span class="pre">Handle.exclude_from_prefixing()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.KnobHandle"><code class="docutils literal notranslate"><span class="pre">KnobHandle</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.VisualMeshElongatedHandle"><code class="docutils literal notranslate"><span class="pre">VisualMeshElongatedHandle</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.handles.VisualMeshKnobHandle"><code class="docutils literal notranslate"><span class="pre">VisualMeshKnobHandle</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.hood">robocasa.models.fixtures.hood module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.hood.Hood"><code class="docutils literal notranslate"><span class="pre">Hood</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.hood.Hood.nat_lang"><code class="docutils literal notranslate"><span class="pre">Hood.nat_lang</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.microwave">robocasa.models.fixtures.microwave module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave"><code class="docutils literal notranslate"><span class="pre">Microwave</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.door_joint_names"><code class="docutils literal notranslate"><span class="pre">Microwave.door_joint_names</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.door_name"><code class="docutils literal notranslate"><span class="pre">Microwave.door_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Microwave.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.get_state"><code class="docutils literal notranslate"><span class="pre">Microwave.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.gripper_button_far"><code class="docutils literal notranslate"><span class="pre">Microwave.gripper_button_far()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.handle_name"><code class="docutils literal notranslate"><span class="pre">Microwave.handle_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.is_closed"><code class="docutils literal notranslate"><span class="pre">Microwave.is_closed()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.is_open"><code class="docutils literal notranslate"><span class="pre">Microwave.is_open()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.nat_lang"><code class="docutils literal notranslate"><span class="pre">Microwave.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.microwave.Microwave.update_state"><code class="docutils literal notranslate"><span class="pre">Microwave.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.others">robocasa.models.fixtures.others module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Box"><code class="docutils literal notranslate"><span class="pre">Box</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Box.rot"><code class="docutils literal notranslate"><span class="pre">Box.rot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Box.set_pos"><code class="docutils literal notranslate"><span class="pre">Box.set_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Box.update_state"><code class="docutils literal notranslate"><span class="pre">Box.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Floor"><code class="docutils literal notranslate"><span class="pre">Floor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Wall"><code class="docutils literal notranslate"><span class="pre">Wall</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Wall.get_ext_sites"><code class="docutils literal notranslate"><span class="pre">Wall.get_ext_sites()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Wall.get_quat"><code class="docutils literal notranslate"><span class="pre">Wall.get_quat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Wall.set_pos"><code class="docutils literal notranslate"><span class="pre">Wall.set_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.others.Wall.update_state"><code class="docutils literal notranslate"><span class="pre">Wall.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.oven">robocasa.models.fixtures.oven module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven"><code class="docutils literal notranslate"><span class="pre">Oven</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.check_rack_contact"><code class="docutils literal notranslate"><span class="pre">Oven.check_rack_contact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.close_door"><code class="docutils literal notranslate"><span class="pre">Oven.close_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Oven.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Oven.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.get_state"><code class="docutils literal notranslate"><span class="pre">Oven.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.has_multiple_rack_levels"><code class="docutils literal notranslate"><span class="pre">Oven.has_multiple_rack_levels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.nat_lang"><code class="docutils literal notranslate"><span class="pre">Oven.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.open_door"><code class="docutils literal notranslate"><span class="pre">Oven.open_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.set_temperature"><code class="docutils literal notranslate"><span class="pre">Oven.set_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.set_timer"><code class="docutils literal notranslate"><span class="pre">Oven.set_timer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.slide_rack"><code class="docutils literal notranslate"><span class="pre">Oven.slide_rack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.oven.Oven.update_state"><code class="docutils literal notranslate"><span class="pre">Oven.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.sink">robocasa.models.fixtures.sink module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink"><code class="docutils literal notranslate"><span class="pre">Sink</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.check_obj_under_water"><code class="docutils literal notranslate"><span class="pre">Sink.check_obj_under_water()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.get_handle_state"><code class="docutils literal notranslate"><span class="pre">Sink.get_handle_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.get_obj_basin_loc"><code class="docutils literal notranslate"><span class="pre">Sink.get_obj_basin_loc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Sink.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Sink.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.handle_joint"><code class="docutils literal notranslate"><span class="pre">Sink.handle_joint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.high_water_radius"><code class="docutils literal notranslate"><span class="pre">Sink.high_water_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.nat_lang"><code class="docutils literal notranslate"><span class="pre">Sink.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.set_handle_state"><code class="docutils literal notranslate"><span class="pre">Sink.set_handle_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.set_temp_state"><code class="docutils literal notranslate"><span class="pre">Sink.set_temp_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.update_state"><code class="docutils literal notranslate"><span class="pre">Sink.update_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.sink.Sink.water_site"><code class="docutils literal notranslate"><span class="pre">Sink.water_site</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.stand_mixer">robocasa.models.fixtures.stand_mixer module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer"><code class="docutils literal notranslate"><span class="pre">StandMixer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.check_item_in_bowl"><code class="docutils literal notranslate"><span class="pre">StandMixer.check_item_in_bowl()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">StandMixer.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.get_state"><code class="docutils literal notranslate"><span class="pre">StandMixer.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.nat_lang"><code class="docutils literal notranslate"><span class="pre">StandMixer.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.set_head_pos"><code class="docutils literal notranslate"><span class="pre">StandMixer.set_head_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.set_speed_dial_knob"><code class="docutils literal notranslate"><span class="pre">StandMixer.set_speed_dial_knob()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stand_mixer.StandMixer.update_state"><code class="docutils literal notranslate"><span class="pre">StandMixer.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.stove">robocasa.models.fixtures.stove module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove"><code class="docutils literal notranslate"><span class="pre">Stove</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.STOVE_HIGH_MIN"><code class="docutils literal notranslate"><span class="pre">Stove.STOVE_HIGH_MIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.STOVE_LOW_MIN"><code class="docutils literal notranslate"><span class="pre">Stove.STOVE_LOW_MIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.burner_sites"><code class="docutils literal notranslate"><span class="pre">Stove.burner_sites</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.check_obj_location_on_stove"><code class="docutils literal notranslate"><span class="pre">Stove.check_obj_location_on_stove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.get_knobs_state"><code class="docutils literal notranslate"><span class="pre">Stove.get_knobs_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.get_obj_location_on_stove"><code class="docutils literal notranslate"><span class="pre">Stove.get_obj_location_on_stove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Stove.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.is_burner_on"><code class="docutils literal notranslate"><span class="pre">Stove.is_burner_on()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.knob_joints"><code class="docutils literal notranslate"><span class="pre">Stove.knob_joints</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.nat_lang"><code class="docutils literal notranslate"><span class="pre">Stove.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.obj_fully_inside_receptacle"><code class="docutils literal notranslate"><span class="pre">Stove.obj_fully_inside_receptacle()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.set_knob_state"><code class="docutils literal notranslate"><span class="pre">Stove.set_knob_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stove.update_state"><code class="docutils literal notranslate"><span class="pre">Stove.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.stove.Stovetop"><code class="docutils literal notranslate"><span class="pre">Stovetop</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.toaster">robocasa.models.fixtures.toaster module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster"><code class="docutils literal notranslate"><span class="pre">Toaster</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.check_slot_contact"><code class="docutils literal notranslate"><span class="pre">Toaster.check_slot_contact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">Toaster.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">Toaster.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.get_state"><code class="docutils literal notranslate"><span class="pre">Toaster.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.nat_lang"><code class="docutils literal notranslate"><span class="pre">Toaster.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.set_doneness_knob"><code class="docutils literal notranslate"><span class="pre">Toaster.set_doneness_knob()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.set_lever"><code class="docutils literal notranslate"><span class="pre">Toaster.set_lever()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster.Toaster.update_state"><code class="docutils literal notranslate"><span class="pre">Toaster.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.toaster_oven">robocasa.models.fixtures.toaster_oven module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven"><code class="docutils literal notranslate"><span class="pre">ToasterOven</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.check_rack_contact"><code class="docutils literal notranslate"><span class="pre">ToasterOven.check_rack_contact()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.close_door"><code class="docutils literal notranslate"><span class="pre">ToasterOven.close_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.get_reset_region_names"><code class="docutils literal notranslate"><span class="pre">ToasterOven.get_reset_region_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.get_reset_regions"><code class="docutils literal notranslate"><span class="pre">ToasterOven.get_reset_regions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.get_state"><code class="docutils literal notranslate"><span class="pre">ToasterOven.get_state()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.has_multiple_rack_levels"><code class="docutils literal notranslate"><span class="pre">ToasterOven.has_multiple_rack_levels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.nat_lang"><code class="docutils literal notranslate"><span class="pre">ToasterOven.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.open_door"><code class="docutils literal notranslate"><span class="pre">ToasterOven.open_door()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.rack_or_tray"><code class="docutils literal notranslate"><span class="pre">ToasterOven.rack_or_tray()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.set_doneness"><code class="docutils literal notranslate"><span class="pre">ToasterOven.set_doneness()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.set_function"><code class="docutils literal notranslate"><span class="pre">ToasterOven.set_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.set_temperature"><code class="docutils literal notranslate"><span class="pre">ToasterOven.set_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.set_time"><code class="docutils literal notranslate"><span class="pre">ToasterOven.set_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.slide_rack"><code class="docutils literal notranslate"><span class="pre">ToasterOven.slide_rack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.toaster_oven.ToasterOven.update_state"><code class="docutils literal notranslate"><span class="pre">ToasterOven.update_state()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures.windows">robocasa.models.fixtures.windows module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.Window"><code class="docutils literal notranslate"><span class="pre">Window</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.Window.nat_lang"><code class="docutils literal notranslate"><span class="pre">Window.nat_lang</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProc"><code class="docutils literal notranslate"><span class="pre">WindowProc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProc.create_window"><code class="docutils literal notranslate"><span class="pre">WindowProc.create_window()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProc.set_pos"><code class="docutils literal notranslate"><span class="pre">WindowProc.set_pos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase"><code class="docutils literal notranslate"><span class="pre">WindowProcBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase.create_window"><code class="docutils literal notranslate"><span class="pre">WindowProcBase.create_window()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase.nat_lang"><code class="docutils literal notranslate"><span class="pre">WindowProcBase.nat_lang</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase.rot"><code class="docutils literal notranslate"><span class="pre">WindowProcBase.rot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase.set_pos"><code class="docutils literal notranslate"><span class="pre">WindowProcBase.set_pos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.WindowProcBase.update_state"><code class="docutils literal notranslate"><span class="pre">WindowProcBase.update_state()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.windows.site_pos"><code class="docutils literal notranslate"><span class="pre">site_pos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.fixtures.html#module-robocasa.models.fixtures">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robocasa.models.objects.html">robocasa.models.objects package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.objects.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.objects.html#module-robocasa.models.objects.kitchen_object_utils">robocasa.models.objects.kitchen_object_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.kitchen_object_utils.ObjCat"><code class="docutils literal notranslate"><span class="pre">ObjCat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.kitchen_object_utils.ObjCat.get_mjcf_kwargs"><code class="docutils literal notranslate"><span class="pre">ObjCat.get_mjcf_kwargs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.kitchen_object_utils.sample_kitchen_object"><code class="docutils literal notranslate"><span class="pre">sample_kitchen_object()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.kitchen_object_utils.sample_kitchen_object_helper"><code class="docutils literal notranslate"><span class="pre">sample_kitchen_object_helper()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.objects.html#module-robocasa.models.objects.kitchen_objects">robocasa.models.objects.kitchen_objects module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.kitchen_objects.get_cats_by_type"><code class="docutils literal notranslate"><span class="pre">get_cats_by_type()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.objects.html#module-robocasa.models.objects.objects">robocasa.models.objects.objects module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject"><code class="docutils literal notranslate"><span class="pre">MJCFObject</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.bottom_offset"><code class="docutils literal notranslate"><span class="pre">MJCFObject.bottom_offset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.get_bbox_points"><code class="docutils literal notranslate"><span class="pre">MJCFObject.get_bbox_points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.horizontal_radius"><code class="docutils literal notranslate"><span class="pre">MJCFObject.horizontal_radius</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.postprocess_model_xml"><code class="docutils literal notranslate"><span class="pre">MJCFObject.postprocess_model_xml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.size"><code class="docutils literal notranslate"><span class="pre">MJCFObject.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MJCFObject.top_offset"><code class="docutils literal notranslate"><span class="pre">MJCFObject.top_offset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MujocoXMLObjectRobocasa"><code class="docutils literal notranslate"><span class="pre">MujocoXMLObjectRobocasa</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MujocoXMLObjectRobocasa.anchor_offset"><code class="docutils literal notranslate"><span class="pre">MujocoXMLObjectRobocasa.anchor_offset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.objects.html#robocasa.models.objects.objects.MujocoXMLObjectRobocasa.set_scale"><code class="docutils literal notranslate"><span class="pre">MujocoXMLObjectRobocasa.set_scale()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.objects.html#module-robocasa.models.objects">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robocasa.models.scenes.html">robocasa.models.scenes package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#module-robocasa.models.scenes.kitchen_arena">robocasa.models.scenes.kitchen_arena module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.kitchen_arena.KitchenArena"><code class="docutils literal notranslate"><span class="pre">KitchenArena</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.kitchen_arena.KitchenArena.get_fixture_cfgs"><code class="docutils literal notranslate"><span class="pre">KitchenArena.get_fixture_cfgs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.kitchen_arena.disable_clutter_in_config"><code class="docutils literal notranslate"><span class="pre">disable_clutter_in_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.kitchen_arena.enable_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">enable_fixtures_in_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.kitchen_arena.update_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">update_fixtures_in_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#module-robocasa.models.scenes.scene_builder">robocasa.models.scenes.scene_builder module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_builder.check_syntax"><code class="docutils literal notranslate"><span class="pre">check_syntax()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_builder.create_fixtures"><code class="docutils literal notranslate"><span class="pre">create_fixtures()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#module-robocasa.models.scenes.scene_registry">robocasa.models.scenes.scene_registry module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType"><code class="docutils literal notranslate"><span class="pre">LayoutType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.ALL"><code class="docutils literal notranslate"><span class="pre">LayoutType.ALL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.DINING"><code class="docutils literal notranslate"><span class="pre">LayoutType.DINING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.ISLAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT001"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT001</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT002"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT002</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT003"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT003</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT004"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT004</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT005"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT005</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT006"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT006</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT007"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT007</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT008"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT008</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT009"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT009</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT010"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT010</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT011"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT011</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT012"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT012</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT013"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT013</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT014"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT014</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT015"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT015</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT016"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT016</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT017"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT017</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT018"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT018</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT019"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT019</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT020"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT020</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT021"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT021</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT022"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT022</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT023"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT023</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT024"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT024</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT025"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT025</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT026"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT026</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT027"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT027</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT028"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT028</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT029"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT029</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT030"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT030</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT031"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT031</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT032"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT032</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT033"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT033</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT034"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT034</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT035"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT035</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT036"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT036</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT037"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT037</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT038"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT038</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT039"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT039</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT040"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT040</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT041"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT041</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT042"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT042</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT043"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT043</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT044"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT044</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT045"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT045</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT046"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT046</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT047"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT047</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT048"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT048</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT049"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT049</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT050"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT050</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT051"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT051</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT052"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT052</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT053"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT053</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT054"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT054</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT055"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT055</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT056"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT056</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT057"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT057</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT058"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT058</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT059"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT059</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT060"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT060</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.NO_ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.NO_ISLAND</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.TEST"><code class="docutils literal notranslate"><span class="pre">LayoutType.TEST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType.TRAIN"><code class="docutils literal notranslate"><span class="pre">LayoutType.TRAIN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType"><code class="docutils literal notranslate"><span class="pre">StyleType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.ALL"><code class="docutils literal notranslate"><span class="pre">StyleType.ALL</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE001"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE001</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE002"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE002</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE003"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE003</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE004"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE004</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE005"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE005</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE006"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE006</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE007"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE007</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE008"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE008</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE009"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE009</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE010"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE010</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE011"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE011</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE012"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE012</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE013"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE013</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE014"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE014</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE015"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE015</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE016"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE016</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE017"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE017</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE018"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE018</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE019"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE019</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE020"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE020</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE021"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE021</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE022"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE022</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE023"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE023</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE024"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE024</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE025"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE025</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE026"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE026</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE027"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE027</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE028"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE028</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE029"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE029</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE030"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE030</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE031"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE031</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE032"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE032</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE033"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE033</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE034"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE034</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE035"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE035</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE036"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE036</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE037"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE037</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE038"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE038</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE039"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE039</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE040"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE040</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE041"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE041</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE042"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE042</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE043"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE043</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE044"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE044</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE045"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE045</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE046"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE046</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE047"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE047</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE048"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE048</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE049"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE049</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE050"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE050</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE051"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE051</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE052"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE052</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE053"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE053</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE054"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE054</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE055"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE055</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE056"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE056</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE057"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE057</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE058"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE058</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE059"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE059</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType.STYLE060"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE060</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.get_layout_path"><code class="docutils literal notranslate"><span class="pre">get_layout_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.get_style_path"><code class="docutils literal notranslate"><span class="pre">get_style_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.unpack_layout_ids"><code class="docutils literal notranslate"><span class="pre">unpack_layout_ids()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.unpack_style_ids"><code class="docutils literal notranslate"><span class="pre">unpack_style_ids()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#module-robocasa.models.scenes.scene_utils">robocasa.models.scenes.scene_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_utils.get_relative_position"><code class="docutils literal notranslate"><span class="pre">get_relative_position()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_utils.initialize_fixture"><code class="docutils literal notranslate"><span class="pre">initialize_fixture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_utils.load_style_config"><code class="docutils literal notranslate"><span class="pre">load_style_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="robocasa.models.scenes.html#module-robocasa.models.scenes">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-robocasa.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.models" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="robocasa.environments.kitchen.single_stage.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.single_stage package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="robocasa.models.fixtures.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">robocasa.models.fixtures package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the RoboCasa core team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright the RoboCasa core team, 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

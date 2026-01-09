@@ -1,0 +1,832 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>robocasa.environments.kitchen.multi_stage.portioning_meals package &#8212; RoboCasa 1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=16584345" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3a25ba87" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a681ed88"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/robocasa.environments.kitchen.multi_stage.portioning_meals';</script>
+    <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
+    <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=f6a7c461"></script>
+    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
+    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
+    <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=c28cf0af"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="robocasa.environments.kitchen.multi_stage.preparing_marinade package" href="robocasa.environments.kitchen.multi_stage.preparing_marinade.html" />
+    <link rel="prev" title="robocasa.environments.kitchen.multi_stage.packing_lunches package" href="robocasa.environments.kitchen.multi_stage.packing_lunches.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/codebase_overview.html">Codebase Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tasks/atomic_tasks.html">Atomic Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks/composite_tasks.html">Composite Tasks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../datasets/datasets_overview.html">Overview of Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/using_datasets.html">Using Datasets</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="robocasa.html">robocasa package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="robocasa.environments.html">robocasa.environments package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="robocasa.environments.kitchen.html">robocasa.environments.kitchen package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4 current active"><a class="reference internal" href="robocasa.environments.kitchen.multi_stage.html">robocasa.environments.kitchen.multi_stage package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.environments.kitchen.single_stage.html">robocasa.environments.kitchen.single_stage package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.models.html">robocasa.models package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html">robocasa.models.fixtures package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html">robocasa.models.objects package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html">robocasa.models.scenes package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.utils.html">robocasa.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.model_zoo.html">robocasa.utils.model_zoo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.usd.html">robocasa.utils.usd package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/robocasa.environments.kitchen.multi_stage.portioning_meals.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>robocasa.environments.kitchen.multi_stage.portioning_meals package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken">robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken"><code class="docutils literal notranslate"><span class="pre">DistributeChicken</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">DistributeChicken.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">DistributeChicken.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize"><code class="docutils literal notranslate"><span class="pre">PortionOnSize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionOnSize.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionOnSize.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt"><code class="docutils literal notranslate"><span class="pre">PortionYogurt</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionYogurt.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionYogurt.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning">robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning"><code class="docutils literal notranslate"><span class="pre">ScalePortioning</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">ScalePortioning.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ScalePortioning.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="robocasa-environments-kitchen-multi-stage-portioning-meals-package">
+<h1>robocasa.environments.kitchen.multi_stage.portioning_meals package<a class="headerlink" href="#robocasa-environments-kitchen-multi-stage-portioning-meals-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-distribute-chicken-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.</span></span><span class="sig-name descname"><span class="pre">DistributeChicken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">knob_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Distribute Chicken: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of distributing cooked chicken drumsticks from a pan to plates.
+The task involves taking 2 chicken drumsticks from a pan and placing exactly
+1 drumstick on each of the 2 plates on the dining counter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take chicken drumsticks from the pan</p></li>
+<li><p>Place exactly 1 drumstick on each plate</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-portion-fruit-bowl-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.</span></span><span class="sig-name descname"><span class="pre">PortionFruitBowl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Portion Fruit Bowl: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of portioning fruits from a plate into two bowls.
+The task involves taking 4 fruits from a plate on the dining counter
+and distributing them evenly into 2 bowls (2 fruits per bowl).</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take fruits from the plate on the dining counter</p></li>
+<li><p>Place exactly 2 fruits in each of the 2 bowls</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-portion-hot-dogs-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.</span></span><span class="sig-name descname"><span class="pre">PortionHotDogs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj_registries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('aigen',</span> <span class="pre">'lightwheel',</span> <span class="pre">'objaverse')</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Portion Hot Dogs: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of portioning hot dog buns and sausages from a bowl into plates.
+The task involves taking 2 hot dog buns and 2 sausages from a bowl on the dining counter
+and placing exactly 1 bun and 1 sausage on each of the 2 plates.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take hot dog buns and sausages from the bowl on the dining counter</p></li>
+<li><p>Place exactly 1 bun and 1 sausage on each plate</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-portion-in-tupperware-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.</span></span><span class="sig-name descname"><span class="pre">PortionInTupperware</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Portion In Tupperware: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of portioning cooked food and vegetables from a plate into tupperware containers.
+The task involves taking 2 cooked food items and 2 vegetables from a plate on the dining counter
+and placing exactly 1 cooked food and 1 vegetable in each of the 2 tupperware containers.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take cooked food and vegetables from the plate on the dining counter</p></li>
+<li><p>Place exactly 1 cooked food and 1 vegetable in each tupperware container</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-portion-on-size-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.</span></span><span class="sig-name descname"><span class="pre">PortionOnSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Portion On Size: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of placing bowls next to plates based on the meal size.
+The task involves placing a small bowl next to a small plate with appetizer,
+and a large bowl next to a large plate with a full meal (meat and cooked food).</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take bowls from the cabinet</p></li>
+<li><p>Place small bowl next to small plate with appetizer</p></li>
+<li><p>Place large bowl next to large plate with meal</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">32,</span> <span class="pre">41,</span> <span class="pre">59,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-portion-yogurt-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.</span></span><span class="sig-name descname"><span class="pre">PortionYogurt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Portion Yogurt: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of portioning yogurt from the dining counter into plates.
+The task involves taking 4 yogurt containers from the dining counter
+and placing exactly 2 yogurt containers on each of the 2 plates.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take yogurt containers from the dining counter</p></li>
+<li><p>Place 2 yogurt containers on each plate</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">22,</span> <span class="pre">58]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning">
+<span id="robocasa-environments-kitchen-multi-stage-portioning-meals-scale-portioning-module"></span><h2>robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.</span></span><span class="sig-name descname"><span class="pre">ScalePortioning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Scale Portioning: composite task for Portioning Meals activity.</p>
+<p>Simulates the task of weighing meat on a digital scale and then placing it on a plate.
+The task involves taking meat from the fridge, placing it on a digital scale,
+waiting for 100 timesteps, then moving it to a plate on the dining counter.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take meat from the fridge</p></li>
+<li><p>Place meat on the digital scale</p></li>
+<li><p>Wait 100 timesteps</p></li>
+<li><p>Move meat from scale to plate on dining counter</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.portioning_meals">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="robocasa.environments.kitchen.multi_stage.packing_lunches.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.packing_lunches package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="robocasa.environments.kitchen.multi_stage.preparing_marinade.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.preparing_marinade package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken">robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken"><code class="docutils literal notranslate"><span class="pre">DistributeChicken</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">DistributeChicken.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.distribute_chicken.DistributeChicken.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">DistributeChicken.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_fruit_bowl.PortionFruitBowl.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionFruitBowl.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_hot_dogs.PortionHotDogs.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionHotDogs.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_in_tupperware.PortionInTupperware.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionInTupperware.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize"><code class="docutils literal notranslate"><span class="pre">PortionOnSize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionOnSize.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_on_size.PortionOnSize.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionOnSize.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt">robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt"><code class="docutils literal notranslate"><span class="pre">PortionYogurt</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">PortionYogurt.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.portion_yogurt.PortionYogurt.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PortionYogurt.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning">robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning"><code class="docutils literal notranslate"><span class="pre">ScalePortioning</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">ScalePortioning.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.portioning_meals.scale_portioning.ScalePortioning.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ScalePortioning.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.portioning_meals">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the RoboCasa core team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright the RoboCasa core team, 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>robocasa.environments.kitchen.multi_stage.microwaving_food package &#8212; RoboCasa 1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b9a5b07b" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3a25ba87" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a681ed88"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/robocasa.environments.kitchen.multi_stage.microwaving_food';</script>
+    <script src="../_static/composite_tasks/composite_task_attributes.js?v=35e92e8c"></script>
+    <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=0eeaf6d8"></script>
+    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
+    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
+    <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=c28cf0af"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="robocasa.environments.kitchen.multi_stage.mixing_and_blending package" href="robocasa.environments.kitchen.multi_stage.mixing_and_blending.html" />
+    <link rel="prev" title="robocasa.environments.kitchen.multi_stage.meat_preparation package" href="robocasa.environments.kitchen.multi_stage.meat_preparation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/codebase_overview.html">Codebase Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tasks/atomic_tasks.html">Atomic Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks/composite_tasks.html">Composite Tasks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../datasets/datasets_overview.html">Overview of Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/using_datasets.html">Using Datasets</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="robocasa.html">robocasa package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="robocasa.environments.html">robocasa.environments package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="robocasa.environments.kitchen.html">robocasa.environments.kitchen package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4 current active"><a class="reference internal" href="robocasa.environments.kitchen.multi_stage.html">robocasa.environments.kitchen.multi_stage package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.environments.kitchen.single_stage.html">robocasa.environments.kitchen.single_stage package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.models.html">robocasa.models package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html">robocasa.models.fixtures package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html">robocasa.models.objects package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html">robocasa.models.scenes package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.utils.html">robocasa.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.model_zoo.html">robocasa.utils.model_zoo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.usd.html">robocasa.utils.usd package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/robocasa.environments.kitchen.multi_stage.microwaving_food.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>robocasa.environments.kitchen.multi_stage.microwaving_food package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item">robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem"><code class="docutils literal notranslate"><span class="pre">FilterMicrowavableItem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">FilterMicrowavableItem.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal"><code class="docutils literal notranslate"><span class="pre">MicrowaveCorrectMeal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">MicrowaveCorrectMeal.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item">robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem"><code class="docutils literal notranslate"><span class="pre">PlaceMicrowaveSafeItem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PlaceMicrowaveSafeItem.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal">robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal"><code class="docutils literal notranslate"><span class="pre">ReheatMeal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ReheatMeal.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food">robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="robocasa-environments-kitchen-multi-stage-microwaving-food-package">
+<h1>robocasa.environments.kitchen.multi_stage.microwaving_food package<a class="headerlink" href="#robocasa-environments-kitchen-multi-stage-microwaving-food-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-filter-microwavable-item-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.</span></span><span class="sig-name descname"><span class="pre">FilterMicrowavableItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Filter Microwavable Item: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of filtering microwavable items from a bowl containing both
+microwavable (meat) and non-microwavable (fruit) items.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Take the bowl containing meat and fruit from the counter</p></li>
+<li><p>Remove the fruit item from the bowl and place it on the plate</p></li>
+<li><p>Place the bowl with only meat in the microwave</p></li>
+<li><p>Close the microwave door</p></li>
+<li><p>Press the start button to begin microwaving</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-microwave-correct-meal-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.</span></span><span class="sig-name descname"><span class="pre">MicrowaveCorrectMeal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Microwave Correct Meal: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of microwaving the correct meal from two bowls containing
+different food items. One bowl is randomly selected to be microwaved.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Identify which bowl should be microwaved (randomly selected)</p></li>
+<li><p>Place the selected bowl in the microwave</p></li>
+<li><p>Close the microwave door</p></li>
+<li><p>Press the start button to begin microwaving</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-microwave-defrost-meat-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.</span></span><span class="sig-name descname"><span class="pre">MicrowaveDefrostMeat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Microwave Defrost Meat: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of defrosting meat in the microwave.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Place the tupperware containing meat in the microwave</p></li>
+<li><p>Close the microwave door</p></li>
+<li><p>Press the start button to begin microwaving</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">19,</span> <span class="pre">20,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">25,</span> <span class="pre">26,</span> <span class="pre">27,</span> <span class="pre">28,</span> <span class="pre">30,</span> <span class="pre">31,</span> <span class="pre">33,</span> <span class="pre">34,</span> <span class="pre">35,</span> <span class="pre">36,</span> <span class="pre">37,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">42,</span> <span class="pre">46,</span> <span class="pre">48,</span> <span class="pre">49,</span> <span class="pre">50,</span> <span class="pre">51,</span> <span class="pre">52,</span> <span class="pre">53,</span> <span class="pre">54,</span> <span class="pre">55,</span> <span class="pre">56,</span> <span class="pre">58,</span> <span class="pre">59,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-place-microwave-safe-item-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.</span></span><span class="sig-name descname"><span class="pre">PlaceMicrowaveSafeItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Place Microwave Safe Item: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of identifying a microwave-safe and non-microwave-safe drink item.
+The robot must identify which drinkware item is safe for microwaving and place it in the microwave.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Identify microwave-safe drink item</p></li>
+<li><p>Identify non-microwave-safe drink item</p></li>
+<li><p>Place microwave-safe item in the microwave</p></li>
+<li><p>Close the microwave door</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-reheat-meal-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.</span></span><span class="sig-name descname"><span class="pre">ReheatMeal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Reheat Meal: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of reheating a meal in a tupperware container containing meat and vegetables.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Place the tupperware containing meat and vegetables in the microwave</p></li>
+<li><p>Close the microwave door</p></li>
+<li><p>Press the start button to begin microwaving</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food">
+<span id="robocasa-environments-kitchen-multi-stage-microwaving-food-return-heated-food-module"></span><h2>robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.</span></span><span class="sig-name descname"><span class="pre">ReturnHeatedFood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Return Heated Food: composite task for Microwaving Food activity.</p>
+<p>Simulates the task of placing a bowl containing heated meat and vegetable
+on the dining counter for serving.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><ol class="arabic simple">
+<li><p>Open the microwave door</p></li>
+<li><p>Take the bowl containing meat and vegetable from the microwave</p></li>
+<li><p>Place it on the dining counter</p></li>
+</ol>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.microwaving_food">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="robocasa.environments.kitchen.multi_stage.meat_preparation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.meat_preparation package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="robocasa.environments.kitchen.multi_stage.mixing_and_blending.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.mixing_and_blending package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item">robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem"><code class="docutils literal notranslate"><span class="pre">FilterMicrowavableItem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.filter_microwavable_item.FilterMicrowavableItem.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">FilterMicrowavableItem.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal"><code class="docutils literal notranslate"><span class="pre">MicrowaveCorrectMeal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_correct_meal.MicrowaveCorrectMeal.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">MicrowaveCorrectMeal.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat">robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.microwave_defrost_meat.MicrowaveDefrostMeat.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">MicrowaveDefrostMeat.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item">robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem"><code class="docutils literal notranslate"><span class="pre">PlaceMicrowaveSafeItem</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.place_microwave_safe_item.PlaceMicrowaveSafeItem.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">PlaceMicrowaveSafeItem.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal">robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal"><code class="docutils literal notranslate"><span class="pre">ReheatMeal</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.reheat_meal.ReheatMeal.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ReheatMeal.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food">robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.microwaving_food.return_heated_food.ReturnHeatedFood.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">ReturnHeatedFood.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.microwaving_food">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the RoboCasa core team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright the RoboCasa core team, 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

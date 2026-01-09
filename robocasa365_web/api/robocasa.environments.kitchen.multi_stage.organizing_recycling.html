@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>robocasa.environments.kitchen.multi_stage.organizing_recycling package &#8212; RoboCasa 1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b9a5b07b" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3a25ba87" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a681ed88"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/robocasa.environments.kitchen.multi_stage.organizing_recycling';</script>
+    <script src="../_static/composite_tasks/composite_task_attributes.js?v=35e92e8c"></script>
+    <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=0eeaf6d8"></script>
+    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
+    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
+    <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=c28cf0af"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="robocasa.environments.kitchen.multi_stage.organizing_utensils package" href="robocasa.environments.kitchen.multi_stage.organizing_utensils.html" />
+    <link rel="prev" title="robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers package" href="robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/codebase_overview.html">Codebase Overview</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tasks/atomic_tasks.html">Atomic Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tasks/composite_tasks.html">Composite Tasks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../datasets/datasets_overview.html">Overview of Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets/using_datasets.html">Using Datasets</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="robocasa.html">robocasa package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="robocasa.environments.html">robocasa.environments package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="robocasa.environments.kitchen.html">robocasa.environments.kitchen package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4 current active"><a class="reference internal" href="robocasa.environments.kitchen.multi_stage.html">robocasa.environments.kitchen.multi_stage package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="robocasa.environments.kitchen.single_stage.html">robocasa.environments.kitchen.single_stage package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.models.html">robocasa.models package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.fixtures.html">robocasa.models.fixtures package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.objects.html">robocasa.models.objects package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.models.scenes.html">robocasa.models.scenes package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="robocasa.utils.html">robocasa.utils package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.model_zoo.html">robocasa.utils.model_zoo package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="robocasa.utils.usd.html">robocasa.utils.usd package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/robocasa.environments.kitchen.multi_stage.organizing_recycling.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>robocasa.environments.kitchen.multi_stage.organizing_recycling package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.get_ep_meta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.other_excluded_layouts"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.other_excluded_layouts</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="robocasa-environments-kitchen-multi-stage-organizing-recycling-package">
+<h1>robocasa.environments.kitchen.multi_stage.organizing_recycling package<a class="headerlink" href="#robocasa-environments-kitchen-multi-stage-organizing-recycling-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size">
+<span id="robocasa-environments-kitchen-multi-stage-organizing-recycling-recycle-bottles-by-size-module"></span><h2>robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.</span></span><span class="sig-name descname"><span class="pre">RecycleBottlesBySize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Recycle Bottles By Size: composite task for Organizing Recycling.</p>
+<p>Simulates the task of sorting empty bottles by size for recycling.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><p>Gather all empty bottled water and beer bottles from the dining counter.
+Place large bottles in a cluster next the sink, but not inside it.
+Place small bottles inside the sink.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type">
+<span id="robocasa-environments-kitchen-multi-stage-organizing-recycling-recycle-bottles-by-type-module"></span><h2>robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.</span></span><span class="sig-name descname"><span class="pre">RecycleBottlesByType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Recycle Bottles By Type: composite task for Organizing Recycling.</p>
+<p>Simulates the task of sorting bottles by type for recycling.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><p>Idenitfy the type of each bottle (plastic or glass) in the middle.
+Place plastic bottles in a cluster of plastic bottles on one side.
+Place glass bottles in a cluster of glass bottles on the other side.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52,</span> <span class="pre">8,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">19,</span> <span class="pre">21,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">25,</span> <span class="pre">28,</span> <span class="pre">29,</span> <span class="pre">30,</span> <span class="pre">33,</span> <span class="pre">34,</span> <span class="pre">38,</span> <span class="pre">41,</span> <span class="pre">42,</span> <span class="pre">46,</span> <span class="pre">49,</span> <span class="pre">54,</span> <span class="pre">57,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.other_excluded_layouts">
+<span class="sig-name descname"><span class="pre">other_excluded_layouts</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[8,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">19,</span> <span class="pre">21,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">25,</span> <span class="pre">28,</span> <span class="pre">29,</span> <span class="pre">30,</span> <span class="pre">33,</span> <span class="pre">34,</span> <span class="pre">38,</span> <span class="pre">41,</span> <span class="pre">42,</span> <span class="pre">46,</span> <span class="pre">49,</span> <span class="pre">54,</span> <span class="pre">57,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.other_excluded_layouts" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans">
+<span id="robocasa-environments-kitchen-multi-stage-organizing-recycling-recycle-soda-cans-module"></span><h2>robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.</span></span><span class="sig-name descname"><span class="pre">RecycleSodaCans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Soda Can Recycling Setup: composite task for Organizing Recycling.</p>
+<p>Simulates the task of gathering scattered empty soda cans around the kitchen and
+placing them in a neatly clustered group, ready for recycling.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><p>Pick up all empty soda cans.
+Place them in a tight cluster on the counter near the stove.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt">
+<span id="robocasa-environments-kitchen-multi-stage-organizing-recycling-recycle-stacked-yogurt-module"></span><h2>robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt module<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.</span></span><span class="sig-name descname"><span class="pre">RecycleStackedYogurt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="robocasa.environments.kitchen.html#robocasa.environments.kitchen.kitchen.Kitchen" title="robocasa.environments.kitchen.kitchen.Kitchen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Kitchen</span></code></a></p>
+<p>Recycle Stacked Yogurt: composite task for Organizing Recycling.</p>
+<p>Simulates the task of stacking yogurt containers to prepare for recycling.</p>
+<dl class="simple">
+<dt>Steps:</dt><dd><p>Pick up the second largest yogurt container from the counter and stack it on the largest container.
+Pick up the smaller container and place it on top of the second largest container.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-robocasa.environments.kitchen.multi_stage.organizing_recycling">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.organizing_dishes_and_containers package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="robocasa.environments.kitchen.multi_stage.organizing_utensils.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">robocasa.environments.kitchen.multi_stage.organizing_utensils package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_size.RecycleBottlesBySize.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesBySize.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.get_ep_meta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_bottles_by_type.RecycleBottlesByType.other_excluded_layouts"><code class="docutils literal notranslate"><span class="pre">RecycleBottlesByType.other_excluded_layouts</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_soda_cans.RecycleSodaCans.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleSodaCans.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt">robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.multi_stage.organizing_recycling.recycle_stacked_yogurt.RecycleStackedYogurt.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">RecycleStackedYogurt.get_ep_meta()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.multi_stage.organizing_recycling">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the RoboCasa core team
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright the RoboCasa core team, 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
