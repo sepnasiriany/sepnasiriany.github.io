@@ -17,7 +17,8 @@ html[data-theme="dark"] body.rc-atomic-tasks {
    PyData's --pst-color-surface stays fairly light even in dark mode; we want
    the Atomic Tasks UI to actually darken with the theme. */
 body.rc-atomic-tasks {
-  --rc-atomic-surface: var(--pst-color-on-background, #ffffff);
+  /* Match Composite Tasks controls-card light gray */
+  --rc-atomic-surface: #f8fafc;
   --rc-atomic-surface-2: var(--pst-color-surface, #ffffff);
   --rc-atomic-border: var(--pst-color-border, #e0e0e0);
   --rc-atomic-hover: var(--pst-color-surface-hover, rgba(0, 0, 0, 0.03));

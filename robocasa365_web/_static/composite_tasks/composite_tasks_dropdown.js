@@ -462,6 +462,7 @@
     ["RefillCondimentStation", ["pnp", "door_open"]],
     ["RestockSinkSupplies", ["pnp", "drawer_open"]],
     ["CleanMicrowave", ["pnp", "door_open"]],
+    ["PrepForSanitizing", ["pnp", "door_open"]],
     ["RinseCuttingBoard", ["lever_turn"]],
     ["LemonSeasoningFish", ["pnp", "door_open"]],
     ["DeliverStraw", ["pnp", "drawer_open"]],
