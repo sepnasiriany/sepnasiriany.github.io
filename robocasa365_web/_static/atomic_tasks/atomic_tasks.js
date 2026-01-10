@@ -352,7 +352,10 @@
 
     const title = document.createElement("div");
     title.className = "rc-video-modal-title";
-    title.textContent = "";
+    const titleCode = document.createElement("code");
+    titleCode.className = "rc-video-modal-title-code";
+    titleCode.textContent = "";
+    title.appendChild(titleCode);
 
     const video = document.createElement("video");
     video.className = "rc-video-modal-player";
@@ -367,7 +370,6 @@
     const instructionText = document.createElement("span");
     instructionText.className = "rc-video-modal-instruction-text";
     instruction.appendChild(instructionLabel);
-    instruction.appendChild(document.createTextNode(" "));
     instruction.appendChild(instructionText);
 
     const error = document.createElement("div");
@@ -388,7 +390,7 @@
         loadTimeout = null;
       }
       hasLoadedMetadata = false;
-      title.textContent = "";
+      titleCode.textContent = "";
       instruction.hidden = true;
       instructionLabel.textContent = "";
       instructionText.textContent = "";
@@ -420,13 +422,14 @@
       document.body.classList.add("rc-modal-open");
       error.hidden = true;
       error.textContent = "";
-      title.textContent = taskName ? `${taskName}` : "";
+      titleCode.textContent = taskName ? `${taskName}` : "";
 
       const tName = (taskName || "").trim();
       const tDesc = (taskDescription || "").trim();
       if (tDesc) {
         instruction.hidden = false;
-        instructionLabel.textContent = tName ? `${tName}:` : "";
+        // Title already shows task name; bottom should only show the description.
+        instructionLabel.textContent = "";
         // description may contain inline HTML (italics for variables); render as-is
         instructionText.innerHTML = tDesc;
       } else {
@@ -575,8 +578,12 @@
     catLabel.setAttribute("for", "rc-atomic-fixture-select");
     const catSelect = document.createElement("select");
     catSelect.id = "rc-atomic-fixture-select";
+    // Enable :invalid styling for placeholder text
+    catSelect.required = true;
     const optAll = document.createElement("option");
     optAll.value = "";
+    optAll.disabled = true;
+    optAll.selected = true;
     optAll.textContent = "Select a skill…";
     catSelect.appendChild(optAll);
     catWrap.appendChild(catLabel);
