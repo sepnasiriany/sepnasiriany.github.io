@@ -230,12 +230,6 @@ html[data-theme="dark"] body.rc-composite-tasks {
   color-scheme: dark;
 }
 
-/* Prevent flash of the raw (pre-JS) tables on refresh.
-   We hide the per-activity sections until JS finishes transforming them into accordions. */
-body.rc-composite-tasks:not(.rc-composite-ready) section#composite-tasks > section[id] {
-  visibility: hidden;
-}
-
 .rc-activity-selector {
   display: flex;
   align-items: center;
@@ -247,6 +241,12 @@ body.rc-composite-tasks:not(.rc-composite-ready) section#composite-tasks > secti
   border-radius: 0.5rem;
   background: #f8fafc;
   flex-wrap: wrap;
+}
+
+/* If the page ships with the old Sphinx tables, hide them entirely.
+   The JS now renders the full UI from JSON into #rc-composite-tasks-root. */
+body.rc-composite-static section#composite-tasks > section[id] {
+  display: none;
 }
 
 /* Match the table header font (Task / Description / Skills Involved / ...) */
@@ -903,38 +903,68 @@ details.rc-activity > summary {
 
 /* Task link color matches meta-category */
 body.rc-composite-tasks details.rc-activity[data-meta-category="food prep"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="food prep"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="food prep"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="food prep"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #6d28d9;
 }
 
 body.rc-composite-tasks details.rc-activity[data-meta-category="cooking"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="cooking"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="cooking"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="cooking"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #1d4ed8;
 }
 
 body.rc-composite-tasks details.rc-activity[data-meta-category="beverage preparation"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="beverage preparation"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="beverage preparation"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="beverage preparation"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #c2410c;
 }
 
 body.rc-composite-tasks details.rc-activity[data-meta-category="organizing and storage"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="organizing and storage"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="organizing and storage"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="organizing and storage"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #15803d;
 }
 
 body.rc-composite-tasks details.rc-activity[data-meta-category="serving"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="serving"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="serving"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="serving"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #be185d;
 }
 
 body.rc-composite-tasks details.rc-activity[data-meta-category="cleaning and sanitizing"] .rc-activity-body table.docutils tbody td:nth-child(1) a,
-body.rc-composite-tasks details.rc-activity[data-meta-category="cleaning and sanitizing"] .rc-activity-body table.docutils tbody td:nth-child(1) a code {
+body.rc-composite-tasks details.rc-activity[data-meta-category="cleaning and sanitizing"] .rc-activity-body table.docutils tbody td:nth-child(1) a code,
+body.rc-composite-tasks details.rc-activity[data-meta-category="cleaning and sanitizing"] .rc-activity-body table.docutils tbody td:nth-child(1) > code {
   color: #a16207;
+}
+
+/* JSON-rendered tables: make <code> look like a styled task label, not an inline-code chip */
+body.rc-composite-tasks details.rc-activity .rc-activity-body table.docutils tbody td:nth-child(1) > code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-weight: 700;
+}
+
+/* Ensure Task + Description align like the transformed tables */
+body.rc-composite-tasks .rc-activity-body table.docutils th,
+body.rc-composite-tasks .rc-activity-body table.docutils td {
+  text-align: left;
 }
 
 body.rc-composite-tasks details.rc-activity .rc-activity-body table.docutils tbody td:nth-child(1) a:hover,
 body.rc-composite-tasks details.rc-activity .rc-activity-body table.docutils tbody td:nth-child(1) a:hover code {
   text-decoration-thickness: 2px;
+}
+
+/* Prevent "broken" underlines on some glyphs (g, y, p, etc).
+   Browsers may enable underline skip-ink by default, which creates gaps. */
+body.rc-composite-tasks details.rc-activity .rc-activity-body table.docutils tbody td:nth-child(1) a,
+body.rc-datasets-overview #rc-datasets-atomic-seen tbody td:first-child a,
+body.rc-datasets-overview #rc-datasets-composite-seen tbody td:first-child a,
+body.rc-datasets-overview #rc-datasets-composite-unseen tbody td:first-child a {
+  text-decoration-skip-ink: none;
+  -webkit-text-decoration-skip: none;
 }
 
 /* iMessage-style video popup (match Atomic Tasks) */
