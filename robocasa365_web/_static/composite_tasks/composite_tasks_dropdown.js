@@ -1746,6 +1746,10 @@
       sec.parentNode.replaceChild(details, sec);
     }
 
+    // Fill the intro blurb activity count (if present)
+    const activityCountEl = content.querySelector("#rc-composite-activity-count");
+    if (activityCountEl) activityCountEl.textContent = String(activities.length);
+
     // Convert "Class File" column into a link on the Task name, then remove the column
     for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
       const table = d.querySelector("table");
@@ -3160,12 +3164,18 @@
     applyFilters();
     applyShowAllState();
 
-    // Put selector under the page title (h1) if present
-    const titleH1 = content.querySelector("h1");
-    if (titleH1 && titleH1.parentNode) {
-      titleH1.insertAdjacentElement("afterend", selectorWrap);
+    // Put selector under the page title, but BELOW the intro blurb if present
+    const introSpan = content.querySelector("#rc-composite-activity-count");
+    const introP = introSpan ? introSpan.closest("p") : null;
+    if (introP && introP.parentNode) {
+      introP.insertAdjacentElement("afterend", selectorWrap);
     } else {
-      content.insertAdjacentElement("afterbegin", selectorWrap);
+      const titleH1 = content.querySelector("h1");
+      if (titleH1 && titleH1.parentNode) {
+        titleH1.insertAdjacentElement("afterend", selectorWrap);
+      } else {
+        content.insertAdjacentElement("afterbegin", selectorWrap);
+      }
     }
 
     ensureBackToTopButton();
