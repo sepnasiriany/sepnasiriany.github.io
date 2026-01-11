@@ -230,6 +230,12 @@ html[data-theme="dark"] body.rc-composite-tasks {
   color-scheme: dark;
 }
 
+/* Prevent flash of the raw (pre-JS) tables on refresh.
+   We hide the per-activity sections until JS finishes transforming them into accordions. */
+body.rc-composite-tasks:not(.rc-composite-ready) section#composite-tasks > section[id] {
+  visibility: hidden;
+}
+
 .rc-activity-selector {
   display: flex;
   align-items: center;

@@ -1668,20 +1668,30 @@
 
     // Page-scoped styling hooks
     document.body.classList.add("rc-composite-tasks");
+    document.body.classList.remove("rc-composite-ready");
 
     // Sphinx Book Theme main content wrapper
     const content =
       document.querySelector("main .bd-article") ||
       document.querySelector("main") ||
       document.body;
-    if (!content) return;
+    if (!content) {
+      document.body.classList.add("rc-composite-ready");
+      return;
+    }
 
     // Activities are sections nested under the main "Composite Tasks" section.
     const rootSection = content.querySelector("section#composite-tasks");
-    if (!rootSection) return;
+    if (!rootSection) {
+      document.body.classList.add("rc-composite-ready");
+      return;
+    }
 
     const activitySections = Array.from(rootSection.querySelectorAll(":scope > section[id]"));
-    if (activitySections.length === 0) return;
+    if (activitySections.length === 0) {
+      document.body.classList.add("rc-composite-ready");
+      return;
+    }
 
     const activities = [];
 
@@ -3179,6 +3189,9 @@
     }
 
     ensureBackToTopButton();
+
+    // Reveal content (removes the pre-JS flash of raw tables)
+    document.body.classList.add("rc-composite-ready");
   });
 
   // Datasets overview page: make target task tables match the Composite Tasks look.
