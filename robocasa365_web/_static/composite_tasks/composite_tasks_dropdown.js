@@ -116,6 +116,39 @@
       .join(" ");
   }
 
+  function formatCompositeDescriptionInPlace(rootEl) {
+    // Replace "{left/right}" -> "[<em>left/right</em>]" (square brackets + italic options)
+    if (!rootEl) return;
+    const textNodes = [];
+    const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
+
+    const re = /\\{([^}]+)\\}/g;
+    for (const node of textNodes) {
+      const s = node.nodeValue || "";
+      if (!s.includes("{")) continue;
+      re.lastIndex = 0;
+
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      let m;
+      while ((m = re.exec(s))) {
+        const start = m.index;
+        const end = start + m[0].length;
+        if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
+        frag.appendChild(document.createTextNode("["));
+        const em = document.createElement("em");
+        em.textContent = m[1];
+        frag.appendChild(em);
+        frag.appendChild(document.createTextNode("]"));
+        last = end;
+      }
+      if (last === 0) continue; // no matches
+      if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    }
+  }
+
   function folderTitleFromMultiStageFolder(folder) {
     // "adding_ice_to_beverages" -> "Adding Ice to Beverages"
     if (folder === "baking_cookies_cakes") return "Baking Cookies and Cakes";
@@ -2047,6 +2080,7 @@
             }
             const tdDesc = document.createElement("td");
             tdDesc.textContent = t.description || "";
+            formatCompositeDescriptionInPlace(tdDesc);
             tdTask.style.textAlign = "left";
             tdDesc.style.textAlign = "left";
             tr.appendChild(tdTask);
@@ -2142,6 +2176,20 @@
     for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
       const table = d.querySelector("table");
       if (table) linkifyTaskAndRemoveClassFile(table);
+    }
+
+    // Replace templated variable braces in descriptions:
+    // "{left/right}" -> "[<em>left/right</em>]"
+    for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
+      const table = d.querySelector("table");
+      if (!table) continue;
+      const ths = Array.from(table.querySelectorAll("thead tr th")).map((th) => (th.textContent || "").trim());
+      const descIdx = ths.indexOf("Description");
+      const idx = descIdx >= 0 ? descIdx : 1;
+      for (const tr of Array.from(table.querySelectorAll("tbody tr"))) {
+        const td = tr.children?.[idx];
+        if (td) formatCompositeDescriptionInPlace(td);
+      }
     }
 
     // After accordions exist, enrich tables with attributes if available
@@ -3765,6 +3813,7 @@
 
         const tdDesc = document.createElement("td");
         tdDesc.textContent = info.description || "";
+        formatCompositeDescriptionInPlace(tdDesc);
 
         tr.appendChild(tdTask);
         tr.appendChild(tdDesc);

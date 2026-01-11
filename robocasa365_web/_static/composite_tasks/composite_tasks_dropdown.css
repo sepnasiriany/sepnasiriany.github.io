@@ -1,5 +1,46 @@
 /* Composite Tasks dropdown styling */
 
+/* Benchmark tables (e.g., Multi-Task Learning) should match Atomic/Composite table look */
+table.rc-benchmark-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.rc-benchmark-table th,
+table.rc-benchmark-table td {
+  border-bottom: 1px solid var(--pst-color-border, #e0e0e0);
+  padding: 0.55rem 0.6rem;
+  vertical-align: top;
+  background: transparent;
+}
+
+table.rc-benchmark-table th {
+  text-align: left;
+  font-weight: 800;
+  background: rgba(127, 127, 127, 0.12);
+}
+
+table.rc-benchmark-table tbody tr:hover td {
+  background: var(--pst-color-surface-hover, rgba(0, 0, 0, 0.03));
+}
+
+/* Split label coloring (match existing task tag colors) */
+table.rc-benchmark-table code.rc-benchmark-split {
+  font-weight: 800;
+}
+
+table.rc-benchmark-table code.rc-benchmark-atomic {
+  color: #ef4444; /* match Atomic Seen tag */
+}
+
+table.rc-benchmark-table code.rc-benchmark-comp-seen {
+  color: #3e00ff; /* match Composite-Seen tag */
+}
+
+table.rc-benchmark-table code.rc-benchmark-comp-unseen {
+  color: #16a34a; /* match Composite-Unseen tag */
+}
+
 /* Per-task tags shown under task names */
 .rc-task-tags {
   margin-top: 0.36rem;

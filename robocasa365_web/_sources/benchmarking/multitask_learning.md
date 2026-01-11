@@ -56,10 +56,51 @@ python gr00t/eval/get_eval_stats.py \
 
 Here is a summary of our benchmarking results. We have released the model checkpoints for reference.
 
-| **Task Split**          | **Diffusion Policy** | **π₀** | **GR00T N1.5** |
-|-------------------------|----------------------|--------|----------------|
-| `Atomic`                | 15.7                 | 36.3   | **43.0**       |
-| `Composite-Seen`        | 0.2                  | 5.2    | **9.6**        |
-| `Composite-Unseen`      | 1.25                 | 0.7    | **4.4**        |
-| **Average**             | 6.1                  | 15.0   | **20.0**       |
-| **Model Checkpoint**             | [TODO Link]()                  | [TODO Link]()   | [TODO Link]()       |
+<table class="docutils rc-benchmark-table">
+  <thead>
+    <tr>
+      <th><strong>Task Split</strong></th>
+      <th><strong>Diffusion Policy</strong></th>
+      <th><strong>π₀</strong></th>
+      <th><strong>π₀.₅</strong></th>
+      <th><strong>GR00T N1.5</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td>15.7%</td>
+      <td>36.3%</td>
+      <td>48.0%</td>
+      <td><strong>43.0%</strong></td>
+    </tr>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td>0.2%</td>
+      <td>5.2%</td>
+      <td>16.5%</td>
+      <td><strong>9.6%</strong></td>
+    </tr>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td>1.25%</td>
+      <td>0.7%</td>
+      <td>5.0%</td>
+      <td><strong>4.4%</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Average</strong></td>
+      <td>6.1%</td>
+      <td>15.0%</td>
+      <td>23.2%</td>
+      <td><strong>20.0%</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Model Checkpoint</strong></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+    </tr>
+  </tbody>
+</table>
