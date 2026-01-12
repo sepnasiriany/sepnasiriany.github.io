@@ -66,7 +66,7 @@ For each task, we provide **500 human demonstrations** collected via teleoperati
 We split these datasets into three groups:
 * **Atomic-Seen** (18 tasks): 18 atomic tasks, with all tasks also represented in pretraining datasets.
 * **Composite-Seen** (16 tasks): 16 composite tasks, with all tasks also represented in pretraining datasets.
-* **Composite-Unseen** (16 tasks): 16 composite tasks, only seen in post-training datasets and not in pre-training datasets.
+* **Composite-Unseen** (16 tasks): 16 composite tasks, only seen in post-training datasets and not in pretraining datasets.
 
 
 ### Atomic-Seen Tasks
