@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Multi-Task Learning &#8212; RoboCasa 1.0 documentation</title>
+    <title>Multi-Task Learning &#8212; RoboCasa 0.0 documentation</title>
   
   
   
@@ -28,29 +28,29 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b9a5b07b" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3a25ba87" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=93858ebf" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=1d495b9f" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=a681ed88"></script>
+    <script src="../_static/documentation_options.js?v=5a5bd864"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/multitask_learning';</script>
-    <script src="../_static/composite_tasks/composite_task_attributes.js?v=35e92e8c"></script>
+    <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=0eeaf6d8"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=b18c4374"></script>
     <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
     <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
     <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js?v=c28cf0af"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=684f982e"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Foundation Model Learning" href="foundation_model_learning.html" />
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
-    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -192,6 +192,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
@@ -372,13 +373,31 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pi0">pi0</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t-n1-5">GR00T N1.5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">guidelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">report evaluation results</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openpi">Openpi</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guideline">guideline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">report evaluation results</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">guideline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">report evaluation results</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -392,106 +411,170 @@ document.write(`
                   
   <section id="multi-task-learning">
 <h1>Multi-Task Learning<a class="headerlink" href="#multi-task-learning" title="Link to this heading">#</a></h1>
-<p>In the multi-task learning benchmark, we study training on multitask pretraining datasets.
-We do policy learning on the <a class="reference external" href="../datasets/pretraining_posttraining_datasets.html#human-datasets">Human Pretraining Datasets</a>, which comprise 482 hours of data across 300 tasks (100 task demonstrations per task).</p>
+<p>In the multi-task learning benchmark, we study training on multi-task pretraining datasets.
+We do policy learning on the <a class="reference external" href="../datasets/pretraining_posttraining_datasets.html#human-datasets">Human Pretraining Datasets</a>, which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
+For each task, we provide 100 task demonstrations per task, resulting in <strong>482 hours of total data</strong>.</p>
+<section id="benchmark-results-and-checkpoints">
+<h2>Benchmark results and checkpoints<a class="headerlink" href="#benchmark-results-and-checkpoints" title="Link to this heading">#</a></h2>
+<p>We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N1.5. Here is a summary of our benchmarking results. We share the model checkpoints for reference.</p>
+<table class="docutils rc-benchmark-table">
+  <thead>
+    <tr>
+      <th><strong>Task Split</strong></th>
+      <th><strong>Diffusion Policy</strong></th>
+      <th><strong>π₀</strong></th>
+      <th><strong>π₀<span class="rc-pi-subdot">.</span>₅</strong></th>
+      <th><strong>GR00T N1.5</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td>15.7%</td>
+      <td>34.6%</td>
+      <td>48.0%</td>
+      <td>43.0%</td>
+    </tr>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td>0.2%</td>
+      <td>6.1%</td>
+      <td>16.5%</td>
+      <td>9.6%</td>
+    </tr>
+    <tr>
+      <td><code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td>1.25%</td>
+      <td>1.1%</td>
+      <td>5.0%</td>
+      <td>4.4%</td>
+    </tr>
+    <tr>
+      <td><strong>Average</strong></td>
+      <td>6.1%</td>
+      <td>14.8%</td>
+      <td>24.2%</td>
+      <td>20.0%</td>
+    </tr>
+    <tr>
+      <td><strong>Model Checkpoint</strong></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+      <td><a href="">TODO Link</a></td>
+    </tr>
+  </tbody>
+</table></section>
 <section id="benchmark-instructions">
 <h2>Benchmark instructions<a class="headerlink" href="#benchmark-instructions" title="Link to this heading">#</a></h2>
-<p>We provide support for benchmarking across Diffusion Policy, pi0, and GR00T N1.5:</p>
 <section id="diffusion-policy">
 <h3>Diffusion Policy<a class="headerlink" href="#diffusion-policy" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># train model</span>
-<span class="n">HYDRA_FULL_ERROR</span><span class="o">=</span><span class="mi">1</span> <span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span> \
+<section id="guidelines">
+<h4>guidelines<a class="headerlink" href="#guidelines" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>We use a batch size of TODO on a TODO gpu</p></li>
+<li><p>We train and evaluate the model after TODO steps</p></li>
+</ul>
+</section>
+<section id="train-model">
+<h4>train model<a class="headerlink" href="#train-model" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HYDRA_FULL_ERROR</span><span class="o">=</span><span class="mi">1</span> <span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">train_diffusion_transformer_xl_bs192</span> \
 <span class="n">task</span><span class="o">=</span><span class="n">robocasa</span><span class="o">/</span><span class="n">pretrain</span><span class="o">/</span><span class="n">pretrain300</span>
-
-<span class="c1"># evaluate model</span>
-<span class="n">TODO</span>
-
-<span class="c1"># report statistics</span>
-<span class="n">TODO</span>
 </pre></div>
 </div>
 </section>
-<section id="pi0">
-<h3>pi0<a class="headerlink" href="#pi0" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># train model</span>
-<span class="n">XLA_PYTHON_CLIENT_MEM_FRACTION</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
+<section id="evaluate-model">
+<h4>evaluate model<a class="headerlink" href="#evaluate-model" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">eval_robocasa</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">checkpoint</span> <span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">train</span>
+</pre></div>
+</div>
+</section>
+<section id="report-evaluation-results">
+<h4>report evaluation results<a class="headerlink" href="#report-evaluation-results" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">diffusion_policy</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="nb">dir</span> <span class="o">&lt;</span><span class="n">outputs</span><span class="o">-</span><span class="nb">dir</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="openpi">
+<h3>Openpi<a class="headerlink" href="#openpi" title="Link to this heading">#</a></h3>
+<section id="guideline">
+<h4>guideline<a class="headerlink" href="#guideline" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>We use a batch size of TODO on a TODO gpu</p></li>
+<li><p>We train and evaluate the model after TODO steps</p></li>
+</ul>
+</section>
+<section id="id1">
+<h4>train model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XLA_PYTHON_CLIENT_MEM_FRACTION</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span> \
 <span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> \
 <span class="o">--</span><span class="n">overwrite</span>
-
-<span class="c1"># evaluate model</span>
-<span class="n">TODO</span>
-
-<span class="c1"># report statistics</span>
-<span class="n">TODO</span>
 </pre></div>
 </div>
 </section>
-<section id="gr00t-n1-5">
-<h3>GR00T N1.5<a class="headerlink" href="#gr00t-n1-5" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># train model</span>
-<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
+<section id="id2">
+<h4>evaluate model<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># part a: start inference server</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">serve_policy</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">8000</span> <span class="n">policy</span><span class="p">:</span><span class="n">checkpoint</span> \
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">posttrain_atomic_seen</span> \
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">dir</span><span class="o">=&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">checkpoint</span><span class="o">&gt;</span>
+
+<span class="c1"># part b: run evals on server</span>
+<span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">port</span> <span class="mi">8000</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_soup</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">checkpoint</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h4>report evaluation results<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TODO</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gr00t">
+<h3>GR00T<a class="headerlink" href="#gr00t" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h4>guideline<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>We use a batch size of 128 on a single NVIDIA GH200 gpu</p></li>
+<li><p>We train and evaluate the model after TODO steps</p></li>
+</ul>
+</section>
+<section id="id5">
+<h4>train model<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span><span class="o">&gt;</span> \
 <span class="o">--</span><span class="n">dataset_soup</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span>
-
-<span class="c1"># evaluate model</span>
-<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>evaluate model<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span><span class="o">&gt;/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span><span class="o">/</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
-
-<span class="c1"># report statistics</span>
-<span class="n">python</span> <span class="n">gr00t</span><span class="o">/</span><span class="nb">eval</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4>report evaluation results<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">gr00t</span><span class="o">/</span><span class="nb">eval</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span><span class="o">/</span>
 </pre></div>
 </div>
 </section>
 </section>
-<section id="benchmark-results-and-checkpoints">
-<h2>Benchmark results and checkpoints<a class="headerlink" href="#benchmark-results-and-checkpoints" title="Link to this heading">#</a></h2>
-<p>Here is a summary of our benchmarking results. We have released the model checkpoints for reference.</p>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th><strong>Task Split</strong></th>
-<th><strong>Diffusion Policy</strong></th>
-<th><strong>π₀</strong></th>
-<th><strong>GR00T N1.5</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Atomic</code></td>
-<td>15.7</td>
-<td>36.3</td>
-<td><strong>43.0</strong></td>
-</tr>
-<tr>
-<td><code>Composite-Seen</code></td>
-<td>0.2</td>
-<td>5.2</td>
-<td><strong>9.6</strong></td>
-</tr>
-<tr>
-<td><code>Composite-Unseen</code></td>
-<td>1.25</td>
-<td>0.7</td>
-<td><strong>4.4</strong></td>
-</tr>
-<tr>
-<td><strong>Average</strong></td>
-<td>6.1</td>
-<td>15.0</td>
-<td><strong>20.0</strong></td>
-</tr>
-<tr>
-<td><strong>Model Checkpoint</strong></td>
-<td><a href="">TODO Link</a></td>
-<td><a href="">TODO Link</a></td>
-<td><a href="">TODO Link</a></td>
-</tr>
-</tbody>
-</table></section>
+</section>
 </section>
 
 
@@ -539,13 +622,31 @@ We do policy learning on the <a class="reference external" href="../datasets/pre
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pi0">pi0</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t-n1-5">GR00T N1.5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">guidelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">report evaluation results</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#openpi">Openpi</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guideline">guideline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">report evaluation results</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">guideline</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">report evaluation results</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

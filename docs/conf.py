@@ -17,7 +17,11 @@ import importlib.util
 sys.path.insert(0, os.path.abspath("."))
 
 
-import robocasa
+try:
+    import robocasa  # type: ignore
+except Exception:  # noqa: BLE001
+    # Docs build should not require full RoboCasa runtime deps (e.g. gymnasium).
+    robocasa = None
 
 
 # -- General configuration ---------------------------------------------------

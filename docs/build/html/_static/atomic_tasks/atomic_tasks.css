@@ -13,6 +13,69 @@ html[data-theme="dark"] body.rc-atomic-tasks {
   color-scheme: dark;
 }
 
+/* Atomic Tasks: theme-aware surfaces.
+   PyData's --pst-color-surface stays fairly light even in dark mode; we want
+   the Atomic Tasks UI to actually darken with the theme. */
+body.rc-atomic-tasks {
+  /* Match Composite Tasks controls-card light gray */
+  --rc-atomic-surface: #f8fafc;
+  --rc-atomic-surface-2: var(--pst-color-surface, #ffffff);
+  --rc-atomic-border: var(--pst-color-border, #e0e0e0);
+  --rc-atomic-hover: var(--pst-color-surface-hover, rgba(0, 0, 0, 0.03));
+  --rc-atomic-text: var(--pst-color-text-base, #111827);
+  --rc-atomic-muted: var(--pst-color-text-muted, #555);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks {
+  /* Darken the cards/controls/tables to match the dark theme page background */
+  --rc-atomic-surface: rgba(255, 255, 255, 0.05);
+  --rc-atomic-surface-2: rgba(255, 255, 255, 0.035);
+  --rc-atomic-border: rgba(255, 255, 255, 0.14);
+  --rc-atomic-hover: rgba(255, 255, 255, 0.08);
+  --rc-atomic-text: rgba(255, 255, 255, 0.92);
+  --rc-atomic-muted: rgba(255, 255, 255, 0.70);
+  /* Softer link color in dark mode (avoid harsh neon/purple visited links) */
+  --rc-atomic-link: rgba(147, 197, 253, 0.88); /* blue-300-ish */
+  --rc-atomic-link-hover: rgba(191, 219, 254, 0.96); /* blue-200-ish */
+}
+
+/* Atomic Tasks: Horizon filter uses composite "length" dropdown classes */
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-dropdown-btn {
+  background: var(--rc-atomic-surface-2);
+  border-color: var(--rc-atomic-border);
+  color: var(--rc-atomic-text);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-dropdown,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-header {
+  /* Make the popup solid (not translucent) */
+  background: #1a202c;
+  border-color: var(--rc-atomic-border);
+}
+
+/* Atomic Tasks: Target Tasks dropdown should match Horizon popup */
+html[data-theme="dark"] body.rc-atomic-tasks .rc-task-attr-dropdown {
+  background: #1a202c;
+  border-color: var(--rc-atomic-border);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-task-attr-dropdown .rc-task-attr-item:hover,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-task-attr-dropdown .rc-task-attr-item:has(input:focus-visible) {
+  background: var(--rc-atomic-hover);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-task-attr-dropdown .rc-task-attr-count {
+  color: var(--rc-atomic-muted);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-item:hover {
+  background: var(--rc-atomic-hover);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-item-count {
+  color: var(--rc-atomic-muted);
+}
+
 /* Hide the right-side "Contents" (secondary TOC) on Atomic Tasks page */
 body.rc-atomic-tasks .bd-sidebar-secondary,
 body.rc-atomic-tasks .sidebar-toggle.secondary-toggle,
@@ -45,9 +108,9 @@ body.rc-atomic-tasks .rc-back-to-top {
   width: 2.6rem;
   height: 2.6rem;
   border-radius: 999px;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
-  color: var(--pst-color-text-base, #111827);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface);
+  color: var(--rc-atomic-text);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   display: inline-flex;
   align-items: center;
@@ -102,10 +165,9 @@ body.rc-atomic-tasks .rc-task-tag-atomic-seen {
   gap: 0.9rem;
   margin: 0.6rem 0 0.9rem 0;
   padding: 0.75rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 0.5rem;
-  /* Match Composite background tint */
-  background: #f8fafc;
+  background: var(--rc-atomic-surface);
 }
 
 .rc-atomic-control {
@@ -124,12 +186,34 @@ body.rc-atomic-tasks .rc-task-tag-atomic-seen {
   min-width: 320px;
 }
 
+.rc-atomic-sort {
+  flex: 0 0 auto;
+}
+
+.rc-atomic-sort select {
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
+}
+
 .rc-atomic-fixture-select select {
   width: 100%;
   padding: 0.35rem 0.5rem;
   border-radius: 0.4rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
+}
+
+/* Placeholder (matches input placeholder “shadow” feel) */
+.rc-atomic-fixture-select select:invalid {
+  color: var(--rc-atomic-muted);
+}
+
+.rc-atomic-fixture-select select:valid {
+  color: var(--rc-atomic-text);
 }
 
 .rc-atomic-search {
@@ -146,8 +230,9 @@ body.rc-atomic-tasks .rc-task-tag-atomic-seen {
   width: 100%;
   padding: 0.35rem 0.5rem;
   border-radius: 0.4rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
 }
 
 .rc-atomic-filter-horizon {
@@ -165,8 +250,9 @@ body.rc-atomic-tasks .rc-filter-target-tasks {
 .rc-atomic-horizon-dropdown-btn {
   padding: 0.3rem 0.55rem;
   border-radius: 0.4rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
   cursor: pointer;
   font-weight: 600;
   font-size: 0.92em; /* match .rc-task-attr-dropdown-btn sizing */
@@ -176,8 +262,9 @@ body.rc-atomic-tasks .rc-filter-target-tasks {
 body.rc-atomic-tasks .rc-filter-target-tasks .rc-task-attr-dropdown-btn {
   padding: 0.3rem 0.55rem;
   border-radius: 0.4rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
   cursor: pointer;
   font-weight: 600;
   min-width: 0; /* override composite default (155px) */
@@ -197,16 +284,16 @@ body.rc-atomic-tasks .rc-atomic-horizon-dropdown {
   max-height: 60vh;
   overflow: auto;
   padding: 0.15rem 0.32rem 0.15rem 0.55rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 0.6rem;
-  background: var(--pst-color-on-background, #fff);
+  background: var(--rc-atomic-surface);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
   text-align: left;
 }
 
 .rc-atomic-horizon-header {
   padding: 0.15rem 0.25rem 0.35rem 0.25rem;
-  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  border-bottom: 1px solid var(--rc-atomic-border);
   margin-bottom: 0.25rem;
 }
 
@@ -230,15 +317,14 @@ body.rc-atomic-tasks .rc-atomic-horizon-dropdown {
 }
 
 .rc-atomic-horizon-item-count {
-  color: rgba(17, 24, 39, 0.65);
+  color: var(--rc-atomic-muted);
   font-weight: 600;
   font-size: 0.85rem;
   white-space: nowrap;
 }
 
 .rc-atomic-count {
-  flex-basis: 100%;
-  color: rgba(17, 24, 39, 0.7);
+  color: var(--rc-atomic-muted);
   font-weight: 500;
 }
 
@@ -250,13 +336,23 @@ body.rc-atomic-tasks .rc-atomic-horizon-dropdown {
   gap: 0.75rem;
 }
 
+.rc-atomic-controls-footer .rc-atomic-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.rc-atomic-controls-footer .rc-atomic-count {
+  margin-left: 0.5rem; /* sits just to the right of Sort dropdown */
+}
+
 /* Reset button: match Composite Tasks */
 body.rc-atomic-tasks .rc-reset-filters-btn {
   padding: 0.3rem 0.55rem;
   border-radius: 0.4rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--pst-color-text-base, #111);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
   font-weight: 600;
   line-height: 1.1;
   cursor: pointer;
@@ -264,7 +360,7 @@ body.rc-atomic-tasks .rc-reset-filters-btn {
 }
 
 body.rc-atomic-tasks .rc-reset-filters-btn:hover {
-  background: rgba(255, 255, 255, 1);
+  background: var(--rc-atomic-hover);
 }
 
 /* Suggestions dropdown */
@@ -273,8 +369,8 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
   top: calc(100% + 0.3rem);
   left: 0;
   right: 0;
-  background: #ffffff;
-  border: 1px solid rgba(17, 24, 39, 0.12);
+  background: var(--rc-atomic-surface);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 0.7rem;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
   overflow: hidden;
@@ -296,7 +392,7 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 
 .rc-atomic-task-suggest-item:hover,
 .rc-atomic-task-suggest-item.rc-active {
-  background: rgba(37, 99, 235, 0.08);
+  background: var(--rc-atomic-hover);
 }
 
 .rc-atomic-task-suggest-name {
@@ -304,7 +400,7 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 }
 
 .rc-atomic-task-suggest-meta {
-  color: rgba(17, 24, 39, 0.65);
+  color: var(--rc-atomic-muted);
   font-size: 0.86rem;
   white-space: nowrap;
 }
@@ -317,10 +413,9 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 }
 
 .rc-atomic-fixture {
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 0.7rem;
-  /* Match Composite background tint */
-  background: #f8fafc;
+  background: var(--rc-atomic-surface);
   overflow: hidden;
 }
 
@@ -329,7 +424,7 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 0.85rem;
-  background: rgba(17, 24, 39, 0.03);
+  background: var(--rc-atomic-hover);
 }
 
 .rc-atomic-fixture-title {
@@ -337,8 +432,8 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 }
 
 .rc-atomic-fixture-badge {
-  background: rgba(17, 24, 39, 0.08);
-  color: rgba(17, 24, 39, 0.8);
+  background: rgba(127, 127, 127, 0.16);
+  color: var(--rc-atomic-text);
   border-radius: 999px;
   padding: 0.18rem 0.5rem;
   font-size: 0.78rem;
@@ -347,7 +442,13 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 
 .rc-atomic-fixture-body {
   padding: 0.75rem 0.85rem 0.85rem 0.85rem;
-  background: #f8fafc;
+  background: transparent;
+}
+
+.rc-atomic-empty {
+  color: var(--rc-atomic-muted);
+  font-weight: 600;
+  padding: 0.35rem 0.1rem;
 }
 
 .rc-atomic-table {
@@ -370,25 +471,40 @@ body.rc-atomic-tasks .rc-reset-filters-btn:hover {
 
 .rc-atomic-table th,
 .rc-atomic-table td {
-  border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+  border-bottom: 1px solid var(--rc-atomic-border);
   padding: 0.55rem 0.6rem;
   vertical-align: top;
-  background: #f8fafc;
+  background: transparent;
 }
 
 .rc-atomic-table th {
   text-align: left;
   font-weight: 800;
-  color: rgba(17, 24, 39, 0.85);
-  background: rgba(17, 24, 39, 0.03);
+  color: var(--rc-atomic-text);
+  background: rgba(127, 127, 127, 0.12);
 }
 
 .rc-atomic-table tbody tr:hover td {
-  background: rgba(37, 99, 235, 0.04);
+  background: var(--rc-atomic-hover);
 }
 
 .rc-atomic-task code {
   font-weight: 700;
+}
+
+/* Dark mode: soften task link color (including visited) */
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:visited,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a code,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:visited code {
+  color: var(--rc-atomic-link);
+}
+
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:hover,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:focus-visible,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:hover code,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-atomic-task a:focus-visible code {
+  color: var(--rc-atomic-link-hover);
 }
 
 /* Target task tag shown under task name (Atomic Tasks page) */
@@ -400,7 +516,7 @@ body.rc-atomic-tasks .rc-atomic-target-tagline {
 }
 
 .rc-atomic-desc {
-  color: rgba(17, 24, 39, 0.85);
+  color: var(--rc-atomic-text);
   line-height: 1.35;
 }
 
@@ -419,9 +535,9 @@ body.rc-atomic-tasks .rc-atomic-target-tagline {
 }
 
 .rc-atomic-video-btn {
-  background: #2563eb;
+  background: var(--pst-color-primary, #2563eb);
   color: #ffffff;
-  border: 1px solid rgba(17, 24, 39, 0.08);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 0.55rem;
   padding: 0.32rem 0.62rem;
   font-size: 0.85rem;
@@ -434,10 +550,11 @@ body.rc-atomic-tasks .rc-atomic-target-tagline {
 }
 
 /* Video modal (match Composite Tasks look) */
-.rc-video-modal-overlay {
+body.rc-atomic-tasks .rc-video-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  /* Make the backdrop clearly opaque enough (light mode was too transparent) */
+  background: rgba(0, 0, 0, 0.75);
   z-index: 2000;
   display: flex;
   align-items: center;
@@ -445,21 +562,30 @@ body.rc-atomic-tasks .rc-atomic-target-tagline {
   padding: 1.25rem;
 }
 
+html[data-theme="dark"] body.rc-atomic-tasks .rc-video-modal-overlay {
+  background: rgba(0, 0, 0, 0.88);
+}
+
 body.rc-modal-open {
   overflow: hidden;
 }
 
-.rc-video-modal {
+body.rc-atomic-tasks .rc-video-modal {
   position: relative;
   width: min(1297px, 95.76vw);
-  background: var(--pst-color-on-background, #fff);
-  border: 1px solid var(--pst-color-border, #e0e0e0);
+  background: var(--rc-atomic-surface);
+  border: 1px solid var(--rc-atomic-border);
   border-radius: 1rem;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
   padding: 0.75rem;
 }
 
-.rc-video-modal-header {
+/* Dark mode: make modal background solid (not translucent) */
+html[data-theme="dark"] body.rc-atomic-tasks .rc-video-modal {
+  background: #111827;
+}
+
+body.rc-atomic-tasks .rc-video-modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -467,7 +593,7 @@ body.rc-modal-open {
   margin-bottom: 0.4rem;
 }
 
-.rc-video-modal-player {
+body.rc-atomic-tasks .rc-video-modal-player {
   width: 100%;
   height: auto;
   border-radius: 0.75rem;
@@ -475,20 +601,20 @@ body.rc-modal-open {
   max-height: 80vh;
 }
 
-.rc-video-modal-instruction {
+body.rc-atomic-tasks .rc-video-modal-instruction {
   margin-top: 0.6rem;
   padding: 0.5rem 0.65rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: var(--pst-color-surface, #ffffff);
-  color: var(--pst-color-text-base, #111);
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-text);
 }
 
-.rc-video-modal-instruction-text {
+body.rc-atomic-tasks .rc-video-modal-instruction-text {
   font-weight: 500;
 }
 
-.rc-video-modal-error {
+body.rc-atomic-tasks .rc-video-modal-error {
   margin-top: 0.6rem;
   padding: 0.5rem 0.65rem;
   border-radius: 0.75rem;
@@ -498,27 +624,50 @@ body.rc-modal-open {
   font-weight: 600;
 }
 
-.rc-video-modal-close {
+body.rc-atomic-tasks .rc-video-modal-close {
   width: 2rem;
   height: 2rem;
   border-radius: 999px;
-  border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: rgba(255, 255, 255, 0.9);
-  font-size: 1.4rem;
+  border: 1px solid var(--rc-atomic-border);
+  background: var(--rc-atomic-surface-2);
+  color: var(--rc-atomic-muted);
+  font-size: 1.25rem;
   line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
 }
 
-.rc-video-modal-close:hover {
-  background: rgba(255, 255, 255, 1);
+body.rc-atomic-tasks .rc-video-modal-close:hover {
+  background: var(--rc-atomic-hover);
+  color: var(--rc-atomic-text);
+  transform: translateY(-1px);
+}
+
+body.rc-atomic-tasks .rc-video-modal-close:focus-visible {
+  outline: 2px solid var(--pst-color-primary, #2563eb);
+  outline-offset: 2px;
 }
 
 /* Slightly different title treatment on Atomic page (keeps it readable) */
-.rc-video-modal-title {
-  color: rgba(255, 255, 255, 0.92);
+body.rc-atomic-tasks .rc-video-modal-title {
+  color: var(--rc-atomic-text);
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Task name in modal header should use code-like font (font-wise) */
+body.rc-atomic-tasks .rc-video-modal-title-code {
+  font-family: var(--pst-font-family-monospace, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+  font-weight: 800;
+  color: inherit;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
