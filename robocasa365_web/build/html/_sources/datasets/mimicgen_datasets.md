@@ -1,1 +1,0 @@
-# MimicGen Datasets
