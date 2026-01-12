@@ -142,15 +142,15 @@ table.rc-benchmark-table code.rc-benchmark-split {
 }
 
 table.rc-benchmark-table code.rc-benchmark-atomic {
-  color: #ef4444; /* match Atomic Seen tag */
+  color: inherit; /* neutral */
 }
 
 table.rc-benchmark-table code.rc-benchmark-comp-seen {
-  color: #3e00ff; /* match Composite-Seen tag */
+  color: inherit; /* neutral */
 }
 
 table.rc-benchmark-table code.rc-benchmark-comp-unseen {
-  color: #16a34a; /* match Composite-Unseen tag */
+  color: inherit; /* neutral */
 }
 
 /* Per-task tags shown under task names */
