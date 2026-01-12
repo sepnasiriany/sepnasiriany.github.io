@@ -1170,7 +1170,7 @@
       const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
       for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
 
-      const re = /\\{([^}]+)\\}/g;
+      const re = /\{([^}]+)\}/g;
       for (const node of textNodes) {
         const s = node.nodeValue || "";
         if (!s.includes("{")) continue;

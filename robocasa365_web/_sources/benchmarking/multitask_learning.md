@@ -1,60 +1,12 @@
 # Multi-Task Learning
 
-In the multi-task learning benchmark, we study training on multitask pretraining datasets.
-We do policy learning on the [Human Pretraining Datasets](../datasets/pretraining_posttraining_datasets.html#human-datasets), which comprise 482 hours of data across 300 tasks (100 task demonstrations per task).
-
-## Benchmark instructions
-We provide support for benchmarking across Diffusion Policy, pi0, and GR00T N1.5:
-
-### Diffusion Policy
-```
-# train model
-HYDRA_FULL_ERROR=1 python train.py \
---config-name=train_diffusion_transformer_xl_bs192 \
-task=robocasa/pretrain/pretrain300
-
-# evaluate model
-TODO
-
-# report statistics
-TODO
-```
-
-### pi0
-```
-# train model
-XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
-<your-ds-soup> \
---exp-name=<your-exp-name> \
---overwrite
-
-# evaluate model
-TODO
-
-# report statistics
-TODO
-```
-
-### GR00T N1.5
-```
-# train model
-python scripts/gr00t_finetune.py \
---output-dir <your-output-dir> \
---dataset_soup <your-ds-soup>
-
-# evaluate model
-python scripts/run_eval.py \
---model_path <your-output-dir>/checkpoint-120000/ \
---split pretrain
-
-# report statistics
-python gr00t/eval/get_eval_stats.py \
---dir expdata/pretrain_human300/checkpoint-120000/
-```
+In the multi-task learning benchmark, we study training on multi-task pretraining datasets.
+We do policy learning on the [Human Pretraining Datasets](../datasets/pretraining_posttraining_datasets.html#human-datasets), which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
+For each task, we provide 100 task demonstrations per task, resulting in **482 hours of total data**.
 
 ## Benchmark results and checkpoints
 
-Here is a summary of our benchmarking results. We have released the model checkpoints for reference.
+We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N1.5. Here is a summary of our benchmarking results. We share the model checkpoints for reference.
 
 <table class="docutils rc-benchmark-table">
   <thead>
@@ -104,3 +56,92 @@ Here is a summary of our benchmarking results. We have released the model checkp
     </tr>
   </tbody>
 </table>
+
+
+## Benchmark instructions
+
+### Diffusion Policy
+
+#### guidelines
+* We use a batch size of TODO on a TODO gpu
+* We train and evaluate the model after TODO steps
+
+#### train model
+```
+HYDRA_FULL_ERROR=1 python train.py \
+--config-name=train_diffusion_transformer_xl_bs192 \
+task=robocasa/pretrain/pretrain300
+```
+
+#### evaluate model
+```
+python eval_robocasa.py \
+--checkpoint <checkpoint-path> \
+--split train
+```
+
+#### report evaluation results
+```
+python diffusion_policy/scripts/get_eval_stats.py \
+--dir <outputs-dir>
+```
+
+### Openpi
+
+#### guideline
+* We use a batch size of TODO on a TODO gpu
+* We train and evaluate the model after TODO steps
+
+#### train model
+```
+XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
+<your-ds-soup> \
+--exp-name=<your-exp-name> \
+--overwrite
+```
+
+#### evaluate model
+```
+# part a: start inference server
+python scripts/serve_policy.py \
+--port=8000 policy:checkpoint \
+--policy.config=posttrain_atomic_seen \
+--policy.dir=<path-to-checkpoint>
+
+# part b: run evals on server
+python examples/robocasa/main.py \
+--args.port 8000 \
+--args.task_soup <your-ds-soup> \
+--args.log_dir <path-to-checkpoint>
+```
+
+#### report evaluation results
+```
+TODO
+```
+
+### GR00T
+
+#### guideline
+* We use a batch size of 128 on a single NVIDIA GH200 gpu
+* We train and evaluate the model after TODO steps
+
+#### train model
+```
+python scripts/gr00t_finetune.py \
+--output-dir <your-output-dir> \
+--dataset_soup <your-ds-soup>
+```
+
+#### evaluate model
+```
+python scripts/run_eval.py \
+--model_path <your-output-dir>/checkpoint-120000/ \
+--split pretrain
+```
+
+#### report evaluation results
+```
+python gr00t/eval/get_eval_stats.py \
+--dir expdata/pretrain_human300/checkpoint-120000/
+```

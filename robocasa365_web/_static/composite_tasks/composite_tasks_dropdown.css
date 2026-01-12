@@ -1,36 +1,139 @@
 /* Composite Tasks dropdown styling */
 
 /* Benchmark tables (e.g., Multi-Task Learning) should match Atomic/Composite table look */
-table.rc-benchmark-table {
+table.rc-benchmark-table,
+table.rc-objects-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 table.rc-benchmark-table th,
-table.rc-benchmark-table td {
+table.rc-benchmark-table td,
+table.rc-objects-table th,
+table.rc-objects-table td {
   border-bottom: 1px solid var(--pst-color-border, #e0e0e0);
   padding: 0.55rem 0.6rem;
   vertical-align: top;
   background: transparent;
 }
 
-table.rc-benchmark-table th {
+table.rc-benchmark-table th,
+table.rc-objects-table th {
   text-align: left;
   font-weight: 800;
   background: rgba(127, 127, 127, 0.12);
 }
 
-table.rc-benchmark-table tbody tr:hover td {
+table.rc-benchmark-table tbody tr:hover td,
+table.rc-objects-table tbody tr:hover td {
   background: var(--pst-color-surface-hover, rgba(0, 0, 0, 0.03));
 }
 
 /* π₀.₅: render dot smaller + lower */
 .rc-pi-subdot {
   display: inline-block;
-  font-size: 0.85em;
+  font-size: 0.95em;
   line-height: 1;
   vertical-align: -0.20em;
   margin: 0 0.03em;
+}
+
+/* Objects page helpers */
+table.rc-objects-table {
+  table-layout: fixed;
+}
+
+/* Column widths: shrink Groups, widen numeric columns */
+table.rc-objects-table th:nth-child(1),
+table.rc-objects-table td:nth-child(1) {
+  width: 24%;
+}
+
+table.rc-objects-table th:nth-child(2),
+table.rc-objects-table td:nth-child(2) {
+  width: 16%;
+}
+
+table.rc-objects-table th:nth-child(3),
+table.rc-objects-table td:nth-child(3),
+table.rc-objects-table th:nth-child(4),
+table.rc-objects-table td:nth-child(4),
+table.rc-objects-table th:nth-child(5),
+table.rc-objects-table td:nth-child(5) {
+  width: 20%;
+}
+
+table.rc-objects-table td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Align numeric headers with numeric cells */
+table.rc-objects-table th:nth-child(3),
+table.rc-objects-table th:nth-child(4),
+table.rc-objects-table th:nth-child(5) {
+  text-align: right;
+}
+
+/* Sort arrows in Objects table headers */
+table.rc-objects-table th .rc-sort-label {
+  margin-right: 0.35rem;
+}
+
+table.rc-objects-table th .rc-table-sort-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0.75;
+  font-size: 0.85em;
+  line-height: 1;
+}
+
+table.rc-objects-table th .rc-table-sort-btn:hover {
+  opacity: 1;
+}
+
+table.rc-objects-table th .rc-table-sort-btn:focus-visible {
+  outline: 2px solid var(--pst-color-primary, #2563eb);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+table.rc-objects-table .group-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.71rem;
+  line-height: 1;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: rgba(127, 127, 127, 0.16);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  color: var(--pst-color-text-base, #111827);
+}
+
+html[data-theme="dark"] table.rc-objects-table .group-tag {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Groups cell: keep exactly 2 groups on one line */
+table.rc-objects-table td:nth-child(2) .rc-groups-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+table.rc-objects-table td:nth-child(2) .rc-groups-wrap-2 {
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 /* Split label coloring (match existing task tag colors) */
@@ -1272,6 +1375,32 @@ body.rc-composite-tasks .sidebar-toggle.secondary-toggle,
 body.rc-composite-tasks label.overlay.overlay-secondary,
 body.rc-composite-tasks #pst-secondary-sidebar-checkbox {
   display: none !important;
+}
+
+/* Hide the right-side "Contents" (secondary TOC) on Objects page */
+body.rc-objects-page .bd-sidebar-secondary,
+body.rc-objects-page .sidebar-toggle.secondary-toggle,
+body.rc-objects-page label.overlay.overlay-secondary,
+body.rc-objects-page #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+
+/* Use the freed space (no secondary sidebar) on Objects page */
+body.rc-objects-page .bd-main .bd-content .bd-article-container {
+  max-width: 95em;
+}
+
+/* Hide the right-side "Contents" (secondary TOC) on Foundation Model Learning page */
+body.rc-foundation-model-learning .bd-sidebar-secondary,
+body.rc-foundation-model-learning .sidebar-toggle.secondary-toggle,
+body.rc-foundation-model-learning label.overlay.overlay-secondary,
+body.rc-foundation-model-learning #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+
+/* Use the freed space (no secondary sidebar) on Foundation Model Learning page */
+body.rc-foundation-model-learning .bd-main .bd-content .bd-article-container {
+  max-width: 95em;
 }
 
 /* Use the freed space (no secondary sidebar) */

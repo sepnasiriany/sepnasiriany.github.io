@@ -2,48 +2,15 @@
 
 RoboCasa offers over 3,200 objects across over 150 object categories. They are sourced from [Objaverse 1.0](https://objaverse.allenai.org/objaverse-1.0), [LightWheel AI](https://www.lightwheel.ai/), and the remaining are AI generated from [Luma.ai](https://luma.ai/). See the breakdown of object categories as follows:
 
-
-
-<style>
-.obj-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-.obj-table th {
-  background: #3498db;
-  color: white;
-  padding: 10px 8px;
-  text-align: left;
-  position: sticky;
-  top: 0;
-}
-.obj-table td {
-  padding: 8px;
-  border-bottom: 1px solid rgba(128,128,128,0.3);
-}
-.obj-table tr:nth-child(even) { background: rgba(128,128,128,0.1); }
-.obj-table tr:hover { background: rgba(52,152,219,0.2); }
-.obj-table .num { text-align: right; }
-.group-tag {
-  background: rgba(52,152,219,0.25);
-  color: inherit;
-  padding: 2px 6px;
-  border-radius: 3px;
-  margin: 1px;
-  display: inline-block;
-  font-size: 12px;
-}
-.obj-table code {
-  background: rgba(128,128,128,0.15);
-  padding: 2px 4px;
-  border-radius: 3px;
-}
-</style>
-
+<script>
+  // Hide the right-side "Contents" (secondary TOC) on the Objects page
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("rc-objects-page");
+  });
+</script>
 ## Object Categories
 
-<table class="obj-table">
+<table class="docutils rc-objects-table">
 <thead><tr><th>Category</th><th>Groups</th><th>Objaverse</th><th>Lightwheel</th><th>AI Gen</th></tr></thead>
 <tbody>
 <tr><td><code>apple</code></td><td><span class="group-tag">fruit</span></td><td class="num">22</td><td class="num">0</td><td class="num">10</td></tr>
@@ -132,7 +99,7 @@ RoboCasa offers over 3,200 objects across over 150 object categories. They are s
 <tr><td><code>yogurt</code></td><td><span class="group-tag">dairy</span> <span class="group-tag">packaged_food</span></td><td class="num">3</td><td class="num">0</td><td class="num">7</td></tr>
 <tr><td><code>dates</code></td><td><span class="group-tag">fruit</span></td><td class="num">0</td><td class="num">0</td><td class="num">13</td></tr>
 <tr><td><code>lemonade</code></td><td><span class="group-tag">drink</span></td><td class="num">0</td><td class="num">0</td><td class="num">6</td></tr>
-<tr><td><code>walnut</code></td><td></td><td class="num">0</td><td class="num">0</td><td class="num">8</td></tr>
+<tr><td><code>walnut</code></td><td><span class="group-tag">misc</span></td><td class="num">0</td><td class="num">0</td><td class="num">8</td></tr>
 <tr><td><code>cheese_grater</code></td><td><span class="group-tag">tool</span></td><td class="num">0</td><td class="num">12</td><td class="num">9</td></tr>
 <tr><td><code>syrup_bottle</code></td><td><span class="group-tag">condiment</span></td><td class="num">0</td><td class="num">6</td><td class="num">13</td></tr>
 <tr><td><code>scallops</code></td><td><span class="group-tag">meat</span></td><td class="num">0</td><td class="num">0</td><td class="num">16</td></tr>
@@ -197,7 +164,7 @@ RoboCasa offers over 3,200 objects across over 150 object categories. They are s
 <tr><td><code>salami</code></td><td><span class="group-tag">meat</span></td><td class="num">0</td><td class="num">0</td><td class="num">13</td></tr>
 <tr><td><code>butter_stick</code></td><td><span class="group-tag">dairy</span></td><td class="num">0</td><td class="num">0</td><td class="num">13</td></tr>
 <tr><td><code>can_opener</code></td><td><span class="group-tag">tool</span></td><td class="num">0</td><td class="num">0</td><td class="num">6</td></tr>
-<tr><td><code>tofu</code></td><td></td><td class="num">0</td><td class="num">0</td><td class="num">17</td></tr>
+<tr><td><code>tofu</code></td><td><span class="group-tag">misc</span></td><td class="num">0</td><td class="num">0</td><td class="num">17</td></tr>
 <tr><td><code>pineapple</code></td><td><span class="group-tag">fruit</span></td><td class="num">0</td><td class="num">0</td><td class="num">8</td></tr>
 <tr><td><code>skewers</code></td><td><span class="group-tag">meat</span> <span class="group-tag">cooked_food</span></td><td class="num">0</td><td class="num">0</td><td class="num">6</td></tr>
 <tr><td><code>colander</code></td><td><span class="group-tag">receptacle</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
@@ -212,7 +179,7 @@ RoboCasa offers over 3,200 objects across over 150 object categories. They are s
 <tr><td><code>cookie_dough_ball</code></td><td><span class="group-tag">sweets</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>cream_cheese_stick</code></td><td><span class="group-tag">dairy</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>digital_scale</code></td><td><span class="group-tag">tool</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
-<tr><td><code>flour_bag</code></td><td></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
+<tr><td><code>flour_bag</code></td><td><span class="group-tag">misc</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>hotdog_bun</code></td><td><span class="group-tag">bread_food</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>mayonnaise</code></td><td><span class="group-tag">condiment</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>mustard</code></td><td><span class="group-tag">condiment</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
@@ -222,7 +189,7 @@ RoboCasa offers over 3,200 objects across over 150 object categories. They are s
 <tr><td><code>pickle_slice</code></td><td><span class="group-tag">vegetable</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>tomato_slice</code></td><td><span class="group-tag">vegetable</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>turkey_slice</code></td><td><span class="group-tag">meat</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
-<tr><td><code>straw</code></td><td></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
+<tr><td><code>straw</code></td><td><span class="group-tag">misc</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>tupperware</code></td><td><span class="group-tag">receptacle</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>chicken_drumstick</code></td><td><span class="group-tag">meat</span></td><td class="num">0</td><td class="num">12</td><td class="num">0</td></tr>
 <tr><td><code>glass_cup</code></td><td><span class="group-tag">receptacle</span> <span class="group-tag">stackable</span></td><td class="num">0</td><td class="num">24</td><td class="num">0</td></tr>

@@ -20,6 +20,147 @@
     return path.endsWith("/datasets/datasets_overview.html") || path.endsWith("/datasets/datasets_overview/");
   }
 
+  function isObjectsPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return path.endsWith("/assets/objects.html") || path.endsWith("/assets/objects/");
+  }
+
+  function isFoundationModelLearningPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return (
+      path.endsWith("/benchmarking/foundation_model_learning.html") ||
+      path.endsWith("/benchmarking/foundation_model_learning/")
+    );
+  }
+
+  function initObjectsTableSorting() {
+    const table = document.querySelector("table.rc-objects-table");
+    if (!table) return;
+
+    // Page-scoped styling hooks
+    document.body.classList.add("rc-objects-page");
+
+    const thead = table.querySelector("thead");
+    const tbody = table.querySelector("tbody");
+    if (!thead || !tbody) return;
+
+    const ths = Array.from(thead.querySelectorAll("th"));
+    if (ths.length === 0) return;
+
+    function normalizeGroupsCell(td) {
+      if (!td) return "";
+      const tags = Array.from(td.querySelectorAll(".group-tag"));
+      if (tags.length === 0) {
+        const raw = (td.textContent || "").trim().replace(/\s+/g, " ");
+        return raw;
+      }
+      const names = tags.map((el) => (el.textContent || "").trim()).filter(Boolean).sort((a, b) => a.localeCompare(b));
+      // Reorder DOM to match alphabetical precedence
+      if (tags.length > 1) {
+        td.innerHTML = "";
+        const wrap = document.createElement("span");
+        wrap.className = "rc-groups-wrap";
+        if (names.length === 2) wrap.classList.add("rc-groups-wrap-2");
+        for (let i = 0; i < names.length; i++) {
+          const span = document.createElement("span");
+          span.className = "group-tag";
+          span.textContent = names[i];
+          wrap.appendChild(span);
+        }
+        td.appendChild(wrap);
+      }
+      return names.join(" ");
+    }
+
+    // Ensure multi-group rows display groups in alphabetical order
+    for (const tr of Array.from(tbody.querySelectorAll("tr"))) {
+      normalizeGroupsCell(tr.children?.[1]);
+    }
+
+    // 0: Category (string), 1: Groups (string), 2-4: numeric
+    function cellKey(tr, idx) {
+      const td = tr.children?.[idx];
+      if (idx === 1) {
+        return normalizeGroupsCell(td).toLowerCase();
+      }
+      const raw = (td?.textContent || "").trim().replace(/\\s+/g, " ");
+      if (idx >= 2) {
+        const n = Number.parseFloat(raw);
+        return Number.isFinite(n) ? n : -Infinity;
+      }
+      return raw.toLowerCase();
+    }
+
+    let active = { idx: -1, dir: "asc" }; // dir: 'asc' | 'desc'
+
+    const indicators = new Map(); // th -> span
+
+    function applySort(idx, dir) {
+      active = { idx, dir };
+
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const keyed = rows.map((tr, origIdx) => ({ tr, origIdx, key: cellKey(tr, idx) }));
+      keyed.sort((a, b) => {
+        const ka = a.key;
+        const kb = b.key;
+        let cmp = 0;
+        if (typeof ka === "number" && typeof kb === "number") cmp = ka - kb;
+        else cmp = String(ka).localeCompare(String(kb));
+        if (cmp === 0) cmp = a.origIdx - b.origIdx; // stable
+        return dir === "asc" ? cmp : -cmp;
+      });
+
+      for (const { tr } of keyed) tbody.appendChild(tr);
+
+      // Update indicators + aria-sort
+      for (let j = 0; j < ths.length; j++) {
+        const thj = ths[j];
+        const indj = indicators.get(thj);
+        if (!indj) continue;
+        if (j === idx) {
+          thj.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
+          indj.textContent = dir === "asc" ? "▲" : "▼";
+        } else {
+          thj.setAttribute("aria-sort", "none");
+          indj.textContent = "↕";
+        }
+      }
+    }
+
+    for (let i = 0; i < ths.length; i++) {
+      const th = ths[i];
+      th.setAttribute("aria-sort", "none");
+
+      const label = document.createElement("span");
+      label.className = "rc-sort-label";
+      // Preserve any existing HTML in header cell
+      while (th.firstChild) label.appendChild(th.firstChild);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rc-table-sort-btn";
+      btn.setAttribute("aria-label", `Sort by ${(th.textContent || "").trim()}`);
+
+      const ind = document.createElement("span");
+      ind.className = "rc-table-sort-indicator";
+      ind.textContent = "↕";
+      btn.appendChild(ind);
+
+      th.appendChild(label);
+      th.appendChild(btn);
+      indicators.set(th, ind);
+
+      btn.addEventListener("click", () => {
+        const idx = i;
+        const dir = active.idx === idx ? (active.dir === "asc" ? "desc" : "asc") : "asc";
+        applySort(idx, dir);
+      });
+    }
+
+    // Default sort: Category A→Z
+    applySort(0, "asc");
+  }
+
   function getTaskAttributesMap() {
     // Prefer the pre-bundled map (works on file:// too)
     const obj = window.ROBOCASA_TASK_ATTRIBUTES;
@@ -114,39 +255,6 @@
         return lw.charAt(0).toUpperCase() + lw.slice(1);
       })
       .join(" ");
-  }
-
-  function formatCompositeDescriptionInPlace(rootEl) {
-    // Replace "{left/right}" -> "[<em>left/right</em>]" (square brackets + italic options)
-    if (!rootEl) return;
-    const textNodes = [];
-    const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
-    for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
-
-    const re = /\\{([^}]+)\\}/g;
-    for (const node of textNodes) {
-      const s = node.nodeValue || "";
-      if (!s.includes("{")) continue;
-      re.lastIndex = 0;
-
-      const frag = document.createDocumentFragment();
-      let last = 0;
-      let m;
-      while ((m = re.exec(s))) {
-        const start = m.index;
-        const end = start + m[0].length;
-        if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
-        frag.appendChild(document.createTextNode("["));
-        const em = document.createElement("em");
-        em.textContent = m[1];
-        frag.appendChild(em);
-        frag.appendChild(document.createTextNode("]"));
-        last = end;
-      }
-      if (last === 0) continue; // no matches
-      if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
-      node.parentNode.replaceChild(frag, node);
-    }
   }
 
   function folderTitleFromMultiStageFolder(folder) {
@@ -1942,7 +2050,7 @@
   }
 
   function ensureBackToTopButton() {
-    if (!isCompositeTasksPage()) return;
+    if (!(isCompositeTasksPage() || isObjectsPage())) return;
     if (document.querySelector(".rc-back-to-top")) return;
 
     const btn = document.createElement("button");
@@ -2080,7 +2188,6 @@
             }
             const tdDesc = document.createElement("td");
             tdDesc.textContent = t.description || "";
-            formatCompositeDescriptionInPlace(tdDesc);
             tdTask.style.textAlign = "left";
             tdDesc.style.textAlign = "left";
             tr.appendChild(tdTask);
@@ -2180,6 +2287,38 @@
 
     // Replace templated variable braces in descriptions:
     // "{left/right}" -> "[<em>left/right</em>]"
+    function formatCompositeDescriptionInPlace(rootEl) {
+      if (!rootEl) return;
+      const textNodes = [];
+      const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
+
+      const re = /\{([^}]+)\}/g;
+      for (const node of textNodes) {
+        const s = node.nodeValue || "";
+        if (!s.includes("{")) continue;
+        re.lastIndex = 0;
+
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        let m;
+        while ((m = re.exec(s))) {
+          const start = m.index;
+          const end = start + m[0].length;
+          if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
+          frag.appendChild(document.createTextNode("["));
+          const em = document.createElement("em");
+          em.textContent = m[1];
+          frag.appendChild(em);
+          frag.appendChild(document.createTextNode("]"));
+          last = end;
+        }
+        if (last === 0) continue; // no matches
+        if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    }
+
     for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
       const table = d.querySelector("table");
       if (!table) continue;
@@ -3618,6 +3757,17 @@
 
   });
 
+  onReady(() => {
+    if (!isObjectsPage()) return;
+    initObjectsTableSorting();
+    ensureBackToTopButton();
+  });
+
+  onReady(() => {
+    if (!isFoundationModelLearningPage()) return;
+    document.body.classList.add("rc-foundation-model-learning");
+  });
+
   // Datasets overview page: make target task tables match the Composite Tasks look.
   onReady(() => {
     if (!isDatasetsOverviewPage()) return;
@@ -3813,7 +3963,6 @@
 
         const tdDesc = document.createElement("td");
         tdDesc.textContent = info.description || "";
-        formatCompositeDescriptionInPlace(tdDesc);
 
         tr.appendChild(tdTask);
         tr.appendChild(tdDesc);

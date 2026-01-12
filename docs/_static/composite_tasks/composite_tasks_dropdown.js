@@ -20,6 +20,147 @@
     return path.endsWith("/datasets/datasets_overview.html") || path.endsWith("/datasets/datasets_overview/");
   }
 
+  function isObjectsPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return path.endsWith("/assets/objects.html") || path.endsWith("/assets/objects/");
+  }
+
+  function isFoundationModelLearningPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return (
+      path.endsWith("/benchmarking/foundation_model_learning.html") ||
+      path.endsWith("/benchmarking/foundation_model_learning/")
+    );
+  }
+
+  function initObjectsTableSorting() {
+    const table = document.querySelector("table.rc-objects-table");
+    if (!table) return;
+
+    // Page-scoped styling hooks
+    document.body.classList.add("rc-objects-page");
+
+    const thead = table.querySelector("thead");
+    const tbody = table.querySelector("tbody");
+    if (!thead || !tbody) return;
+
+    const ths = Array.from(thead.querySelectorAll("th"));
+    if (ths.length === 0) return;
+
+    function normalizeGroupsCell(td) {
+      if (!td) return "";
+      const tags = Array.from(td.querySelectorAll(".group-tag"));
+      if (tags.length === 0) {
+        const raw = (td.textContent || "").trim().replace(/\s+/g, " ");
+        return raw;
+      }
+      const names = tags.map((el) => (el.textContent || "").trim()).filter(Boolean).sort((a, b) => a.localeCompare(b));
+      // Reorder DOM to match alphabetical precedence
+      if (tags.length > 1) {
+        td.innerHTML = "";
+        const wrap = document.createElement("span");
+        wrap.className = "rc-groups-wrap";
+        if (names.length === 2) wrap.classList.add("rc-groups-wrap-2");
+        for (let i = 0; i < names.length; i++) {
+          const span = document.createElement("span");
+          span.className = "group-tag";
+          span.textContent = names[i];
+          wrap.appendChild(span);
+        }
+        td.appendChild(wrap);
+      }
+      return names.join(" ");
+    }
+
+    // Ensure multi-group rows display groups in alphabetical order
+    for (const tr of Array.from(tbody.querySelectorAll("tr"))) {
+      normalizeGroupsCell(tr.children?.[1]);
+    }
+
+    // 0: Category (string), 1: Groups (string), 2-4: numeric
+    function cellKey(tr, idx) {
+      const td = tr.children?.[idx];
+      if (idx === 1) {
+        return normalizeGroupsCell(td).toLowerCase();
+      }
+      const raw = (td?.textContent || "").trim().replace(/\\s+/g, " ");
+      if (idx >= 2) {
+        const n = Number.parseFloat(raw);
+        return Number.isFinite(n) ? n : -Infinity;
+      }
+      return raw.toLowerCase();
+    }
+
+    let active = { idx: -1, dir: "asc" }; // dir: 'asc' | 'desc'
+
+    const indicators = new Map(); // th -> span
+
+    function applySort(idx, dir) {
+      active = { idx, dir };
+
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const keyed = rows.map((tr, origIdx) => ({ tr, origIdx, key: cellKey(tr, idx) }));
+      keyed.sort((a, b) => {
+        const ka = a.key;
+        const kb = b.key;
+        let cmp = 0;
+        if (typeof ka === "number" && typeof kb === "number") cmp = ka - kb;
+        else cmp = String(ka).localeCompare(String(kb));
+        if (cmp === 0) cmp = a.origIdx - b.origIdx; // stable
+        return dir === "asc" ? cmp : -cmp;
+      });
+
+      for (const { tr } of keyed) tbody.appendChild(tr);
+
+      // Update indicators + aria-sort
+      for (let j = 0; j < ths.length; j++) {
+        const thj = ths[j];
+        const indj = indicators.get(thj);
+        if (!indj) continue;
+        if (j === idx) {
+          thj.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
+          indj.textContent = dir === "asc" ? "▲" : "▼";
+        } else {
+          thj.setAttribute("aria-sort", "none");
+          indj.textContent = "↕";
+        }
+      }
+    }
+
+    for (let i = 0; i < ths.length; i++) {
+      const th = ths[i];
+      th.setAttribute("aria-sort", "none");
+
+      const label = document.createElement("span");
+      label.className = "rc-sort-label";
+      // Preserve any existing HTML in header cell
+      while (th.firstChild) label.appendChild(th.firstChild);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rc-table-sort-btn";
+      btn.setAttribute("aria-label", `Sort by ${(th.textContent || "").trim()}`);
+
+      const ind = document.createElement("span");
+      ind.className = "rc-table-sort-indicator";
+      ind.textContent = "↕";
+      btn.appendChild(ind);
+
+      th.appendChild(label);
+      th.appendChild(btn);
+      indicators.set(th, ind);
+
+      btn.addEventListener("click", () => {
+        const idx = i;
+        const dir = active.idx === idx ? (active.dir === "asc" ? "desc" : "asc") : "asc";
+        applySort(idx, dir);
+      });
+    }
+
+    // Default sort: Category A→Z
+    applySort(0, "asc");
+  }
+
   function getTaskAttributesMap() {
     // Prefer the pre-bundled map (works on file:// too)
     const obj = window.ROBOCASA_TASK_ATTRIBUTES;
@@ -62,6 +203,19 @@
     return map;
   }
 
+  let CACHED_TASK_ATTRIBUTES_JSON = null;
+  async function loadTaskAttributesJson() {
+    if (CACHED_TASK_ATTRIBUTES_JSON) return CACHED_TASK_ATTRIBUTES_JSON;
+    const url = `${getContentRoot()}_static/composite_tasks/task_attributes.json`;
+    const res = await fetch(url, { cache: "force-cache" });
+    if (!res.ok) {
+      throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    CACHED_TASK_ATTRIBUTES_JSON = data;
+    return data;
+  }
+
   function getHeadingTitle(headingEl) {
     // Sphinx adds a permalink anchor like: <a class="headerlink"...>#</a>
     // We want the visible title without that "#".
@@ -69,6 +223,228 @@
     const headerlink = clone.querySelector("a.headerlink");
     if (headerlink) headerlink.remove();
     return (clone.textContent || "").trim();
+  }
+
+  function anchorIdFromActivityTitle(title) {
+    // Roughly matches Sphinx's default slugging for section IDs.
+    return (title || "")
+      .toLowerCase()
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .trim()
+      .replace(/\\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  function normalizeActivityKey(activity) {
+    return (activity || "").trim().replace(/\\s+/g, " ").toLowerCase();
+  }
+
+  function titleCaseActivity(activity) {
+    const s = (activity || "").trim().replace(/\\s+/g, " ");
+    if (!s) return s;
+    const lowerWords = new Set(["a", "an", "the", "and", "or", "of", "to", "in", "on", "for", "with"]);
+    return s
+      .split(" ")
+      .map((w, i) => {
+        if (!w) return w;
+        // Preserve all-caps acronyms
+        if (w.length > 1 && w === w.toUpperCase()) return w;
+        const lw = w.toLowerCase();
+        if (i !== 0 && lowerWords.has(lw)) return lw;
+        return lw.charAt(0).toUpperCase() + lw.slice(1);
+      })
+      .join(" ");
+  }
+
+  function folderTitleFromMultiStageFolder(folder) {
+    // "adding_ice_to_beverages" -> "Adding Ice to Beverages"
+    if (folder === "baking_cookies_cakes") return "Baking Cookies and Cakes";
+    return titleCaseActivity((folder || "").replace(/_/g, " "));
+  }
+
+  function compactAlphaNumKey(s) {
+    return (s || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
+  }
+
+  // Source of truth: the actual directory names under robocasa/environments/kitchen/multi_stage/
+  // (Excluded: "__pycache__")
+  const MULTI_STAGE_FOLDERS = [
+    "adding_ice_to_beverages",
+    "arranging_buffet",
+    "arranging_cabinets",
+    "arranging_condiments",
+    "baking",
+    "baking_cookies_cakes",
+    "boiling",
+    "brewing",
+    "broiling_fish",
+    "chopping_food",
+    "chopping_vegetables",
+    "cleaning_appliances",
+    "cleaning_sink",
+    "clearing_table",
+    "defrosting_food",
+    "filling_serving_dishes",
+    "frying",
+    "garnishing_dishes",
+    "loading_fridge",
+    "making_juice",
+    "making_salads",
+    "making_smoothies",
+    "making_tea",
+    "making_toast",
+    "managing_freezer_space",
+    "measuring_ingredients",
+    "meat_preparation",
+    "microwaving_food",
+    "mixing_and_blending",
+    "mixing_ingredients",
+    "organizing_dishes_and_containers",
+    "organizing_recycling",
+    "organizing_utensils",
+    "packing_lunches",
+    "plating_food",
+    "portioning_meals",
+    "preparing_hot_chocolate",
+    "preparing_marinade",
+    "preparing_sandwiches",
+    "reheating_food",
+    "restocking_supplies",
+    "sanitize_surface",
+    "sanitizing_cutting_board",
+    "sauteing_vegetables",
+    "seasoning_food",
+    "serving_beverages",
+    "serving_food",
+    "setting_the_table",
+    "simmering_sauces",
+    "slicing_meat",
+    "slow_cooking",
+    "snack_preparation",
+    "sorting_ingredients",
+    "steaming_food",
+    "steaming_vegetables",
+    "storing_leftovers",
+    "tidying_cabinets_and_drawers",
+    "toasting_bread",
+    "washing_dishes",
+    "washing_fruits_and_vegetables",
+  ];
+
+  const MULTI_STAGE_FOLDER_SET = new Set(MULTI_STAGE_FOLDERS);
+
+  const MULTI_STAGE_COMPACT_TO_FOLDER = (() => {
+    const map = new Map();
+    for (const folder of MULTI_STAGE_FOLDERS) {
+      const title = folderTitleFromMultiStageFolder(folder);
+      const candidates = new Set([compactAlphaNumKey(folder), compactAlphaNumKey(title)]);
+      // Common broken format: words concatenated and sometimes singularized ("cabinets" -> "cabinet").
+      for (const k of Array.from(candidates)) {
+        if (k && k.endsWith("s")) candidates.add(k.slice(0, -1));
+      }
+      for (const k of candidates) {
+        if (!k) continue;
+        if (!map.has(k)) map.set(k, folder);
+      }
+    }
+    return map;
+  })();
+
+  const ACTIVITY_TO_FOLDER_ALIASES = new Map([
+    // Use the actual directory names under robocasa/environments/kitchen/multi_stage/
+    ["boiling water", "boiling"],
+    ["brewing coffee", "brewing"],
+    ["frying foods", "frying"],
+
+    ["baking cookies and cakes", "baking_cookies_cakes"],
+    ["baking cookies/cakes", "baking_cookies_cakes"],
+
+    ["microwaving foods", "microwaving_food"],
+
+    ["preparing marinades", "preparing_marinade"],
+    ["preparing marinade", "preparing_marinade"],
+
+    ["sanitizing surfaces", "sanitize_surface"],
+    ["sanitize surface", "sanitize_surface"],
+
+    ["sanitizing cutting boards", "sanitizing_cutting_board"],
+    ["sanitizing cutting board", "sanitizing_cutting_board"],
+
+    // Typos seen in the wild
+    ["serving begerages", "serving_beverages"],
+
+    // More typos / legacy labels present in task_attributes.json
+    ["boiilng water", "boiling"],
+    ["cleaning appliacnes", "cleaning_appliances"],
+    ["loading dishwasher", "washing_dishes"],
+    ["washing produce", "washing_fruits_and_vegetables"],
+  ]);
+
+  function folderForActivityTitle(activityTitle) {
+    const key = normalizeActivityKey(activityTitle);
+    const aliased = ACTIVITY_TO_FOLDER_ALIASES.get(key);
+    if (aliased) return aliased;
+
+    // If the incoming activity is already the (possibly broken) title, try to map it
+    // to a known multi_stage folder by compact matching.
+    const compactFromTitle = compactAlphaNumKey(key);
+    const fromCompact = MULTI_STAGE_COMPACT_TO_FOLDER.get(compactFromTitle);
+    if (fromCompact) return fromCompact;
+
+    // Default: "Adding ice to beverages" -> "adding_ice_to_beverages"
+    const folder = (key || "")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .trim()
+      .replace(/[\\s-]+/g, "_")
+      .replace(/_+/g, "_");
+
+    // If the default slug doesn't match an actual folder, try compact matching before giving up.
+    if (MULTI_STAGE_FOLDER_SET.has(folder)) return folder;
+    const fromFolderCompact = MULTI_STAGE_COMPACT_TO_FOLDER.get(compactAlphaNumKey(folder));
+    return fromFolderCompact || folder;
+  }
+
+  function groupTasksByActivity(tasks) {
+    const map = new Map();
+    for (const t of tasks || []) {
+      const activityRaw = (t && t.activity) || "";
+      const name = (t && t.name) || "";
+      const description = (t && t.description) || "";
+      if (!activityRaw || !name) continue;
+      if (activityRaw === "Atomic") continue;
+
+      const folder = folderForActivityTitle(activityRaw);
+      if (!folder) continue;
+
+      const prettyTitle = folderTitleFromMultiStageFolder(folder);
+      if (!map.has(folder)) map.set(folder, { folder, title: prettyTitle, tasks: [] });
+
+      const entry = map.get(folder);
+      entry.title = prettyTitle;
+      entry.tasks.push({ name, description });
+    }
+    return map;
+  }
+
+  function buildTaskToSourceMapFromLegacy(rootSection) {
+    const map = new Map();
+    if (!rootSection) return map;
+    // Legacy Sphinx content structure: <section id="..."><table>...</table></section>
+    const rows = Array.from(rootSection.querySelectorAll(":scope > section[id] table tbody tr"));
+    for (const tr of rows) {
+      const tds = Array.from(tr.querySelectorAll("td"));
+      if (tds.length < 3) continue;
+      const taskName = (tds[0].querySelector("code")?.textContent || tds[0].textContent || "").trim();
+      const href = tds[2].querySelector("a[href]")?.getAttribute("href") || "";
+      if (taskName && href) map.set(taskName, href);
+    }
+    return map;
   }
 
   const META_BY_ACTIVITY = new Map([
@@ -346,6 +722,47 @@
       .trim();
   }
 
+  function activityFolderFromTitle(title) {
+    // "Adding Ice to Beverages" -> "adding_ice_to_beverages"
+    return (title || "")
+      .toLowerCase()
+      .replace(/&/g, " and ")
+      // allow underscores if we're handed a folder-like string
+      .replace(/[^a-z0-9_\\s-]/g, "")
+      .trim()
+      .replace(/[\\s-]+/g, "_")
+      .replace(/_+/g, "_");
+  }
+
+  function snakeFromTaskName(taskName) {
+    // "MakeIceLemonade" -> "make_ice_lemonade"
+    return (taskName || "")
+      .replace(/-/g, "_")
+      .replace(/\\s+/g, "_")
+      .replace(/([A-Z]+)([A-Z][a-z0-9])/g, "$1_$2")
+      .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+      .toLowerCase()
+      .replace(/_+/g, "_")
+      .trim();
+  }
+
+  const TASK_FILE_BASE_OVERRIDES = new Map([
+    // Fix local filename typos / variants in robocasa/environments/kitchen/multi_stage/
+    ["AddSweetener", "add_sweetner"],
+    ["AirDryFruit", "airdry_fruit"],
+    ["OrganizeMetallicUtensils", "organize_metalic_utensils"],
+    ["SetUpSpiceStation", "setup_spice_station"],
+    ["StackBowlsInSink", "stack_bowls"],
+  ]);
+
+  function sourceUrlForTask(activityTitle, taskName) {
+    // Derive folder from actual multi_stage directory naming conventions.
+    const activityFolder = folderForActivityTitle(activityTitle) || activityFolderFromTitle(activityTitle);
+    const base = TASK_FILE_BASE_OVERRIDES.get(taskName) || snakeFromTaskName(taskName);
+    if (!activityFolder || !base) return null;
+    return `https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/${activityFolder}/${base}.py`;
+  }
+
   function uniqueTokens(query) {
     const raw = (query || "")
       .toLowerCase()
@@ -462,6 +879,7 @@
     ["RefillCondimentStation", ["pnp", "door_open"]],
     ["RestockSinkSupplies", ["pnp", "drawer_open"]],
     ["CleanMicrowave", ["pnp", "door_open"]],
+    ["PrepForSanitizing", ["pnp", "door_open"]],
     ["RinseCuttingBoard", ["lever_turn"]],
     ["LemonSeasoningFish", ["pnp", "door_open"]],
     ["DeliverStraw", ["pnp", "drawer_open"]],
@@ -1238,7 +1656,10 @@
 
     const title = document.createElement("div");
     title.className = "rc-video-modal-title";
-    title.textContent = "";
+    const titleCode = document.createElement("code");
+    titleCode.className = "rc-video-modal-title-code";
+    titleCode.textContent = "";
+    title.appendChild(titleCode);
 
     const video = document.createElement("video");
     video.className = "rc-video-modal-player";
@@ -1259,7 +1680,6 @@
     const instructionText = document.createElement("span");
     instructionText.className = "rc-video-modal-instruction-text";
     instruction.appendChild(instructionLabel);
-    instruction.appendChild(document.createTextNode(" "));
     instruction.appendChild(instructionText);
 
       function doClose() {
@@ -1278,7 +1698,7 @@
       instructionText.textContent = "";
       error.hidden = true;
       error.textContent = "";
-      title.textContent = "";
+      titleCode.textContent = "";
       video.removeAttribute("src");
       video.load();
     }
@@ -1305,7 +1725,7 @@
       document.body.classList.add("rc-modal-open");
       error.hidden = true;
       error.textContent = "";
-      title.textContent = taskName ? `${taskName}` : "";
+      titleCode.textContent = taskName ? `${taskName}` : "";
 
       const srcsRaw = Array.isArray(sources) ? sources : [sources];
       const srcs = srcsRaw.map((s) => String(s || "").trim()).filter(Boolean);
@@ -1391,7 +1811,8 @@
       const tName = (taskName || "").trim();
       const tDesc = (taskDescription || "").trim();
       if (tName || tDesc) {
-        instructionLabel.textContent = tName ? `${tName}:` : "";
+        // Title already shows task name; bottom should only show the description.
+        instructionLabel.textContent = "";
         let htmlDesc = tDesc || "";
         // Sphinx renders [*text*] as [<em>text</em>] - keep brackets but ensure italics
         htmlDesc = htmlDesc.replace(/\[<em>([^<]+)<\/em>\]/g, "[<em>$1</em>]");
@@ -1629,7 +2050,7 @@
   }
 
   function ensureBackToTopButton() {
-    if (!isCompositeTasksPage()) return;
+    if (!(isCompositeTasksPage() || isObjectsPage())) return;
     if (document.querySelector(".rc-back-to-top")) return;
 
     const btn = document.createElement("button");
@@ -1659,8 +2080,11 @@
     document.body.appendChild(btn);
   }
 
-  onReady(() => {
+  onReady(async () => {
     if (!isCompositeTasksPage()) return;
+    // Hard guard: prevent double-initialization (duplicate activity cards)
+    if (window.__rcCompositeTasksInit) return;
+    window.__rcCompositeTasksInit = true;
 
     // Page-scoped styling hooks
     document.body.classList.add("rc-composite-tasks");
@@ -1672,80 +2096,239 @@
       document.body;
     if (!content) return;
 
-    // Activities are sections nested under the main "Composite Tasks" section.
+    // Activities are sections nested under the main "Composite Tasks" section,
+    // OR are generated from JSON if a placeholder root is present.
     const rootSection = content.querySelector("section#composite-tasks");
     if (!rootSection) return;
 
-    const activitySections = Array.from(rootSection.querySelectorAll(":scope > section[id]"));
-    if (activitySections.length === 0) return;
+    const attrsMap = getTaskAttributesMap();
+    const episodeLengthMap = getEpisodeLengthMap();
+    const taskToSourceMap = buildTaskToSourceMapFromLegacy(rootSection);
 
     const activities = [];
 
-    const attrsMap = getTaskAttributesMap();
-    const episodeLengthMap = getEpisodeLengthMap();
+    const placeholderRoot = rootSection.querySelector("#rc-composite-tasks-root");
+    if (placeholderRoot) {
+      try {
+        const data = await loadTaskAttributesJson();
+        const grouped = groupTasksByActivity(data && data.tasks ? data.tasks : []);
+        const activityEntries = Array.from(grouped.values()).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
-    for (const sec of activitySections) {
-      const h2 = sec.querySelector(":scope > h2");
-      if (!h2) continue;
+        const detailsEls = [];
+        for (const entry of activityEntries) {
+          const title = entry.title || "";
+          const folder = entry.folder || folderForActivityTitle(title);
+          const tasks = entry.tasks || [];
 
-      const title = getHeadingTitle(h2);
-      if (!title) continue;
+          const details = document.createElement("details");
+          details.className = "rc-activity";
 
-      const details = document.createElement("details");
-      details.className = "rc-activity";
+          const summary = document.createElement("summary");
+          const summaryLeft = document.createElement("div");
+          summaryLeft.className = "rc-activity-summary-left";
 
-      const summary = document.createElement("summary");
-      const summaryLeft = document.createElement("div");
-      summaryLeft.className = "rc-activity-summary-left";
+          const summaryText = document.createElement("span");
+          summaryText.className = "rc-activity-title";
+          summaryText.textContent = title;
+          summaryLeft.appendChild(summaryText);
 
-      const summaryText = document.createElement("span");
-      summaryText.className = "rc-activity-title";
-      summaryText.textContent = title;
-      summaryLeft.appendChild(summaryText);
+          const metaCategory = metaCategoryForActivityTitle(title);
+          details.dataset.metaCategory = metaCategory;
+          const metaTag = document.createElement("span");
+          metaTag.className = "rc-activity-meta";
+          metaTag.dataset.meta = metaCategory;
+          metaTag.textContent = categoryLabel(metaCategory);
+          summaryLeft.appendChild(metaTag);
 
-      const metaCategory = metaCategoryForActivityTitle(title);
-      details.dataset.metaCategory = metaCategory;
-      const metaTag = document.createElement("span");
-      metaTag.className = "rc-activity-meta";
-      metaTag.dataset.meta = metaCategory;
-      metaTag.textContent = categoryLabel(metaCategory);
-      summaryLeft.appendChild(metaTag);
+          summary.appendChild(summaryLeft);
 
-      summary.appendChild(summaryLeft);
+          const nTasks = tasks.length;
+          const badge = document.createElement("span");
+          badge.className = "rc-activity-badge";
+          badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
+          summary.appendChild(badge);
 
-      const nTasks = countTasks(sec);
-      if (typeof nTasks === "number") {
-        const badge = document.createElement("span");
-        badge.className = "rc-activity-badge";
-        badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
-        summary.appendChild(badge);
+          details.appendChild(summary);
+
+          const body = document.createElement("div");
+          body.className = "rc-activity-body";
+
+          const table = document.createElement("table");
+          table.className = "docutils";
+          table.setAttribute("border", "1");
+          const thead = document.createElement("thead");
+          const theadTr = document.createElement("tr");
+          const thTask = document.createElement("th");
+          thTask.textContent = "Task";
+          const thDesc = document.createElement("th");
+          thDesc.textContent = "Description";
+          thTask.style.textAlign = "left";
+          thDesc.style.textAlign = "left";
+          theadTr.appendChild(thTask);
+          theadTr.appendChild(thDesc);
+          thead.appendChild(theadTr);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          for (const t of tasks) {
+            const tr = document.createElement("tr");
+            const tdTask = document.createElement("td");
+            const code = document.createElement("code");
+            code.textContent = t.name;
+            const srcUrl = taskToSourceMap.get(t.name) || sourceUrlForTask(folder || title, t.name);
+            if (srcUrl) {
+              const a = document.createElement("a");
+              a.href = srcUrl;
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
+              a.appendChild(code);
+              tdTask.appendChild(a);
+            } else {
+              tdTask.appendChild(code);
+            }
+            const tdDesc = document.createElement("td");
+            tdDesc.textContent = t.description || "";
+            tdTask.style.textAlign = "left";
+            tdDesc.style.textAlign = "left";
+            tr.appendChild(tdTask);
+            tr.appendChild(tdDesc);
+            tbody.appendChild(tr);
+          }
+          table.appendChild(tbody);
+
+          body.appendChild(table);
+
+          const anchorId = anchorIdFromActivityTitle(title);
+          details.id = anchorId || title;
+          details.appendChild(body);
+
+          activities.push({ title, id: details.id });
+          detailsEls.push(details);
+        }
+
+        // Replace the placeholder root with the generated activities, so <details> are direct children
+        placeholderRoot.replaceWith(...detailsEls);
+      } catch (e) {
+        // If JSON can't be loaded, fall back to existing static HTML (if any).
+        console.error(e);
       }
-      details.appendChild(summary);
+    } else {
+      const activitySections = Array.from(rootSection.querySelectorAll(":scope > section[id]"));
+      if (activitySections.length === 0) return;
 
-      const body = document.createElement("div");
-      body.className = "rc-activity-body";
+      for (const sec of activitySections) {
+        const h2 = sec.querySelector(":scope > h2");
+        if (!h2) continue;
 
-      // Move everything except the heading into the details body
-      for (const child of Array.from(sec.childNodes)) {
-        if (child === h2) continue;
-        body.appendChild(child);
+        const title = getHeadingTitle(h2);
+        if (!title) continue;
+
+        const details = document.createElement("details");
+        details.className = "rc-activity";
+
+        const summary = document.createElement("summary");
+        const summaryLeft = document.createElement("div");
+        summaryLeft.className = "rc-activity-summary-left";
+
+        const summaryText = document.createElement("span");
+        summaryText.className = "rc-activity-title";
+        summaryText.textContent = title;
+        summaryLeft.appendChild(summaryText);
+
+        const metaCategory = metaCategoryForActivityTitle(title);
+        details.dataset.metaCategory = metaCategory;
+        const metaTag = document.createElement("span");
+        metaTag.className = "rc-activity-meta";
+        metaTag.dataset.meta = metaCategory;
+        metaTag.textContent = categoryLabel(metaCategory);
+        summaryLeft.appendChild(metaTag);
+
+        summary.appendChild(summaryLeft);
+
+        const nTasks = countTasks(sec);
+        if (typeof nTasks === "number") {
+          const badge = document.createElement("span");
+          badge.className = "rc-activity-badge";
+          badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
+          summary.appendChild(badge);
+        }
+        details.appendChild(summary);
+
+        const body = document.createElement("div");
+        body.className = "rc-activity-body";
+
+        // Move everything except the heading into the details body
+        for (const child of Array.from(sec.childNodes)) {
+          if (child === h2) continue;
+          body.appendChild(child);
+        }
+
+        // Preserve existing anchor IDs (so #baking links still work)
+        const anchorId = sec.id;
+        details.id = anchorId;
+        details.appendChild(body);
+
+        activities.push({ title, id: anchorId });
+
+        // Replace the entire section with details
+        sec.parentNode.replaceChild(details, sec);
       }
-
-      // Preserve existing anchor IDs (so #baking links still work)
-      const anchorId = sec.id;
-      details.id = anchorId;
-      details.appendChild(body);
-
-      activities.push({ title, id: anchorId });
-
-      // Replace the entire section with details
-      sec.parentNode.replaceChild(details, sec);
     }
+
+    // Fill the intro blurb activity count (if present)
+    const activityCountEl = content.querySelector("#rc-composite-activity-count");
+    if (activityCountEl) activityCountEl.textContent = String(activities.length);
 
     // Convert "Class File" column into a link on the Task name, then remove the column
     for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
       const table = d.querySelector("table");
       if (table) linkifyTaskAndRemoveClassFile(table);
+    }
+
+    // Replace templated variable braces in descriptions:
+    // "{left/right}" -> "[<em>left/right</em>]"
+    function formatCompositeDescriptionInPlace(rootEl) {
+      if (!rootEl) return;
+      const textNodes = [];
+      const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
+
+      const re = /\{([^}]+)\}/g;
+      for (const node of textNodes) {
+        const s = node.nodeValue || "";
+        if (!s.includes("{")) continue;
+        re.lastIndex = 0;
+
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        let m;
+        while ((m = re.exec(s))) {
+          const start = m.index;
+          const end = start + m[0].length;
+          if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
+          frag.appendChild(document.createTextNode("["));
+          const em = document.createElement("em");
+          em.textContent = m[1];
+          frag.appendChild(em);
+          frag.appendChild(document.createTextNode("]"));
+          last = end;
+        }
+        if (last === 0) continue; // no matches
+        if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    }
+
+    for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
+      const table = d.querySelector("table");
+      if (!table) continue;
+      const ths = Array.from(table.querySelectorAll("thead tr th")).map((th) => (th.textContent || "").trim());
+      const descIdx = ths.indexOf("Description");
+      const idx = descIdx >= 0 ? descIdx : 1;
+      for (const tr of Array.from(table.querySelectorAll("tbody tr"))) {
+        const td = tr.children?.[idx];
+        if (td) formatCompositeDescriptionInPlace(td);
+      }
     }
 
     // After accordions exist, enrich tables with attributes if available
@@ -1769,9 +2352,13 @@
 
     const select = document.createElement("select");
     select.id = "rc-activity-select";
+    // Enable :invalid styling for placeholder text
+    select.required = true;
 
     const defaultOpt = document.createElement("option");
     defaultOpt.value = "";
+    defaultOpt.disabled = true;
+    defaultOpt.selected = true;
     defaultOpt.textContent = "Select an activity…";
     select.appendChild(defaultOpt);
 
@@ -3152,15 +3739,33 @@
     applyFilters();
     applyShowAllState();
 
-    // Put selector under the page title (h1) if present
-    const titleH1 = content.querySelector("h1");
-    if (titleH1 && titleH1.parentNode) {
-      titleH1.insertAdjacentElement("afterend", selectorWrap);
+    // Put selector under the page title, but BELOW the intro blurb if present
+    const introSpan = content.querySelector("#rc-composite-activity-count");
+    const introP = introSpan ? introSpan.closest("p") : null;
+    if (introP && introP.parentNode) {
+      introP.insertAdjacentElement("afterend", selectorWrap);
     } else {
-      content.insertAdjacentElement("afterbegin", selectorWrap);
+      const titleH1 = content.querySelector("h1");
+      if (titleH1 && titleH1.parentNode) {
+        titleH1.insertAdjacentElement("afterend", selectorWrap);
+      } else {
+        content.insertAdjacentElement("afterbegin", selectorWrap);
+      }
     }
 
     ensureBackToTopButton();
+
+  });
+
+  onReady(() => {
+    if (!isObjectsPage()) return;
+    initObjectsTableSorting();
+    ensureBackToTopButton();
+  });
+
+  onReady(() => {
+    if (!isFoundationModelLearningPage()) return;
+    document.body.classList.add("rc-foundation-model-learning");
   });
 
   // Datasets overview page: make target task tables match the Composite Tasks look.
@@ -3262,43 +3867,16 @@
       return "";
     }
 
-    async function fetchCompositeMeta() {
-      // Extract description + class-file hrefs from the Composite Tasks page HTML.
-      // This avoids maintaining a separate mapping in the docs bundle.
-      try {
-        const url = `${getContentRoot()}tasks/composite_tasks.html`;
-        const res = await fetch(url, { credentials: "same-origin" });
-        if (!res.ok) throw new Error(`fetch ${url} -> ${res.status}`);
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const map = new Map();
-        const tables = Array.from(doc.querySelectorAll("table.docutils"));
-        for (const table of tables) {
-          const theadRow = table.querySelector("thead tr");
-          if (!theadRow) continue;
-          const ths = Array.from(theadRow.querySelectorAll("th")).map((th) => (th.textContent || "").trim());
-          const taskIdx = ths.indexOf("Task");
-          const descIdx = ths.indexOf("Description");
-          const classIdx = ths.indexOf("Class File");
-          if (taskIdx < 0 || descIdx < 0 || classIdx < 0) continue;
-          for (const tr of Array.from(table.querySelectorAll("tbody tr"))) {
-            const tds = Array.from(tr.children);
-            const taskTd = tds[taskIdx];
-            const descTd = tds[descIdx];
-            const classTd = tds[classIdx];
-            if (!taskTd || !descTd || !classTd) continue;
-            const code = taskTd.querySelector("code");
-            const name = ((code ? code.textContent : taskTd.textContent) || "").trim();
-            if (!name) continue;
-            const href = classTd.querySelector("a[href]")?.href || "";
-            const descHTML = descTd.innerHTML || "";
-            if (!map.has(name)) map.set(name, { href, descHTML });
-          }
-        }
-        return map;
-      } catch {
-        return new Map();
+    function buildCompositeInfoMap(taskAttributesJson) {
+      // Source of truth: same JSON used by the Composite Tasks page.
+      const map = new Map();
+      const tasks = taskAttributesJson && Array.isArray(taskAttributesJson.tasks) ? taskAttributesJson.tasks : [];
+      for (const t of tasks) {
+        if (!t || !t.name) continue;
+        if (t.activity === "Atomic") continue;
+        map.set(t.name, { activity: t.activity || "", description: t.description || "" });
       }
+      return map;
     }
 
     function populateAtomicSeen(table, atomicEpisodeLengthMap) {
@@ -3358,7 +3936,7 @@
       }
     }
 
-    function populateCompositeTable(table, taskNames, metaMap) {
+    function populateCompositeTable(table, taskNames, infoMap) {
       const tbody = table?.querySelector("tbody");
       if (!tbody) return;
       tbody.innerHTML = "";
@@ -3367,8 +3945,9 @@
         const tr = document.createElement("tr");
 
         const tdTask = document.createElement("td");
-        const meta = metaMap.get(name) || {};
-        const href = meta.href || "";
+        const info = infoMap.get(name) || {};
+        const activity = info.activity || "";
+        const href = activity ? sourceUrlForTask(activity, name) : "";
         const code = document.createElement("code");
         code.textContent = name;
         if (href) {
@@ -3383,7 +3962,7 @@
         }
 
         const tdDesc = document.createElement("td");
-        tdDesc.innerHTML = meta.descHTML || "";
+        tdDesc.textContent = info.description || "";
 
         tr.appendChild(tdTask);
         tr.appendChild(tdDesc);
@@ -3395,20 +3974,21 @@
       const attrsMap = getTaskAttributesMap() || new Map();
       const episodeLengthMap = getEpisodeLengthMap();
       const atomicEpisodeLengthMap = getAtomicEpisodeLengthMap();
-      const compMeta = await fetchCompositeMeta();
+      const taskAttributesJson = await loadTaskAttributesJson();
+      const compInfo = buildCompositeInfoMap(taskAttributesJson);
 
       const atomicTable = document.getElementById("rc-datasets-atomic-seen");
       if (atomicTable) populateAtomicSeen(atomicTable, atomicEpisodeLengthMap);
 
       const compSeenTable = document.getElementById("rc-datasets-composite-seen");
       if (compSeenTable) {
-        populateCompositeTable(compSeenTable, COMPOSITE_SEEN_TASKS, compMeta);
+        populateCompositeTable(compSeenTable, COMPOSITE_SEEN_TASKS, compInfo);
         addAttributesToTable(compSeenTable, attrsMap, episodeLengthMap);
       }
 
       const compUnseenTable = document.getElementById("rc-datasets-composite-unseen");
       if (compUnseenTable) {
-        populateCompositeTable(compUnseenTable, COMPOSITE_UNSEEN_TASKS, compMeta);
+        populateCompositeTable(compUnseenTable, COMPOSITE_UNSEEN_TASKS, compInfo);
         addAttributesToTable(compUnseenTable, attrsMap, episodeLengthMap);
       }
     })();
