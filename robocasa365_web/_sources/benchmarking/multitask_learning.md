@@ -62,7 +62,7 @@ Here is a summary of our benchmarking results. We have released the model checkp
       <th><strong>Task Split</strong></th>
       <th><strong>Diffusion Policy</strong></th>
       <th><strong>π₀</strong></th>
-      <th><strong>π₀.₅</strong></th>
+      <th><strong>π₀<span class="rc-pi-subdot">.</span>₅</strong></th>
       <th><strong>GR00T N1.5</strong></th>
     </tr>
   </thead>
@@ -70,30 +70,30 @@ Here is a summary of our benchmarking results. We have released the model checkp
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
       <td>15.7%</td>
-      <td>36.3%</td>
+      <td>34.6%</td>
       <td>48.0%</td>
-      <td><strong>43.0%</strong></td>
+      <td>43.0%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
       <td>0.2%</td>
-      <td>5.2%</td>
+      <td>6.1%</td>
       <td>16.5%</td>
-      <td><strong>9.6%</strong></td>
+      <td>9.6%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
       <td>1.25%</td>
-      <td>0.7%</td>
+      <td>1.1%</td>
       <td>5.0%</td>
-      <td><strong>4.4%</strong></td>
+      <td>4.4%</td>
     </tr>
     <tr>
       <td><strong>Average</strong></td>
       <td>6.1%</td>
-      <td>15.0%</td>
-      <td>23.2%</td>
-      <td><strong>20.0%</strong></td>
+      <td>14.8%</td>
+      <td>24.2%</td>
+      <td>20.0%</td>
     </tr>
     <tr>
       <td><strong>Model Checkpoint</strong></td>

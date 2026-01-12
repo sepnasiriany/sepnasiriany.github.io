@@ -24,6 +24,15 @@ table.rc-benchmark-table tbody tr:hover td {
   background: var(--pst-color-surface-hover, rgba(0, 0, 0, 0.03));
 }
 
+/* π₀.₅: render dot smaller + lower */
+.rc-pi-subdot {
+  display: inline-block;
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: -0.20em;
+  margin: 0 0.03em;
+}
+
 /* Split label coloring (match existing task tag colors) */
 table.rc-benchmark-table code.rc-benchmark-split {
   font-weight: 800;
