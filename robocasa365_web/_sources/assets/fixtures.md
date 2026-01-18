@@ -766,6 +766,24 @@ function preloadAdjacentImages(viewer, currentPos) {
   }
 }
 
+function preloadAllImagesForViewer(viewer) {
+  // Preload all images for a fixture when modal opens for smooth scrolling
+  // Cache management: Browsers automatically manage image cache size.
+  // We only cache one fixture at a time (the one in the modal), so memory usage
+  // is reasonable (typically 20-60 images per fixture, ~200KB-2MB total).
+  // When the modal closes, the browser can garbage collect unused images.
+  const base = viewer.dataset.base;
+  const ids = getViewerIds(viewer);
+  
+  ids.forEach(function(imageId) {
+    const src = `${base}/${imageId}.png`;
+    // Only preload if not already cached
+    if (!imagePreloadCache.has(src)) {
+      preloadImage(src);
+    }
+  });
+}
+
 function closeFixtureModal() {
   document.getElementById('fixtureModal').classList.remove('active');
   document.body.style.overflow = '';
@@ -1013,6 +1031,10 @@ function openFixtureModalForViewer(viewer) {
   const modalSlider = document.getElementById('fixtureModalSlider');
   modalSlider.min = "1";
   modalSlider.max = String(count);
+
+  // Preload all images for this fixture when modal opens
+  // This ensures smooth scrolling through all images without loading delays
+  preloadAllImagesForViewer(viewer);
 
   setModalIndex(pos);
   document.getElementById('fixtureModal').classList.add('active');
