@@ -733,55 +733,32 @@ table.rc-fixtures-table td:nth-child(2) {
 // Fixture modal state (single-preview + slider)
 let currentViewer = null;
 
-// Image preloading cache and management
-const imagePreloadCache = new Map(); // Maps image URL to Image object
-const PRELOAD_RANGE = 3; // Preload next 3 images in each direction
-
-function preloadImage(src) {
-  // Return cached image if already loaded
-  if (imagePreloadCache.has(src)) {
-    return imagePreloadCache.get(src);
-  }
-  
-  // Create new Image object for preloading
-  const img = new Image();
-  imagePreloadCache.set(src, img);
-  img.src = src;
-  return img;
-}
-
-function preloadAdjacentImages(viewer, currentPos) {
+// Simple image preloading using browser-native <link rel="prefetch">
+// This is more stable than manual Image object caching
+function prefetchAdjacentImages(viewer, currentPos) {
   const base = viewer.dataset.base;
   const ids = getViewerIds(viewer);
   const count = ids.length;
+  const PRELOAD_RANGE = 2; // Prefetch next 2 images in each direction
   
-  // Preload images in range [currentPos - PRELOAD_RANGE, currentPos + PRELOAD_RANGE]
+  // Remove old prefetch links
+  const oldLinks = document.querySelectorAll('link[data-fixture-prefetch]');
+  oldLinks.forEach(link => link.remove());
+  
+  // Add prefetch links for adjacent images
   for (let offset = -PRELOAD_RANGE; offset <= PRELOAD_RANGE; offset++) {
     const targetPos = currentPos + offset;
     if (targetPos >= 1 && targetPos <= count && targetPos !== currentPos) {
       const imageId = ids[targetPos - 1];
       const src = `${base}/${imageId}.png`;
-      preloadImage(src);
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = src;
+      link.setAttribute('data-fixture-prefetch', 'true');
+      document.head.appendChild(link);
     }
   }
-}
-
-function preloadAllImagesForViewer(viewer) {
-  // Preload all images for a fixture when modal opens for smooth scrolling
-  // Cache management: Browsers automatically manage image cache size.
-  // We only cache one fixture at a time (the one in the modal), so memory usage
-  // is reasonable (typically 20-60 images per fixture, ~200KB-2MB total).
-  // When the modal closes, the browser can garbage collect unused images.
-  const base = viewer.dataset.base;
-  const ids = getViewerIds(viewer);
-  
-  ids.forEach(function(imageId) {
-    const src = `${base}/${imageId}.png`;
-    // Only preload if not already cached
-    if (!imagePreloadCache.has(src)) {
-      preloadImage(src);
-    }
-  });
 }
 
 function closeFixtureModal() {
@@ -877,60 +854,26 @@ function setViewerIndex(viewer, index) {
   const src = `${base}/${imageId}.png`;
   const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
   
-  // Preload adjacent images for smooth navigation
-  preloadAdjacentImages(viewer, pos);
+  // Prefetch adjacent images using browser-native prefetch
+  prefetchAdjacentImages(viewer, pos);
   
   if (img) {
-    // Check if image is already in cache (preloaded)
-    const cachedImg = imagePreloadCache.get(src);
-    if (cachedImg) {
-      if (cachedImg.complete) {
-        // Image is already loaded, use it immediately
-        img.src = src;
-        img.alt = styleLabel;
-      } else {
-        // Image is loading, wait for it
-        img.style.opacity = '0.5';
-        img.style.transition = 'opacity 0.2s';
-        // Check again in case it completed between checks
-        if (cachedImg.complete) {
-          img.src = src;
-          img.alt = styleLabel;
-          img.style.opacity = '1';
-        } else {
-          cachedImg.onload = function() {
-            img.src = src;
-            img.alt = styleLabel;
-            img.style.opacity = '1';
-            cachedImg.onload = null;
-            cachedImg.onerror = null;
-          };
-          cachedImg.onerror = function() {
-            img.style.opacity = '1'; // Reset opacity even on error
-            cachedImg.onload = null;
-            cachedImg.onerror = null;
-          };
-        }
-      }
-    } else {
-      // Show loading state
-      img.style.opacity = '0.5';
+    // Simple loading state - browser handles caching naturally
+    if (img.src !== src) {
+      img.style.opacity = '0.6';
       img.style.transition = 'opacity 0.2s';
-      
-      // Load image
-      const loadImg = new Image();
-      loadImg.onload = function() {
-        img.src = src;
-        img.alt = styleLabel;
-        img.style.opacity = '1';
-        // Cache it
-        imagePreloadCache.set(src, loadImg);
+    }
+    img.src = src;
+    img.alt = styleLabel;
+    
+    // Fade in when loaded (browser will use cache if available)
+    if (!img.complete) {
+      img.onload = function() {
+        this.style.opacity = '1';
+        this.onload = null;
       };
-      loadImg.onerror = function() {
-        img.style.opacity = '1'; // Reset opacity even on error
-      };
-      loadImg.src = src;
-      imagePreloadCache.set(src, loadImg);
+    } else {
+      img.style.opacity = '1';
     }
   }
   if (label) label.textContent = styleLabel;
@@ -963,56 +906,25 @@ function setModalIndex(index) {
   const src = `${base}/${imageId}.png`;
   const styleLabel = getStyleLabelForPos(currentViewer, pos, imageId);
   
-  // Preload adjacent images for smooth navigation
-  preloadAdjacentImages(currentViewer, pos);
+  // Prefetch adjacent images using browser-native prefetch
+  prefetchAdjacentImages(currentViewer, pos);
   
   if (modalImg) {
-    // Check if image is already in cache (preloaded)
-    const cachedImg = imagePreloadCache.get(src);
-    if (cachedImg) {
-      if (cachedImg.complete) {
-        // Image is already loaded, use it immediately
-        modalImg.src = src;
-      } else {
-        // Image is loading, wait for it
-        modalImg.style.opacity = '0.5';
-        modalImg.style.transition = 'opacity 0.2s';
-        // Check again in case it completed between checks
-        if (cachedImg.complete) {
-          modalImg.src = src;
-          modalImg.style.opacity = '1';
-        } else {
-          cachedImg.onload = function() {
-            modalImg.src = src;
-            modalImg.style.opacity = '1';
-            cachedImg.onload = null;
-            cachedImg.onerror = null;
-          };
-          cachedImg.onerror = function() {
-            modalImg.style.opacity = '1'; // Reset opacity even on error
-            cachedImg.onload = null;
-            cachedImg.onerror = null;
-          };
-        }
-      }
-    } else {
-      // Show loading state
-      modalImg.style.opacity = '0.5';
+    // Simple loading state - browser handles caching naturally
+    if (modalImg.src !== src) {
+      modalImg.style.opacity = '0.6';
       modalImg.style.transition = 'opacity 0.2s';
-      
-      // Load image
-      const loadImg = new Image();
-      loadImg.onload = function() {
-        modalImg.src = src;
-        modalImg.style.opacity = '1';
-        // Cache it
-        imagePreloadCache.set(src, loadImg);
+    }
+    modalImg.src = src;
+    
+    // Fade in when loaded (browser will use cache if available)
+    if (!modalImg.complete) {
+      modalImg.onload = function() {
+        this.style.opacity = '1';
+        this.onload = null;
       };
-      loadImg.onerror = function() {
-        modalImg.style.opacity = '1'; // Reset opacity even on error
-      };
-      loadImg.src = src;
-      imagePreloadCache.set(src, loadImg);
+    } else {
+      modalImg.style.opacity = '1';
     }
   }
   if (modalLabel) modalLabel.textContent = styleLabel;
@@ -1031,10 +943,6 @@ function openFixtureModalForViewer(viewer) {
   const modalSlider = document.getElementById('fixtureModalSlider');
   modalSlider.min = "1";
   modalSlider.max = String(count);
-
-  // Preload all images for this fixture when modal opens
-  // This ensures smooth scrolling through all images without loading delays
-  preloadAllImagesForViewer(viewer);
 
   setModalIndex(pos);
   document.getElementById('fixtureModal').classList.add('active');
@@ -1169,15 +1077,15 @@ function initFixtureViewers() {
     }
   });
   
-  // Preload initial images for all viewers after a short delay
-  // This ensures the page is interactive first, then preloads in background
+  // Prefetch initial images for all viewers after a short delay
+  // This ensures the page is interactive first, then prefetches in background
   setTimeout(function() {
     const viewers = document.querySelectorAll('.fixture-viewer');
     viewers.forEach(function(viewer) {
       const ids = getViewerIds(viewer);
       if (ids.length > 0) {
-        // Preload first few images for each viewer
-        preloadAdjacentImages(viewer, 1);
+        // Prefetch first few images for each viewer
+        prefetchAdjacentImages(viewer, 1);
       }
     });
   }, 500);
