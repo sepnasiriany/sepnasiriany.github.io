@@ -1,7 +1,23 @@
 # Fixtures
 
-<p class="fixtures-intro">Each kitchen scene contains a wide variety of interactable fixtures. Specifically, RoboCasa includes a total of 456 fixtures spanning 12 distinct categories.</p>
+<p class="fixtures-intro">Each kitchen scene contains a wide variety of interactable fixtures. RoboCasa includes a total of 456 fixtures spanning 16 categories.</p>
 
+<div class="fixture-filter-container">
+  <label for="style-filter-input" class="fixture-filter-label">Filter by Style:</label>
+  <input
+    type="text"
+    id="style-filter-input"
+    class="fixture-filter-input"
+    inputmode="numeric"
+    pattern="\\d{1,2}"
+    maxlength="2"
+    placeholder="Enter style (1-60)"
+    aria-label="Filter fixtures by style number"
+  >
+  <button type="button" id="style-filter-clear" class="fixture-filter-clear" onclick="clearStyleFilter()" style="display: none;">Clear</button>
+</div>
+
+<!--
 <div class="fixtures-table-wrap">
   <table class="rc-benchmark-table rc-fixtures-table">
   <thead>
@@ -27,6 +43,7 @@
   </tbody>
   </table>
 </div>
+-->
 
 <style>
 /* Page width: use more of the available horizontal space (fixtures page only) */
@@ -89,6 +106,12 @@ table.rc-fixtures-table td:nth-child(2) {
   opacity: 0.8;
 }
 
+/* Inline (non-modal) "Style ..." label under fixture preview */
+.fixture-preview-label {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
 /* Modal/Lightbox styles */
 .fixture-modal {
   display: none;
@@ -109,23 +132,42 @@ table.rc-fixtures-table td:nth-child(2) {
 }
 .modal-content {
   position: relative;
-  max-width: min(90%, 900px);
-  max-height: 75vh;
+  max-width: min(90%, 990px);
+  max-height: 82vh;
   text-align: center;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  line-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .modal-content img {
   max-width: 100%;
-  max-height: 70vh;
+  max-height: 82vh;
   width: auto;
   height: auto;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  border: none;
+  outline: none;
+  background: transparent;
+  vertical-align: bottom;
+  image-rendering: auto;
+  flex-shrink: 0;
 }
 .modal-label {
   color: white;
   font-size: 18px;
-  margin-top: 12px;
+  margin-top: 20px; /* more gap from image */
   font-weight: 500;
 }
 .modal-close {
@@ -288,6 +330,66 @@ table.rc-fixtures-table td:nth-child(2) {
   margin-top: 10px;
 }
 
+/* Style filter */
+.fixture-filter-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0 20px 0;
+  padding: 12px;
+  background: var(--pst-color-surface, rgba(127, 127, 127, 0.04));
+  border: 1px solid var(--pst-color-border, rgba(128, 128, 128, 0.3));
+  border-radius: 8px;
+}
+
+.fixture-filter-label {
+  font-weight: 600;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.fixture-filter-input {
+  flex: 1;
+  max-width: 200px;
+  padding: 8px 12px;
+  border: 1px solid var(--pst-color-border, rgba(128, 128, 128, 0.3));
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--pst-color-background, white);
+  color: inherit;
+}
+
+.fixture-filter-input:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+  border-color: #3498db;
+}
+
+.fixture-filter-input.rc-invalid {
+  border-color: #b42318 !important;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.15);
+}
+
+.fixture-filter-clear {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.fixture-filter-clear:hover {
+  background: #2980b9;
+}
+
+.fixture-card.hidden-by-filter {
+  display: none;
+}
+
 .fixture-inline-counter {
   font-size: 14px;
   min-width: 70px;
@@ -366,6 +468,22 @@ table.rc-fixtures-table td:nth-child(2) {
   max-height: none; /* avoid letterboxing whitespace */
   object-fit: initial;
   background: transparent;
+  vertical-align: bottom;
+  line-height: 0;
+}
+
+/* Normalize image appearance in dark mode */
+@media (prefers-color-scheme: dark) {
+  .modal-content img,
+  .fixture-preview-image {
+    filter: brightness(1.25) contrast(0.88) saturate(1.05);
+  }
+  .modal-content {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  }
+  .fixture-card {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(127, 127, 127, 0.04));
+  }
 }
 </style>
 
@@ -386,10 +504,108 @@ table.rc-fixtures-table td:nth-child(2) {
 
 <div class="fixtures-viewers-grid">
   <div class="fixture-card">
-    <h2 class="fixture-card-title">Microwave</h2>
-    <div class="fixture-viewer" data-name="Microwave" data-base="../_static/fixtures/microwaves" data-ids="36,40,15,4,37,30,9,42,26,47,38,18,49,57,16,20,31,17,45,12,33,8,44,55,22,11,1,6,23,46,60,34,28,41,48,50,56,27,21,54,59,13,29,19,7,2,58,39,14,3" data-style-groups="1;2|3;4;5;6;7|9;8;10;11;12|35|60;13|23;14;15;16;17;18;19;20;21|46;22;24;25;26;27|38|49;28;29;30;31;32;33;34;36;37|52;39;40;41|48;42;43;44;45;47;50;51;53;54;55;56;57;58;59">
+    <h2 class="fixture-card-title">Blender</h2>
+    <div class="fixture-viewer" data-name="Blender" data-base="../_static/fixtures/blender" data-ids="1,2,3,4,5,6,7,8,11,12,13,14,15,56,18,19,21,22,23,25,30,44" data-style-groups="1;2;3;4|9;5;6;7;8|10;11|28|48|51;12|35|39;13|29|31;14|16|36;15|20|32|49;17|27|53|56;18|24|52;19|26|40|54|58;21|37|60;22|41|42|59;23|38|43|46|47;25|45|50;30|33|34;44|55|57">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="../_static/fixtures/microwaves/36.png" alt="Microwave">
+        <img class="fixture-preview-image" src="../_static/fixtures/blender/1.png" alt="Blender">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 22</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="22" value="1" aria-label="Blender index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Coffee Machine</h2>
+    <div class="fixture-viewer" data-name="Coffee Machine" data-base="../_static/fixtures/coffee_machine" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,32,20,21,22,23,24,25,27,28,29,30,31,34,35,36,37,38,42,43,44,45,47,48,50,51,53,56,58,59,60" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15|33;16|41;17;18|57;19|32;20;21|49;22|39;23|54;24|46|52;25|26;27;28;29;30|55;31;34|40;35;36;37;38;42;43;44;45;47;48;50;51;53;56;58;59;60">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/coffee_machine/1.png" alt="Coffee Machine">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 48</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="48" value="1" aria-label="Coffee Machine index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Electric Kettle</h2>
+    <div class="fixture-viewer" data-name="Electric Kettle" data-base="../_static/fixtures/electric_kettle" data-ids="1,2,3,4,9,11,12,13,14,15,16,20,21,22,23,24,25,26,31,34,38,39,41,53,55" data-style-groups="1|6;2|7;3|8;4|5;9|10;11|17|43;12|18|47|59;13|29|35|50;14|36|40|44|60;15|19;16|45;20;21|37|49;22|28|56;23|51;24|48;25|27|54|57;26|30|33|42;31|32;34;38|52;39|46;41;53;55|58">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/electric_kettle/1.png" alt="Electric Kettle">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 25</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="25" value="1" aria-label="Electric Kettle index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Dishwasher</h2>
+    <div class="fixture-viewer" data-name="Dishwasher" data-base="../_static/fixtures/dishwasher" data-ids="36,40,32,15,4,30,26,47,38,18,49,20,31,17,45,12,52,8,44,6,23,5,24,13,14" data-style-groups="1|6;2|8|9;3;4;5;7|10;11|28|33;12|27|29;13|39;14|16|24|36|53|59;15|17|41|44;18|35;19|55;20|40;21|37|43|45;22|46;23|30;25|34|47|48|52|56;26|54|60;31|42;32;38|57;49|51;50;58">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/dishwasher/36.png" alt="Dishwasher">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 25</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="25" value="1" aria-label="Dishwasher index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Fridge (Bottom Freezer)</h2>
+    <div class="fixture-viewer" data-name="Fridge (Bottom Freezer)" data-base="../_static/fixtures/fridge_bottom_freezer" data-ids="36,9,32,37,30,26,47,38,57,29,16,20,31,17,12,8,22" data-style-groups="1|5;2|8;3|4;6;7|9|10;11|45;12|36|59;13|24;14|16|23|49|53;15|34|51|60;17|27|32|40|46|57;18|21|43|52;19|29|35|48|58;20|30|37|41|44|55|56;22|33|39|50|54;25|26|31;28|38|42|47">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/fridge_bottom_freezer/36.png" alt="Fridge (Bottom Freezer)">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 17</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="17" value="1" aria-label="Fridge (Bottom Freezer) index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Fridge (French Door)</h2>
+    <div class="fixture-viewer" data-name="Fridge (French Door)" data-base="../_static/fixtures/fridge_french_door" data-ids="1,8,10,4,6,11,12,13,15,17,19,20,22,25,30,51,44" data-style-groups="1;2|8;3|7|10;4;5|6|9;11|14|18|35;12|21|34|52|56;13|16|24|29|49|53;15|41|42;17|36|37|59;19|23|27|32|47|57;20|26|45|46|55;22|31|38;25|28|39|48|54|58;30|40|43;33|50|51|60;44">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/fridge_french_door/1.png" alt="Fridge (French Door)">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 17</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="17" value="1" aria-label="Fridge (French Door) index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Fridge (Side by Side)</h2>
+    <div class="fixture-viewer" data-name="Fridge (Side by Side)" data-base="../_static/fixtures/fridge_side_by_side" data-ids="1,8,4,6,7,11,12,14,17,23,24,26,28,30,33,36" data-style-groups="1|5;2|8|10;3|4;6|9;7;11|15|18|22|34|45|49|52|53|54;12|13|16|31|41|42|46|58;14|19|21|43|55|60;17|20|29|50|59;23|27|38;24|25|47|56;26|32|48;28|37|40|44;30|39;33|35|51|57;36">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/fridge_side_by_side/1.png" alt="Fridge (Side by Side)">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 16</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="16" value="1" aria-label="Fridge (Side by Side) index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Microwave</h2>
+    <div class="fixture-viewer" data-name="Microwave" data-base="../_static/fixtures/microwave" data-ids="36,40,15,4,37,30,9,42,26,47,38,18,49,57,16,20,31,17,45,12,33,8,44,55,22,11,1,6,23,46,60,34,28,41,48,50,56,27,21,54,59,13,29,19,7,2,58,39,14,3" data-style-groups="1;2|3;4;5;6;7|9;8;10;11;12|35|60;13|23;14;15;16;17;18;19;20;21|46;22;24;25;26;27|38|49;28;29;30;31;32;33;34;36;37|52;39;40;41|48;42;43;44;45;47;50;51;53;54;55;56;57;58;59">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/microwave/36.png" alt="Microwave">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -400,10 +616,24 @@ table.rc-fixtures-table td:nth-child(2) {
   </div>
 
   <div class="fixture-card">
-    <h2 class="fixture-card-title">Sink</h2>
-    <div class="fixture-viewer" data-name="Sink" data-base="../_static/fixtures/sinks" data-ids="36,40,32,4,37,30,9,51,42,26,47,38,18,49,57,16,20,31,17,45,12,52,33,8,44,55,22,11,1,6,23,60,43,28,5,48,56,27,21,54,10,59,25,13,29,19,7,39,14" data-style-groups="1;2;3|4;5;6;7;8;9;10;11|56;12;13;14;15;16;17;18;19;20;21;22;23;24|39|55;25;26|36;27;28;29;30;31|33;32|41;34;35;37;38|52;40;42|49;43;44;45;46;47;48;50;51;53;54;57|59;58|60">
+    <h2 class="fixture-card-title">Oven</h2>
+    <div class="fixture-viewer" data-name="Oven" data-base="../_static/fixtures/oven" data-ids="46,25,40,41,19,14,48,31,53,22,43,59,38,47,32,8,55,50,60,6,4" data-style-groups="1;2|7|8;3|9;4;5;6;10;11|15|18|44|50;12|30|33|41;13|31|57;14|27|35|39|55;16|25|46;17|60;19|26|29|37|45;20|23|32|52;21|22|40|58;24|28|34|38|59;36|54|56;42|47|51;43|49;48|53">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="../_static/fixtures/sinks/36.png" alt="Sink">
+        <img class="fixture-preview-image" src="../_static/fixtures/oven/46.png" alt="Oven">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 21</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="21" value="1" aria-label="Oven index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Sink</h2>
+    <div class="fixture-viewer" data-name="Sink" data-base="../_static/fixtures/sink" data-ids="36,40,32,4,37,30,9,51,42,26,47,38,18,49,57,16,20,31,17,45,12,52,33,8,44,55,22,11,1,6,23,60,43,28,5,48,56,27,21,54,10,59,25,13,29,19,7,39,14" data-style-groups="1;2;3|4;5;6;7;8;9;10;11|56;12;13;14;15;16;17;18;19;20;21;22;23;24|39|55;25;26|36;27;28;29;30;31|33;32|41;34;35;37;38|52;40;42|49;43;44;45;46;47;48;50;51;53;54;57|59;58|60">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/sink/36.png" alt="Sink">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -414,15 +644,85 @@ table.rc-fixtures-table td:nth-child(2) {
   </div>
 
   <div class="fixture-card">
-    <h2 class="fixture-card-title">Stove</h2>
-    <div class="fixture-viewer" data-name="Stove" data-base="../_static/fixtures/stoves" data-ids="36,40,32,30,9,26,38,18,16,20,31,33,8,44,22,11,19" data-style-groups="1|4|6;2|5;3|10;7|9;8;11|12|32|35|39|57;13|15|37|44|59;14|16|22|27|30|51;17|23|58;18|20|21|38|41|46|52;19|34|45;24|40|60;25|42|48|54;26|33|43|47;28|31|36|50;29|49|55;53|56">
+    <h2 class="fixture-card-title">Stand Mixer</h2>
+    <div class="fixture-viewer" data-name="Stand Mixer" data-base="../_static/fixtures/stand_mixer" data-ids="1,2,4,5,7,10,11,12,13,16,17,18,19,20,21,23,24,26,29,35,38,39,42,48,51" data-style-groups="1|8|9;2|3;4;5|6;7;10;11|14|15|22|59;12|37|50;13|49|52|56;16|27|45|57;17|47;18|32;19|25;20;21|30;23|28|33|46;24|40|43|53;26|31|34|55;29|41|44;35|36|60;38;39|54;42;48;51|58">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="../_static/fixtures/stoves/36.png" alt="Stove">
+        <img class="fixture-preview-image" src="../_static/fixtures/stand_mixer/1.png" alt="Stand Mixer">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 25</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="25" value="1" aria-label="Stand Mixer index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Stove (classic)</h2>
+    <div class="fixture-viewer" data-name="Stove (classic)" data-base="../_static/fixtures/stove_classic" data-ids="36,40,32,30,9,26,38,29,16,20,31,53,8,44,6,2,58" data-style-groups="1|4|6;2|5;3|10;7|9;8;11|12|32|35|39|57;13|15|37|44|59;14|16|22|27|30|51;17|23|58;18|20|21|38|41|46|52;19|34|45;24|40|60;25|42|48|54;26|33|43|47;28|31|36|50;29|49|55;53|56">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/stove_classic/36.png" alt="Stove (classic)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
         <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 17</span>
-        <input type="range" class="fixture-inline-slider" min="1" max="17" value="1" aria-label="Stove index">
+        <input type="range" class="fixture-inline-slider" min="1" max="17" value="1" aria-label="Stove (classic) index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Stove (wide)</h2>
+    <div class="fixture-viewer" data-name="Stove (wide)" data-base="../_static/fixtures/stove_wide" data-ids="1,60,12,13,55,16,19,18,28" data-style-groups="1|2|3|4|5|6|7|8|9|10;11|41|50|60;12|20|21|22|24|25|36|39|48|52;13|14|30|38|44|45|46|51|58;15|23|35|43|55|57;16|26|29|32|33|34|47|54|56|59;17|19|42;18|27|49;28|31|37|40|53">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/stove_wide/1.png" alt="Stove (wide)">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 9</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="9" value="1" aria-label="Stove (wide) index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Stovetop</h2>
+    <div class="fixture-viewer" data-name="Stovetop" data-base="../_static/fixtures/stovetop" data-ids="1,2,5,6,7,8,9,10,35,12,13,14,56,16,17,18,49,20,21,25,55,36,48,51" data-style-groups="1|3;2|4;5;6;7;8;9;10;11|35|38|39|45|53;12|31|42|46;13|24|27|41|54;14|37|44|58;15|56;16|23|60;17;18|28|30|33;19|49;20|43;21|22;25|34|52;26|29|32|40|50|55|59;36|47|57;48;51">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/stovetop/1.png" alt="Stovetop">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 24</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="24" value="1" aria-label="Stovetop index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Toaster</h2>
+    <div class="fixture-viewer" data-name="Toaster" data-base="../_static/fixtures/toaster" data-ids="1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,27,28,29,30,32,33,34,35,37,39,41,42,43,44,47,48,50,53,55,58,60" data-style-groups="1;2;3;4|5;6;7;8;9;10;11|26|45;12|51;13;14|40;15;16|23|57|59;17|49;18;19;20;21|36;22|31;24;25;27;28|46;29;30|38;32;33;34;35;37;39|56;41;42|52;43|54;44;47;48;50;53;55;58;60">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/toaster/1.png" alt="Toaster">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 44</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="44" value="1" aria-label="Toaster index">
+      </div>
+    </div>
+  </div>
+
+  <div class="fixture-card">
+    <h2 class="fixture-card-title">Toaster Oven</h2>
+    <div class="fixture-viewer" data-name="Toaster Oven" data-base="../_static/fixtures/toaster_oven" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,32,34,35,37,38,40,41,43,44,45,46,50,52,53,54,55,57,59" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16|22;17|31;33|47;18|49;19|48;20;21|39;23;24;25;26|60;27;28|36;29|42;30;32;34|58;35;37;38;40;41;43;44;45;46|51;50;52;53;54|56;55;57;59">
+      <div class="fixture-item fixture-preview" role="button" tabindex="0">
+        <img class="fixture-preview-image" src="../_static/fixtures/toaster_oven/1.png" alt="Toaster Oven">
+        <div class="label fixture-preview-label">Style</div>
+      </div>
+      <div class="fixture-inline-slider-container">
+        <span class="fixture-inline-counter" aria-label="Current fixture" data-role="counter">1 / 47</span>
+        <input type="range" class="fixture-inline-slider" min="1" max="47" value="1" aria-label="Toaster Oven index">
       </div>
     </div>
   </div>
@@ -599,6 +899,61 @@ function fixtureModalStep(delta) {
   setViewerIndex(currentViewer, next);
 }
 
+// Style filter functionality
+function filterFixturesByStyle(styleNumber) {
+  const styleNum = parseInt(styleNumber, 10);
+
+  // If invalid / empty: clear filter + reset all viewers to their first entry
+  if (!styleNumber || isNaN(styleNum) || styleNum < 1 || styleNum > 60) {
+    document.querySelectorAll('.fixture-card').forEach(card => {
+      card.classList.remove('hidden-by-filter');
+      const viewer = card.querySelector('.fixture-viewer');
+      if (viewer) setViewerIndex(viewer, 1);
+    });
+    const clearBtn = document.getElementById('style-filter-clear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    return;
+  }
+
+  // Jump every fixture viewer to the entry that contains this style number.
+  // If a fixture truly doesn't contain the style, hide it.
+  document.querySelectorAll('.fixture-card').forEach(card => {
+    const viewer = card.querySelector('.fixture-viewer');
+    if (!viewer) {
+      card.classList.add('hidden-by-filter');
+      return;
+    }
+
+    const styleGroups = getViewerStyleGroups(viewer);
+    if (!styleGroups || styleGroups.length === 0) {
+      card.classList.add('hidden-by-filter');
+      return;
+    }
+
+    const matchIdx = styleGroups.findIndex(group => group.includes(styleNum));
+    if (matchIdx === -1) {
+      card.classList.add('hidden-by-filter');
+      return;
+    }
+
+    card.classList.remove('hidden-by-filter');
+    // viewer indices are 1-based
+    setViewerIndex(viewer, matchIdx + 1);
+  });
+
+  const clearBtn = document.getElementById('style-filter-clear');
+  if (clearBtn) clearBtn.style.display = 'inline-block';
+}
+
+function clearStyleFilter() {
+  const input = document.getElementById('style-filter-input');
+  if (input) {
+    input.value = '';
+    input.classList.remove('rc-invalid');
+    filterFixturesByStyle('');
+  }
+}
+
 // Close modal on escape key
 document.addEventListener('keydown', function(e) {
   const modal = document.getElementById('fixtureModal');
@@ -655,11 +1010,45 @@ function initFixtureViewers() {
   });
 }
 
+// Initialize style filter
+function initStyleFilter() {
+  const filterInput = document.getElementById('style-filter-input');
+  if (filterInput) {
+    filterInput.addEventListener('input', function(e) {
+      // Keep only digits and limit to 2 characters (1-2 digits)
+      let v = String(e.target.value || '').replace(/\\D+/g, '').slice(0, 2);
+      if (v !== e.target.value) e.target.value = v;
+
+      const n = parseInt(v, 10);
+      const invalid = v.length > 0 && (!Number.isFinite(n) || n < 1 || n > 60);
+      e.target.classList.toggle('rc-invalid', invalid);
+
+      if (!invalid) filterFixturesByStyle(v);
+    });
+    filterInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        // Re-validate on Enter
+        const v = String(e.target.value || '').replace(/\\D+/g, '').slice(0, 2);
+        e.target.value = v;
+        const n = parseInt(v, 10);
+        const invalid = v.length > 0 && (!Number.isFinite(n) || n < 1 || n > 60);
+        e.target.classList.toggle('rc-invalid', invalid);
+        if (!invalid) filterFixturesByStyle(v);
+      }
+    });
+  }
+}
+
 // Initialize on page load
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initFixtureViewers);
+  document.addEventListener('DOMContentLoaded', function() {
+    initFixtureViewers();
+    initStyleFilter();
+  });
 } else {
   initFixtureViewers();
+  initStyleFilter();
 }
 </script>
 

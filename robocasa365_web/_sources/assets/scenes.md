@@ -26,12 +26,6 @@ env = gym.make(
 )
 ```
 
-## Pretraining kitchens 
-
-For pretraining kitchens, we provide 50 layouts and 50 styles.
-The layouts are sourced from real world kitchens based on Zillow listings found across diverse locations in the United States (California Bay Area, Denver, Austin, Atlanta, Boston).
-Each layout can be paired with any style, resulting in **2,500 total pretraining kitchen scenes**.
-
 <style>
 .sort-btn {
   background: #3498db;
@@ -53,11 +47,17 @@ Each layout can be paired with any style, resulting in **2,500 total pretraining
 }
 .scene-item {
   text-align: center;
+  cursor: pointer;
 }
 .scene-item img {
   width: 100%;
   border-radius: 6px;
   border: 1px solid rgba(128,128,128,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.scene-item img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 .scene-item .label {
   font-size: 12px;
@@ -65,7 +65,165 @@ Each layout can be paired with any style, resulting in **2,500 total pretraining
   color: inherit;
   opacity: 0.8;
 }
+
+/* Modal/Lightbox styles */
+.scene-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  overflow: hidden;
+}
+.scene-modal.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  position: relative;
+  max-width: min(90%, 900px);
+  max-height: 75vh;
+  text-align: center;
+}
+.modal-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  aspect-ratio: 1080 / 720;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.modal-label {
+  color: white;
+  font-size: 18px;
+  margin-top: 12px;
+  font-weight: 500;
+}
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #3498db;
+}
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 20px;
+  user-select: none;
+  transition: color 0.2s;
+  z-index: 10000;
+}
+.modal-nav:hover {
+  color: #3498db;
+}
+.modal-prev {
+  left: 20px;
+}
+.modal-next {
+  right: 20px;
+}
+.modal-slider-container {
+  width: 80%;
+  max-width: 600px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.modal-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+  outline: none;
+}
+.modal-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #3498db;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modal-slider::-webkit-slider-thumb:hover {
+  background: #2980b9;
+}
+.modal-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #3498db;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+.modal-counter {
+  color: white;
+  font-size: 14px;
+  min-width: 60px;
+  text-align: center;
+}
 </style>
+
+<!-- Modal HTML -->
+<div id="sceneModal" class="scene-modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <span class="modal-nav modal-prev" onclick="navigateModal(-1)">&#10094;</span>
+  <span class="modal-nav modal-next" onclick="navigateModal(1)">&#10095;</span>
+  <div class="modal-content">
+    <img id="modalImage" src="" alt="Scene">
+    <div id="modalLabel" class="modal-label"></div>
+  </div>
+  <div class="modal-slider-container">
+    <span class="modal-counter" id="modalCounter">1 / 1</span>
+    <input type="range" class="modal-slider" id="modalSlider" min="0" value="0" onchange="sliderChange(this.value)" oninput="sliderChange(this.value)">
+  </div>
+</div>
+
+## Target kitchens
+
+<div class="scene-grid" id="sceneGridTarget">
+  <div class="scene-item" data-layout="1" data-style="1"><img src="../images/target_scenes/layout1_style1.png"><div class="label">Layout 1 / Style 1</div></div>
+  <div class="scene-item" data-layout="2" data-style="2"><img src="../images/target_scenes/layout2_style2.png"><div class="label">Layout 2 / Style 2</div></div>
+  <div class="scene-item" data-layout="3" data-style="3"><img src="../images/target_scenes/layout3_style3.png"><div class="label">Layout 3 / Style 3</div></div>
+  <div class="scene-item" data-layout="4" data-style="4"><img src="../images/target_scenes/layout4_style4.png"><div class="label">Layout 4 / Style 4</div></div>
+  <div class="scene-item" data-layout="5" data-style="5"><img src="../images/target_scenes/layout5_style5.png"><div class="label">Layout 5 / Style 5</div></div>
+  <div class="scene-item" data-layout="6" data-style="6"><img src="../images/target_scenes/layout6_style6.png"><div class="label">Layout 6 / Style 6</div></div>
+  <div class="scene-item" data-layout="7" data-style="7"><img src="../images/target_scenes/layout7_style7.png"><div class="label">Layout 7 / Style 7</div></div>
+  <div class="scene-item" data-layout="8" data-style="8"><img src="../images/target_scenes/layout8_style8.png"><div class="label">Layout 8 / Style 8</div></div>
+  <div class="scene-item" data-layout="9" data-style="9"><img src="../images/target_scenes/layout9_style9.png"><div class="label">Layout 9 / Style 9</div></div>
+  <div class="scene-item" data-layout="10" data-style="10"><img src="../images/target_scenes/layout10_style10.png"><div class="label">Layout 10 / Style 10</div></div>
+</div>
+
+
+## Pretraining kitchens 
+
+For pretraining kitchens, we provide 50 layouts and 50 styles.
+The layouts are sourced from real world kitchens based on Zillow listings found across diverse locations in the United States (California Bay Area, Denver, Austin, Atlanta, Boston).
+Each layout can be paired with any style, resulting in **2,500 total pretraining kitchen scenes**.
 
 <div>
   <button class="sort-btn active" onclick="sortScenes('layout')">Sort by Layout</button>
@@ -73,59 +231,139 @@ Each layout can be paired with any style, resulting in **2,500 total pretraining
 </div>
 
 <div class="scene-grid" id="sceneGrid">
-  <div class="scene-item" data-layout="11" data-style="27"><img src="../pretrain_scenes/layout11_style27.png"><div class="label">Layout 11 / Style 27</div></div>
-  <div class="scene-item" data-layout="12" data-style="11"><img src="../pretrain_scenes/layout12_style11.png"><div class="label">Layout 12 / Style 11</div></div>
-  <div class="scene-item" data-layout="13" data-style="20"><img src="../pretrain_scenes/layout13_style20.png"><div class="label">Layout 13 / Style 20</div></div>
-  <div class="scene-item" data-layout="14" data-style="23"><img src="../pretrain_scenes/layout14_style23.png"><div class="label">Layout 14 / Style 23</div></div>
-  <div class="scene-item" data-layout="15" data-style="15"><img src="../pretrain_scenes/layout15_style15.png"><div class="label">Layout 15 / Style 15</div></div>
-  <div class="scene-item" data-layout="16" data-style="16"><img src="../pretrain_scenes/layout16_style16.png"><div class="label">Layout 16 / Style 16</div></div>
-  <div class="scene-item" data-layout="17" data-style="32"><img src="../pretrain_scenes/layout17_style32.png"><div class="label">Layout 17 / Style 32</div></div>
-  <div class="scene-item" data-layout="18" data-style="26"><img src="../pretrain_scenes/layout18_style26.png"><div class="label">Layout 18 / Style 26</div></div>
-  <div class="scene-item" data-layout="19" data-style="13"><img src="../pretrain_scenes/layout19_style13.png"><div class="label">Layout 19 / Style 13</div></div>
-  <div class="scene-item" data-layout="20" data-style="55"><img src="../pretrain_scenes/layout20_style55.png"><div class="label">Layout 20 / Style 55</div></div>
-  <div class="scene-item" data-layout="21" data-style="58"><img src="../pretrain_scenes/layout21_style58.png"><div class="label">Layout 21 / Style 58</div></div>
-  <div class="scene-item" data-layout="22" data-style="30"><img src="../pretrain_scenes/layout22_style30.png"><div class="label">Layout 22 / Style 30</div></div>
-  <div class="scene-item" data-layout="23" data-style="24"><img src="../pretrain_scenes/layout23_style24.png"><div class="label">Layout 23 / Style 24</div></div>
-  <div class="scene-item" data-layout="24" data-style="50"><img src="../pretrain_scenes/layout24_style50.png"><div class="label">Layout 24 / Style 50</div></div>
-  <div class="scene-item" data-layout="25" data-style="39"><img src="../pretrain_scenes/layout25_style39.png"><div class="label">Layout 25 / Style 39</div></div>
-  <div class="scene-item" data-layout="26" data-style="22"><img src="../pretrain_scenes/layout26_style22.png"><div class="label">Layout 26 / Style 22</div></div>
-  <div class="scene-item" data-layout="27" data-style="53"><img src="../pretrain_scenes/layout27_style53.png"><div class="label">Layout 27 / Style 53</div></div>
-  <div class="scene-item" data-layout="28" data-style="29"><img src="../pretrain_scenes/layout28_style29.png"><div class="label">Layout 28 / Style 29</div></div>
-  <div class="scene-item" data-layout="29" data-style="57"><img src="../pretrain_scenes/layout29_style57.png"><div class="label">Layout 29 / Style 57</div></div>
-  <div class="scene-item" data-layout="30" data-style="25"><img src="../pretrain_scenes/layout30_style25.png"><div class="label">Layout 30 / Style 25</div></div>
-  <div class="scene-item" data-layout="31" data-style="36"><img src="../pretrain_scenes/layout31_style36.png"><div class="label">Layout 31 / Style 36</div></div>
-  <div class="scene-item" data-layout="32" data-style="54"><img src="../pretrain_scenes/layout32_style54.png"><div class="label">Layout 32 / Style 54</div></div>
-  <div class="scene-item" data-layout="33" data-style="60"><img src="../pretrain_scenes/layout33_style60.png"><div class="label">Layout 33 / Style 60</div></div>
-  <div class="scene-item" data-layout="34" data-style="37"><img src="../pretrain_scenes/layout34_style37.png"><div class="label">Layout 34 / Style 37</div></div>
-  <div class="scene-item" data-layout="35" data-style="14"><img src="../pretrain_scenes/layout35_style14.png"><div class="label">Layout 35 / Style 14</div></div>
-  <div class="scene-item" data-layout="36" data-style="12"><img src="../pretrain_scenes/layout36_style12.png"><div class="label">Layout 36 / Style 12</div></div>
-  <div class="scene-item" data-layout="37" data-style="17"><img src="../pretrain_scenes/layout37_style17.png"><div class="label">Layout 37 / Style 17</div></div>
-  <div class="scene-item" data-layout="38" data-style="42"><img src="../pretrain_scenes/layout38_style42.png"><div class="label">Layout 38 / Style 42</div></div>
-  <div class="scene-item" data-layout="39" data-style="28"><img src="../pretrain_scenes/layout39_style28.png"><div class="label">Layout 39 / Style 28</div></div>
-  <div class="scene-item" data-layout="40" data-style="33"><img src="../pretrain_scenes/layout40_style33.png"><div class="label">Layout 40 / Style 33</div></div>
-  <div class="scene-item" data-layout="41" data-style="48"><img src="../pretrain_scenes/layout41_style48.png"><div class="label">Layout 41 / Style 48</div></div>
-  <div class="scene-item" data-layout="42" data-style="51"><img src="../pretrain_scenes/layout42_style51.png"><div class="label">Layout 42 / Style 51</div></div>
-  <div class="scene-item" data-layout="43" data-style="31"><img src="../pretrain_scenes/layout43_style31.png"><div class="label">Layout 43 / Style 31</div></div>
-  <div class="scene-item" data-layout="44" data-style="43"><img src="../pretrain_scenes/layout44_style43.png"><div class="label">Layout 44 / Style 43</div></div>
-  <div class="scene-item" data-layout="45" data-style="52"><img src="../pretrain_scenes/layout45_style52.png"><div class="label">Layout 45 / Style 52</div></div>
-  <div class="scene-item" data-layout="46" data-style="38"><img src="../pretrain_scenes/layout46_style38.png"><div class="label">Layout 46 / Style 38</div></div>
-  <div class="scene-item" data-layout="47" data-style="40"><img src="../pretrain_scenes/layout47_style40.png"><div class="label">Layout 47 / Style 40</div></div>
-  <div class="scene-item" data-layout="48" data-style="41"><img src="../pretrain_scenes/layout48_style41.png"><div class="label">Layout 48 / Style 41</div></div>
-  <div class="scene-item" data-layout="49" data-style="44"><img src="../pretrain_scenes/layout49_style44.png"><div class="label">Layout 49 / Style 44</div></div>
-  <div class="scene-item" data-layout="50" data-style="19"><img src="../pretrain_scenes/layout50_style19.png"><div class="label">Layout 50 / Style 19</div></div>
-  <div class="scene-item" data-layout="51" data-style="34"><img src="../pretrain_scenes/layout51_style34.png"><div class="label">Layout 51 / Style 34</div></div>
-  <div class="scene-item" data-layout="52" data-style="18"><img src="../pretrain_scenes/layout52_style18.png"><div class="label">Layout 52 / Style 18</div></div>
-  <div class="scene-item" data-layout="53" data-style="45"><img src="../pretrain_scenes/layout53_style45.png"><div class="label">Layout 53 / Style 45</div></div>
-  <div class="scene-item" data-layout="54" data-style="56"><img src="../pretrain_scenes/layout54_style56.png"><div class="label">Layout 54 / Style 56</div></div>
-  <div class="scene-item" data-layout="55" data-style="49"><img src="../pretrain_scenes/layout55_style49.png"><div class="label">Layout 55 / Style 49</div></div>
-  <div class="scene-item" data-layout="56" data-style="47"><img src="../pretrain_scenes/layout56_style47.png"><div class="label">Layout 56 / Style 47</div></div>
-  <div class="scene-item" data-layout="57" data-style="46"><img src="../pretrain_scenes/layout57_style46.png"><div class="label">Layout 57 / Style 46</div></div>
-  <div class="scene-item" data-layout="58" data-style="59"><img src="../pretrain_scenes/layout58_style59.png"><div class="label">Layout 58 / Style 59</div></div>
-  <div class="scene-item" data-layout="59" data-style="35"><img src="../pretrain_scenes/layout59_style35.png"><div class="label">Layout 59 / Style 35</div></div>
-  <div class="scene-item" data-layout="60" data-style="21"><img src="../pretrain_scenes/layout60_style21.png"><div class="label">Layout 60 / Style 21</div></div>
+  <div class="scene-item" data-layout="11" data-style="27"><img src="../images/pretrain_scenes/layout11_style27.png"><div class="label">Layout 11 / Style 27</div></div>
+  <div class="scene-item" data-layout="12" data-style="11"><img src="../images/pretrain_scenes/layout12_style11.png"><div class="label">Layout 12 / Style 11</div></div>
+  <div class="scene-item" data-layout="13" data-style="20"><img src="../images/pretrain_scenes/layout13_style20.png"><div class="label">Layout 13 / Style 20</div></div>
+  <div class="scene-item" data-layout="14" data-style="23"><img src="../images/pretrain_scenes/layout14_style23.png"><div class="label">Layout 14 / Style 23</div></div>
+  <div class="scene-item" data-layout="15" data-style="15"><img src="../images/pretrain_scenes/layout15_style15.png"><div class="label">Layout 15 / Style 15</div></div>
+  <div class="scene-item" data-layout="16" data-style="16"><img src="../images/pretrain_scenes/layout16_style16.png"><div class="label">Layout 16 / Style 16</div></div>
+  <div class="scene-item" data-layout="17" data-style="32"><img src="../images/pretrain_scenes/layout17_style32.png"><div class="label">Layout 17 / Style 32</div></div>
+  <div class="scene-item" data-layout="18" data-style="26"><img src="../images/pretrain_scenes/layout18_style26.png"><div class="label">Layout 18 / Style 26</div></div>
+  <div class="scene-item" data-layout="19" data-style="13"><img src="../images/pretrain_scenes/layout19_style13.png"><div class="label">Layout 19 / Style 13</div></div>
+  <div class="scene-item" data-layout="20" data-style="55"><img src="../images/pretrain_scenes/layout20_style55.png"><div class="label">Layout 20 / Style 55</div></div>
+  <div class="scene-item" data-layout="21" data-style="58"><img src="../images/pretrain_scenes/layout21_style58.png"><div class="label">Layout 21 / Style 58</div></div>
+  <div class="scene-item" data-layout="22" data-style="30"><img src="../images/pretrain_scenes/layout22_style30.png"><div class="label">Layout 22 / Style 30</div></div>
+  <div class="scene-item" data-layout="23" data-style="24"><img src="../images/pretrain_scenes/layout23_style24.png"><div class="label">Layout 23 / Style 24</div></div>
+  <div class="scene-item" data-layout="24" data-style="50"><img src="../images/pretrain_scenes/layout24_style50.png"><div class="label">Layout 24 / Style 50</div></div>
+  <div class="scene-item" data-layout="25" data-style="39"><img src="../images/pretrain_scenes/layout25_style39.png"><div class="label">Layout 25 / Style 39</div></div>
+  <div class="scene-item" data-layout="26" data-style="22"><img src="../images/pretrain_scenes/layout26_style22.png"><div class="label">Layout 26 / Style 22</div></div>
+  <div class="scene-item" data-layout="27" data-style="53"><img src="../images/pretrain_scenes/layout27_style53.png"><div class="label">Layout 27 / Style 53</div></div>
+  <div class="scene-item" data-layout="28" data-style="29"><img src="../images/pretrain_scenes/layout28_style29.png"><div class="label">Layout 28 / Style 29</div></div>
+  <div class="scene-item" data-layout="29" data-style="57"><img src="../images/pretrain_scenes/layout29_style57.png"><div class="label">Layout 29 / Style 57</div></div>
+  <div class="scene-item" data-layout="30" data-style="25"><img src="../images/pretrain_scenes/layout30_style25.png"><div class="label">Layout 30 / Style 25</div></div>
+  <div class="scene-item" data-layout="31" data-style="36"><img src="../images/pretrain_scenes/layout31_style36.png"><div class="label">Layout 31 / Style 36</div></div>
+  <div class="scene-item" data-layout="32" data-style="54"><img src="../images/pretrain_scenes/layout32_style54.png"><div class="label">Layout 32 / Style 54</div></div>
+  <div class="scene-item" data-layout="33" data-style="60"><img src="../images/pretrain_scenes/layout33_style60.png"><div class="label">Layout 33 / Style 60</div></div>
+  <div class="scene-item" data-layout="34" data-style="37"><img src="../images/pretrain_scenes/layout34_style37.png"><div class="label">Layout 34 / Style 37</div></div>
+  <div class="scene-item" data-layout="35" data-style="14"><img src="../images/pretrain_scenes/layout35_style14.png"><div class="label">Layout 35 / Style 14</div></div>
+  <div class="scene-item" data-layout="36" data-style="12"><img src="../images/pretrain_scenes/layout36_style12.png"><div class="label">Layout 36 / Style 12</div></div>
+  <div class="scene-item" data-layout="37" data-style="17"><img src="../images/pretrain_scenes/layout37_style17.png"><div class="label">Layout 37 / Style 17</div></div>
+  <div class="scene-item" data-layout="38" data-style="42"><img src="../images/pretrain_scenes/layout38_style42.png"><div class="label">Layout 38 / Style 42</div></div>
+  <div class="scene-item" data-layout="39" data-style="28"><img src="../images/pretrain_scenes/layout39_style28.png"><div class="label">Layout 39 / Style 28</div></div>
+  <div class="scene-item" data-layout="40" data-style="33"><img src="../images/pretrain_scenes/layout40_style33.png"><div class="label">Layout 40 / Style 33</div></div>
+  <div class="scene-item" data-layout="41" data-style="48"><img src="../images/pretrain_scenes/layout41_style48.png"><div class="label">Layout 41 / Style 48</div></div>
+  <div class="scene-item" data-layout="42" data-style="51"><img src="../images/pretrain_scenes/layout42_style51.png"><div class="label">Layout 42 / Style 51</div></div>
+  <div class="scene-item" data-layout="43" data-style="31"><img src="../images/pretrain_scenes/layout43_style31.png"><div class="label">Layout 43 / Style 31</div></div>
+  <div class="scene-item" data-layout="44" data-style="43"><img src="../images/pretrain_scenes/layout44_style43.png"><div class="label">Layout 44 / Style 43</div></div>
+  <div class="scene-item" data-layout="45" data-style="52"><img src="../images/pretrain_scenes/layout45_style52.png"><div class="label">Layout 45 / Style 52</div></div>
+  <div class="scene-item" data-layout="46" data-style="38"><img src="../images/pretrain_scenes/layout46_style38.png"><div class="label">Layout 46 / Style 38</div></div>
+  <div class="scene-item" data-layout="47" data-style="40"><img src="../images/pretrain_scenes/layout47_style40.png"><div class="label">Layout 47 / Style 40</div></div>
+  <div class="scene-item" data-layout="48" data-style="41"><img src="../images/pretrain_scenes/layout48_style41.png"><div class="label">Layout 48 / Style 41</div></div>
+  <div class="scene-item" data-layout="49" data-style="44"><img src="../images/pretrain_scenes/layout49_style44.png"><div class="label">Layout 49 / Style 44</div></div>
+  <div class="scene-item" data-layout="50" data-style="19"><img src="../images/pretrain_scenes/layout50_style19.png"><div class="label">Layout 50 / Style 19</div></div>
+  <div class="scene-item" data-layout="51" data-style="34"><img src="../images/pretrain_scenes/layout51_style34.png"><div class="label">Layout 51 / Style 34</div></div>
+  <div class="scene-item" data-layout="52" data-style="18"><img src="../images/pretrain_scenes/layout52_style18.png"><div class="label">Layout 52 / Style 18</div></div>
+  <div class="scene-item" data-layout="53" data-style="45"><img src="../images/pretrain_scenes/layout53_style45.png"><div class="label">Layout 53 / Style 45</div></div>
+  <div class="scene-item" data-layout="54" data-style="56"><img src="../images/pretrain_scenes/layout54_style56.png"><div class="label">Layout 54 / Style 56</div></div>
+  <div class="scene-item" data-layout="55" data-style="49"><img src="../images/pretrain_scenes/layout55_style49.png"><div class="label">Layout 55 / Style 49</div></div>
+  <div class="scene-item" data-layout="56" data-style="47"><img src="../images/pretrain_scenes/layout56_style47.png"><div class="label">Layout 56 / Style 47</div></div>
+  <div class="scene-item" data-layout="57" data-style="46"><img src="../images/pretrain_scenes/layout57_style46.png"><div class="label">Layout 57 / Style 46</div></div>
+  <div class="scene-item" data-layout="58" data-style="59"><img src="../images/pretrain_scenes/layout58_style59.png"><div class="label">Layout 58 / Style 59</div></div>
+  <div class="scene-item" data-layout="59" data-style="35"><img src="../images/pretrain_scenes/layout59_style35.png"><div class="label">Layout 59 / Style 35</div></div>
+  <div class="scene-item" data-layout="60" data-style="21"><img src="../images/pretrain_scenes/layout60_style21.png"><div class="label">Layout 60 / Style 21</div></div>
 </div>
 
 <script>
+// Scene modal variables
+let currentScenes = [];
+let currentIndex = 0;
+let currentGridId = '';
+
+function openModal(gridId, index) {
+  currentGridId = gridId;
+  const grid = document.getElementById(gridId);
+  currentScenes = Array.from(grid.querySelectorAll('.scene-item'));
+  currentIndex = index;
+  
+  const slider = document.getElementById('modalSlider');
+  slider.max = currentScenes.length - 1;
+  slider.value = currentIndex;
+  
+  updateModalContent();
+  document.getElementById('sceneModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('sceneModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function updateModalContent() {
+  const item = currentScenes[currentIndex];
+  const img = item.querySelector('img');
+  const label = item.querySelector('.label');
+  
+  document.getElementById('modalImage').src = img.src;
+  document.getElementById('modalLabel').textContent = label.textContent;
+  document.getElementById('modalSlider').value = currentIndex;
+  document.getElementById('modalCounter').textContent = (currentIndex + 1) + ' / ' + currentScenes.length;
+}
+
+function navigateModal(direction) {
+  currentIndex += direction;
+  if (currentIndex < 0) currentIndex = currentScenes.length - 1;
+  if (currentIndex >= currentScenes.length) currentIndex = 0;
+  updateModalContent();
+}
+
+function sliderChange(value) {
+  currentIndex = parseInt(value);
+  updateModalContent();
+}
+
+// Close modal on escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowLeft') navigateModal(-1);
+  if (e.key === 'ArrowRight') navigateModal(1);
+});
+
+// Close modal when clicking outside the image
+document.getElementById('sceneModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Add click handlers to scene items
+function initSceneClicks() {
+  ['sceneGridTarget', 'sceneGrid'].forEach(function(gridId) {
+    const grid = document.getElementById(gridId);
+    if (grid) {
+      const items = grid.querySelectorAll('.scene-item');
+      items.forEach(function(item, index) {
+        item.onclick = function() { openModal(gridId, index); };
+      });
+    }
+  });
+}
+
+// Initialize on page load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSceneClicks);
+} else {
+  initSceneClicks();
+}
+
 function sortScenes(by) {
   const grid = document.getElementById('sceneGrid');
   const items = Array.from(grid.children);
@@ -133,22 +371,7 @@ function sortScenes(by) {
   items.forEach(item => grid.appendChild(item));
   document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
+  // Re-initialize click handlers after sorting
+  initSceneClicks();
 }
 </script>
-
-
-## Target task kitchens
-
-<div class="scene-grid" id="sceneGridTarget">
-  <div class="scene-item" data-layout="1" data-style="1"><img src="../target_scenes/layout1_style1.png"><div class="label">Layout 1 / Style 1</div></div>
-  <div class="scene-item" data-layout="2" data-style="2"><img src="../target_scenes/layout2_style2.png"><div class="label">Layout 2 / Style 2</div></div>
-  <div class="scene-item" data-layout="3" data-style="3"><img src="../target_scenes/layout3_style3.png"><div class="label">Layout 3 / Style 3</div></div>
-  <div class="scene-item" data-layout="4" data-style="4"><img src="../target_scenes/layout4_style4.png"><div class="label">Layout 4 / Style 4</div></div>
-  <div class="scene-item" data-layout="5" data-style="5"><img src="../target_scenes/layout5_style5.png"><div class="label">Layout 5 / Style 5</div></div>
-  <div class="scene-item" data-layout="6" data-style="6"><img src="../target_scenes/layout6_style6.png"><div class="label">Layout 6 / Style 6</div></div>
-  <div class="scene-item" data-layout="7" data-style="7"><img src="../target_scenes/layout7_style7.png"><div class="label">Layout 7 / Style 7</div></div>
-  <div class="scene-item" data-layout="8" data-style="8"><img src="../target_scenes/layout8_style8.png"><div class="label">Layout 8 / Style 8</div></div>
-  <div class="scene-item" data-layout="9" data-style="9"><img src="../target_scenes/layout9_style9.png"><div class="label">Layout 9 / Style 9</div></div>
-  <div class="scene-item" data-layout="10" data-style="10"><img src="../target_scenes/layout10_style10.png"><div class="label">Layout 10 / Style 10</div></div>
-</div>
-

@@ -139,7 +139,7 @@
     { id: "lids", label: "Close & Open Lid" },
     { id: "insertion", label: "Insertion" },
     { id: "navigation", label: "Navigation" },
-    { id: "pick_and_place", label: "Pick and Place" },
+    { id: "pick_and_place", label: "Pick & Place" },
     { id: "pressing_buttons", label: "Press Button" },
     { id: "sliding_racks", label: "Slide Rack" },
     { id: "turning_levers", label: "Turn Lever" },
@@ -207,10 +207,10 @@
   }
 
   // Fixture-view overrides:
-  // - Remove fixture sections: Doors, Pick and Place, Navigation
+  // - Remove fixture sections: Doors, Pick & Place, Navigation
   // - Create: "Fridge", "Cabinet", "Dishwasher" (virtual), and "Misc"
   // - Re-route former door + PnP + navigation tasks into their represented fixture buckets.
-  const FIXTURE_VIEW_REMOVED_LABELS = new Set(["Doors", "Pick and Place", "Navigation"]);
+  const FIXTURE_VIEW_REMOVED_LABELS = new Set(["Doors", "Pick & Place", "Navigation"]);
   const FIXTURE_VIEW_MISC_TASKS = new Set([
     "CheesyBread",
     "MakeIcedCoffee",
@@ -239,8 +239,8 @@
     line.className = "rc-atomic-target-tagline";
     const pill = document.createElement("span");
     pill.className = "rc-task-tag rc-task-tag-atomic-seen";
-    pill.textContent = "Atomic Seen";
-    pill.setAttribute("aria-label", "Atomic Seen");
+    pill.textContent = "Atomic-Seen";
+    pill.setAttribute("aria-label", "Atomic-Seen");
     line.appendChild(pill);
 
     // Place the tag under the task name (below the link / code)
@@ -657,10 +657,10 @@
     atomicSeenCb.type = "checkbox";
     atomicSeenCb.checked = true;
     atomicSeenCb.value = "atomic_seen";
-    atomicSeenCb.setAttribute("aria-label", "Atomic Seen");
+    atomicSeenCb.setAttribute("aria-label", "Atomic-Seen");
     const atomicSeenPill = document.createElement("span");
     atomicSeenPill.className = "rc-task-tag rc-task-tag-atomic-seen";
-    atomicSeenPill.textContent = "Atomic Seen";
+    atomicSeenPill.textContent = "Atomic-Seen";
     const atomicSeenCount = document.createElement("span");
     atomicSeenCount.className = "rc-task-attr-count";
     atomicSeenCount.textContent = "";
@@ -953,8 +953,8 @@
             groupId = GROUP_MISC_ID;
             groupLabel = "Miscellaneous";
           }
-          // PnP tasks formerly under "Pick and Place"
-          else if (name.startsWith("PnP") || meta.fixtureLabel === "Pick and Place") {
+          // PnP tasks formerly under "Pick & Place"
+          else if (name.startsWith("PnP") || meta.fixtureLabel === "Pick & Place") {
             groupId = groupIdForPnPTask(name);
           }
 

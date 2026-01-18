@@ -844,7 +844,7 @@
     ["OvenBroilFish", ["pnp", "rack_slide"]],
     ["RemoveBroiledFish", ["pnp", "door_open", "rack_slide"]],
     ["ToasterOvenBroilFish", ["pnp", "rack_slide", "knob_twist", "door_close"]],
-    // Remove PnP from this task specifically, but keep the desired skill
+    // Remove Pick & Place from this task specifically, but keep the desired skill
     ["StartElectricKettle", ["button_press", "kettle_lid_close"]],
     ["MeatTransfer", ["pnp", "door_open"]],
     ["CuttingToolSelection", ["pnp", "drawer_open"]],
@@ -1109,7 +1109,7 @@
 
     const pill = document.createElement("span");
     pill.className = `rc-task-tag ${isSeen ? "rc-task-tag-comp-seen" : "rc-task-tag-comp-unseen"}`;
-    pill.textContent = isSeen ? "Composite Seen" : "Composite Unseen";
+    pill.textContent = isSeen ? "Composite-Seen" : "Composite-Unseen";
     pill.setAttribute("aria-label", pill.textContent);
 
     line.appendChild(pill);
@@ -1132,7 +1132,7 @@
       span.className = "rc-task-tag";
       if (t === "pnp") {
         span.classList.add("rc-task-tag-pnp");
-        span.textContent = "PnP";
+        span.textContent = "Pick & Place";
         return span;
       }
       // Composite target (seen/unseen) is shown under the task name (not in Task Skills)
@@ -2700,7 +2700,7 @@
       { key: "knob_twist", label: "Twist Knob", pillClass: "rc-task-tag rc-task-tag-knob-twist" },
       { key: "lever_turn", label: "Turn Lever", pillClass: "rc-task-tag rc-task-tag-lever-turn" },
       { key: "button_press", label: "Press Button", pillClass: "rc-task-tag rc-task-tag-button-press" },
-      { key: "pnp", label: "PnP", pillClass: "rc-task-tag rc-task-tag-pnp" },
+      { key: "pnp", label: "Pick & Place", pillClass: "rc-task-tag rc-task-tag-pnp" },
     ];
 
     const attrChecks = new Map(); // key -> checkbox
@@ -2841,8 +2841,8 @@
     targetMenu.hidden = true;
 
     const TARGET_TASKS = [
-      { key: "comp_seen_target", label: "Composite Seen", pillClass: "rc-task-tag rc-task-tag-comp-seen" },
-      { key: "comp_unseen_target", label: "Composite Unseen", pillClass: "rc-task-tag rc-task-tag-comp-unseen" },
+      { key: "comp_seen_target", label: "Composite-Seen", pillClass: "rc-task-tag rc-task-tag-comp-seen" },
+      { key: "comp_unseen_target", label: "Composite-Unseen", pillClass: "rc-task-tag rc-task-tag-comp-unseen" },
     ];
 
     // Button label should be stable
@@ -2980,6 +2980,52 @@
 
     // Build task search + suggestions
     const taskIndex = buildTaskIndex(content);
+
+    // Sort Skills Involved filter popup by frequency (most to least frequent)
+    // This only affects the filter popup order, not the tag display order in tables
+    function sortAttrFilterByFrequency() {
+      // Calculate frequency of each skill
+      const skillFreq = new Map();
+      for (const attr of TASK_ATTRS) {
+        skillFreq.set(attr.key, 0);
+      }
+      for (const item of taskIndex) {
+        const keys = item.tagKeys || [];
+        if (Array.isArray(keys)) {
+          for (const key of keys) {
+            if (skillFreq.has(key)) {
+              skillFreq.set(key, skillFreq.get(key) + 1);
+            }
+          }
+        }
+      }
+
+      // Sort TASK_ATTRS by frequency (descending)
+      const sortedAttrs = [...TASK_ATTRS].sort((a, b) => {
+        const freqA = skillFreq.get(a.key) || 0;
+        const freqB = skillFreq.get(b.key) || 0;
+        return freqB - freqA; // Descending order
+      });
+
+      // Reorder the rows in the filter popup (keep header, reorder item rows)
+      const header = attrMenu.querySelector('.rc-task-attr-header');
+      // Remove all item rows (but keep header)
+      for (const it of TASK_ATTRS) {
+        const row = attrRows.get(it.key);
+        if (row && row.parentNode === attrMenu) {
+          attrMenu.removeChild(row);
+        }
+      }
+
+      // Re-append rows in sorted order (after header)
+      for (const it of sortedAttrs) {
+        const row = attrRows.get(it.key);
+        if (row) {
+          attrMenu.appendChild(row);
+        }
+      }
+    }
+    sortAttrFilterByFrequency();
 
     // "Show all tasks" toggle (opens all activity accordions)
     const showAllWrap = document.createElement("div");

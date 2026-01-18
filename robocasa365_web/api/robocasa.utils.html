@@ -30,8 +30,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=f271369c" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=1d495b9f" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b87b75b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -46,11 +46,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/robocasa.utils';</script>
     <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=b18c4374"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=c5d10428"></script>
     <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
     <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
     <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js?v=684f982e"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=5584c8eb"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="robocasa.utils.model_zoo package" href="robocasa.utils.model_zoo.html" />
@@ -183,7 +183,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/benchmarking_overview.html">Overview of Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
@@ -701,7 +701,7 @@ If not just use the old controller config for arms.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="robocasa.utils.dataset_registry.get_ds_meta">
-<span class="sig-prename descclassname"><span class="pre">robocasa.utils.dataset_registry.</span></span><span class="sig-name descname"><span class="pre">get_ds_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demo_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.utils.dataset_registry.get_ds_meta" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">robocasa.utils.dataset_registry.</span></span><span class="sig-name descname"><span class="pre">get_ds_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pretrain'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demo_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.utils.dataset_registry.get_ds_meta" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">

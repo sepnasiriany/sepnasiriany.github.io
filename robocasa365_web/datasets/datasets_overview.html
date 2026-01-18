@@ -30,8 +30,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8934e607" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=1d495b9f" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b87b75b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -46,11 +46,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'datasets/datasets_overview';</script>
     <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=b18c4374"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=c5d10428"></script>
     <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
     <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
     <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js?v=684f982e"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=5584c8eb"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Using Datasets" href="using_datasets.html" />
@@ -183,7 +183,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/benchmarking_overview.html">Overview of Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
@@ -378,7 +378,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-datasets">Synthetic Datasets</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-task-datasets">Target Task Datasets</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-datasets">Target Datasets</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#atomic-seen-tasks">Atomic-Seen Tasks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composite-seen-tasks">Composite-Seen Tasks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composite-unseen-tasks">Composite-Unseen Tasks</a></li>
@@ -398,10 +398,10 @@ document.write(`
   <section id="overview-of-datasets">
 <h1>Overview of Datasets<a class="headerlink" href="#overview-of-datasets" title="Link to this heading">#</a></h1>
 <p>RoboCasa offers over 2,200 hours of demonstration data, comprising human teleoperation data and synthetic data.
-Broadly, the data is split into <strong>pretraining datasets</strong> and <strong>target task datasets</strong>.
-The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitchens, while the target task datasets feature 50 target tasks across a distinct set of 10 heldout target kitchens.</p>
+Broadly, the data is split into <strong>pretraining datasets</strong> and <strong>target datasets</strong>.
+The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitchens, while the target datasets feature 50 target tasks across a distinct set of 10 heldout target kitchens.</p>
 <table class="docutils rc-datasets-summary">
-  <caption>Dataset statistics across pretraining and target task settings.</caption>
+  <caption>Dataset statistics across pretraining and target settings.</caption>
   <thead>
     <tr>
       <th>Setting</th>
@@ -427,14 +427,14 @@ The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitc
       <td>1615</td>
     </tr>
     <tr>
-      <td>Target Task (Human)</td>
+      <td>Target (Human)</td>
       <td>50</td>
       <td>10</td>
       <td>500</td>
       <td>193</td>
     </tr>
   </tbody>
-</table><p>We provide a detailed overview of the pretraining and target task datasets below.</p>
+</table><p>We provide a detailed overview of the pretraining and target datasets below.</p>
 <hr class="docutils" />
 <section id="pretraining-datasets">
 <h2>Pretraining Datasets<a class="headerlink" href="#pretraining-datasets" title="Link to this heading">#</a></h2>
@@ -452,17 +452,17 @@ Go to the <a class="reference external" href="../tasks/atomic_tasks.html">Atomic
 </section>
 </section>
 <hr class="docutils" />
-<section id="target-task-datasets">
-<h2>Target Task Datasets<a class="headerlink" href="#target-task-datasets" title="Link to this heading">#</a></h2>
+<section id="target-datasets">
+<h2>Target Datasets<a class="headerlink" href="#target-datasets" title="Link to this heading">#</a></h2>
 <p>In addition to pretraining data, RoboCasa offers over 193 hours of high-quality demonstration data for target tasks collected via teleoperation.
-The target task datasets feature 50 diverse tasks across 10 distinct post-training kitchen scenes.
-Note that these post-training scenes are distinct from the pretraining scenes represented in the pretraining datasets.
+The target datasets feature 50 diverse tasks across 10 distinct target kitchen scenes.
+Note that these target scenes are distinct from the pretraining scenes represented in the pretraining datasets.
 For each task, we provide <strong>500 human demonstrations</strong> collected via teleoperation.</p>
 <p>We split these datasets into three groups:</p>
 <ul class="simple">
 <li><p><strong>Atomic-Seen</strong> (18 tasks): 18 atomic tasks, with all tasks also represented in pretraining datasets.</p></li>
 <li><p><strong>Composite-Seen</strong> (16 tasks): 16 composite tasks, with all tasks also represented in pretraining datasets.</p></li>
-<li><p><strong>Composite-Unseen</strong> (16 tasks): 16 composite tasks, only seen in post-training datasets and not in pretraining datasets.</p></li>
+<li><p><strong>Composite-Unseen</strong> (16 tasks): 16 composite tasks, only seen in target datasets and not in pretraining datasets.</p></li>
 </ul>
 <section id="atomic-seen-tasks">
 <h3>Atomic-Seen Tasks<a class="headerlink" href="#atomic-seen-tasks" title="Link to this heading">#</a></h3>
@@ -628,7 +628,7 @@ For each task, we provide <strong>500 human demonstrations</strong> collected vi
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#synthetic-datasets">Synthetic Datasets</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-task-datasets">Target Task Datasets</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#target-datasets">Target Datasets</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#atomic-seen-tasks">Atomic-Seen Tasks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composite-seen-tasks">Composite-Seen Tasks</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#composite-unseen-tasks">Composite-Unseen Tasks</a></li>

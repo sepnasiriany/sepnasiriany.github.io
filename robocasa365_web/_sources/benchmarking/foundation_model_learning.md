@@ -1,15 +1,16 @@
 # Foundation Model Learning
 
-In the foundation model learning benchmark we are interested in studying foundation model training, i.e., training with our pretraining datasets, followed by fine-tuning on our target task datasets.
+In the foundation model learning benchmark we are interested in studying foundation model training, i.e., training with our pretraining datasets, followed by fine-tuning on our target datasets.
 There are two phases of training:
 - **Pretraining**: pretraining on 2000+ hours of data across 300 tasks. The data comprises human datasets for 300 tasks (482 hours) and synthetic MimicGen data across 60 atomic tasks (1615 hours)
-- **Target task fine-tuning**: fine-tuning the pretrained model on human datasets across 50 tasks (193 hours). We fine-tune the model indepdently on three separate target task split datasets:
+- **Target task fine-tuning**: fine-tuning the pretrained model on human datasets across 50 tasks (193 hours). We fine-tune the model independently on three separate splits of target data:
   - **Atomic-Seen** (18 atomic tasks, also seen in pretraining)
   - **Composite-Seen** (16 composite tasks, also seen in pretraining)
   - **Composite-Unseen** (a separate set of 16 composite tasks, not seen in pretraining)
 
+-------
 ## Benchmark results and checkpoints
-We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target task training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results. We share the model checkpoints for reference.
+We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results **(average task success rate, in %)**. We share the model checkpoints for reference.
 
 <table class="docutils rc-benchmark-table">
   <thead>
@@ -72,14 +73,75 @@ We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretrainin
   </tbody>
 </table>
 
+-------
 ## Benchmark instructions
 
 ### GR00T
 
-#### guidelines
+#### Guidelines
+- We use a batch size of 128
+- For the pretraining, we train for 80k steps
+- For target task fine-tuning, we train for 60k steps
+- We always evaluate the models in **target** scenes
 
-#### train model
+#### Train model
+```
+# run pretraining
+python scripts/gr00t_finetune.py \
+--output-dir expdata/foundation_model_learning/pretraining \
+--dataset_soup pretrain_human300_mg60 \
+--max_steps 80000
 
-#### evaluate model
+# target task fine-tuning: for atomic-seen, composite-seen, composite-unseen tasks
+# the following three training experiments can be run in parallel
+python scripts/gr00t_finetune.py \
+--output-dir expdata/foundation_model_learning/target_task_finetuning/atomic_seen \
+--base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
+--dataset_soup posttrain_atomic_seen \
+--max_steps 60000
 
-#### report evaluation results
+python scripts/gr00t_finetune.py \
+--output-dir expdata/foundation_model_learning/target_task_finetuning/composite_seen \
+--base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
+--dataset_soup posttrain_composite_seen \
+--max_steps 60000
+
+python scripts/gr00t_finetune.py \
+--output-dir expdata/foundation_model_learning/target_task_finetuning/composite_unseen \
+--base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
+--dataset_soup posttrain_composite_unseen \
+--max_steps 60000
+```
+
+#### Evaluate model
+```
+# Evaluate pretraining model
+python scripts/run_eval.py \
+--model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
+--task_soup atomic_seen composite_seen composite_unseen \
+--split target
+
+# evaluate target fine-tuning: atomic-seen tasks
+python scripts/run_eval.py \
+--model_path expdata/foundation_model_learning/target_task_finetuning/atomic_seen/checkpoint-60000 \
+--task_soup atomic_seen \
+--split target
+
+# evaluate target fine-tuning: composite-seen tasks
+python scripts/run_eval.py \
+--model_path expdata/foundation_model_learning/target_task_finetuning/composite_seen/checkpoint-60000 \
+--task_soup composite_seen \
+--split target
+
+# evaluate target fine-tuning: composite-unseen tasks
+python scripts/run_eval.py \
+--model_path expdata/foundation_model_learning/target_task_finetuning/composite_unseen/checkpoint-60000 \
+--task_soup composite_unseen \
+--split target
+```
+
+#### Report evaluation results
+```
+python gr00t/eval/get_eval_stats.py \
+--dir <your-ckpt>
+```

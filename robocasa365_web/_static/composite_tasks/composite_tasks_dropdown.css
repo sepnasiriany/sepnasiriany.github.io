@@ -629,8 +629,9 @@ body.rc-composite-tasks .rc-task-search input[type="search"] {
   padding: 0.3rem 0.55rem;
   border-radius: 0.4rem;
   border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--pst-color-text-base, #111);
+  /* Match Fixtures page "Clear" button color (keep sizing unchanged) */
+  background: #3498db;
+  color: #ffffff;
   font-weight: 600;
   line-height: 1.1;
   cursor: pointer;
@@ -638,7 +639,7 @@ body.rc-composite-tasks .rc-task-search input[type="search"] {
 }
 
 .rc-reset-filters-btn:hover {
-  background: rgba(255, 255, 255, 1);
+  background: #2980b9;
 }
 
 .rc-filter input {
@@ -1591,12 +1592,12 @@ html[data-theme="dark"] body.rc-composite-tasks .rc-task-count {
 /* Composite Tasks: Reset button should be visible in dark mode (match Atomic) */
 html[data-theme="dark"] body.rc-composite-tasks .rc-reset-filters-btn {
   border-color: var(--rc-border);
-  background: var(--rc-surface-2);
-  color: var(--rc-text);
+  background: #3498db;
+  color: #ffffff;
 }
 
 html[data-theme="dark"] body.rc-composite-tasks .rc-reset-filters-btn:hover {
-  background: var(--rc-hover);
+  background: #2980b9;
 }
 
 /* Composite Tasks: activity cards + tables */

@@ -30,8 +30,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8934e607" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=1d495b9f" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=b87b75b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -46,11 +46,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/foundation_model_learning';</script>
     <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=b18c4374"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=c5d10428"></script>
     <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
     <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
     <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js?v=684f982e"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=5584c8eb"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Lifelong Learning" href="lifelong_learning.html" />
@@ -183,7 +183,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking_overview.html">Overview of Benchmarking</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lifelong_learning.html">Lifelong Learning</a></li>
@@ -376,10 +376,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">guidelines</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">train model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">evaluate model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">report evaluation results</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">Train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">Evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">Report evaluation results</a></li>
 </ul>
 </li>
 </ul>
@@ -397,11 +397,11 @@ document.write(`
                   
   <section id="foundation-model-learning">
 <h1>Foundation Model Learning<a class="headerlink" href="#foundation-model-learning" title="Link to this heading">#</a></h1>
-<p>In the foundation model learning benchmark we are interested in studying foundation model training, i.e., training with our pretraining datasets, followed by fine-tuning on our target task datasets.
+<p>In the foundation model learning benchmark we are interested in studying foundation model training, i.e., training with our pretraining datasets, followed by fine-tuning on our target datasets.
 There are two phases of training:</p>
 <ul class="simple">
 <li><p><strong>Pretraining</strong>: pretraining on 2000+ hours of data across 300 tasks. The data comprises human datasets for 300 tasks (482 hours) and synthetic MimicGen data across 60 atomic tasks (1615 hours)</p></li>
-<li><p><strong>Target task fine-tuning</strong>: fine-tuning the pretrained model on human datasets across 50 tasks (193 hours). We fine-tune the model indepdently on three separate target task split datasets:</p>
+<li><p><strong>Target task fine-tuning</strong>: fine-tuning the pretrained model on human datasets across 50 tasks (193 hours). We fine-tune the model independently on three separate splits of target data:</p>
 <ul>
 <li><p><strong>Atomic-Seen</strong> (18 atomic tasks, also seen in pretraining)</p></li>
 <li><p><strong>Composite-Seen</strong> (16 composite tasks, also seen in pretraining)</p></li>
@@ -409,9 +409,10 @@ There are two phases of training:</p>
 </ul>
 </li>
 </ul>
+<hr class="docutils" />
 <section id="benchmark-results-and-checkpoints">
 <h2>Benchmark results and checkpoints<a class="headerlink" href="#benchmark-results-and-checkpoints" title="Link to this heading">#</a></h2>
-<p>We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target task training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results. We share the model checkpoints for reference.</p>
+<p>We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results <strong>(average task success rate, in %)</strong>. We share the model checkpoints for reference.</p>
 <table class="docutils rc-benchmark-table">
   <thead>
     <tr>
@@ -472,21 +473,84 @@ There are two phases of training:</p>
     </tr>
   </tbody>
 </table></section>
+<hr class="docutils" />
 <section id="benchmark-instructions">
 <h2>Benchmark instructions<a class="headerlink" href="#benchmark-instructions" title="Link to this heading">#</a></h2>
 <section id="gr00t">
 <h3>GR00T<a class="headerlink" href="#gr00t" title="Link to this heading">#</a></h3>
 <section id="guidelines">
-<h4>guidelines<a class="headerlink" href="#guidelines" title="Link to this heading">#</a></h4>
+<h4>Guidelines<a class="headerlink" href="#guidelines" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>We use a batch size of 128</p></li>
+<li><p>For the pretraining, we train for 80k steps</p></li>
+<li><p>For target task fine-tuning, we train for 60k steps</p></li>
+<li><p>We always evaluate the models in <strong>target</strong> scenes</p></li>
+</ul>
 </section>
 <section id="train-model">
-<h4>train model<a class="headerlink" href="#train-model" title="Link to this heading">#</a></h4>
+<h4>Train model<a class="headerlink" href="#train-model" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># run pretraining</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">pretrain_human300_mg60</span> \
+<span class="o">--</span><span class="n">max_steps</span> <span class="mi">80000</span>
+
+<span class="c1"># target task fine-tuning: for atomic-seen, composite-seen, composite-unseen tasks</span>
+<span class="c1"># the following three training experiments can be run in parallel</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">atomic_seen</span> \
+<span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_atomic_seen</span> \
+<span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
+
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_seen</span> \
+<span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_composite_seen</span> \
+<span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
+
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_composite_unseen</span> \
+<span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
+</pre></div>
+</div>
 </section>
 <section id="evaluate-model">
-<h4>evaluate model<a class="headerlink" href="#evaluate-model" title="Link to this heading">#</a></h4>
+<h4>Evaluate model<a class="headerlink" href="#evaluate-model" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate pretraining model</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">target</span>
+
+<span class="c1"># evaluate target fine-tuning: atomic-seen tasks</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">atomic_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">target</span>
+
+<span class="c1"># evaluate target fine-tuning: composite-seen tasks</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">composite_seen</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">target</span>
+
+<span class="c1"># evaluate target fine-tuning: composite-unseen tasks</span>
+<span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_unseen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">target</span>
+</pre></div>
+</div>
 </section>
 <section id="report-evaluation-results">
-<h4>report evaluation results<a class="headerlink" href="#report-evaluation-results" title="Link to this heading">#</a></h4>
+<h4>Report evaluation results<a class="headerlink" href="#report-evaluation-results" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">gr00t</span><span class="o">/</span><span class="nb">eval</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="nb">dir</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ckpt</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
@@ -540,10 +604,10 @@ There are two phases of training:</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">guidelines</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">train model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">evaluate model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">report evaluation results</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#train-model">Train model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluate-model">Evaluate model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report-evaluation-results">Report evaluation results</a></li>
 </ul>
 </li>
 </ul>

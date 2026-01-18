@@ -1,11 +1,11 @@
 # Overview of Datasets
 
 RoboCasa offers over 2,200 hours of demonstration data, comprising human teleoperation data and synthetic data.
-Broadly, the data is split into **pretraining datasets** and **target task datasets**.
-The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitchens, while the target task datasets feature 50 target tasks across a distinct set of 10 heldout target kitchens.
+Broadly, the data is split into **pretraining datasets** and **target datasets**.
+The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitchens, while the target datasets feature 50 target tasks across a distinct set of 10 heldout target kitchens.
 
 <table class="docutils rc-datasets-summary">
-  <caption>Dataset statistics across pretraining and target task settings.</caption>
+  <caption>Dataset statistics across pretraining and target settings.</caption>
   <thead>
     <tr>
       <th>Setting</th>
@@ -31,7 +31,7 @@ The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitc
       <td>1615</td>
     </tr>
     <tr>
-      <td>Target Task (Human)</td>
+      <td>Target (Human)</td>
       <td>50</td>
       <td>10</td>
       <td>500</td>
@@ -40,7 +40,7 @@ The pretraining datasets feature 300 diverse tasks across 2,500 pretraining kitc
   </tbody>
 </table>
 
-We provide a detailed overview of the pretraining and target task datasets below.
+We provide a detailed overview of the pretraining and target datasets below.
 
 -------
 ## Pretraining Datasets
@@ -56,17 +56,17 @@ Go to the [Atomic Tasks](../tasks/atomic_tasks.html) and [Composite Tasks](../ta
 Go to the [Atomic Tasks](../tasks/atomic_tasks.html) page to see the list of supported tasks.
 
 -------
-## Target Task Datasets
+## Target Datasets
 
 In addition to pretraining data, RoboCasa offers over 193 hours of high-quality demonstration data for target tasks collected via teleoperation.
-The target task datasets feature 50 diverse tasks across 10 distinct post-training kitchen scenes.
-Note that these post-training scenes are distinct from the pretraining scenes represented in the pretraining datasets.
+The target datasets feature 50 diverse tasks across 10 distinct target kitchen scenes.
+Note that these target scenes are distinct from the pretraining scenes represented in the pretraining datasets.
 For each task, we provide **500 human demonstrations** collected via teleoperation.
 
 We split these datasets into three groups:
 * **Atomic-Seen** (18 tasks): 18 atomic tasks, with all tasks also represented in pretraining datasets.
 * **Composite-Seen** (16 tasks): 16 composite tasks, with all tasks also represented in pretraining datasets.
-* **Composite-Unseen** (16 tasks): 16 composite tasks, only seen in post-training datasets and not in pretraining datasets.
+* **Composite-Unseen** (16 tasks): 16 composite tasks, only seen in target datasets and not in pretraining datasets.
 
 
 ### Atomic-Seen Tasks

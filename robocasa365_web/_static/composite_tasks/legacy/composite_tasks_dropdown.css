@@ -223,8 +223,9 @@ html[data-theme="dark"] body.rc-composite-tasks {
   padding: 0.3rem 0.55rem;
   border-radius: 0.4rem;
   border: 1px solid var(--pst-color-border, #e0e0e0);
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--pst-color-text-base, #111);
+  /* Match Fixtures page "Clear" button color (keep sizing unchanged) */
+  background: #3498db;
+  color: #ffffff;
   font-weight: 600;
   line-height: 1.1;
   cursor: pointer;
@@ -232,7 +233,7 @@ html[data-theme="dark"] body.rc-composite-tasks {
 }
 
 .rc-reset-filters-btn:hover {
-  background: rgba(255, 255, 255, 1);
+  background: #2980b9;
 }
 
 .rc-filter input {

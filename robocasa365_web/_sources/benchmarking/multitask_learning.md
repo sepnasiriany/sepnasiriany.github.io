@@ -4,9 +4,10 @@ In the multi-task learning benchmark, we study training on multi-task pretrainin
 We do policy learning on the [Human Pretraining Datasets](../datasets/pretraining_posttraining_datasets.html#human-datasets), which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
 For each task, we provide 100 task demonstrations per task, resulting in **482 hours of total data**.
 
+-------
 ## Benchmark results and checkpoints
 
-We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N1.5. Here is a summary of our benchmarking results. We share the model checkpoints for reference.
+We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N1.5. Here is a summary of our benchmarking results **(average task success rate, in %)**. We share the model checkpoints for reference.
 
 <table class="docutils rc-benchmark-table">
   <thead>
@@ -57,42 +58,43 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
   </tbody>
 </table>
 
-
+-------
 ## Benchmark instructions
 
 ### Diffusion Policy
 
-#### guidelines
-* We use a batch size of TODO on a TODO gpu
-* We train and evaluate the model after TODO steps
+#### Guidelines
+* We use a batch size of 192 and train for 500k steps
+* We evaluate the model in **pretrain** scenes
 
-#### train model
+#### Train model
 ```
-HYDRA_FULL_ERROR=1 python train.py \
+python train.py \
 --config-name=train_diffusion_transformer_xl_bs192 \
 task=robocasa/pretrain/pretrain300
 ```
 
-#### evaluate model
+#### Evaluate model
 ```
 python eval_robocasa.py \
 --checkpoint <checkpoint-path> \
 --split train
 ```
 
-#### report evaluation results
+#### Report evaluation results
 ```
 python diffusion_policy/scripts/get_eval_stats.py \
 --dir <outputs-dir>
 ```
 
+-------
 ### Openpi
 
-#### guideline
-* We use a batch size of TODO on a TODO gpu
-* We train and evaluate the model after TODO steps
+#### Guidelines
+* We use a batch size of 64 and train for 75k steps
+* We evaluate the model in **pretrain** scenes
 
-#### train model
+#### Train model
 ```
 XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
 <your-ds-soup> \
@@ -100,7 +102,7 @@ XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
 --overwrite
 ```
 
-#### evaluate model
+#### Evaluate model
 ```
 # part a: start inference server
 python scripts/serve_policy.py \
@@ -115,33 +117,35 @@ python examples/robocasa/main.py \
 --args.log_dir <path-to-checkpoint>
 ```
 
-#### report evaluation results
+#### Report evaluation results
 ```
 TODO
 ```
 
+-------
 ### GR00T
 
-#### guideline
-* We use a batch size of 128 on a single NVIDIA GH200 gpu
-* We train and evaluate the model after TODO steps
+#### Guidelines
+* We use a batch size of 128 and train for 120k steps
+* We evaluate the model in **pretrain** scenes
 
-#### train model
+#### Train model
 ```
 python scripts/gr00t_finetune.py \
---output-dir <your-output-dir> \
---dataset_soup <your-ds-soup>
+--output-dir expdata/multitask_learning \
+--dataset_soup <your-ds-soup> \
+--max_steps 120000
 ```
 
-#### evaluate model
+#### Evaluate model
 ```
 python scripts/run_eval.py \
---model_path <your-output-dir>/checkpoint-120000/ \
+--model_path expdata/multitask_learning/checkpoint-120000/ \
 --split pretrain
 ```
 
-#### report evaluation results
+#### Report evaluation results
 ```
 python gr00t/eval/get_eval_stats.py \
---dir expdata/pretrain_human300/checkpoint-120000/
+--dir expdata/multitask_learning/checkpoint-120000/
 ```

@@ -1,6 +1,6 @@
 # Using Datasets
 
-We provide datasets in the lerobot format. There are broadly three types of datasets: **pretraining human** datasets, **pretraining MimicGen** datasets, and **target task human** datasets (see [datasets overview](../datasets/datasets_overview.html) for details).
+We provide datasets in the lerobot format. There are broadly three types of datasets: **pretraining human** datasets, **pretraining MimicGen** datasets, and **target human** datasets (see [datasets overview](../datasets/datasets_overview.html) for details).
 
 ### Downloading datasets
 
@@ -23,7 +23,7 @@ python -m robocasa.scripts.download_datasets --datasets pretrain_human
 # only download pretraining mimicgen dataasets
 python -m robocasa.scripts.download_datasets --datasets pretrain_mg
 
-# only download target task human datasets
+# only download target human datasets
 python -m robocasa.scripts.download_datasets --datasets target_human
 
 # only download datasets for a specific task
@@ -36,13 +36,40 @@ Additionally you can specify the following optional arguments:
 ```
 
 ### Dataset structure
-RoboCasa datasets follow the convention lerobot. Here is an overview of important elements of each dataset:
+RoboCasa datasets follow the LeRobot format. Here is an overview of important elements of each dataset:
 
-`|__meta`: env meta data and all demos <br>
-`   |__TODO` TODO<br>
-`|__data` TODO<br>
-`|__videos`: TODO<br>
-`|__extras`: TODO
+```
+lerobot/
+├── meta/                               # Metadata files describing the dataset
+│   ├── info.json                       # Dataset info (robot type, episodes, frames, fps, features)
+│   ├── tasks.jsonl                     # Language instructions with task indices
+│   ├── episodes.jsonl                  # Per-episode metadata (index, instruction, length)
+│   ├── episodes_stats.jsonl            # Per-episode statistics for actions/proprioception
+│   ├── stats.json                      # Aggregated statistics across all episodes
+│   ├── episode_stats.json              # Similar stats needed by some policy dataloaders
+│   ├── modality.json                   # Info contained in observations and action vectors
+│   └── embodiment.json                 # Embodiment information
+│
+├── data/                               # Low-dimensional trajectory data (parquet files)
+│   └── chunk-<chunk_id>/
+│       └── episode_<episode_id>.parquet   # Proprioception, actions, dones, timestamps
+│
+├── videos/                             # MP4 video files for each camera view
+│   └── chunk-<chunk_id>/
+│       ├── observation.images.robot0_agentview_left/
+│       │   └── episode_<episode_id>.mp4   # Left third-person camera
+│       ├── observation.images.robot0_agentview_right/
+│       │   └── episode_<episode_id>.mp4   # Right third-person camera
+│       └── observation.images.robot0_eye_in_hand/
+│           └── episode_<episode_id>.mp4   # Eye-in-hand camera
+│
+└── extras/                             # MuJoCo/RoboCasa-specific metadata (non-standard)
+    ├── dataset_meta.json               # Environment args and controller configs
+    └── episode_<episode_id>/           # Per-episode extras
+        ├── ep_meta.json                # Episode metadata (layout, style, fixtures, objects)
+        ├── model.xml.gz                # Compressed MJCF MuJoCo model XML
+        └── states.npz                  # Raw MuJoCo states for replay (not for training)
+```
 
 ### Dataset registry
 We track each dataset with metadata (paths, task horizon length, etc.) in the [dataset registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py). You can use the `get_ds_meta()` function to retrieve metadata for a specific task:
@@ -72,11 +99,10 @@ ds_soup = get_ds_soup(
 ### Basic usage
 Here is an example script to access dataset elements:
 ```py
-
 from lerobot.datasets.lerobot_dataset import LeRobotDataset
 import random
 
-ds = LeRobotDataset(repo_id="robocasa365",root=PATH)
+ds = LeRobotDataset(repo_id="robocasa365", root=DATASET_PATH)
 ep_idx = 5
 start = int(ds.episode_data_index["from"][ep_idx]) 
 end = int(ds.episode_data_index["to"][ep_idx])
