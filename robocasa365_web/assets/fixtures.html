@@ -478,9 +478,18 @@ table.rc-fixtures-table td:nth-child(2) {
 }
 
 /* Inline (non-modal) "Style ..." label under fixture preview */
-.fixture-preview-label {
+.fixture-item .fixture-preview-label {
   font-size: 14px;
-  margin-top: 20px;
+  margin-top: 14px;
+}
+
+/* Highlight matching style number when filtering */
+.style-highlight {
+  background-color: #ffeb3b;
+  color: #000;
+  padding: 2px 2px;
+  border-radius: 3px;
+  font-weight: 600;
 }
 
 /* Modal/Lightbox styles */
@@ -847,14 +856,38 @@ table.rc-fixtures-table td:nth-child(2) {
 @media (prefers-color-scheme: dark) {
   .modal-content img,
   .fixture-preview-image {
-    filter: brightness(1.25) contrast(0.88) saturate(1.05);
+    /* Avoid black-crush: don't alter the image pixels with CSS filters.
+       Instead, give the image a subtle neutral backdrop + border in dark mode. */
+    filter: none;
+    /* A slightly brighter matte + halo reduces perceived "black crush"
+       from the surrounding dark UI without altering the image pixels. */
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.35) inset,
+      0 0 0 10px rgba(255, 255, 255, 0.025);
+    border-radius: 8px;
   }
   .modal-content {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
   }
   .fixture-card {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(127, 127, 127, 0.04));
   }
+}
+
+/* PyData theme dark-mode uses html[data-theme="dark"] (not just prefers-color-scheme).
+   Force-disable any theme image filters that can cause perceived "black crush". */
+html[data-theme="dark"] .modal-content img,
+html[data-theme="dark"] .fixture-preview-image {
+  filter: none !important;
+  opacity: 1 !important;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35) inset,
+    0 0 0 10px rgba(255, 255, 255, 0.025);
+  border-radius: 8px;
 }
 </style><!-- Modal HTML --><div id="fixtureModal" class="fixture-modal">
   <span class="modal-close" onclick="closeFixtureModal()">&times;</span>
@@ -1067,6 +1100,9 @@ table.rc-fixtures-table td:nth-child(2) {
 // Fixture modal state (single-preview + slider)
 let currentViewer = null;
 
+// Current style filter value (for highlighting)
+let currentStyleFilter = null;
+
 // Simple image preloading using browser-native <link rel="prefetch">
 // This is more stable than manual Image object caching
 function prefetchAdjacentImages(viewer, currentPos) {
@@ -1170,7 +1206,22 @@ function sortViewerByStyleOrder(viewer) {
 function getStyleLabelForPos(viewer, pos, fallbackId) {
   const groups = getViewerStyleGroups(viewer);
   const group = (groups && groups[pos - 1] && groups[pos - 1].length) ? groups[pos - 1] : [fallbackId];
-  return `Style ${group.join('/')}`;
+  const styleNumbers = group.join('/');
+  
+  // If filtering, highlight the matching style number
+  if (currentStyleFilter !== null) {
+    const filterNum = currentStyleFilter;
+    const highlighted = styleNumbers.split('/').map(num => {
+      const numStr = String(num).trim();
+      if (parseInt(numStr, 10) === filterNum) {
+        return `<span class="style-highlight">${numStr}</span>`;
+      }
+      return numStr;
+    }).join('/');
+    return `Style ${highlighted}`;
+  }
+  
+  return `Style ${styleNumbers}`;
 }
 
 function setViewerIndex(viewer, index) {
@@ -1210,7 +1261,7 @@ function setViewerIndex(viewer, index) {
       img.style.opacity = '1';
     }
   }
-  if (label) label.textContent = styleLabel;
+  if (label) label.innerHTML = styleLabel;
   if (counter) counter.textContent = `${pos} / ${count}`;
   if (slider) slider.value = String(pos);
 
@@ -1261,7 +1312,7 @@ function setModalIndex(index) {
       modalImg.style.opacity = '1';
     }
   }
-  if (modalLabel) modalLabel.textContent = styleLabel;
+  if (modalLabel) modalLabel.innerHTML = styleLabel;
   if (modalCounter) modalCounter.textContent = `${pos} / ${count}`;
   if (modalSlider) modalSlider.value = String(pos);
   if (modalPrev) modalPrev.disabled = pos <= 1;
@@ -1307,6 +1358,7 @@ function filterFixturesByStyle(styleNumber) {
 
   // If invalid / empty: clear filter + reset all viewers to their first entry
   if (!styleNumber || isNaN(styleNum) || styleNum < 1 || styleNum > 60) {
+    currentStyleFilter = null;
     document.querySelectorAll('.fixture-card').forEach(card => {
       card.classList.remove('hidden-by-filter');
       const viewer = card.querySelector('.fixture-viewer');
@@ -1316,6 +1368,9 @@ function filterFixturesByStyle(styleNumber) {
     if (clearBtn) clearBtn.style.display = 'none';
     return;
   }
+  
+  // Store the filter value for highlighting
+  currentStyleFilter = styleNum;
 
   // Jump every fixture viewer to the entry that contains this style number.
   // If a fixture truly doesn't contain the style, hide it.
@@ -1342,6 +1397,21 @@ function filterFixturesByStyle(styleNumber) {
     // viewer indices are 1-based
     setViewerIndex(viewer, matchIdx + 1);
   });
+  
+  // Refresh all visible labels to show highlighting
+  document.querySelectorAll('.fixture-card:not(.hidden-by-filter)').forEach(card => {
+    const viewer = card.querySelector('.fixture-viewer');
+    if (viewer) {
+      const currentPos = parseInt(viewer.dataset.current || "1", 10) || 1;
+      setViewerIndex(viewer, currentPos);
+    }
+  });
+  
+  // Update modal label if modal is open
+  if (currentViewer) {
+    const modalPos = parseInt(currentViewer.dataset.current || "1", 10) || 1;
+    setModalIndex(modalPos);
+  }
 
   const clearBtn = document.getElementById('style-filter-clear');
   if (clearBtn) clearBtn.style.display = 'inline-block';
