@@ -113,11 +113,11 @@
     "OpenCabinet",
     "OpenDrawer",
     "OpenStandMixerHead",
-    "PnPCounterToCabinet",
-    "PnPCounterToStove",
-    "PnPDrawerToCounter",
-    "PnPSinkToCounter",
-    "PnPToasterToCounter",
+    "PickPlaceCounterToCabinet",
+    "PickPlaceCounterToStove",
+    "PickPlaceDrawerToCounter",
+    "PickPlaceSinkToCounter",
+    "PickPlaceToasterToCounter",
     "SlideDishwasherRack",
     "TurnOffStove",
     "TurnOnElectricKettle",
@@ -209,7 +209,7 @@
   // Fixture-view overrides:
   // - Remove fixture sections: Doors, Pick & Place, Navigation
   // - Create: "Fridge", "Cabinet", "Dishwasher" (virtual), and "Misc"
-  // - Re-route former door + PnP + navigation tasks into their represented fixture buckets.
+  // - Re-route former door + PickPlace + navigation tasks into their represented fixture buckets.
   const FIXTURE_VIEW_REMOVED_LABELS = new Set(["Doors", "Pick & Place", "Navigation"]);
   const FIXTURE_VIEW_MISC_TASKS = new Set([
     "CheesyBread",
@@ -890,8 +890,8 @@
           return GROUP_MISC_ID;
         }
 
-        function groupIdForPnPTask(name) {
-          // Map PnP tasks to the fixture they represent
+        function groupIdForPickPlaceTask(name) {
+          // Map PickPlace tasks to the fixture they represent
           if (name.includes("Fridge")) return GROUP_FRIDGE_ID;
           if (name.includes("Cabinet")) return GROUP_CABINET_ID;
           if (name.includes("Blender")) return fixtureIdByLabel.get("Blender") || GROUP_MISC_ID;
@@ -953,9 +953,9 @@
             groupId = GROUP_MISC_ID;
             groupLabel = "Miscellaneous";
           }
-          // PnP tasks formerly under "Pick & Place"
-          else if (name.startsWith("PnP") || meta.fixtureLabel === "Pick & Place") {
-            groupId = groupIdForPnPTask(name);
+          // PickPlace tasks formerly under "Pick & Place"
+          else if (name.startsWith("PickPlace") || meta.fixtureLabel === "Pick & Place") {
+            groupId = groupIdForPickPlaceTask(name);
           }
 
           // Fall back to original fixture bucket when not overridden

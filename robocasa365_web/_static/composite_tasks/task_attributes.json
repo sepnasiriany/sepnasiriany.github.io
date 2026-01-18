@@ -218,126 +218,126 @@
       "description": "Pick the mug on the counter and place it in the cabinet with the handle facing the right, like the mugs already inside."
     },
     {
-      "name": "PnPCabinetToCounter",
+      "name": "PickPlaceCabinetToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the cabinet and place it on the counter."
     },
     {
-      "name": "PnPCounterToBlender",
+      "name": "PickPlaceCounterToBlender",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the counter and place it in the blender."
     },
     {
-      "name": "PnPCounterToCabinet",
+      "name": "PickPlaceCounterToCabinet",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the counter and place it in the cabinet."
     },
     {
-      "name": "PnPCounterToDrawer",
+      "name": "PickPlaceCounterToDrawer",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the counter and place it in the drawer."
     },
     {
-      "name": "PnPCounterToMicrowave",
+      "name": "PickPlaceCounterToMicrowave",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "Yes",
       "description": "Pick the item from the counter and place it in the microwave."
     },
     {
-      "name": "PnPCounterToOven",
+      "name": "PickPlaceCounterToOven",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "Yes",
       "description": "Place the item on the {bottom/top} rack of the oven."
     },
     {
-      "name": "PnPCounterToSink",
+      "name": "PickPlaceCounterToSink",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the counter and place it in the sink."
     },
     {
-      "name": "PnPCounterToStandMixer",
+      "name": "PickPlaceCounterToStandMixer",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Place the item in the stand mixer bowl."
     },
     {
-      "name": "PnPCounterToStove",
+      "name": "PickPlaceCounterToStove",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the plate and place it in the pan."
     },
     {
-      "name": "PnPCounterToToasterOven",
+      "name": "PickPlaceCounterToToasterOven",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Place the item on the rack of the toaster oven."
     },
     {
-      "name": "PnPDrawerToCounter",
+      "name": "PickPlaceDrawerToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "Yes",
       "description": "Pick the item from the drawer and place it on the counter."
     },
     {
-      "name": "PnPFridgeDrawerToShelf",
+      "name": "PickPlaceFridgeDrawerToShelf",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the fridge drawer and place it on a fridge shelf."
     },
     {
-      "name": "PnPFridgeShelfToDrawer",
+      "name": "PickPlaceFridgeShelfToDrawer",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the fridge shelf and place it in the fridge drawer."
     },
     {
-      "name": "PnPMicrowaveToCounter",
+      "name": "PickPlaceMicrowaveToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "Yes",
       "description": "Pick the item from the microwave and place it on container located on the counter."
     },
     {
-      "name": "PnPSinkToCounter",
+      "name": "PickPlaceSinkToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the sink and place it on the container located on the counter."
     },
     {
-      "name": "PnPStoveToCounter",
+      "name": "PickPlaceStoveToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the pan and place it in the container."
     },
     {
-      "name": "PnPToasterOvenToCounter",
+      "name": "PickPlaceToasterOvenToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Pick the item from the toaster oven and place it on the plate on the counter."
     },
     {
-      "name": "PnPToasterToCounter",
+      "name": "PickPlaceToasterToCounter",
       "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",

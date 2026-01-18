@@ -733,6 +733,39 @@ table.rc-fixtures-table td:nth-child(2) {
 // Fixture modal state (single-preview + slider)
 let currentViewer = null;
 
+// Image preloading cache and management
+const imagePreloadCache = new Map(); // Maps image URL to Image object
+const PRELOAD_RANGE = 3; // Preload next 3 images in each direction
+
+function preloadImage(src) {
+  // Return cached image if already loaded
+  if (imagePreloadCache.has(src)) {
+    return imagePreloadCache.get(src);
+  }
+  
+  // Create new Image object for preloading
+  const img = new Image();
+  imagePreloadCache.set(src, img);
+  img.src = src;
+  return img;
+}
+
+function preloadAdjacentImages(viewer, currentPos) {
+  const base = viewer.dataset.base;
+  const ids = getViewerIds(viewer);
+  const count = ids.length;
+  
+  // Preload images in range [currentPos - PRELOAD_RANGE, currentPos + PRELOAD_RANGE]
+  for (let offset = -PRELOAD_RANGE; offset <= PRELOAD_RANGE; offset++) {
+    const targetPos = currentPos + offset;
+    if (targetPos >= 1 && targetPos <= count && targetPos !== currentPos) {
+      const imageId = ids[targetPos - 1];
+      const src = `${base}/${imageId}.png`;
+      preloadImage(src);
+    }
+  }
+}
+
 function closeFixtureModal() {
   document.getElementById('fixtureModal').classList.remove('active');
   document.body.style.overflow = '';
@@ -825,9 +858,62 @@ function setViewerIndex(viewer, index) {
 
   const src = `${base}/${imageId}.png`;
   const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
+  
+  // Preload adjacent images for smooth navigation
+  preloadAdjacentImages(viewer, pos);
+  
   if (img) {
-    img.src = src;
-    img.alt = styleLabel;
+    // Check if image is already in cache (preloaded)
+    const cachedImg = imagePreloadCache.get(src);
+    if (cachedImg) {
+      if (cachedImg.complete) {
+        // Image is already loaded, use it immediately
+        img.src = src;
+        img.alt = styleLabel;
+      } else {
+        // Image is loading, wait for it
+        img.style.opacity = '0.5';
+        img.style.transition = 'opacity 0.2s';
+        // Check again in case it completed between checks
+        if (cachedImg.complete) {
+          img.src = src;
+          img.alt = styleLabel;
+          img.style.opacity = '1';
+        } else {
+          cachedImg.onload = function() {
+            img.src = src;
+            img.alt = styleLabel;
+            img.style.opacity = '1';
+            cachedImg.onload = null;
+            cachedImg.onerror = null;
+          };
+          cachedImg.onerror = function() {
+            img.style.opacity = '1'; // Reset opacity even on error
+            cachedImg.onload = null;
+            cachedImg.onerror = null;
+          };
+        }
+      }
+    } else {
+      // Show loading state
+      img.style.opacity = '0.5';
+      img.style.transition = 'opacity 0.2s';
+      
+      // Load image
+      const loadImg = new Image();
+      loadImg.onload = function() {
+        img.src = src;
+        img.alt = styleLabel;
+        img.style.opacity = '1';
+        // Cache it
+        imagePreloadCache.set(src, loadImg);
+      };
+      loadImg.onerror = function() {
+        img.style.opacity = '1'; // Reset opacity even on error
+      };
+      loadImg.src = src;
+      imagePreloadCache.set(src, loadImg);
+    }
   }
   if (label) label.textContent = styleLabel;
   if (counter) counter.textContent = `${pos} / ${count}`;
@@ -835,7 +921,7 @@ function setViewerIndex(viewer, index) {
 
   viewer.dataset.current = String(pos);
 
-  // Keep modal in sync if it’s open for this viewer
+  // Keep modal in sync if it's open for this viewer
   if (currentViewer === viewer) {
     setModalIndex(pos);
   }
@@ -858,7 +944,59 @@ function setModalIndex(index) {
 
   const src = `${base}/${imageId}.png`;
   const styleLabel = getStyleLabelForPos(currentViewer, pos, imageId);
-  if (modalImg) modalImg.src = src;
+  
+  // Preload adjacent images for smooth navigation
+  preloadAdjacentImages(currentViewer, pos);
+  
+  if (modalImg) {
+    // Check if image is already in cache (preloaded)
+    const cachedImg = imagePreloadCache.get(src);
+    if (cachedImg) {
+      if (cachedImg.complete) {
+        // Image is already loaded, use it immediately
+        modalImg.src = src;
+      } else {
+        // Image is loading, wait for it
+        modalImg.style.opacity = '0.5';
+        modalImg.style.transition = 'opacity 0.2s';
+        // Check again in case it completed between checks
+        if (cachedImg.complete) {
+          modalImg.src = src;
+          modalImg.style.opacity = '1';
+        } else {
+          cachedImg.onload = function() {
+            modalImg.src = src;
+            modalImg.style.opacity = '1';
+            cachedImg.onload = null;
+            cachedImg.onerror = null;
+          };
+          cachedImg.onerror = function() {
+            modalImg.style.opacity = '1'; // Reset opacity even on error
+            cachedImg.onload = null;
+            cachedImg.onerror = null;
+          };
+        }
+      }
+    } else {
+      // Show loading state
+      modalImg.style.opacity = '0.5';
+      modalImg.style.transition = 'opacity 0.2s';
+      
+      // Load image
+      const loadImg = new Image();
+      loadImg.onload = function() {
+        modalImg.src = src;
+        modalImg.style.opacity = '1';
+        // Cache it
+        imagePreloadCache.set(src, loadImg);
+      };
+      loadImg.onerror = function() {
+        modalImg.style.opacity = '1'; // Reset opacity even on error
+      };
+      loadImg.src = src;
+      imagePreloadCache.set(src, loadImg);
+    }
+  }
   if (modalLabel) modalLabel.textContent = styleLabel;
   if (modalCounter) modalCounter.textContent = `${pos} / ${count}`;
   if (modalSlider) modalSlider.value = String(pos);
@@ -1008,6 +1146,19 @@ function initFixtureViewers() {
       });
     }
   });
+  
+  // Preload initial images for all viewers after a short delay
+  // This ensures the page is interactive first, then preloads in background
+  setTimeout(function() {
+    const viewers = document.querySelectorAll('.fixture-viewer');
+    viewers.forEach(function(viewer) {
+      const ids = getViewerIds(viewer);
+      if (ids.length > 0) {
+        // Preload first few images for each viewer
+        preloadAdjacentImages(viewer, 1);
+      }
+    });
+  }, 500);
 }
 
 // Initialize style filter

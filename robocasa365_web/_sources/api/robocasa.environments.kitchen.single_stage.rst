@@ -68,10 +68,10 @@ robocasa.environments.kitchen.single\_stage.kitchen\_oven module
    :undoc-members:
    :show-inheritance:
 
-robocasa.environments.kitchen.single\_stage.kitchen\_pnp module
+robocasa.environments.kitchen.single\_stage.kitchen\_PickPlace module
 ---------------------------------------------------------------
 
-.. automodule:: robocasa.environments.kitchen.single_stage.kitchen_pnp
+.. automodule:: robocasa.environments.kitchen.single_stage.kitchen_pick_place
    :members:
    :undoc-members:
    :show-inheritance:

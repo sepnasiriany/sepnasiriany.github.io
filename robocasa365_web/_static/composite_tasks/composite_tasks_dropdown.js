@@ -271,7 +271,7 @@
       .replace(/[^a-z0-9]/g, "");
   }
 
-  // Source of truth: the actual directory names under robocasa/environments/kitchen/multi_stage/
+  // Source of truth: the actual directory names under robocasa/environments/kitchen/composite/
   // (Excluded: "__pycache__")
   const MULTI_STAGE_FOLDERS = [
     "adding_ice_to_beverages",
@@ -356,7 +356,7 @@
   })();
 
   const ACTIVITY_TO_FOLDER_ALIASES = new Map([
-    // Use the actual directory names under robocasa/environments/kitchen/multi_stage/
+    // Use the actual directory names under robocasa/environments/kitchen/composite/
     ["boiling water", "boiling"],
     ["brewing coffee", "brewing"],
     ["frying foods", "frying"],
@@ -391,7 +391,7 @@
     if (aliased) return aliased;
 
     // If the incoming activity is already the (possibly broken) title, try to map it
-    // to a known multi_stage folder by compact matching.
+    // to a known composite folder by compact matching.
     const compactFromTitle = compactAlphaNumKey(key);
     const fromCompact = MULTI_STAGE_COMPACT_TO_FOLDER.get(compactFromTitle);
     if (fromCompact) return fromCompact;
@@ -747,7 +747,7 @@
   }
 
   const TASK_FILE_BASE_OVERRIDES = new Map([
-    // Fix local filename typos / variants in robocasa/environments/kitchen/multi_stage/
+    // Fix local filename typos / variants in robocasa/environments/kitchen/composite/
     ["AddSweetener", "add_sweetner"],
     ["AirDryFruit", "airdry_fruit"],
     ["OrganizeMetallicUtensils", "organize_metalic_utensils"],
@@ -756,11 +756,11 @@
   ]);
 
   function sourceUrlForTask(activityTitle, taskName) {
-    // Derive folder from actual multi_stage directory naming conventions.
+    // Derive folder from actual composite directory naming conventions.
     const activityFolder = folderForActivityTitle(activityTitle) || activityFolderFromTitle(activityTitle);
     const base = TASK_FILE_BASE_OVERRIDES.get(taskName) || snakeFromTaskName(taskName);
     if (!activityFolder || !base) return null;
-    return `https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/${activityFolder}/${base}.py`;
+    return `https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/composite/${activityFolder}/${base}.py`;
   }
 
   function uniqueTokens(query) {
@@ -828,90 +828,90 @@
 
   // Optional per-task tags shown under the task name (Composite Tasks page only).
   // Default applies to all tasks, unless overridden in TASK_TAGS.
-  const DEFAULT_TASK_TAGS = ["pnp"];
+  const DEFAULT_TASK_TAGS = ["PickPlace"];
   // Format: taskName -> array of tag keys (rendered as pills).
   // Use [] to explicitly disable tags for a specific task.
   const TASK_TAGS = new Map([
     // Manual skill overrides (additive alongside inferred tags)
-    ["MakeIceLemonade", ["pnp", "door_open"]],
-    ["ArrangeBuffetDessert", ["pnp", "door_open"]],
-    ["CutBuffetPizza", ["pnp", "drawer_open"]],
-    ["DivideBuffetTrays", ["pnp", "door_open"]],
-    ["TongBuffetSetup", ["pnp", "drawer_open"]],
-    ["CoolBakedCake", ["pnp", "rack_slide", "door_open"]],
-    ["CoolBakedCookies", ["pnp", "rack_slide"]],
-    ["MixCakeFrosting", ["pnp", "knob_twist", "stand_mixer_close"]],
-    ["OvenBroilFish", ["pnp", "rack_slide"]],
-    ["RemoveBroiledFish", ["pnp", "door_open", "rack_slide"]],
-    ["ToasterOvenBroilFish", ["pnp", "rack_slide", "knob_twist", "door_close"]],
+    ["MakeIceLemonade", ["PickPlace", "door_open"]],
+    ["ArrangeBuffetDessert", ["PickPlace", "door_open"]],
+    ["CutBuffetPizza", ["PickPlace", "drawer_open"]],
+    ["DivideBuffetTrays", ["PickPlace", "door_open"]],
+    ["TongBuffetSetup", ["PickPlace", "drawer_open"]],
+    ["CoolBakedCake", ["PickPlace", "rack_slide", "door_open"]],
+    ["CoolBakedCookies", ["PickPlace", "rack_slide"]],
+    ["MixCakeFrosting", ["PickPlace", "knob_twist", "stand_mixer_close"]],
+    ["OvenBroilFish", ["PickPlace", "rack_slide"]],
+    ["RemoveBroiledFish", ["PickPlace", "door_open", "rack_slide"]],
+    ["ToasterOvenBroilFish", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
     // Remove Pick & Place from this task specifically, but keep the desired skill
     ["StartElectricKettle", ["button_press", "kettle_lid_close"]],
-    ["MeatTransfer", ["pnp", "door_open"]],
-    ["CuttingToolSelection", ["pnp", "drawer_open"]],
-    ["ChooseRipeFruit", ["pnp", "blender_lid_open"]],
-    ["ClearReceptaclesForCleaning", ["pnp", "lever_turn"]],
-    ["MicrowaveThawing", ["pnp", "door_open", "door_close", "button_press"]],
-    ["MicrowaveThawingFridge", ["pnp", "door_close", "button_press"]],
-    ["ThawInSink", ["pnp", "lever_turn"]],
-    ["AddLemonToFish", ["pnp", "door_open"]],
-    ["GarnishPancake", ["pnp", "door_open"]],
-    ["FillBlenderJug", ["pnp", "lever_turn"]],
-    ["WashLettuce", ["pnp", "lever_turn"]],
-    ["ReturnHeatedFood", ["pnp", "door_open"]],
-    ["LoadDishwasher", ["pnp", "rack_slide"]],
-    ["AfterwashSorting", ["pnp", "lever_turn"]],
-    ["AirDryFruit", ["pnp", "lever_turn"]],
-    ["BlendIngredients", ["pnp", "button_press", "blender_lid_open", "blender_lid_close"]],
-    ["BlendSalsaMix", ["pnp", "blender_lid_open", "blender_lid_close"]],
-    ["BlendVegetableSauce", ["pnp", "button_press", "blender_lid_close"]],
-    ["PrepareVeggieDip", ["pnp", "button_press", "blender_lid_close"]],
-    ["ClusterUtensilsInDrawer", ["pnp", "drawer_open"]],
-    ["PlateStoreDinner", ["pnp", "door_open"]],
-    ["BlendMarinade", ["pnp", "button_press", "blender_lid_close"]],
-    ["PlaceMeatInMarinade", ["pnp", "door_open"]],
-    ["PlaceStraw", ["pnp", "drawer_open"]],
-    ["HeatKebabSandwich", ["pnp", "knob_twist", "rack_slide", "door_close"]],
-    ["HotDogSetup", ["pnp", "door_open"]],
-    ["PrepareSausageCheese", ["pnp", "door_open"]],
-    ["ToastHeatableIngredients", ["pnp", "rack_slide", "door_open"]],
-    ["MakeLoadedPotato", ["pnp", "door_open"]],
-    ["WaffleReheat", ["pnp", "button_press"]],
-    ["RefillCondimentStation", ["pnp", "door_open"]],
-    ["RestockSinkSupplies", ["pnp", "drawer_open"]],
-    ["CleanMicrowave", ["pnp", "door_open"]],
-    ["PrepForSanitizing", ["pnp", "door_open"]],
+    ["MeatTransfer", ["PickPlace", "door_open"]],
+    ["CuttingToolSelection", ["PickPlace", "drawer_open"]],
+    ["ChooseRipeFruit", ["PickPlace", "blender_lid_open"]],
+    ["ClearReceptaclesForCleaning", ["PickPlace", "lever_turn"]],
+    ["MicrowaveThawing", ["PickPlace", "door_open", "door_close", "button_press"]],
+    ["MicrowaveThawingFridge", ["PickPlace", "door_close", "button_press"]],
+    ["ThawInSink", ["PickPlace", "lever_turn"]],
+    ["AddLemonToFish", ["PickPlace", "door_open"]],
+    ["GarnishPancake", ["PickPlace", "door_open"]],
+    ["FillBlenderJug", ["PickPlace", "lever_turn"]],
+    ["WashLettuce", ["PickPlace", "lever_turn"]],
+    ["ReturnHeatedFood", ["PickPlace", "door_open"]],
+    ["LoadDishwasher", ["PickPlace", "rack_slide"]],
+    ["AfterwashSorting", ["PickPlace", "lever_turn"]],
+    ["AirDryFruit", ["PickPlace", "lever_turn"]],
+    ["BlendIngredients", ["PickPlace", "button_press", "blender_lid_open", "blender_lid_close"]],
+    ["BlendSalsaMix", ["PickPlace", "blender_lid_open", "blender_lid_close"]],
+    ["BlendVegetableSauce", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["PrepareVeggieDip", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["ClusterUtensilsInDrawer", ["PickPlace", "drawer_open"]],
+    ["PlateStoreDinner", ["PickPlace", "door_open"]],
+    ["BlendMarinade", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["PlaceMeatInMarinade", ["PickPlace", "door_open"]],
+    ["PlaceStraw", ["PickPlace", "drawer_open"]],
+    ["HeatKebabSandwich", ["PickPlace", "knob_twist", "rack_slide", "door_close"]],
+    ["HotDogSetup", ["PickPlace", "door_open"]],
+    ["PrepareSausageCheese", ["PickPlace", "door_open"]],
+    ["ToastHeatableIngredients", ["PickPlace", "rack_slide", "door_open"]],
+    ["MakeLoadedPotato", ["PickPlace", "door_open"]],
+    ["WaffleReheat", ["PickPlace", "button_press"]],
+    ["RefillCondimentStation", ["PickPlace", "door_open"]],
+    ["RestockSinkSupplies", ["PickPlace", "drawer_open"]],
+    ["CleanMicrowave", ["PickPlace", "door_open"]],
+    ["PrepForSanitizing", ["PickPlace", "door_open"]],
     ["RinseCuttingBoard", ["lever_turn"]],
-    ["LemonSeasoningFish", ["pnp", "door_open"]],
-    ["DeliverStraw", ["pnp", "drawer_open"]],
-    ["PrepareCocktailStation", ["pnp", "door_open"]],
-    ["PrepareDishwasher", ["pnp", "rack_slide"]],
-    ["DrainVeggies", ["pnp", "lever_turn"]],
-    ["PrewashFoodAssembly", ["pnp", "lever_turn"]],
-    ["WashFruitColander", ["pnp", "lever_turn"]],
-    ["ArrangeBreadBowl", ["pnp", "rack_slide"]],
-    ["DateNight", ["pnp", "door_open"]],
-    ["SeasoningSpiceSetup", ["pnp", "door_open"]],
-    ["SetBowlsForSoup", ["pnp", "door_open"]],
-    ["SetupButterPlate", ["pnp", "door_open"]],
-    ["SetupFruitBowl", ["pnp", "door_open"]],
-    ["SetUpCuttingStation", ["pnp", "drawer_open"]],
-    ["BeginSlowCooking", ["pnp", "knob_twist"]],
-    ["MultistepSteaming", ["pnp", "lever_turn"]],
-    ["ServeWarmCroissant", ["pnp", "rack_slide", "door_open"]],
-    ["ToastBagel", ["pnp", "rack_slide", "knob_twist", "door_close"]],
-    ["ToastBaguette", ["pnp", "rack_slide", "knob_twist", "door_close"]],
-    ["ToastOnCorrectRack", ["pnp", "rack_slide", "door_open"]],
-    ["GetToastedBread", ["pnp", "start_toaster"]],
-    ["ToastOneSlotPair", ["pnp", "start_toaster"]],
-    ["MakeCheesecakeFilling", ["pnp", "knob_twist", "stand_mixer_close"]],
-    ["ClearClutter", ["pnp", "lever_turn"]],
+    ["LemonSeasoningFish", ["PickPlace", "door_open"]],
+    ["DeliverStraw", ["PickPlace", "drawer_open"]],
+    ["PrepareCocktailStation", ["PickPlace", "door_open"]],
+    ["PrepareDishwasher", ["PickPlace", "rack_slide"]],
+    ["DrainVeggies", ["PickPlace", "lever_turn"]],
+    ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
+    ["WashFruitColander", ["PickPlace", "lever_turn"]],
+    ["ArrangeBreadBowl", ["PickPlace", "rack_slide"]],
+    ["DateNight", ["PickPlace", "door_open"]],
+    ["SeasoningSpiceSetup", ["PickPlace", "door_open"]],
+    ["SetBowlsForSoup", ["PickPlace", "door_open"]],
+    ["SetupButterPlate", ["PickPlace", "door_open"]],
+    ["SetupFruitBowl", ["PickPlace", "door_open"]],
+    ["SetUpCuttingStation", ["PickPlace", "drawer_open"]],
+    ["BeginSlowCooking", ["PickPlace", "knob_twist"]],
+    ["MultistepSteaming", ["PickPlace", "lever_turn"]],
+    ["ServeWarmCroissant", ["PickPlace", "rack_slide", "door_open"]],
+    ["ToastBagel", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
+    ["ToastBaguette", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
+    ["ToastOnCorrectRack", ["PickPlace", "rack_slide", "door_open"]],
+    ["GetToastedBread", ["PickPlace", "start_toaster"]],
+    ["ToastOneSlotPair", ["PickPlace", "start_toaster"]],
+    ["MakeCheesecakeFilling", ["PickPlace", "knob_twist", "stand_mixer_close"]],
+    ["ClearClutter", ["PickPlace", "lever_turn"]],
   ]);
 
   // Per-task tag removals applied after auto-inference.
   // Format: taskName -> array of tag keys to remove.
   const TASK_TAG_REMOVALS = new Map([
     // Reset tasks mention "open" in the description, but we don't want to show Open Door here.
-    ["ResetCabinetDoors", ["door_open", "pnp"]],
+    ["ResetCabinetDoors", ["door_open", "PickPlace"]],
     ["CandleCleanup", ["door_open"]],
     ["DrinkwareConsolidation", ["door_open"]],
     // "Press" here is not a button press; avoid incorrect Press Button tag.
@@ -927,14 +927,14 @@
     ["StackBowlsCabinet", ["door_open"]],
     ["BlendMarinade", ["door_close"]],
     ["CountertopCleanup", ["drawer_open"]],
-    ["RinseCuttingBoard", ["knob_twist", "button_press", "pnp"]],
+    ["RinseCuttingBoard", ["knob_twist", "button_press", "PickPlace"]],
     ["MultistepSteaming", ["knob_twist"]],
     ["PlaceBreakfastItemsAway", ["door_open"]],
     ["UtensilShuffle", ["drawer_open"]],
     ["SortingCleanup", ["door_open"]],
     ["ToastOneSlotPair", ["button_press"]],
-    ["RinseSinkBasin", ["pnp"]],
-    ["TurnOffSimmeredSauceHeat", ["pnp"]],
+    ["RinseSinkBasin", ["PickPlace"]],
+    ["TurnOffSimmeredSauceHeat", ["PickPlace"]],
   ]);
 
   // Tag display order (should match the Task Attributes dropdown order)
@@ -955,7 +955,7 @@
     "knob_twist",
     "lever_turn",
     "button_press",
-    "pnp",
+    "PickPlace",
   ];
 
   // Target task lists (from robocasa/utils/dataset_registry.py)
@@ -1130,8 +1130,8 @@
     function pillForTag(t) {
       const span = document.createElement("span");
       span.className = "rc-task-tag";
-      if (t === "pnp") {
-        span.classList.add("rc-task-tag-pnp");
+      if (t === "PickPlace") {
+        span.classList.add("rc-task-tag-PickPlace");
         span.textContent = "Pick & Place";
         return span;
       }
@@ -2700,7 +2700,7 @@
       { key: "knob_twist", label: "Twist Knob", pillClass: "rc-task-tag rc-task-tag-knob-twist" },
       { key: "lever_turn", label: "Turn Lever", pillClass: "rc-task-tag rc-task-tag-lever-turn" },
       { key: "button_press", label: "Press Button", pillClass: "rc-task-tag rc-task-tag-button-press" },
-      { key: "pnp", label: "Pick & Place", pillClass: "rc-task-tag rc-task-tag-pnp" },
+      { key: "PickPlace", label: "Pick & Place", pillClass: "rc-task-tag rc-task-tag-PickPlace" },
     ];
 
     const attrChecks = new Map(); // key -> checkbox
@@ -3828,11 +3828,11 @@
       "OpenCabinet",
       "OpenDrawer",
       "OpenStandMixerHead",
-      "PnPCounterToCabinet",
-      "PnPCounterToStove",
-      "PnPDrawerToCounter",
-      "PnPSinkToCounter",
-      "PnPToasterToCounter",
+      "PickPlaceCounterToCabinet",
+      "PickPlaceCounterToStove",
+      "PickPlaceDrawerToCounter",
+      "PickPlaceSinkToCounter",
+      "PickPlaceToasterToCounter",
       "SlideDishwasherRack",
       "TurnOffStove",
       "TurnOnElectricKettle",
