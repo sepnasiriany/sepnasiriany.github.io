@@ -36,6 +36,7 @@ Welcome to RoboCasa's documentation!
    :caption: Benchmarking
 
    benchmarking/benchmarking_overview
+   benchmarking/policy_learning_algorithms
    benchmarking/multitask_learning
    benchmarking/foundation_model_learning
    benchmarking/lifelong_learning

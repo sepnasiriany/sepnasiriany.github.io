@@ -11,7 +11,7 @@ For these scripts, Mac users need to prepend the "python" command with "mj": `mj
 
 The following script shows how to create a gym environment and to run random rollouts:
 
-```
+```py
 import gymnasium as gym
 import robocasa
 from robocasa.utils.env_utils import run_random_rollouts

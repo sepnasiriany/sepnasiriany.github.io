@@ -93,7 +93,7 @@ table.rc-fixtures-table td:nth-child(2) {
   width: 100%;
   border-radius: 6px;
   border: 1px solid rgba(128,128,128,0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .fixture-item img:hover {
   transform: scale(1.03);
@@ -486,16 +486,13 @@ table.rc-fixtures-table td:nth-child(2) {
   .modal-content img,
   .fixture-preview-image {
     /* Avoid black-crush: don't alter the image pixels with CSS filters.
-       Instead, give the image a subtle neutral backdrop + border in dark mode. */
+       Use a subtle background matte to reduce perceived "black crush"
+       from the surrounding dark UI without visible borders. */
     filter: none;
-    /* A slightly brighter matte + halo reduces perceived "black crush"
-       from the surrounding dark UI without altering the image pixels. */
     background-color: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.35) inset,
-      0 0 0 10px rgba(255, 255, 255, 0.025);
-    border-radius: 8px;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
   }
   .modal-content {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
@@ -512,11 +509,9 @@ html[data-theme="dark"] .fixture-preview-image {
   filter: none !important;
   opacity: 1 !important;
   background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.35) inset,
-    0 0 0 10px rgba(255, 255, 255, 0.025);
-  border-radius: 8px;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 </style>
 

@@ -15,6 +15,152 @@
     return path.endsWith("/tasks/composite_tasks.html") || path.endsWith("/tasks/composite_tasks/");
   }
 
+  function isDatasetsOverviewPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return path.endsWith("/datasets/datasets_overview.html") || path.endsWith("/datasets/datasets_overview/");
+  }
+
+  function isObjectsPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return path.endsWith("/assets/objects.html") || path.endsWith("/assets/objects/");
+  }
+
+  function isFoundationModelLearningPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return (
+      path.endsWith("/benchmarking/foundation_model_learning.html") ||
+      path.endsWith("/benchmarking/foundation_model_learning/")
+    );
+  }
+
+  function initObjectsTableSorting() {
+    const table = document.querySelector("table.rc-objects-table");
+    if (!table) return;
+
+    // Page-scoped styling hooks
+    document.body.classList.add("rc-objects-page");
+
+    const thead = table.querySelector("thead");
+    const tbody = table.querySelector("tbody");
+    if (!thead || !tbody) return;
+
+    const ths = Array.from(thead.querySelectorAll("th"));
+    if (ths.length === 0) return;
+
+    function normalizeGroupsCell(td) {
+      if (!td) return "";
+      const tags = Array.from(td.querySelectorAll(".group-tag"));
+      if (tags.length === 0) {
+        const raw = (td.textContent || "").trim().replace(/\s+/g, " ");
+        return raw;
+      }
+      const names = tags.map((el) => (el.textContent || "").trim()).filter(Boolean).sort((a, b) => a.localeCompare(b));
+      // Reorder DOM to match alphabetical precedence
+      if (tags.length > 1) {
+        td.innerHTML = "";
+        const wrap = document.createElement("span");
+        wrap.className = "rc-groups-wrap";
+        if (names.length === 2) wrap.classList.add("rc-groups-wrap-2");
+        for (let i = 0; i < names.length; i++) {
+          const span = document.createElement("span");
+          span.className = "group-tag";
+          span.textContent = names[i];
+          wrap.appendChild(span);
+        }
+        td.appendChild(wrap);
+      }
+      return names.join(" ");
+    }
+
+    // Ensure multi-group rows display groups in alphabetical order
+    for (const tr of Array.from(tbody.querySelectorAll("tr"))) {
+      normalizeGroupsCell(tr.children?.[1]);
+    }
+
+    // 0: Category (string), 1: Groups (string), 2-4: numeric
+    function cellKey(tr, idx) {
+      const td = tr.children?.[idx];
+      if (idx === 1) {
+        return normalizeGroupsCell(td).toLowerCase();
+      }
+      const raw = (td?.textContent || "").trim().replace(/\\s+/g, " ");
+      if (idx >= 2) {
+        const n = Number.parseFloat(raw);
+        return Number.isFinite(n) ? n : -Infinity;
+      }
+      return raw.toLowerCase();
+    }
+
+    let active = { idx: -1, dir: "asc" }; // dir: 'asc' | 'desc'
+
+    const indicators = new Map(); // th -> span
+
+    function applySort(idx, dir) {
+      active = { idx, dir };
+
+      const rows = Array.from(tbody.querySelectorAll("tr"));
+      const keyed = rows.map((tr, origIdx) => ({ tr, origIdx, key: cellKey(tr, idx) }));
+      keyed.sort((a, b) => {
+        const ka = a.key;
+        const kb = b.key;
+        let cmp = 0;
+        if (typeof ka === "number" && typeof kb === "number") cmp = ka - kb;
+        else cmp = String(ka).localeCompare(String(kb));
+        if (cmp === 0) cmp = a.origIdx - b.origIdx; // stable
+        return dir === "asc" ? cmp : -cmp;
+      });
+
+      for (const { tr } of keyed) tbody.appendChild(tr);
+
+      // Update indicators + aria-sort
+      for (let j = 0; j < ths.length; j++) {
+        const thj = ths[j];
+        const indj = indicators.get(thj);
+        if (!indj) continue;
+        if (j === idx) {
+          thj.setAttribute("aria-sort", dir === "asc" ? "ascending" : "descending");
+          indj.textContent = dir === "asc" ? "▲" : "▼";
+        } else {
+          thj.setAttribute("aria-sort", "none");
+          indj.textContent = "↕";
+        }
+      }
+    }
+
+    for (let i = 0; i < ths.length; i++) {
+      const th = ths[i];
+      th.setAttribute("aria-sort", "none");
+
+      const label = document.createElement("span");
+      label.className = "rc-sort-label";
+      // Preserve any existing HTML in header cell
+      while (th.firstChild) label.appendChild(th.firstChild);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rc-table-sort-btn";
+      btn.setAttribute("aria-label", `Sort by ${(th.textContent || "").trim()}`);
+
+      const ind = document.createElement("span");
+      ind.className = "rc-table-sort-indicator";
+      ind.textContent = "↕";
+      btn.appendChild(ind);
+
+      th.appendChild(label);
+      th.appendChild(btn);
+      indicators.set(th, ind);
+
+      btn.addEventListener("click", () => {
+        const idx = i;
+        const dir = active.idx === idx ? (active.dir === "asc" ? "desc" : "asc") : "asc";
+        applySort(idx, dir);
+      });
+    }
+
+    // Default sort: Category A→Z
+    applySort(0, "asc");
+  }
+
   function getTaskAttributesMap() {
     // Prefer the pre-bundled map (works on file:// too)
     const obj = window.ROBOCASA_TASK_ATTRIBUTES;
@@ -39,6 +185,37 @@
     return null;
   }
 
+  function getAtomicEpisodeLengthMap() {
+    // Prefer atomic-specific lengths; fall back to composite lengths for any missing entries.
+    const map = new Map();
+    const a = window.ROBOCASA_ATOMIC_EPISODE_LENGTHS;
+    if (a && typeof a === "object" && a.tasks && typeof a.tasks === "object") {
+      for (const [taskName, data] of Object.entries(a.tasks)) {
+        if (data && typeof data.mean_seconds === "number") map.set(taskName, data.mean_seconds);
+      }
+    }
+    const c = window.ROBOCASA_EPISODE_LENGTHS;
+    if (c && typeof c === "object" && c.tasks && typeof c.tasks === "object") {
+      for (const [taskName, data] of Object.entries(c.tasks)) {
+        if (!map.has(taskName) && data && typeof data.mean_seconds === "number") map.set(taskName, data.mean_seconds);
+      }
+    }
+    return map;
+  }
+
+  let CACHED_TASK_ATTRIBUTES_JSON = null;
+  async function loadTaskAttributesJson() {
+    if (CACHED_TASK_ATTRIBUTES_JSON) return CACHED_TASK_ATTRIBUTES_JSON;
+    const url = `${getContentRoot()}composite_tasks/task_attributes.json`;
+    const res = await fetch(url, { cache: "force-cache" });
+    if (!res.ok) {
+      throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    CACHED_TASK_ATTRIBUTES_JSON = data;
+    return data;
+  }
+
   function getHeadingTitle(headingEl) {
     // Sphinx adds a permalink anchor like: <a class="headerlink"...>#</a>
     // We want the visible title without that "#".
@@ -46,6 +223,228 @@
     const headerlink = clone.querySelector("a.headerlink");
     if (headerlink) headerlink.remove();
     return (clone.textContent || "").trim();
+  }
+
+  function anchorIdFromActivityTitle(title) {
+    // Roughly matches Sphinx's default slugging for section IDs.
+    return (title || "")
+      .toLowerCase()
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .trim()
+      .replace(/\\s+/g, "-")
+      .replace(/-+/g, "-");
+  }
+
+  function normalizeActivityKey(activity) {
+    return (activity || "").trim().replace(/\\s+/g, " ").toLowerCase();
+  }
+
+  function titleCaseActivity(activity) {
+    const s = (activity || "").trim().replace(/\\s+/g, " ");
+    if (!s) return s;
+    const lowerWords = new Set(["a", "an", "the", "and", "or", "of", "to", "in", "on", "for", "with"]);
+    return s
+      .split(" ")
+      .map((w, i) => {
+        if (!w) return w;
+        // Preserve all-caps acronyms
+        if (w.length > 1 && w === w.toUpperCase()) return w;
+        const lw = w.toLowerCase();
+        if (i !== 0 && lowerWords.has(lw)) return lw;
+        return lw.charAt(0).toUpperCase() + lw.slice(1);
+      })
+      .join(" ");
+  }
+
+  function folderTitleFromMultiStageFolder(folder) {
+    // "adding_ice_to_beverages" -> "Adding Ice to Beverages"
+    if (folder === "baking_cookies_cakes") return "Baking Cookies and Cakes";
+    return titleCaseActivity((folder || "").replace(/_/g, " "));
+  }
+
+  function compactAlphaNumKey(s) {
+    return (s || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]/g, "");
+  }
+
+  // Source of truth: the actual directory names under robocasa/environments/kitchen/composite/
+  // (Excluded: "__pycache__")
+  const MULTI_STAGE_FOLDERS = [
+    "adding_ice_to_beverages",
+    "arranging_buffet",
+    "arranging_cabinets",
+    "arranging_condiments",
+    "baking",
+    "baking_cookies_cakes",
+    "boiling",
+    "brewing",
+    "broiling_fish",
+    "chopping_food",
+    "chopping_vegetables",
+    "cleaning_appliances",
+    "cleaning_sink",
+    "clearing_table",
+    "defrosting_food",
+    "filling_serving_dishes",
+    "frying",
+    "garnishing_dishes",
+    "loading_fridge",
+    "making_juice",
+    "making_salads",
+    "making_smoothies",
+    "making_tea",
+    "making_toast",
+    "managing_freezer_space",
+    "measuring_ingredients",
+    "meat_preparation",
+    "microwaving_food",
+    "mixing_and_blending",
+    "mixing_ingredients",
+    "organizing_dishes_and_containers",
+    "organizing_recycling",
+    "organizing_utensils",
+    "packing_lunches",
+    "plating_food",
+    "portioning_meals",
+    "preparing_hot_chocolate",
+    "preparing_marinade",
+    "preparing_sandwiches",
+    "reheating_food",
+    "restocking_supplies",
+    "sanitize_surface",
+    "sanitizing_cutting_board",
+    "sauteing_vegetables",
+    "seasoning_food",
+    "serving_beverages",
+    "serving_food",
+    "setting_the_table",
+    "simmering_sauces",
+    "slicing_meat",
+    "slow_cooking",
+    "snack_preparation",
+    "sorting_ingredients",
+    "steaming_food",
+    "steaming_vegetables",
+    "storing_leftovers",
+    "tidying_cabinets_and_drawers",
+    "toasting_bread",
+    "washing_dishes",
+    "washing_fruits_and_vegetables",
+  ];
+
+  const MULTI_STAGE_FOLDER_SET = new Set(MULTI_STAGE_FOLDERS);
+
+  const MULTI_STAGE_COMPACT_TO_FOLDER = (() => {
+    const map = new Map();
+    for (const folder of MULTI_STAGE_FOLDERS) {
+      const title = folderTitleFromMultiStageFolder(folder);
+      const candidates = new Set([compactAlphaNumKey(folder), compactAlphaNumKey(title)]);
+      // Common broken format: words concatenated and sometimes singularized ("cabinets" -> "cabinet").
+      for (const k of Array.from(candidates)) {
+        if (k && k.endsWith("s")) candidates.add(k.slice(0, -1));
+      }
+      for (const k of candidates) {
+        if (!k) continue;
+        if (!map.has(k)) map.set(k, folder);
+      }
+    }
+    return map;
+  })();
+
+  const ACTIVITY_TO_FOLDER_ALIASES = new Map([
+    // Use the actual directory names under robocasa/environments/kitchen/composite/
+    ["boiling water", "boiling"],
+    ["brewing coffee", "brewing"],
+    ["frying foods", "frying"],
+
+    ["baking cookies and cakes", "baking_cookies_cakes"],
+    ["baking cookies/cakes", "baking_cookies_cakes"],
+
+    ["microwaving foods", "microwaving_food"],
+
+    ["preparing marinades", "preparing_marinade"],
+    ["preparing marinade", "preparing_marinade"],
+
+    ["sanitizing surfaces", "sanitize_surface"],
+    ["sanitize surface", "sanitize_surface"],
+
+    ["sanitizing cutting boards", "sanitizing_cutting_board"],
+    ["sanitizing cutting board", "sanitizing_cutting_board"],
+
+    // Typos seen in the wild
+    ["serving begerages", "serving_beverages"],
+
+    // More typos / legacy labels present in task_attributes.json
+    ["boiilng water", "boiling"],
+    ["cleaning appliacnes", "cleaning_appliances"],
+    ["loading dishwasher", "washing_dishes"],
+    ["washing produce", "washing_fruits_and_vegetables"],
+  ]);
+
+  function folderForActivityTitle(activityTitle) {
+    const key = normalizeActivityKey(activityTitle);
+    const aliased = ACTIVITY_TO_FOLDER_ALIASES.get(key);
+    if (aliased) return aliased;
+
+    // If the incoming activity is already the (possibly broken) title, try to map it
+    // to a known composite folder by compact matching.
+    const compactFromTitle = compactAlphaNumKey(key);
+    const fromCompact = MULTI_STAGE_COMPACT_TO_FOLDER.get(compactFromTitle);
+    if (fromCompact) return fromCompact;
+
+    // Default: "Adding ice to beverages" -> "adding_ice_to_beverages"
+    const folder = (key || "")
+      .replace(/&/g, " and ")
+      .replace(/[^a-z0-9\\s-]/g, "")
+      .trim()
+      .replace(/[\\s-]+/g, "_")
+      .replace(/_+/g, "_");
+
+    // If the default slug doesn't match an actual folder, try compact matching before giving up.
+    if (MULTI_STAGE_FOLDER_SET.has(folder)) return folder;
+    const fromFolderCompact = MULTI_STAGE_COMPACT_TO_FOLDER.get(compactAlphaNumKey(folder));
+    return fromFolderCompact || folder;
+  }
+
+  function groupTasksByActivity(tasks) {
+    const map = new Map();
+    for (const t of tasks || []) {
+      const activityRaw = (t && t.activity) || "";
+      const name = (t && t.name) || "";
+      const description = (t && t.description) || "";
+      if (!activityRaw || !name) continue;
+      if (activityRaw === "Atomic") continue;
+
+      const folder = folderForActivityTitle(activityRaw);
+      if (!folder) continue;
+
+      const prettyTitle = folderTitleFromMultiStageFolder(folder);
+      if (!map.has(folder)) map.set(folder, { folder, title: prettyTitle, tasks: [] });
+
+      const entry = map.get(folder);
+      entry.title = prettyTitle;
+      entry.tasks.push({ name, description });
+    }
+    return map;
+  }
+
+  function buildTaskToSourceMapFromLegacy(rootSection) {
+    const map = new Map();
+    if (!rootSection) return map;
+    // Legacy Sphinx content structure: <section id="..."><table>...</table></section>
+    const rows = Array.from(rootSection.querySelectorAll(":scope > section[id] table tbody tr"));
+    for (const tr of rows) {
+      const tds = Array.from(tr.querySelectorAll("td"));
+      if (tds.length < 3) continue;
+      const taskName = (tds[0].querySelector("code")?.textContent || tds[0].textContent || "").trim();
+      const href = tds[2].querySelector("a[href]")?.getAttribute("href") || "";
+      if (taskName && href) map.set(taskName, href);
+    }
+    return map;
   }
 
   const META_BY_ACTIVITY = new Map([
@@ -179,35 +578,58 @@
     // Add header columns if missing
     const theadRow = table.querySelector("thead tr");
     if (theadRow) {
-      const ths = Array.from(theadRow.querySelectorAll("th")).map((th) => (th.textContent || "").trim());
-      const mobileHeader = "Navigation";
+      let thEls = Array.from(theadRow.querySelectorAll("th"));
+      let ths = thEls.map((th) => (th.textContent || "").trim());
       const horizonHeader = "Horizon";
-      const hasMobile = ths.includes(mobileHeader);
+      const skillsHeader = "Skills Involved";
       const hasSubtasks = ths.includes("Subtasks");
       const legacyLengthIdx = ths.indexOf("Length");
       const horizonIdx = ths.indexOf(horizonHeader);
       const hasEpisodeLength = legacyLengthIdx >= 0 || horizonIdx >= 0;
+      const hasSkills = ths.includes(skillsHeader);
       const hasVideo = ths.includes("Video");
 
       // Backwards compat: if a pre-existing column is labeled "Length", rename it to "Horizon"
       if (legacyLengthIdx >= 0 && horizonIdx < 0) {
-        const thEls = Array.from(theadRow.querySelectorAll("th"));
         const legacyTh = thEls[legacyLengthIdx];
         if (legacyTh) legacyTh.textContent = horizonHeader;
       }
 
+      // Remove the old "Navigation" column if present (we now render Navigation as a tag)
+      const navIdx = ths.indexOf("Navigation");
+      if (navIdx >= 0) {
+        thEls[navIdx]?.remove();
+        const bodyRows = Array.from(table.querySelectorAll("tbody tr"));
+        for (const tr of bodyRows) {
+          const cells = Array.from(tr.children);
+          cells[navIdx]?.remove();
+        }
+        // Recompute after mutation
+        thEls = Array.from(theadRow.querySelectorAll("th"));
+        ths = thEls.map((th) => (th.textContent || "").trim());
+      }
+
+      // Insert Task Skills after Description (we want to show Description before Skills)
+      const taskIdx = ths.indexOf("Task");
       const descIdx = ths.indexOf("Description");
-      const insertAfter = descIdx >= 0 ? theadRow.children[descIdx] : null;
+      if (!hasSkills && taskIdx >= 0 && descIdx >= 0) {
+        const th = document.createElement("th");
+        th.textContent = skillsHeader;
+        th.style.textAlign = "left";
+        theadRow.insertBefore(th, theadRow.children[descIdx].nextSibling);
+        // Recompute after mutation
+        thEls = Array.from(theadRow.querySelectorAll("th"));
+        ths = thEls.map((th2) => (th2.textContent || "").trim());
+      }
+
+      // Insert Subtasks/Horizon after Task Skills (if present), otherwise after Description
+      const skillsIdx2 = ths.indexOf(skillsHeader);
+      const descIdx2 = ths.indexOf("Description");
+      const insertAfter =
+        skillsIdx2 >= 0 ? theadRow.children[skillsIdx2] : descIdx2 >= 0 ? theadRow.children[descIdx2] : null;
       let refNode = insertAfter ? insertAfter.nextSibling : null;
 
       // Insert in desired order right after Description
-      if (!hasMobile) {
-        const th = document.createElement("th");
-        th.textContent = mobileHeader;
-        th.style.textAlign = "left";
-        theadRow.insertBefore(th, refNode);
-        refNode = th.nextSibling;
-      }
       if (!hasSubtasks) {
         const th = document.createElement("th");
         th.textContent = "Subtasks";
@@ -281,7 +703,9 @@
     if (!firstCell) return null;
     const code = firstCell.querySelector("code");
     const name = (code ? code.textContent : firstCell.textContent) || "";
-    return name.trim() || null;
+    // Strip any UI-only suffix (e.g. composite asterisk marker)
+    const cleaned = name.replace(/\s*[*★]\s*$/, "").trim();
+    return cleaned || null;
   }
 
   function getActivityTitleFromDetails(detailsEl) {
@@ -296,6 +720,47 @@
       .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
       .toLowerCase()
       .trim();
+  }
+
+  function activityFolderFromTitle(title) {
+    // "Adding Ice to Beverages" -> "adding_ice_to_beverages"
+    return (title || "")
+      .toLowerCase()
+      .replace(/&/g, " and ")
+      // allow underscores if we're handed a folder-like string
+      .replace(/[^a-z0-9_\\s-]/g, "")
+      .trim()
+      .replace(/[\\s-]+/g, "_")
+      .replace(/_+/g, "_");
+  }
+
+  function snakeFromTaskName(taskName) {
+    // "MakeIceLemonade" -> "make_ice_lemonade"
+    return (taskName || "")
+      .replace(/-/g, "_")
+      .replace(/\\s+/g, "_")
+      .replace(/([A-Z]+)([A-Z][a-z0-9])/g, "$1_$2")
+      .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+      .toLowerCase()
+      .replace(/_+/g, "_")
+      .trim();
+  }
+
+  const TASK_FILE_BASE_OVERRIDES = new Map([
+    // Fix local filename typos / variants in robocasa/environments/kitchen/composite/
+    ["AddSweetener", "add_sweetner"],
+    ["AirDryFruit", "airdry_fruit"],
+    ["OrganizeMetallicUtensils", "organize_metalic_utensils"],
+    ["SetUpSpiceStation", "setup_spice_station"],
+    ["StackBowlsInSink", "stack_bowls"],
+  ]);
+
+  function sourceUrlForTask(activityTitle, taskName) {
+    // Derive folder from actual composite directory naming conventions.
+    const activityFolder = folderForActivityTitle(activityTitle) || activityFolderFromTitle(activityTitle);
+    const base = TASK_FILE_BASE_OVERRIDES.get(taskName) || snakeFromTaskName(taskName);
+    if (!activityFolder || !base) return null;
+    return `https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/composite/${activityFolder}/${base}.py`;
   }
 
   function uniqueTokens(query) {
@@ -323,10 +788,13 @@
         const taskSpacedLower = spacedLowerFromIdentifier(task);
         // Search text includes task, spaced task, and activity
         const searchText = `${taskLower} ${taskSpacedLower} ${activityTitleLower}`;
+        const tds = tr.querySelectorAll("td");
+        // With Task Skills column after Description, Description is the 2nd cell
+        const descText = (tds.length >= 2 ? tds[1]?.textContent : "") || "";
         const mobileTd = tr.querySelector("td.rc-mobile");
         const subtasksTd = tr.querySelector("td.rc-subtasks");
         const episodeLengthTd = tr.querySelector("td.rc-episode-length");
-        const mobile = (mobileTd ? mobileTd.textContent : "").trim();
+        const mobile = (tr.dataset.rcMobile || (mobileTd ? mobileTd.textContent : "")).trim();
         const subtasks = Number.parseInt((subtasksTd ? subtasksTd.textContent : "").trim(), 10);
         const lengthText = (episodeLengthTd ? episodeLengthTd.textContent : "").trim();
         // Extract numeric value from "32s" or "—"
@@ -344,6 +812,7 @@
           taskSpacedLower,
           searchText,
           mobile: mobile === "Yes" || mobile === "No" ? mobile : null,
+          tagKeys: getTaskTagKeys(task, mobile === "Yes" || mobile === "No" ? mobile : null, descText),
           subtasks: Number.isFinite(subtasks) ? subtasks : null,
           length: length,
           metaCategory,
@@ -355,6 +824,416 @@
       }
     }
     return items;
+  }
+
+  // Optional per-task tags shown under the task name (Composite Tasks page only).
+  // Default applies to all tasks, unless overridden in TASK_TAGS.
+  const DEFAULT_TASK_TAGS = ["PickPlace"];
+  // Format: taskName -> array of tag keys (rendered as pills).
+  // Use [] to explicitly disable tags for a specific task.
+  const TASK_TAGS = new Map([
+    // Manual skill overrides (additive alongside inferred tags)
+    ["MakeIceLemonade", ["PickPlace", "door_open"]],
+    ["ArrangeBuffetDessert", ["PickPlace", "door_open"]],
+    ["CutBuffetPizza", ["PickPlace", "drawer_open"]],
+    ["DivideBuffetTrays", ["PickPlace", "door_open"]],
+    ["TongBuffetSetup", ["PickPlace", "drawer_open"]],
+    ["CoolBakedCake", ["PickPlace", "rack_slide", "door_open"]],
+    ["CoolBakedCookies", ["PickPlace", "rack_slide"]],
+    ["MixCakeFrosting", ["PickPlace", "knob_twist", "stand_mixer_close"]],
+    ["OvenBroilFish", ["PickPlace", "rack_slide"]],
+    ["RemoveBroiledFish", ["PickPlace", "door_open", "rack_slide"]],
+    ["ToasterOvenBroilFish", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
+    // Remove Pick & Place from this task specifically, but keep the desired skill
+    ["StartElectricKettle", ["button_press", "kettle_lid_close"]],
+    ["MeatTransfer", ["PickPlace", "door_open"]],
+    ["CuttingToolSelection", ["PickPlace", "drawer_open"]],
+    ["ChooseRipeFruit", ["PickPlace", "blender_lid_open"]],
+    ["ClearReceptaclesForCleaning", ["PickPlace", "lever_turn"]],
+    ["MicrowaveThawing", ["PickPlace", "door_open", "door_close", "button_press"]],
+    ["MicrowaveThawingFridge", ["PickPlace", "door_close", "button_press"]],
+    ["ThawInSink", ["PickPlace", "lever_turn"]],
+    ["AddLemonToFish", ["PickPlace", "door_open"]],
+    ["GarnishPancake", ["PickPlace", "door_open"]],
+    ["FillBlenderJug", ["PickPlace", "lever_turn"]],
+    ["WashLettuce", ["PickPlace", "lever_turn"]],
+    ["ReturnHeatedFood", ["PickPlace", "door_open"]],
+    ["LoadDishwasher", ["PickPlace", "rack_slide"]],
+    ["AfterwashSorting", ["PickPlace", "lever_turn"]],
+    ["AirDryFruit", ["PickPlace", "lever_turn"]],
+    ["BlendIngredients", ["PickPlace", "button_press", "blender_lid_open", "blender_lid_close"]],
+    ["BlendSalsaMix", ["PickPlace", "blender_lid_open", "blender_lid_close"]],
+    ["BlendVegetableSauce", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["PrepareVeggieDip", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["ClusterUtensilsInDrawer", ["PickPlace", "drawer_open"]],
+    ["PlateStoreDinner", ["PickPlace", "door_open"]],
+    ["BlendMarinade", ["PickPlace", "button_press", "blender_lid_close"]],
+    ["PlaceMeatInMarinade", ["PickPlace", "door_open"]],
+    ["PlaceStraw", ["PickPlace", "drawer_open"]],
+    ["HeatKebabSandwich", ["PickPlace", "knob_twist", "rack_slide", "door_close"]],
+    ["HotDogSetup", ["PickPlace", "door_open"]],
+    ["PrepareSausageCheese", ["PickPlace", "door_open"]],
+    ["ToastHeatableIngredients", ["PickPlace", "rack_slide", "door_open"]],
+    ["MakeLoadedPotato", ["PickPlace", "door_open"]],
+    ["WaffleReheat", ["PickPlace", "button_press"]],
+    ["RefillCondimentStation", ["PickPlace", "door_open"]],
+    ["RestockSinkSupplies", ["PickPlace", "drawer_open"]],
+    ["CleanMicrowave", ["PickPlace", "door_open"]],
+    ["PrepForSanitizing", ["PickPlace", "door_open"]],
+    ["RinseCuttingBoard", ["lever_turn"]],
+    ["LemonSeasoningFish", ["PickPlace", "door_open"]],
+    ["DeliverStraw", ["PickPlace", "drawer_open"]],
+    ["PrepareCocktailStation", ["PickPlace", "door_open"]],
+    ["PrepareDishwasher", ["PickPlace", "rack_slide"]],
+    ["DrainVeggies", ["PickPlace", "lever_turn"]],
+    ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
+    ["WashFruitColander", ["PickPlace", "lever_turn"]],
+    ["ArrangeBreadBowl", ["PickPlace", "rack_slide"]],
+    ["DateNight", ["PickPlace", "door_open"]],
+    ["SeasoningSpiceSetup", ["PickPlace", "door_open"]],
+    ["SetBowlsForSoup", ["PickPlace", "door_open"]],
+    ["SetupButterPlate", ["PickPlace", "door_open"]],
+    ["SetupFruitBowl", ["PickPlace", "door_open"]],
+    ["SetUpCuttingStation", ["PickPlace", "drawer_open"]],
+    ["BeginSlowCooking", ["PickPlace", "knob_twist"]],
+    ["MultistepSteaming", ["PickPlace", "lever_turn"]],
+    ["ServeWarmCroissant", ["PickPlace", "rack_slide", "door_open"]],
+    ["ToastBagel", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
+    ["ToastBaguette", ["PickPlace", "rack_slide", "knob_twist", "door_close"]],
+    ["ToastOnCorrectRack", ["PickPlace", "rack_slide", "door_open"]],
+    ["GetToastedBread", ["PickPlace", "start_toaster"]],
+    ["ToastOneSlotPair", ["PickPlace", "start_toaster"]],
+    ["MakeCheesecakeFilling", ["PickPlace", "knob_twist", "stand_mixer_close"]],
+    ["ClearClutter", ["PickPlace", "lever_turn"]],
+  ]);
+
+  // Per-task tag removals applied after auto-inference.
+  // Format: taskName -> array of tag keys to remove.
+  const TASK_TAG_REMOVALS = new Map([
+    // Reset tasks mention "open" in the description, but we don't want to show Open Door here.
+    ["ResetCabinetDoors", ["door_open", "PickPlace"]],
+    ["CandleCleanup", ["door_open"]],
+    ["DrinkwareConsolidation", ["door_open"]],
+    // "Press" here is not a button press; avoid incorrect Press Button tag.
+    ["PressChicken", ["button_press"]],
+    // Prefer lever turning over knob twisting for this task.
+    ["ThawInSink", ["knob_twist"]],
+    ["FillBlenderJug", ["knob_twist"]],
+    ["AfterwashSorting", ["knob_twist"]],
+    ["AirDryFruit", ["knob_twist"]],
+    ["ClearClutter", ["knob_twist"]],
+    ["WashFruitColander", ["knob_twist"]],
+    ["EmptyDishRack", ["door_open"]],
+    ["StackBowlsCabinet", ["door_open"]],
+    ["BlendMarinade", ["door_close"]],
+    ["CountertopCleanup", ["drawer_open"]],
+    ["RinseCuttingBoard", ["knob_twist", "button_press", "PickPlace"]],
+    ["MultistepSteaming", ["knob_twist"]],
+    ["PlaceBreakfastItemsAway", ["door_open"]],
+    ["UtensilShuffle", ["drawer_open"]],
+    ["SortingCleanup", ["door_open"]],
+    ["ToastOneSlotPair", ["button_press"]],
+    ["RinseSinkBasin", ["PickPlace"]],
+    ["TurnOffSimmeredSauceHeat", ["PickPlace"]],
+  ]);
+
+  // Tag display order (should match the Task Attributes dropdown order)
+  const TAG_ORDER = [
+    "comp_seen_target",
+    "comp_unseen_target",
+    "nav",
+    "door_open",
+    "door_close",
+    "drawer_open",
+    "drawer_close",
+    "start_toaster",
+    "stand_mixer_close",
+    "blender_lid_open",
+    "blender_lid_close",
+    "kettle_lid_close",
+    "rack_slide",
+    "knob_twist",
+    "lever_turn",
+    "button_press",
+    "PickPlace",
+  ];
+
+  // Target task lists (from robocasa/utils/dataset_registry.py)
+  const COMP_SEEN_TARGET_TASKS = new Set([
+    "DeliverStraw",
+    "GetToastedBread",
+    "KettleBoiling",
+    "LoadDishwasher",
+    "PackIdenticalLunches",
+    "PreSoakPan",
+    "PrepareCoffee",
+    "RinseSinkBasin",
+    "ScrubCuttingBoard",
+    "SearingMeat",
+    "SetUpCuttingStation",
+    "StackBowlsCabinet",
+    "SteamInMicrowave",
+    "StirVegetables",
+    "StoreLeftoversInBowl",
+    "WashLettuce",
+  ]);
+
+  const COMP_UNSEEN_TARGET_TASKS = new Set([
+    "ArrangeBreadBasket",
+    "ArrangeTea",
+    "BreadSelection",
+    "CategorizeCondiments",
+    "CuttingToolSelection",
+    "GarnishPancake",
+    "GatherTableware",
+    "HeatKebabSandwich",
+    "MakeIceLemonade",
+    "PanTransfer",
+    "PortionHotDogs",
+    "RecycleBottlesByType",
+    "SeparateFreezerRack",
+    "WaffleReheat",
+    "WashFruitColander",
+    "WeighIngredients",
+  ]);
+
+  function inferSkillTagKeys(taskName, descText) {
+    const t = String(taskName || "").toLowerCase();
+    const d = String(descText || "").toLowerCase();
+    const out = [];
+
+    const isOpen = /\bopen\b/.test(d) || t.startsWith("open");
+    const isClose = /\b(close|shut)\b/.test(d) || t.startsWith("close") || t.startsWith("reset");
+
+    const isDrawer = /\bdrawer\b/.test(d) || t.includes("drawer");
+    const isDoorish =
+      /\b(door|cabinet|fridge|freezer|dishwasher|oven|microwave)\b/.test(d) ||
+      /(door|cabinet|fridge|freezer|dishwasher|oven|microwave)/.test(t);
+
+    if (isOpen) {
+      if (isDrawer) out.push("drawer_open");
+      else if (isDoorish) out.push("door_open");
+    }
+    if (isClose) {
+      if (isDrawer) out.push("drawer_close");
+      else if (isDoorish) out.push("door_close");
+    }
+
+    const hasTurn = /\b(turn|twist|rotate|adjust)\b/.test(d) || t.startsWith("turn") || t.includes("adjust");
+    const knobCtx =
+      /\b(knob|dial|temperature|stove|burner|faucet)\b/.test(d) ||
+      /(temperature|stove|toaster|oven)/.test(t);
+    const leverCtx = /\b(spout|lever)\b/.test(d) || t.includes("spout") || t.includes("lever");
+
+    if (hasTurn && knobCtx) out.push("knob_twist");
+    if (hasTurn && leverCtx) out.push("lever_turn");
+
+    const presses =
+      /\b(press|push)\b/.test(d) ||
+      /\bbutton\b/.test(d) ||
+      t.includes("press") ||
+      t.includes("button");
+    if (presses) out.push("button_press");
+
+    return out;
+  }
+
+  function uniquePush(arr, key) {
+    if (!arr.includes(key)) arr.push(key);
+  }
+
+  function formatCount(n) {
+    if (!Number.isFinite(n) || n <= 0) return "";
+    return `(${n})`;
+  }
+
+  function getTaskTagKeys(taskName, navigationVal, descText) {
+    const override = TASK_TAGS.get(taskName);
+    const tags = override != null ? override.slice() : DEFAULT_TASK_TAGS.slice();
+    if (!tags || tags.length === 0) return [];
+
+    // Prepend target-task tags (must appear before any other tags)
+    if (COMP_SEEN_TARGET_TASKS.has(taskName) && !tags.includes("comp_seen_target")) {
+      tags.unshift("comp_seen_target");
+    }
+    if (COMP_UNSEEN_TARGET_TASKS.has(taskName) && !tags.includes("comp_unseen_target")) {
+      tags.unshift("comp_unseen_target");
+    }
+
+    // Auto-add Navigation tag based on task attributes ("Yes" / "No")
+    if (navigationVal === "Yes" && !tags.includes("nav")) tags.push("nav");
+
+    // Skill tags inferred from task name + description
+    for (const s of inferSkillTagKeys(taskName, descText)) uniquePush(tags, s);
+
+    // Apply per-task removals (if any)
+    const removals = TASK_TAG_REMOVALS.get(taskName);
+    if (removals && removals.length) {
+      for (const r of removals) {
+        for (let i = tags.length - 1; i >= 0; i -= 1) {
+          if (tags[i] === r) tags.splice(i, 1);
+        }
+      }
+    }
+
+    // Ensure skill precedence matches the Task Attributes dropdown (without injecting tags).
+    const out = [];
+    const seen = new Set();
+    function pushOnce(t) {
+      if (!t || seen.has(t)) return;
+      seen.add(t);
+      out.push(t);
+    }
+    for (const t of TAG_ORDER) if (tags.includes(t)) pushOnce(t);
+    for (const t of tags) pushOnce(t);
+    return out;
+  }
+
+  function renderCompositeTargetTagIntoTaskCell(taskName, taskTd) {
+    if (!taskName || !taskTd) return;
+
+    // Idempotent: remove any existing indicators first (legacy stars + current tags)
+    for (const old of Array.from(taskTd.querySelectorAll(".rc-comp-star"))) old.remove();
+    taskTd.querySelector(".rc-comp-target-tagline")?.remove();
+
+    // Datasets overview page already separates Composite Seen/Unseen tables,
+    // so showing the tag under each task name is redundant.
+    if (document.body.classList.contains("rc-datasets-overview")) return;
+
+    const isSeen = COMP_SEEN_TARGET_TASKS.has(taskName);
+    const isUnseen = COMP_UNSEEN_TARGET_TASKS.has(taskName);
+    if (!isSeen && !isUnseen) return;
+
+    const line = document.createElement("div");
+    line.className = "rc-comp-target-tagline";
+
+    const pill = document.createElement("span");
+    pill.className = `rc-task-tag ${isSeen ? "rc-task-tag-comp-seen" : "rc-task-tag-comp-unseen"}`;
+    pill.textContent = isSeen ? "Composite-Seen" : "Composite-Unseen";
+    pill.setAttribute("aria-label", pill.textContent);
+
+    line.appendChild(pill);
+    // Place the tag under the task name (below the link / code)
+    taskTd.appendChild(line);
+  }
+
+  function renderTaskTagsIntoCell(taskName, containerTd, navigationVal, descText) {
+    if (!taskName || !containerTd) return;
+    if (containerTd.querySelector(".rc-task-tags")) return; // idempotent
+
+    const tags = getTaskTagKeys(taskName, navigationVal, descText);
+    if (!tags || tags.length === 0) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "rc-task-tags";
+
+    function pillForTag(t) {
+      const span = document.createElement("span");
+      span.className = "rc-task-tag";
+      if (t === "PickPlace") {
+        span.classList.add("rc-task-tag-PickPlace");
+        span.textContent = "Pick & Place";
+        return span;
+      }
+      // Composite target (seen/unseen) is shown under the task name (not in Task Skills)
+      if (t === "comp_seen_target" || t === "comp_unseen_target") return null;
+      if (t === "nav") {
+        span.classList.add("rc-task-tag-nav");
+        span.textContent = "Navigation";
+        return span;
+      }
+      if (t === "door_open") {
+        span.classList.add("rc-task-tag-door-open");
+        span.textContent = "Open Door";
+        return span;
+      }
+      if (t === "door_close") {
+        span.classList.add("rc-task-tag-door-close");
+        span.textContent = "Close Door";
+        return span;
+      }
+      if (t === "drawer_open") {
+        span.classList.add("rc-task-tag-drawer-open");
+        span.textContent = "Open Drawer";
+        return span;
+      }
+      if (t === "drawer_close") {
+        span.classList.add("rc-task-tag-drawer-close");
+        span.textContent = "Close Drawer";
+        return span;
+      }
+      // Deprecated toaster-oven tags: render as generic Open/Close Door instead
+      if (t === "toaster_oven_open") {
+        span.classList.add("rc-task-tag-door-open");
+        span.textContent = "Open Door";
+        return span;
+      }
+      if (t === "toaster_oven_close") {
+        span.classList.add("rc-task-tag-door-close");
+        span.textContent = "Close Door";
+        return span;
+      }
+      if (t === "start_toaster") {
+        span.classList.add("rc-task-tag-start-toaster");
+        span.textContent = "Start Toaster";
+        return span;
+      }
+      if (t === "stand_mixer_close") {
+        span.classList.add("rc-task-tag-stand-mixer-close");
+        span.textContent = "Close Stand Mixer";
+        return span;
+      }
+      if (t === "blender_lid_open") {
+        span.classList.add("rc-task-tag-blender-lid-open");
+        span.textContent = "Open Blender Lid";
+        return span;
+      }
+      if (t === "blender_lid_close") {
+        span.classList.add("rc-task-tag-blender-lid-close");
+        span.textContent = "Close Blender Lid";
+        return span;
+      }
+      if (t === "kettle_lid_close") {
+        span.classList.add("rc-task-tag-kettle-lid-close");
+        span.textContent = "Close Kettle Lid";
+        return span;
+      }
+      if (t === "knob_twist") {
+        span.classList.add("rc-task-tag-knob-twist");
+        span.textContent = "Twist Knob";
+        return span;
+      }
+      if (t === "lever_turn") {
+        span.classList.add("rc-task-tag-lever-turn");
+        span.textContent = "Turn Lever";
+        return span;
+      }
+      if (t === "button_press") {
+        span.classList.add("rc-task-tag-button-press");
+        span.textContent = "Press Button";
+        return span;
+      }
+      if (t === "rack_slide") {
+        span.classList.add("rc-task-tag-rack-slide");
+        span.textContent = "Slide Rack";
+        return span;
+      }
+      return null;
+    }
+
+    const pills = [];
+    for (const t of tags) {
+      const pill = pillForTag(t);
+      if (pill) pills.push(pill);
+    }
+
+    if (pills.length === 0) return;
+
+    // Insert into the provided container cell (needed for layout measurements)
+    containerTd.appendChild(wrap);
+
+    // Display all tags (no "+N" collapsing)
+    for (const p of pills) wrap.appendChild(p);
   }
 
   function reorderActivityDropdownOptions(selectEl, detailsEls) {
@@ -738,7 +1617,7 @@
     const DEFAULT_PUBLIC_VIDEO_BASE_URL = "https://pub-4433dcd10060475196ea5832312785f9.r2.dev";
     const DEFAULT_PUBLIC_VIDEO_PREFIX = "robocasa365-videos";
 
-    // Optional user-configured base URL (takes precedence over defaults)
+    // Optional user-configured base URL (e.g., R2 bucket)
     const base = window.ROBOCASA_VIDEO_BASE_URL;
     if (typeof base === "string" && base.trim()) {
       const b = base.replace(/\/+$/, "");
@@ -777,7 +1656,10 @@
 
     const title = document.createElement("div");
     title.className = "rc-video-modal-title";
-    title.textContent = "";
+    const titleCode = document.createElement("code");
+    titleCode.className = "rc-video-modal-title-code";
+    titleCode.textContent = "";
+    title.appendChild(titleCode);
 
     const video = document.createElement("video");
     video.className = "rc-video-modal-player";
@@ -798,13 +1680,9 @@
     const instructionText = document.createElement("span");
     instructionText.className = "rc-video-modal-instruction-text";
     instruction.appendChild(instructionLabel);
-    instruction.appendChild(document.createTextNode(" "));
     instruction.appendChild(instructionText);
 
-    let loadTimeout = null;
-    let hasLoadedMetadata = false;
-
-    function doClose() {
+      function doClose() {
       overlay.hidden = true;
       document.body.classList.remove("rc-modal-open");
       try {
@@ -820,7 +1698,7 @@
       instructionText.textContent = "";
       error.hidden = true;
       error.textContent = "";
-      title.textContent = "";
+      titleCode.textContent = "";
       video.removeAttribute("src");
       video.load();
     }
@@ -847,13 +1725,11 @@
       document.body.classList.add("rc-modal-open");
       error.hidden = true;
       error.textContent = "";
-      title.textContent = taskName ? `${taskName}` : "";
+      titleCode.textContent = taskName ? `${taskName}` : "";
 
       const srcsRaw = Array.isArray(sources) ? sources : [sources];
       const srcs = srcsRaw.map((s) => String(s || "").trim()).filter(Boolean);
       let attempt = 0;
-      let loadTimeout = null;
-      let hasLoadedMetadata = false;
 
       function showUnavailable() {
         video.removeAttribute("src");
@@ -870,6 +1746,9 @@
             'window.ROBOCASA_VIDEO_BASE_URL to a base like "https://pub-4433dcd10060475196ea5832312785f9.r2.dev" (or ".../robocasa365-videos" if your objects use that prefix).';
         }
       }
+
+      let loadTimeout = null;
+      let hasLoadedMetadata = false;
 
       function tryNextSource() {
         if (attempt >= srcs.length) {
@@ -932,7 +1811,8 @@
       const tName = (taskName || "").trim();
       const tDesc = (taskDescription || "").trim();
       if (tName || tDesc) {
-        instructionLabel.textContent = tName ? `${tName}:` : "";
+        // Title already shows task name; bottom should only show the description.
+        instructionLabel.textContent = "";
         let htmlDesc = tDesc || "";
         // Sphinx renders [*text*] as [<em>text</em>] - keep brackets but ensure italics
         htmlDesc = htmlDesc.replace(/\[<em>([^<]+)<\/em>\]/g, "[<em>$1</em>]");
@@ -1003,16 +1883,39 @@
     const rows = Array.from(table.querySelectorAll("tbody tr"));
     for (const tr of rows) {
       // Avoid double-inserting
-      if (tr.querySelector("td.rc-mobile")) continue;
+      if (
+        tr.querySelector("td.rc-task-skills") ||
+        tr.querySelector("td.rc-subtasks") ||
+        tr.querySelector("td.rc-episode-length")
+      )
+        continue;
 
       const name = taskNameFromRow(tr);
       const attrs = name ? attrsMap.get(name) : null;
 
-      const mobileTd = document.createElement("td");
-      mobileTd.className = "rc-mobile";
-      mobileTd.style.textAlign = "left";
+      // Base columns at this point: Task (0), Description (1)
+      const tds0 = Array.from(tr.querySelectorAll("td"));
+      const taskTd = tds0[0] || null;
+      const descTd0 = tds0[1] || null;
+      const descText = (descTd0?.textContent || "").trim();
+
+      // Remove any legacy tag container under task name
+      taskTd?.querySelector(".rc-task-tags")?.remove();
+
+      // Insert Task Skills after Description
+      const skillsTd = document.createElement("td");
+      skillsTd.className = "rc-task-skills";
+      skillsTd.style.textAlign = "left";
+      if (descTd0) tr.insertBefore(skillsTd, descTd0.nextSibling);
+      else tr.appendChild(skillsTd);
+
+      if (name) renderTaskTagsIntoCell(name, skillsTd, attrs?.mobile, descText);
+      if (name && taskTd) renderCompositeTargetTagIntoTaskCell(name, taskTd);
+
       const mobileVal = attrs?.mobile;
-      mobileTd.textContent = mobileVal === "Yes" || mobileVal === "No" ? mobileVal : "—";
+      tr.dataset.rcMobile = mobileVal === "Yes" || mobileVal === "No" ? mobileVal : "";
+      // If an old Navigation column exists from a cached script run, remove it.
+      tr.querySelector("td.rc-mobile")?.remove();
 
       const subtasksTd = document.createElement("td");
       subtasksTd.className = "rc-subtasks";
@@ -1039,10 +1942,12 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "rc-atomic-video-btn";
-        btn.textContent = "Watch";
+        btn.textContent = "Demo";
         btn.addEventListener("click", () => {
           // Get description as HTML (Sphinx may have already rendered markdown) or as text
-          const desc = descTd ? (descTd.innerHTML || descTd.textContent || "").trim() : "";
+          const desc = descTd0
+            ? (descTd0.innerHTML || descTd0.textContent || "").trim()
+            : "";
           openVideo(v.sources, name || "", desc);
         });
         videoTd.appendChild(btn);
@@ -1050,20 +1955,18 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "rc-atomic-video-btn";
-        btn.textContent = "Watch";
+        btn.textContent = "Demo";
         btn.disabled = true;
         videoTd.appendChild(btn);
       }
 
-      // Insert after Description column (2nd cell)
+      // Insert after Task Skills column (Task, Description, Task Skills)
       const tds = tr.querySelectorAll("td");
-      const descTd = tds.length >= 2 ? tds[1] : null;
-      if (descTd && descTd.parentNode) {
-        tr.insertBefore(mobileTd, descTd.nextSibling);
-        tr.insertBefore(subtasksTd, mobileTd.nextSibling);
+      const skillsTd2 = tds.length >= 3 ? tds[2] : null;
+      if (skillsTd2 && skillsTd2.parentNode) {
+        tr.insertBefore(subtasksTd, skillsTd2.nextSibling);
         tr.insertBefore(episodeLengthTd, subtasksTd.nextSibling);
       } else {
-        tr.appendChild(mobileTd);
         tr.appendChild(subtasksTd);
         tr.appendChild(episodeLengthTd);
       }
@@ -1073,8 +1976,115 @@
     }
   }
 
-  onReady(() => {
+  function addAtomicAttributesToTable(table, atomicEpisodeLengthMap) {
+    // Reuse Composite column layout, but fill Atomic-specific horizon + video.
+    ensureColumns(table);
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    for (const tr of rows) {
+      // Avoid double-inserting
+      if (
+        tr.querySelector("td.rc-task-skills") ||
+        tr.querySelector("td.rc-subtasks") ||
+        tr.querySelector("td.rc-episode-length") ||
+        tr.querySelector("td.rc-video")
+      )
+        continue;
+
+      const name = taskNameFromRow(tr);
+      const tds0 = Array.from(tr.querySelectorAll("td"));
+      const descTd0 = tds0[1] || null;
+
+      // Insert Task Skills after Description (blank for Atomic)
+      const skillsTd = document.createElement("td");
+      skillsTd.className = "rc-task-skills";
+      skillsTd.style.textAlign = "left";
+      skillsTd.textContent = "—";
+      if (descTd0) tr.insertBefore(skillsTd, descTd0.nextSibling);
+      else tr.appendChild(skillsTd);
+
+      const subtasksTd = document.createElement("td");
+      subtasksTd.className = "rc-subtasks";
+      subtasksTd.style.textAlign = "left";
+      subtasksTd.textContent = "—";
+
+      const episodeLengthTd = document.createElement("td");
+      episodeLengthTd.className = "rc-episode-length";
+      episodeLengthTd.style.textAlign = "left";
+      const episodeLength = name ? atomicEpisodeLengthMap?.get(name) : null;
+      if (episodeLength != null && Number.isFinite(episodeLength)) {
+        episodeLengthTd.textContent = `${Math.round(episodeLength)}s`;
+      } else {
+        episodeLengthTd.textContent = "—";
+      }
+
+      const videoTd = document.createElement("td");
+      videoTd.className = "rc-video";
+      videoTd.style.textAlign = "left";
+      const v = name ? getVideoForTask(name) : null;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "rc-atomic-video-btn";
+      btn.textContent = "Demo";
+      if (v) {
+        btn.addEventListener("click", () => {
+          const desc = descTd0 ? (descTd0.innerHTML || descTd0.textContent || "").trim() : "";
+          openVideo(v.sources, name || "", desc);
+        });
+      } else {
+        btn.disabled = true;
+      }
+      videoTd.appendChild(btn);
+
+      // Insert after Task Skills column (Task, Description, Task Skills)
+      const tds = tr.querySelectorAll("td");
+      const skillsTd2 = tds.length >= 3 ? tds[2] : null;
+      if (skillsTd2 && skillsTd2.parentNode) {
+        tr.insertBefore(subtasksTd, skillsTd2.nextSibling);
+        tr.insertBefore(episodeLengthTd, subtasksTd.nextSibling);
+      } else {
+        tr.appendChild(subtasksTd);
+        tr.appendChild(episodeLengthTd);
+      }
+      tr.appendChild(videoTd);
+    }
+  }
+
+  function ensureBackToTopButton() {
+    if (!(isCompositeTasksPage() || isObjectsPage())) return;
+    if (document.querySelector(".rc-back-to-top")) return;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "rc-back-to-top";
+    btn.setAttribute("aria-label", "Back to top");
+    btn.title = "Back to top";
+    btn.textContent = "↑";
+
+    btn.addEventListener("click", () => {
+      try {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch {
+        window.scrollTo(0, 0);
+      }
+    });
+
+    const update = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      btn.classList.toggle("rc-visible", y > 900);
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+
+    document.body.appendChild(btn);
+  }
+
+  onReady(async () => {
     if (!isCompositeTasksPage()) return;
+    // Hard guard: prevent double-initialization (duplicate activity cards)
+    if (window.__rcCompositeTasksInit) return;
+    window.__rcCompositeTasksInit = true;
 
     // Page-scoped styling hooks
     document.body.classList.add("rc-composite-tasks");
@@ -1086,80 +2096,239 @@
       document.body;
     if (!content) return;
 
-    // Activities are sections nested under the main "Composite Tasks" section.
+    // Activities are sections nested under the main "Composite Tasks" section,
+    // OR are generated from JSON if a placeholder root is present.
     const rootSection = content.querySelector("section#composite-tasks");
     if (!rootSection) return;
 
-    const activitySections = Array.from(rootSection.querySelectorAll(":scope > section[id]"));
-    if (activitySections.length === 0) return;
+    const attrsMap = getTaskAttributesMap();
+    const episodeLengthMap = getEpisodeLengthMap();
+    const taskToSourceMap = buildTaskToSourceMapFromLegacy(rootSection);
 
     const activities = [];
 
-    const attrsMap = getTaskAttributesMap();
-    const episodeLengthMap = getEpisodeLengthMap();
+    const placeholderRoot = rootSection.querySelector("#rc-composite-tasks-root");
+    if (placeholderRoot) {
+      try {
+        const data = await loadTaskAttributesJson();
+        const grouped = groupTasksByActivity(data && data.tasks ? data.tasks : []);
+        const activityEntries = Array.from(grouped.values()).sort((a, b) => (a.title || "").localeCompare(b.title || ""));
 
-    for (const sec of activitySections) {
-      const h2 = sec.querySelector(":scope > h2");
-      if (!h2) continue;
+        const detailsEls = [];
+        for (const entry of activityEntries) {
+          const title = entry.title || "";
+          const folder = entry.folder || folderForActivityTitle(title);
+          const tasks = entry.tasks || [];
 
-      const title = getHeadingTitle(h2);
-      if (!title) continue;
+          const details = document.createElement("details");
+          details.className = "rc-activity";
 
-      const details = document.createElement("details");
-      details.className = "rc-activity";
+          const summary = document.createElement("summary");
+          const summaryLeft = document.createElement("div");
+          summaryLeft.className = "rc-activity-summary-left";
 
-      const summary = document.createElement("summary");
-      const summaryLeft = document.createElement("div");
-      summaryLeft.className = "rc-activity-summary-left";
+          const summaryText = document.createElement("span");
+          summaryText.className = "rc-activity-title";
+          summaryText.textContent = title;
+          summaryLeft.appendChild(summaryText);
 
-      const summaryText = document.createElement("span");
-      summaryText.className = "rc-activity-title";
-      summaryText.textContent = title;
-      summaryLeft.appendChild(summaryText);
+          const metaCategory = metaCategoryForActivityTitle(title);
+          details.dataset.metaCategory = metaCategory;
+          const metaTag = document.createElement("span");
+          metaTag.className = "rc-activity-meta";
+          metaTag.dataset.meta = metaCategory;
+          metaTag.textContent = categoryLabel(metaCategory);
+          summaryLeft.appendChild(metaTag);
 
-      const metaCategory = metaCategoryForActivityTitle(title);
-      details.dataset.metaCategory = metaCategory;
-      const metaTag = document.createElement("span");
-      metaTag.className = "rc-activity-meta";
-      metaTag.dataset.meta = metaCategory;
-      metaTag.textContent = categoryLabel(metaCategory);
-      summaryLeft.appendChild(metaTag);
+          summary.appendChild(summaryLeft);
 
-      summary.appendChild(summaryLeft);
+          const nTasks = tasks.length;
+          const badge = document.createElement("span");
+          badge.className = "rc-activity-badge";
+          badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
+          summary.appendChild(badge);
 
-      const nTasks = countTasks(sec);
-      if (typeof nTasks === "number") {
-        const badge = document.createElement("span");
-        badge.className = "rc-activity-badge";
-        badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
-        summary.appendChild(badge);
+          details.appendChild(summary);
+
+          const body = document.createElement("div");
+          body.className = "rc-activity-body";
+
+          const table = document.createElement("table");
+          table.className = "docutils";
+          table.setAttribute("border", "1");
+          const thead = document.createElement("thead");
+          const theadTr = document.createElement("tr");
+          const thTask = document.createElement("th");
+          thTask.textContent = "Task";
+          const thDesc = document.createElement("th");
+          thDesc.textContent = "Description";
+          thTask.style.textAlign = "left";
+          thDesc.style.textAlign = "left";
+          theadTr.appendChild(thTask);
+          theadTr.appendChild(thDesc);
+          thead.appendChild(theadTr);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          for (const t of tasks) {
+            const tr = document.createElement("tr");
+            const tdTask = document.createElement("td");
+            const code = document.createElement("code");
+            code.textContent = t.name;
+            const srcUrl = taskToSourceMap.get(t.name) || sourceUrlForTask(folder || title, t.name);
+            if (srcUrl) {
+              const a = document.createElement("a");
+              a.href = srcUrl;
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
+              a.appendChild(code);
+              tdTask.appendChild(a);
+            } else {
+              tdTask.appendChild(code);
+            }
+            const tdDesc = document.createElement("td");
+            tdDesc.textContent = t.description || "";
+            tdTask.style.textAlign = "left";
+            tdDesc.style.textAlign = "left";
+            tr.appendChild(tdTask);
+            tr.appendChild(tdDesc);
+            tbody.appendChild(tr);
+          }
+          table.appendChild(tbody);
+
+          body.appendChild(table);
+
+          const anchorId = anchorIdFromActivityTitle(title);
+          details.id = anchorId || title;
+          details.appendChild(body);
+
+          activities.push({ title, id: details.id });
+          detailsEls.push(details);
+        }
+
+        // Replace the placeholder root with the generated activities, so <details> are direct children
+        placeholderRoot.replaceWith(...detailsEls);
+      } catch (e) {
+        // If JSON can't be loaded, fall back to existing static HTML (if any).
+        console.error(e);
       }
-      details.appendChild(summary);
+    } else {
+      const activitySections = Array.from(rootSection.querySelectorAll(":scope > section[id]"));
+      if (activitySections.length === 0) return;
 
-      const body = document.createElement("div");
-      body.className = "rc-activity-body";
+      for (const sec of activitySections) {
+        const h2 = sec.querySelector(":scope > h2");
+        if (!h2) continue;
 
-      // Move everything except the heading into the details body
-      for (const child of Array.from(sec.childNodes)) {
-        if (child === h2) continue;
-        body.appendChild(child);
+        const title = getHeadingTitle(h2);
+        if (!title) continue;
+
+        const details = document.createElement("details");
+        details.className = "rc-activity";
+
+        const summary = document.createElement("summary");
+        const summaryLeft = document.createElement("div");
+        summaryLeft.className = "rc-activity-summary-left";
+
+        const summaryText = document.createElement("span");
+        summaryText.className = "rc-activity-title";
+        summaryText.textContent = title;
+        summaryLeft.appendChild(summaryText);
+
+        const metaCategory = metaCategoryForActivityTitle(title);
+        details.dataset.metaCategory = metaCategory;
+        const metaTag = document.createElement("span");
+        metaTag.className = "rc-activity-meta";
+        metaTag.dataset.meta = metaCategory;
+        metaTag.textContent = categoryLabel(metaCategory);
+        summaryLeft.appendChild(metaTag);
+
+        summary.appendChild(summaryLeft);
+
+        const nTasks = countTasks(sec);
+        if (typeof nTasks === "number") {
+          const badge = document.createElement("span");
+          badge.className = "rc-activity-badge";
+          badge.textContent = `${nTasks} task${nTasks === 1 ? "" : "s"}`;
+          summary.appendChild(badge);
+        }
+        details.appendChild(summary);
+
+        const body = document.createElement("div");
+        body.className = "rc-activity-body";
+
+        // Move everything except the heading into the details body
+        for (const child of Array.from(sec.childNodes)) {
+          if (child === h2) continue;
+          body.appendChild(child);
+        }
+
+        // Preserve existing anchor IDs (so #baking links still work)
+        const anchorId = sec.id;
+        details.id = anchorId;
+        details.appendChild(body);
+
+        activities.push({ title, id: anchorId });
+
+        // Replace the entire section with details
+        sec.parentNode.replaceChild(details, sec);
       }
-
-      // Preserve existing anchor IDs (so #baking links still work)
-      const anchorId = sec.id;
-      details.id = anchorId;
-      details.appendChild(body);
-
-      activities.push({ title, id: anchorId });
-
-      // Replace the entire section with details
-      sec.parentNode.replaceChild(details, sec);
     }
+
+    // Fill the intro blurb activity count (if present)
+    const activityCountEl = content.querySelector("#rc-composite-activity-count");
+    if (activityCountEl) activityCountEl.textContent = String(activities.length);
 
     // Convert "Class File" column into a link on the Task name, then remove the column
     for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
       const table = d.querySelector("table");
       if (table) linkifyTaskAndRemoveClassFile(table);
+    }
+
+    // Replace templated variable braces in descriptions:
+    // "{left/right}" -> "[<em>left/right</em>]"
+    function formatCompositeDescriptionInPlace(rootEl) {
+      if (!rootEl) return;
+      const textNodes = [];
+      const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
+
+      const re = /\{([^}]+)\}/g;
+      for (const node of textNodes) {
+        const s = node.nodeValue || "";
+        if (!s.includes("{")) continue;
+        re.lastIndex = 0;
+
+        const frag = document.createDocumentFragment();
+        let last = 0;
+        let m;
+        while ((m = re.exec(s))) {
+          const start = m.index;
+          const end = start + m[0].length;
+          if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
+          frag.appendChild(document.createTextNode("["));
+          const em = document.createElement("em");
+          em.textContent = m[1];
+          frag.appendChild(em);
+          frag.appendChild(document.createTextNode("]"));
+          last = end;
+        }
+        if (last === 0) continue; // no matches
+        if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+        node.parentNode.replaceChild(frag, node);
+      }
+    }
+
+    for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
+      const table = d.querySelector("table");
+      if (!table) continue;
+      const ths = Array.from(table.querySelectorAll("thead tr th")).map((th) => (th.textContent || "").trim());
+      const descIdx = ths.indexOf("Description");
+      const idx = descIdx >= 0 ? descIdx : 1;
+      for (const tr of Array.from(table.querySelectorAll("tbody tr"))) {
+        const td = tr.children?.[idx];
+        if (td) formatCompositeDescriptionInPlace(td);
+      }
     }
 
     // After accordions exist, enrich tables with attributes if available
@@ -1183,9 +2352,13 @@
 
     const select = document.createElement("select");
     select.id = "rc-activity-select";
+    // Enable :invalid styling for placeholder text
+    select.required = true;
 
     const defaultOpt = document.createElement("option");
     defaultOpt.value = "";
+    defaultOpt.disabled = true;
+    defaultOpt.selected = true;
     defaultOpt.textContent = "Select an activity…";
     select.appendChild(defaultOpt);
 
@@ -1212,26 +2385,6 @@
     // Filters
     const filtersWrap = document.createElement("div");
     filtersWrap.className = "rc-filters";
-
-    const navWrap = document.createElement("div");
-    navWrap.className = "rc-filter";
-    const navLabel = document.createElement("label");
-    navLabel.textContent = "Navigation:";
-    navLabel.setAttribute("for", "rc-filter-nav");
-    const navSelect = document.createElement("select");
-    navSelect.id = "rc-filter-nav";
-    for (const [val, text] of [
-      ["", "Any"],
-      ["Yes", "Yes"],
-      ["No", "No"],
-    ]) {
-      const opt = document.createElement("option");
-      opt.value = val;
-      opt.textContent = text;
-      navSelect.appendChild(opt);
-    }
-    navWrap.appendChild(navLabel);
-    navWrap.appendChild(navSelect);
 
     // Sort UI (goes BELOW the filters row)
     const sortWrap = document.createElement("div");
@@ -1299,7 +2452,6 @@
     subRow.appendChild(maxInput);
     subWrap.appendChild(subRow);
 
-    filtersWrap.appendChild(navWrap);
     filtersWrap.appendChild(subWrap);
 
     const note = document.createElement("div");
@@ -1332,7 +2484,7 @@
     LENGTH_INTERVALS.push({ key: "120-170", label: "120-170s", min: 120, max: 170, inclusiveMax: true });
 
     const lengthChecks = new Map(); // key -> checkbox
-    const lengthMeta = new Map(); // key -> { min, max, inclusiveMax, label, countEl }
+    const lengthMeta = new Map(); // key -> { min, max, inclusiveMax, label, countEl, rowEl }
 
     function updateLengthButton() {
       const total = LENGTH_INTERVALS.length;
@@ -1408,7 +2560,7 @@
 
       const countSpan = document.createElement("span");
       countSpan.className = "rc-length-item-count";
-      countSpan.textContent = "(0)";
+      countSpan.textContent = "";
 
       const rightWrap = document.createElement("span");
       rightWrap.className = "rc-length-item-right";
@@ -1420,7 +2572,7 @@
       lengthMenu.appendChild(row);
 
       lengthChecks.set(it.key, cb);
-      lengthMeta.set(it.key, { min: it.min, max: it.max, inclusiveMax: it.inclusiveMax, label: it.label, countEl: countSpan });
+      lengthMeta.set(it.key, { min: it.min, max: it.max, inclusiveMax: it.inclusiveMax, label: it.label, countEl: countSpan, rowEl: row });
 
       cb.addEventListener("change", () => {
         syncAllCheckbox();
@@ -1468,6 +2620,8 @@
     CATEGORIES.sort((a, b) => a.label.toLowerCase().localeCompare(b.label.toLowerCase()));
 
     const categoryChecks = new Map();
+    const categoryCountEls = new Map(); // key -> span
+    const categoryRows = new Map(); // key -> row
     for (const { key, label: lab } of CATEGORIES) {
       const item = document.createElement("label");
       item.className = "rc-category-item";
@@ -1481,10 +2635,19 @@
       txt.className = "rc-activity-meta rc-category-tag";
       txt.dataset.meta = key;
       txt.textContent = lab;
+      const countSpan = document.createElement("span");
+      countSpan.className = "rc-category-item-count";
+      countSpan.textContent = "";
       item.appendChild(cb);
-      item.appendChild(txt);
+      const rightWrap = document.createElement("span");
+      rightWrap.className = "rc-category-item-right";
+      rightWrap.appendChild(txt);
+      item.appendChild(rightWrap);
+      item.appendChild(countSpan);
       catMenu.appendChild(item);
       categoryChecks.set(key, cb);
+      categoryCountEls.set(key, countSpan);
+      categoryRows.set(key, item);
     }
 
     function updateCategoriesButton() {
@@ -1509,6 +2672,279 @@
     categoryWrap.appendChild(catMenu);
     filtersWrap.appendChild(categoryWrap);
 
+    // Skills Involved filter (dropdown with multi-select + counts)
+    const attrWrap = document.createElement("div");
+    attrWrap.className = "rc-filter rc-filter-task-attrs";
+
+    const attrBtn = document.createElement("button");
+    attrBtn.type = "button";
+    attrBtn.className = "rc-task-attr-dropdown-btn";
+    attrBtn.setAttribute("aria-label", "Skills Involved");
+
+    const attrMenu = document.createElement("div");
+    attrMenu.className = "rc-task-attr-dropdown";
+    attrMenu.hidden = true;
+
+    const TASK_ATTRS = [
+      { key: "nav", label: "Navigation", pillClass: "rc-task-tag rc-task-tag-nav" },
+      { key: "door_open", label: "Open Door", pillClass: "rc-task-tag rc-task-tag-door-open" },
+      { key: "door_close", label: "Close Door", pillClass: "rc-task-tag rc-task-tag-door-close" },
+      { key: "drawer_open", label: "Open Drawer", pillClass: "rc-task-tag rc-task-tag-drawer-open" },
+      { key: "drawer_close", label: "Close Drawer", pillClass: "rc-task-tag rc-task-tag-drawer-close" },
+      { key: "start_toaster", label: "Start Toaster", pillClass: "rc-task-tag rc-task-tag-start-toaster" },
+      { key: "stand_mixer_close", label: "Close Stand Mixer", pillClass: "rc-task-tag rc-task-tag-stand-mixer-close" },
+      { key: "blender_lid_open", label: "Open Blender Lid", pillClass: "rc-task-tag rc-task-tag-blender-lid-open" },
+      { key: "blender_lid_close", label: "Close Blender Lid", pillClass: "rc-task-tag rc-task-tag-blender-lid-close" },
+      { key: "kettle_lid_close", label: "Close Kettle Lid", pillClass: "rc-task-tag rc-task-tag-kettle-lid-close" },
+      { key: "rack_slide", label: "Slide Rack", pillClass: "rc-task-tag rc-task-tag-rack-slide" },
+      { key: "knob_twist", label: "Twist Knob", pillClass: "rc-task-tag rc-task-tag-knob-twist" },
+      { key: "lever_turn", label: "Turn Lever", pillClass: "rc-task-tag rc-task-tag-lever-turn" },
+      { key: "button_press", label: "Press Button", pillClass: "rc-task-tag rc-task-tag-button-press" },
+      { key: "PickPlace", label: "Pick & Place", pillClass: "rc-task-tag rc-task-tag-PickPlace" },
+    ];
+
+    const attrChecks = new Map(); // key -> checkbox
+    const attrCountEls = new Map(); // key -> span
+    const attrRows = new Map(); // key -> row
+
+    function getVisibleAttrKeys() {
+      const keys = [];
+      for (const it of TASK_ATTRS) {
+        const row = attrRows.get(it.key);
+        if (row && !row.hidden) keys.push(it.key);
+      }
+      return keys;
+    }
+
+    function updateAttrButton() {
+      const visibleKeys = getVisibleAttrKeys();
+      const total = visibleKeys.length;
+      let checked = 0;
+      for (const k of visibleKeys) if (attrChecks.get(k)?.checked) checked += 1;
+      if (total === 0) attrBtn.textContent = "Skills Involved (None)";
+      else if (checked === total) attrBtn.textContent = "Skills Involved (All)";
+      else if (checked === 0) attrBtn.textContent = "Skills Involved (None)";
+      else attrBtn.textContent = `Skills Involved (${checked}/${total})`;
+    }
+
+    const attrHeader = document.createElement("div");
+    attrHeader.className = "rc-task-attr-header";
+    const attrAllRow = document.createElement("label");
+    attrAllRow.className = "rc-task-attr-all";
+    const attrAllCb = document.createElement("input");
+    attrAllCb.type = "checkbox";
+    attrAllCb.className = "rc-task-attr-all-cb";
+    attrAllCb.checked = true;
+    attrAllCb.setAttribute("aria-label", "All skills involved");
+    const attrAllText = document.createElement("span");
+    attrAllText.textContent = "All";
+    attrAllRow.appendChild(attrAllCb);
+    attrAllRow.appendChild(attrAllText);
+    attrHeader.appendChild(attrAllRow);
+    attrMenu.appendChild(attrHeader);
+
+    function syncAttrAllCheckbox() {
+      const visibleKeys = getVisibleAttrKeys();
+      const total = visibleKeys.length;
+      let checked = 0;
+      for (const k of visibleKeys) if (attrChecks.get(k)?.checked) checked += 1;
+      if (total === 0 || checked === 0) {
+        attrAllCb.checked = false;
+        attrAllCb.indeterminate = false;
+      } else if (checked === total) {
+        attrAllCb.checked = true;
+        attrAllCb.indeterminate = false;
+      } else {
+        attrAllCb.checked = false;
+        attrAllCb.indeterminate = true;
+      }
+    }
+
+    attrAllCb.addEventListener("change", () => {
+      const visibleKeys = getVisibleAttrKeys();
+      const total = visibleKeys.length;
+      let checked = 0;
+      for (const k of visibleKeys) if (attrChecks.get(k)?.checked) checked += 1;
+      const shouldSelectAll = total > 0 && checked !== total;
+      for (const k of visibleKeys) {
+        const cb = attrChecks.get(k);
+        if (cb) cb.checked = shouldSelectAll;
+      }
+      syncAttrAllCheckbox();
+      updateAttrButton();
+      applyFilters();
+    });
+
+    for (const it of TASK_ATTRS) {
+      const row = document.createElement("label");
+      row.className = "rc-task-attr-item";
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = true;
+      cb.value = it.key;
+      cb.setAttribute("aria-label", it.label);
+
+      const pill = document.createElement("span");
+      pill.className = it.pillClass;
+      pill.textContent = it.label;
+
+      const countSpan = document.createElement("span");
+      countSpan.className = "rc-task-attr-count";
+      countSpan.textContent = "";
+
+      row.appendChild(cb);
+      const rightWrap = document.createElement("span");
+      rightWrap.className = "rc-task-attr-item-right";
+      rightWrap.appendChild(pill);
+      row.appendChild(rightWrap);
+      row.appendChild(countSpan);
+      attrMenu.appendChild(row);
+
+      attrChecks.set(it.key, cb);
+      attrCountEls.set(it.key, countSpan);
+      attrRows.set(it.key, row);
+
+      cb.addEventListener("change", () => {
+        syncAttrAllCheckbox();
+        updateAttrButton();
+        applyFilters();
+      });
+    }
+
+    syncAttrAllCheckbox();
+    updateAttrButton();
+
+    attrBtn.addEventListener("click", () => {
+      attrMenu.hidden = !attrMenu.hidden;
+    });
+    document.addEventListener("click", (e) => {
+      if (attrWrap.contains(e.target)) return;
+      attrMenu.hidden = true;
+    });
+
+    attrWrap.appendChild(attrBtn);
+    attrWrap.appendChild(attrMenu);
+    filtersWrap.appendChild(attrWrap);
+
+    // Target Tasks filter (All Tasks vs target-only)
+    const targetWrap = document.createElement("div");
+    targetWrap.className = "rc-filter rc-filter-target-tasks";
+
+    const targetBtn = document.createElement("button");
+    targetBtn.type = "button";
+    targetBtn.className = "rc-task-attr-dropdown-btn";
+    targetBtn.setAttribute("aria-label", "Target Tasks");
+
+    const targetMenu = document.createElement("div");
+    targetMenu.className = "rc-task-attr-dropdown";
+    targetMenu.hidden = true;
+
+    const TARGET_TASKS = [
+      { key: "comp_seen_target", label: "Composite-Seen", pillClass: "rc-task-tag rc-task-tag-comp-seen" },
+      { key: "comp_unseen_target", label: "Composite-Unseen", pillClass: "rc-task-tag rc-task-tag-comp-unseen" },
+    ];
+
+    // Button label should be stable
+    targetBtn.textContent = "Target Tasks";
+
+    const targetChecks = new Map(); // key -> checkbox
+    const targetCountEls = new Map(); // key -> span
+
+    // All Tasks option
+    const allTasksRow = document.createElement("label");
+    allTasksRow.className = "rc-task-attr-item rc-target-all-tasks-row";
+
+    const allTasksCb = document.createElement("input");
+    allTasksCb.type = "checkbox";
+    allTasksCb.checked = true; // default
+    allTasksCb.setAttribute("aria-label", "All tasks");
+
+    const allTasksText = document.createElement("span");
+    allTasksText.textContent = "All Tasks";
+
+    const allTasksCount = document.createElement("span");
+    allTasksCount.className = "rc-task-attr-count";
+    allTasksCount.textContent = "";
+
+    allTasksRow.appendChild(allTasksCb);
+    allTasksRow.appendChild(allTasksText);
+    allTasksRow.appendChild(allTasksCount);
+    targetMenu.appendChild(allTasksRow);
+
+    // Divider (matches other dropdowns visually)
+    const targetDivider = document.createElement("div");
+    targetDivider.style.height = "1px";
+    targetDivider.style.background = "var(--pst-color-border, #e0e0e0)";
+    targetDivider.style.margin = "0.25rem 0.15rem 0.35rem 0";
+    targetMenu.appendChild(targetDivider);
+
+    function syncFromAllTasks() {
+      if (!allTasksCb.checked) return;
+      // If "All Tasks" is selected, other two are selected by default.
+      for (const cb of targetChecks.values()) cb.checked = true;
+    }
+
+    for (const it of TARGET_TASKS) {
+      const row = document.createElement("label");
+      row.className = "rc-task-attr-item";
+
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = true;
+      cb.value = it.key;
+      cb.setAttribute("aria-label", it.label);
+
+      const pill = document.createElement("span");
+      pill.className = it.pillClass;
+      pill.textContent = it.label;
+
+      const countSpan = document.createElement("span");
+      countSpan.className = "rc-task-attr-count";
+      countSpan.textContent = "";
+
+      row.appendChild(cb);
+      const rightWrap = document.createElement("span");
+      rightWrap.className = "rc-task-attr-item-right";
+      rightWrap.appendChild(pill);
+      row.appendChild(rightWrap);
+      row.appendChild(countSpan);
+      targetMenu.appendChild(row);
+
+      targetChecks.set(it.key, cb);
+      targetCountEls.set(it.key, countSpan);
+
+      cb.addEventListener("change", () => {
+        // If user customizes seen/unseen, they are no longer in "All Tasks" mode.
+        allTasksCb.checked = false;
+        applyFilters();
+      });
+    }
+
+    allTasksCb.addEventListener("change", () => {
+      syncFromAllTasks();
+      applyFilters();
+    });
+
+    targetBtn.addEventListener("click", () => {
+      targetMenu.hidden = !targetMenu.hidden;
+    });
+    document.addEventListener("click", (e) => {
+      if (targetWrap.contains(e.target)) return;
+      targetMenu.hidden = true;
+    });
+
+    targetWrap.appendChild(targetBtn);
+    targetWrap.appendChild(targetMenu);
+    filtersWrap.appendChild(targetWrap);
+
+    // Filter order: Subtasks, Categories, Skills Involved, Horizon, Target Tasks
+    // Re-append nodes to deterministically enforce order.
+    filtersWrap.appendChild(categoryWrap);
+    filtersWrap.appendChild(attrWrap);
+    filtersWrap.appendChild(lengthWrap);
+    filtersWrap.appendChild(targetWrap);
+
     const resetBtn = document.createElement("button");
     resetBtn.type = "button";
     resetBtn.className = "rc-reset-filters-btn";
@@ -1516,7 +2952,6 @@
     resetBtn.setAttribute("aria-label", "Reset filters");
     resetBtn.addEventListener("click", () => {
       // Reset filter inputs to defaults
-      navSelect.value = "";
       minInput.value = "";
       maxInput.value = "";
       lastValidSubtasks = { minV: 2, maxV: 16 };
@@ -1531,12 +2966,66 @@
       updateCategoriesButton();
       updateSubtasksValidityAndNote();
       catMenu.hidden = true;
+      for (const cb of attrChecks.values()) cb.checked = true;
+      // eslint-disable-next-line no-use-before-define
+      syncAttrAllCheckbox();
+      updateAttrButton();
+      attrMenu.hidden = true;
+      allTasksCb.checked = true;
+      for (const cb of targetChecks.values()) cb.checked = true;
+      targetMenu.hidden = true;
       applyFilters();
     });
     filtersWrap.appendChild(resetBtn);
 
     // Build task search + suggestions
     const taskIndex = buildTaskIndex(content);
+
+    // Sort Skills Involved filter popup by frequency (most to least frequent)
+    // This only affects the filter popup order, not the tag display order in tables
+    function sortAttrFilterByFrequency() {
+      // Calculate frequency of each skill
+      const skillFreq = new Map();
+      for (const attr of TASK_ATTRS) {
+        skillFreq.set(attr.key, 0);
+      }
+      for (const item of taskIndex) {
+        const keys = item.tagKeys || [];
+        if (Array.isArray(keys)) {
+          for (const key of keys) {
+            if (skillFreq.has(key)) {
+              skillFreq.set(key, skillFreq.get(key) + 1);
+            }
+          }
+        }
+      }
+
+      // Sort TASK_ATTRS by frequency (descending)
+      const sortedAttrs = [...TASK_ATTRS].sort((a, b) => {
+        const freqA = skillFreq.get(a.key) || 0;
+        const freqB = skillFreq.get(b.key) || 0;
+        return freqB - freqA; // Descending order
+      });
+
+      // Reorder the rows in the filter popup (keep header, reorder item rows)
+      const header = attrMenu.querySelector('.rc-task-attr-header');
+      // Remove all item rows (but keep header)
+      for (const it of TASK_ATTRS) {
+        const row = attrRows.get(it.key);
+        if (row && row.parentNode === attrMenu) {
+          attrMenu.removeChild(row);
+        }
+      }
+
+      // Re-append rows in sorted order (after header)
+      for (const it of sortedAttrs) {
+        const row = attrRows.get(it.key);
+        if (row) {
+          attrMenu.appendChild(row);
+        }
+      }
+    }
+    sortAttrFilterByFrequency();
 
     // "Show all tasks" toggle (opens all activity accordions)
     const showAllWrap = document.createElement("div");
@@ -1633,10 +3122,50 @@
       return lengthSeconds >= interval.min && lengthSeconds < interval.max;
     }
 
+    function getActiveTaskAttrKeys() {
+      const total = TASK_ATTRS.length;
+      let checked = 0;
+      const active = [];
+      for (const it of TASK_ATTRS) {
+        const cb = attrChecks.get(it.key);
+        if (cb && cb.checked) {
+          checked += 1;
+          active.push(it.key);
+        }
+      }
+      if (checked === total) return null; // no constraint
+      if (checked === 0) return []; // impossible
+      return active;
+    }
+
+    function getActiveTargetTaskKeys() {
+      // If "All Tasks" is selected, we do not filter by target tasks.
+      if (allTasksCb.checked) return null;
+      const total = TARGET_TASKS.length;
+      let checked = 0;
+      const active = [];
+      for (const it of TARGET_TASKS) {
+        const cb = targetChecks.get(it.key);
+        if (cb && cb.checked) {
+          checked += 1;
+          active.push(it.key);
+        }
+      }
+      if (checked === 0) return []; // impossible
+      return active;
+    }
+
+    function taskHasAnyAttr(item, activeKeys) {
+      if (activeKeys == null) return true;
+      if (!Array.isArray(activeKeys) || activeKeys.length === 0) return false;
+      const s = new Set(activeKeys);
+      const keys = item?.tagKeys || [];
+      return Array.isArray(keys) && keys.some((k) => s.has(k));
+    }
+
     function updateLengthDropdownCounts() {
       try {
         // Get current filters excluding length
-        const nav = (navSelect.value || "").trim();
         const minP = parseBound(minInput.value);
         const maxP = parseBound(maxInput.value);
         const minV = minP.value == null ? 2 : minP.value;
@@ -1651,6 +3180,9 @@
           if (cb.checked) cats.add(cat);
         }
 
+        const attrKeys = getActiveTaskAttrKeys();
+        const targetKeys = getActiveTargetTaskKeys();
+
         // Count tasks for each interval (excluding length filter)
         for (const it of LENGTH_INTERVALS) {
           let count = 0;
@@ -1661,7 +3193,13 @@
             } else if (cats.size === 0) {
               continue;
             }
-            if (nav && item.mobile !== nav) continue;
+            if (Array.isArray(targetKeys)) {
+              if (targetKeys.length === 0) continue;
+              const keys = item.tagKeys || [];
+              const set = new Set(targetKeys);
+              if (!Array.isArray(keys) || !keys.some((k) => set.has(k))) continue;
+            }
+            if (!taskHasAnyAttr(item, attrKeys)) continue;
             if (item.subtasks == null) continue;
             if (item.subtasks < effectiveSubtasks.minV || item.subtasks > effectiveSubtasks.maxV) continue;
 
@@ -1671,10 +3209,208 @@
           }
 
           const meta = lengthMeta.get(it.key);
-          if (meta?.countEl) meta.countEl.textContent = `(${count})`;
+          if (meta?.countEl) meta.countEl.textContent = formatCount(count);
+          if (meta?.rowEl) {
+            meta.rowEl.hidden = count === 0;
+          }
         }
+
+        // Refresh header + button state (checkboxes are not mutated here)
+        syncAllCheckbox();
+        updateLengthButton();
       } catch (e) {
         console.error("Error updating length dropdown counts:", e);
+      }
+    }
+
+    function updateTaskAttrDropdownCounts() {
+      try {
+        // Get current filters excluding task attributes
+        const minP = parseBound(minInput.value);
+        const maxP = parseBound(maxInput.value);
+        const minV = minP.value == null ? 2 : minP.value;
+        const maxV = maxP.value == null ? 16 : maxP.value;
+        const minOut = minP.ok && minP.value != null && (minP.value < 2 || minP.value > 16);
+        const maxOut = maxP.ok && maxP.value != null && (maxP.value < 2 || maxP.value > 16);
+        const inRange = !minOut && !maxOut && minP.ok && maxP.ok;
+        const effectiveSubtasks = inRange ? { minV, maxV } : lastValidSubtasks;
+
+        const cats = new Set();
+        for (const [cat, cb] of categoryChecks.entries()) {
+          if (cb.checked) cats.add(cat);
+        }
+
+        const lengthIntervalsActive = getActiveLengthIntervals();
+        const targetKeys = getActiveTargetTaskKeys();
+
+        for (const ta of TASK_ATTRS) {
+          let count = 0;
+          for (const item of taskIndex) {
+            if (cats.size > 0) {
+              if (!item.metaCategory || !cats.has(item.metaCategory)) continue;
+            } else if (cats.size === 0) {
+              continue;
+            }
+            if (Array.isArray(targetKeys)) {
+              if (targetKeys.length === 0) continue;
+              const keys = item.tagKeys || [];
+              const set = new Set(targetKeys);
+              if (!Array.isArray(keys) || !keys.some((k) => set.has(k))) continue;
+            }
+
+            if (item.subtasks == null) continue;
+            if (item.subtasks < effectiveSubtasks.minV || item.subtasks > effectiveSubtasks.maxV) continue;
+
+            if (item.length == null) continue;
+            if (Array.isArray(lengthIntervalsActive)) {
+              if (lengthIntervalsActive.length === 0) continue;
+              let ok = false;
+              for (const it of lengthIntervalsActive) {
+                if (lengthMatchesInterval(item.length, it)) {
+                  ok = true;
+                  break;
+                }
+              }
+              if (!ok) continue;
+            }
+
+            const keys = item.tagKeys || [];
+            if (!Array.isArray(keys) || !keys.includes(ta.key)) continue;
+            count += 1;
+          }
+
+          const el = attrCountEls.get(ta.key);
+          if (el) el.textContent = formatCount(count);
+          const row = attrRows.get(ta.key);
+          if (row) row.hidden = count === 0;
+        }
+
+        // Refresh header + button state (checkboxes are not mutated here)
+        syncAttrAllCheckbox();
+        updateAttrButton();
+      } catch (e) {
+        console.error("Error updating task attribute dropdown counts:", e);
+      }
+    }
+
+    function updateCategoryDropdownCounts() {
+      try {
+        // Get current filters excluding categories
+        const minP = parseBound(minInput.value);
+        const maxP = parseBound(maxInput.value);
+        const minV = minP.value == null ? 2 : minP.value;
+        const maxV = maxP.value == null ? 16 : maxP.value;
+        const minOut = minP.ok && minP.value != null && (minP.value < 2 || minP.value > 16);
+        const maxOut = maxP.ok && maxP.value != null && (maxP.value < 2 || maxP.value > 16);
+        const inRange = !minOut && !maxOut && minP.ok && maxP.ok;
+        const effectiveSubtasks = inRange ? { minV, maxV } : lastValidSubtasks;
+
+        const lengthIntervalsActive = getActiveLengthIntervals();
+        const attrKeys = getActiveTaskAttrKeys();
+        const targetKeys = getActiveTargetTaskKeys();
+
+        for (const { key } of CATEGORIES) {
+          let count = 0;
+          for (const item of taskIndex) {
+            if (!item.metaCategory || item.metaCategory !== key) continue;
+            if (Array.isArray(targetKeys)) {
+              if (targetKeys.length === 0) continue;
+              const keys = item.tagKeys || [];
+              const set = new Set(targetKeys);
+              if (!Array.isArray(keys) || !keys.some((k) => set.has(k))) continue;
+            }
+            if (!taskHasAnyAttr(item, attrKeys)) continue;
+
+            if (item.subtasks == null) continue;
+            if (item.subtasks < effectiveSubtasks.minV || item.subtasks > effectiveSubtasks.maxV) continue;
+
+            if (item.length == null) continue;
+            if (Array.isArray(lengthIntervalsActive)) {
+              if (lengthIntervalsActive.length === 0) continue;
+              let ok = false;
+              for (const it of lengthIntervalsActive) {
+                if (lengthMatchesInterval(item.length, it)) {
+                  ok = true;
+                  break;
+                }
+              }
+              if (!ok) continue;
+            }
+
+            count += 1;
+          }
+          const el = categoryCountEls.get(key);
+          if (el) el.textContent = formatCount(count);
+          const row = categoryRows.get(key);
+          if (row) row.hidden = count === 0;
+        }
+
+        // Refresh button state (checkboxes are not mutated here)
+        updateCategoriesButton();
+      } catch (e) {
+        console.error("Error updating category dropdown counts:", e);
+      }
+    }
+
+    function updateTargetTaskDropdownCounts() {
+      try {
+        // Get current filters excluding target tasks
+        const minP = parseBound(minInput.value);
+        const maxP = parseBound(maxInput.value);
+        const minV = minP.value == null ? 2 : minP.value;
+        const maxV = maxP.value == null ? 16 : maxP.value;
+        const minOut = minP.ok && minP.value != null && (minP.value < 2 || minP.value > 16);
+        const maxOut = maxP.ok && maxP.value != null && (maxP.value < 2 || maxP.value > 16);
+        const inRange = !minOut && !maxOut && minP.ok && maxP.ok;
+        const effectiveSubtasks = inRange ? { minV, maxV } : lastValidSubtasks;
+
+        const cats = new Set();
+        for (const [cat, cb] of categoryChecks.entries()) {
+          if (cb.checked) cats.add(cat);
+        }
+
+        const lengthIntervalsActive = getActiveLengthIntervals();
+        const attrKeys = getActiveTaskAttrKeys();
+
+        // All Tasks count (total tasks in table)
+        allTasksCount.textContent = formatCount(taskIndex.length);
+
+        for (const tt of TARGET_TASKS) {
+          let count = 0;
+          for (const item of taskIndex) {
+            if (cats.size > 0) {
+              if (!item.metaCategory || !cats.has(item.metaCategory)) continue;
+            } else if (cats.size === 0) {
+              continue;
+            }
+            if (!taskHasAnyAttr(item, attrKeys)) continue;
+
+            if (item.subtasks == null) continue;
+            if (item.subtasks < effectiveSubtasks.minV || item.subtasks > effectiveSubtasks.maxV) continue;
+
+            if (item.length == null) continue;
+            if (Array.isArray(lengthIntervalsActive)) {
+              if (lengthIntervalsActive.length === 0) continue;
+              let ok = false;
+              for (const it of lengthIntervalsActive) {
+                if (lengthMatchesInterval(item.length, it)) {
+                  ok = true;
+                  break;
+                }
+              }
+              if (!ok) continue;
+            }
+
+            const keys = item.tagKeys || [];
+            if (!Array.isArray(keys) || !keys.includes(tt.key)) continue;
+            count += 1;
+          }
+
+          const el = targetCountEls.get(tt.key);
+          if (el) el.textContent = formatCount(count);
+        }
+      } catch (e) {
+        console.error("Error updating target task dropdown counts:", e);
       }
     }
 
@@ -1693,7 +3429,6 @@
     }
 
     function getActiveFilters() {
-      const nav = (navSelect.value || "").trim();
       const minP = parseBound(minInput.value);
       const maxP = parseBound(maxInput.value);
 
@@ -1711,18 +3446,21 @@
 
       // Length filter (multi-select)
       const lengthIntervalsActive = getActiveLengthIntervals();
+      const taskAttrKeys = getActiveTaskAttrKeys();
+      const targetTaskKeys = getActiveTargetTaskKeys();
 
       const cats = new Set();
       for (const [cat, cb] of categoryChecks.entries()) {
         if (cb.checked) cats.add(cat);
       }
       return {
-        nav,
         minV: effective.minV,
         maxV: effective.maxV,
         hasError: !inRange,
         lengthIntervals: lengthIntervalsActive,
         lengthHasError: false, // Dropdown always has valid values
+        taskAttrs: taskAttrKeys,
+        targetTasks: targetTaskKeys,
         cats,
       };
     }
@@ -1733,7 +3471,19 @@
       } else if (f.cats && f.cats.size === 0) {
         return false;
       }
-      if (f.nav && item.mobile !== f.nav) return false;
+      // Target Tasks filter
+      if (Array.isArray(f.targetTasks)) {
+        if (f.targetTasks.length === 0) return false;
+        const keys = item.tagKeys || [];
+        const set = new Set(f.targetTasks);
+        if (!Array.isArray(keys) || !keys.some((k) => set.has(k))) return false;
+      }
+      if (Array.isArray(f.taskAttrs)) {
+        if (f.taskAttrs.length === 0) return false;
+        const keys = item.tagKeys || [];
+        const set = new Set(f.taskAttrs);
+        if (!Array.isArray(keys) || !keys.some((k) => set.has(k))) return false;
+      }
       if (item.subtasks == null) return false;
       if (item.subtasks < f.minV || item.subtasks > f.maxV) return false;
       // Length filter
@@ -1805,6 +3555,12 @@
       
       // Update length dropdown counts (shows counts based on current other filters)
       updateLengthDropdownCounts();
+      // Update task-attribute dropdown counts (shows counts based on current other filters)
+      updateTaskAttrDropdownCounts();
+      // Update category dropdown counts (shows counts based on current other filters)
+      updateCategoryDropdownCounts();
+      // Update target tasks dropdown counts (shows counts based on current other filters)
+      updateTargetTaskDropdownCounts();
     }
 
     const searchWrap = document.createElement("div");
@@ -1988,7 +3744,6 @@
     selectorWrap.appendChild(sortWrap);
 
     // Wire filters after search exists
-    navSelect.addEventListener("change", applyFilters);
 
     minInput.addEventListener("input", () => {
       syncMinMaxIfCrossed("min");
@@ -2030,13 +3785,259 @@
     applyFilters();
     applyShowAllState();
 
-    // Put selector under the page title (h1) if present
-    const titleH1 = content.querySelector("h1");
-    if (titleH1 && titleH1.parentNode) {
-      titleH1.insertAdjacentElement("afterend", selectorWrap);
+    // Put selector under the page title, but BELOW the intro blurb if present
+    const introSpan = content.querySelector("#rc-composite-activity-count");
+    const introP = introSpan ? introSpan.closest("p") : null;
+    if (introP && introP.parentNode) {
+      introP.insertAdjacentElement("afterend", selectorWrap);
     } else {
-      content.insertAdjacentElement("afterbegin", selectorWrap);
+      const titleH1 = content.querySelector("h1");
+      if (titleH1 && titleH1.parentNode) {
+        titleH1.insertAdjacentElement("afterend", selectorWrap);
+      } else {
+        content.insertAdjacentElement("afterbegin", selectorWrap);
+      }
     }
+
+    ensureBackToTopButton();
+
+  });
+
+  onReady(() => {
+    if (!isObjectsPage()) return;
+    initObjectsTableSorting();
+    ensureBackToTopButton();
+  });
+
+  onReady(() => {
+    if (!isFoundationModelLearningPage()) return;
+    document.body.classList.add("rc-foundation-model-learning");
+  });
+
+  // Datasets overview page: make target task tables match the Composite Tasks look.
+  onReady(() => {
+    if (!isDatasetsOverviewPage()) return;
+    document.body.classList.add("rc-composite-tasks", "rc-datasets-overview");
+
+    const ATOMIC_SEEN_TASKS = [
+      "CloseBlenderLid",
+      "CloseFridge",
+      "CloseToasterOvenDoor",
+      "CoffeeSetupMug",
+      "NavigateKitchen",
+      "OpenCabinet",
+      "OpenDrawer",
+      "OpenStandMixerHead",
+      "PickPlaceCounterToCabinet",
+      "PickPlaceCounterToStove",
+      "PickPlaceDrawerToCounter",
+      "PickPlaceSinkToCounter",
+      "PickPlaceToasterToCounter",
+      "SlideDishwasherRack",
+      "TurnOffStove",
+      "TurnOnElectricKettle",
+      "TurnOnMicrowave",
+      "TurnOnSinkFaucet",
+    ];
+
+    const COMPOSITE_SEEN_TASKS = [
+      "DeliverStraw",
+      "GetToastedBread",
+      "KettleBoiling",
+      "LoadDishwasher",
+      "PackIdenticalLunches",
+      "PreSoakPan",
+      "PrepareCoffee",
+      "RinseSinkBasin",
+      "ScrubCuttingBoard",
+      "SearingMeat",
+      "SetUpCuttingStation",
+      "StackBowlsCabinet",
+      "SteamInMicrowave",
+      "StirVegetables",
+      "StoreLeftoversInBowl",
+      "WashLettuce",
+    ];
+
+    const COMPOSITE_UNSEEN_TASKS = [
+      "ArrangeBreadBasket",
+      "ArrangeTea",
+      "BreadSelection",
+      "CategorizeCondiments",
+      "CuttingToolSelection",
+      "GarnishPancake",
+      "GatherTableware",
+      "HeatKebabSandwich",
+      "MakeIceLemonade",
+      "PanTransfer",
+      "PortionHotDogs",
+      "RecycleBottlesByType",
+      "SeparateFreezerRack",
+      "WaffleReheat",
+      "WashFruitColander",
+      "WeighIngredients",
+    ];
+
+    function escapeHtml(s) {
+      return String(s || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatAtomicDescription(desc) {
+      // Match Atomic Tasks page formatting for variables.
+      const raw = String(desc || "");
+      const esc = escapeHtml(raw);
+      let out = esc.replace(/\{([^}]+)\}/g, (_m, inner) => `<span class="rc-atomic-var"><em>${inner}</em></span>`);
+      out = out.replace(/\[([^\]]+)\]/g, (_m, inner) => `[<span class="rc-atomic-var"><em>${inner}</em></span>]`);
+      return out;
+    }
+
+    function getAtomicClassHref(taskName) {
+      const idx = window.ROBOCASA_ATOMIC_TASK_INDEX;
+      const fixtures = idx && Array.isArray(idx.fixtures) ? idx.fixtures : [];
+      for (const fx of fixtures) {
+        const tasks = Array.isArray(fx.tasks) ? fx.tasks : [];
+        for (const t of tasks) {
+          if (!t || t.name !== taskName) continue;
+          const base = t.github || fx.github || "";
+          const lineno = t.lineno;
+          if (!base) return "";
+          if (lineno && Number.isFinite(lineno)) return `${base}#L${lineno}`;
+          return base;
+        }
+      }
+      return "";
+    }
+
+    function buildCompositeInfoMap(taskAttributesJson) {
+      // Source of truth: same JSON used by the Composite Tasks page.
+      const map = new Map();
+      const tasks = taskAttributesJson && Array.isArray(taskAttributesJson.tasks) ? taskAttributesJson.tasks : [];
+      for (const t of tasks) {
+        if (!t || !t.name) continue;
+        if (t.activity === "Atomic") continue;
+        map.set(t.name, { activity: t.activity || "", description: t.description || "" });
+      }
+      return map;
+    }
+
+    function populateAtomicSeen(table, atomicEpisodeLengthMap) {
+      const tbody = table?.querySelector("tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const atomicAttrs = window.ROBOCASA_ATOMIC_TASK_ATTRIBUTES || {};
+
+      for (const name of ATOMIC_SEEN_TASKS) {
+        const tr = document.createElement("tr");
+
+        const tdTask = document.createElement("td");
+        const href = getAtomicClassHref(name);
+        const code = document.createElement("code");
+        code.textContent = name;
+        if (href) {
+          const a = document.createElement("a");
+          a.href = href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.appendChild(code);
+          tdTask.appendChild(a);
+        } else {
+          tdTask.appendChild(code);
+        }
+
+        const tdDesc = document.createElement("td");
+        const rawDesc = atomicAttrs?.[name]?.description || "";
+        tdDesc.innerHTML = formatAtomicDescription(rawDesc);
+
+        const tdH = document.createElement("td");
+        const horizon = atomicEpisodeLengthMap?.get(name);
+        tdH.textContent = Number.isFinite(horizon) ? `${Math.round(horizon)}s` : "—";
+
+        const tdV = document.createElement("td");
+        const v = getVideoForTask(name);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "rc-atomic-video-btn";
+        btn.textContent = "Demo";
+        if (v) {
+          btn.addEventListener("click", () => {
+            const desc = (tdDesc.innerHTML || tdDesc.textContent || "").trim();
+            openVideo(v.sources, name, desc);
+          });
+        } else {
+          btn.disabled = true;
+        }
+        tdV.appendChild(btn);
+
+        tr.appendChild(tdTask);
+        tr.appendChild(tdDesc);
+        tr.appendChild(tdH);
+        tr.appendChild(tdV);
+        tbody.appendChild(tr);
+      }
+    }
+
+    function populateCompositeTable(table, taskNames, infoMap) {
+      const tbody = table?.querySelector("tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      for (const name of taskNames) {
+        const tr = document.createElement("tr");
+
+        const tdTask = document.createElement("td");
+        const info = infoMap.get(name) || {};
+        const activity = info.activity || "";
+        const href = activity ? sourceUrlForTask(activity, name) : "";
+        const code = document.createElement("code");
+        code.textContent = name;
+        if (href) {
+          const a = document.createElement("a");
+          a.href = href;
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+          a.appendChild(code);
+          tdTask.appendChild(a);
+        } else {
+          tdTask.appendChild(code);
+        }
+
+        const tdDesc = document.createElement("td");
+        tdDesc.textContent = info.description || "";
+
+        tr.appendChild(tdTask);
+        tr.appendChild(tdDesc);
+        tbody.appendChild(tr);
+      }
+    }
+
+    (async () => {
+      const attrsMap = getTaskAttributesMap() || new Map();
+      const episodeLengthMap = getEpisodeLengthMap();
+      const atomicEpisodeLengthMap = getAtomicEpisodeLengthMap();
+      const taskAttributesJson = await loadTaskAttributesJson();
+      const compInfo = buildCompositeInfoMap(taskAttributesJson);
+
+      const atomicTable = document.getElementById("rc-datasets-atomic-seen");
+      if (atomicTable) populateAtomicSeen(atomicTable, atomicEpisodeLengthMap);
+
+      const compSeenTable = document.getElementById("rc-datasets-composite-seen");
+      if (compSeenTable) {
+        populateCompositeTable(compSeenTable, COMPOSITE_SEEN_TASKS, compInfo);
+        addAttributesToTable(compSeenTable, attrsMap, episodeLengthMap);
+      }
+
+      const compUnseenTable = document.getElementById("rc-datasets-composite-unseen");
+      if (compUnseenTable) {
+        populateCompositeTable(compUnseenTable, COMPOSITE_UNSEEN_TASKS, compInfo);
+        addAttributesToTable(compUnseenTable, attrsMap, episodeLengthMap);
+      }
+    })();
   });
 })();
 

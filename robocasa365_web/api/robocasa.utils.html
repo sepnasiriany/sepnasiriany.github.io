@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=12e2c56b" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8d1fec2c" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -184,6 +184,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/benchmarking_overview.html">Overview of Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarking/policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/foundation_model_learning.html">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../benchmarking/lifelong_learning.html">Lifelong Learning</a></li>
@@ -388,12 +389,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.config_utils.refactor_composite_controller_config"><code class="docutils literal notranslate"><span class="pre">refactor_composite_controller_config()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.dataset_registry">robocasa.utils.dataset_registry module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.add_cotraining_weights"><code class="docutils literal notranslate"><span class="pre">add_cotraining_weights()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.get_ds_meta"><code class="docutils literal notranslate"><span class="pre">get_ds_meta()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.get_ds_soup"><code class="docutils literal notranslate"><span class="pre">get_ds_soup()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.dataset_registry">robocasa.utils.dataset_registry module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.env_utils">robocasa.utils.env_utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.env_utils.categorize_stool_rotations"><code class="docutils literal notranslate"><span class="pre">categorize_stool_rotations()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.env_utils.compute_robot_base_placement_pose"><code class="docutils literal notranslate"><span class="pre">compute_robot_base_placement_pose()</span></code></a></li>
@@ -693,22 +689,6 @@ If not just use the old controller config for arms.
 </section>
 <section id="module-robocasa.utils.dataset_registry">
 <span id="robocasa-utils-dataset-registry-module"></span><h2>robocasa.utils.dataset_registry module<a class="headerlink" href="#module-robocasa.utils.dataset_registry" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="robocasa.utils.dataset_registry.add_cotraining_weights">
-<span class="sig-prename descclassname"><span class="pre">robocasa.utils.dataset_registry.</span></span><span class="sig-name descname"><span class="pre">add_cotraining_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soup</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dc_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">non_dc_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.55</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.utils.dataset_registry.add_cotraining_weights" title="Link to this definition">#</a></dt>
-<dd><p>takes a soup as input, adds weights (in place), returns the same soup</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="robocasa.utils.dataset_registry.get_ds_meta">
-<span class="sig-prename descclassname"><span class="pre">robocasa.utils.dataset_registry.</span></span><span class="sig-name descname"><span class="pre">get_ds_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pretrain'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demo_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.utils.dataset_registry.get_ds_meta" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="robocasa.utils.dataset_registry.get_ds_soup">
-<span class="sig-prename descclassname"><span class="pre">robocasa.utils.dataset_registry.</span></span><span class="sig-name descname"><span class="pre">get_ds_soup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">split</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demo_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.utils.dataset_registry.get_ds_soup" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
 </section>
 <section id="module-robocasa.utils.env_utils">
 <span id="robocasa-utils-env-utils-module"></span><h2>robocasa.utils.env_utils module<a class="headerlink" href="#module-robocasa.utils.env_utils" title="Link to this heading">#</a></h2>
@@ -1799,12 +1779,7 @@ the identity (0.0) and the straight multiplication (1.0).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.config_utils.refactor_composite_controller_config"><code class="docutils literal notranslate"><span class="pre">refactor_composite_controller_config()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.dataset_registry">robocasa.utils.dataset_registry module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.add_cotraining_weights"><code class="docutils literal notranslate"><span class="pre">add_cotraining_weights()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.get_ds_meta"><code class="docutils literal notranslate"><span class="pre">get_ds_meta()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.dataset_registry.get_ds_soup"><code class="docutils literal notranslate"><span class="pre">get_ds_soup()</span></code></a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.dataset_registry">robocasa.utils.dataset_registry module</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.utils.env_utils">robocasa.utils.env_utils module</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.env_utils.categorize_stool_rotations"><code class="docutils literal notranslate"><span class="pre">categorize_stool_rotations()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.utils.env_utils.compute_robot_base_placement_pose"><code class="docutils literal notranslate"><span class="pre">compute_robot_base_placement_pose()</span></code></a></li>

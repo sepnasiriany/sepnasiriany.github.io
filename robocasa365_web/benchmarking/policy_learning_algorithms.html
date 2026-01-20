@@ -30,8 +30,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8934e607" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=1d495b9f" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8d1fec2c" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -46,15 +46,15 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/policy_learning_algorithms';</script>
     <script src="../_static/composite_tasks/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_tasks/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=b18c4374"></script>
-    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=0936eb95"></script>
-    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=d9c0d55a"></script>
-    <script src="../_static/atomic_tasks/atomic_task_index.js?v=da58dbd3"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js?v=684f982e"></script>
+    <script src="../_static/composite_tasks/composite_tasks_dropdown.js?v=553429d4"></script>
+    <script src="../_static/atomic_tasks/atomic_task_attributes.js?v=f414f7b2"></script>
+    <script src="../_static/atomic_tasks/atomic_episode_lengths.js?v=5f9a20d6"></script>
+    <script src="../_static/atomic_tasks/atomic_task_index.js?v=e7084057"></script>
+    <script src="../_static/atomic_tasks/atomic_tasks.js?v=76a95ff3"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Multi-Task Learning" href="multitask_learning.html" />
-    <link rel="prev" title="Using Datasets" href="../datasets/using_datasets.html" />
+    <link rel="prev" title="Overview of Benchmarking" href="benchmarking_overview.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,6 +183,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="benchmarking_overview.html">Overview of Benchmarking</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Policy Learning Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="foundation_model_learning.html">Foundation Model Learning</a></li>
@@ -374,15 +375,21 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-system-specs">Recommended system specs</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relevant-scripts">Relevant scripts</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openpi">Openpi</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Recommended system specs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Relevant scripts</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Recommended system specs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Relevant scripts</a></li>
 </ul>
 </li>
 </ul>
@@ -398,41 +405,80 @@ document.write(`
                   
   <section id="policy-learning-algorithms">
 <h1>Policy Learning Algorithms<a class="headerlink" href="#policy-learning-algorithms" title="Link to this heading">#</a></h1>
-<p>We provide official support for benchmarking the following policy learning algorithms: <a class="reference external" href="https://github.com/robocasa/diffusion_policy_dev">Diffusion Policy</a>, <a class="reference external" href="https://github.com/robocasa/openpi-dev">Openpi</a>, and <a class="reference external" href="https://github.com/robocasa/groot">GR00T</a>.</p>
+<p>We provide official support for benchmarking the following policy learning algorithms: <a class="reference external" href="https://github.com/robocasa/diffusion_policy">Diffusion Policy</a>, <a class="reference external" href="https://github.com/robocasa/openpi">Openpi</a>, and <a class="reference external" href="https://github.com/robocasa/groot">GR00T</a>.</p>
 <hr class="docutils" />
 <section id="diffusion-policy">
 <h2>Diffusion Policy<a class="headerlink" href="#diffusion-policy" title="Link to this heading">#</a></h2>
+<p>We fork the official Diffusion Policy code base, hosted at <a class="reference external" href="https://github.com/robocasa/diffusion_policy">https://github.com/robocasa/diffusion_policy</a>.</p>
+<section id="recommended-system-specs">
+<h3>Recommended system specs<a class="headerlink" href="#recommended-system-specs" title="Link to this heading">#</a></h3>
+<p>For training we recommend a GPU with at least 24 Gb of memory, but 48 Gb+ is prefered.
+For inference we recommend a GPU with at least 8 Gb of memory.</p>
+</section>
 <section id="installation">
 <h3>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">diffusion_policy_dev</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">diffusion_policy</span>
 <span class="n">cd</span> <span class="n">diffusion_policy</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
 </section>
+<section id="relevant-scripts">
+<h3>Relevant scripts<a class="headerlink" href="#relevant-scripts" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Training: <a class="reference external" href="train.py">train.py</a></p></li>
+<li><p>Evaluation: <a class="reference external" href="eval_robocasa.py">eval_robocasa.py</a></p></li>
+</ul>
+</section>
 </section>
 <hr class="docutils" />
 <section id="openpi">
 <h2>Openpi<a class="headerlink" href="#openpi" title="Link to this heading">#</a></h2>
+<p>We fork the official Openpi code base, hosted at <a class="github reference external" href="https://github.com/robocasa/openpi">robocasa/openpi</a>. Our fork support training for <strong>pi0 and pi0.5</strong>.</p>
 <section id="id1">
-<h3>Installation<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">openpi</span><span class="o">-</span><span class="n">dev</span>
+<h3>Recommended system specs<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>For training we recommend a GPU with at least 80 Gb of memory (H100, H200, etc).
+For inference we recommend a GPU with at least 8 Gb of memory.</p>
+</section>
+<section id="id2">
+<h3>Installation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">openpi</span>
 <span class="n">cd</span> <span class="n">openpi</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
 </section>
+<section id="id3">
+<h3>Relevant scripts<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Training: <a class="reference external" href="scripts/train.py">scripts/train.py</a></p></li>
+<li><p>Evaluation: <a class="reference external" href="scripts/serve_policy.py">scripts/serve_policy.py</a> and <a class="reference external" href="examples/robocasa/main.py">examples/robocasa/main.py</a></p></li>
+</ul>
+</section>
 </section>
 <hr class="docutils" />
 <section id="gr00t">
 <h2>GR00T<a class="headerlink" href="#gr00t" title="Link to this heading">#</a></h2>
-<section id="id2">
-<h3>Installation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>We fork the official GR00T code base, hosted at <a class="github reference external" href="https://github.com/robocasa/groot">robocasa/groot</a>. Our fork support training for <strong>GR00T N1.5</strong>.</p>
+<section id="id4">
+<h3>Recommended system specs<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>For training we recommend a GPU with at least 80 Gb of memory (H100, H200, etc).
+For inference we recommend a GPU with at least 8 Gb of memory.</p>
+</section>
+<section id="id5">
+<h3>Installation<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">groot</span>
-<span class="n">cd</span> <span class="n">gr00t</span>
+<span class="n">cd</span> <span class="n">groot</span>
 <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
+</section>
+<section id="id6">
+<h3>Relevant scripts<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Training: <a class="reference external" href="scripts/gr00t_finetune.py">scripts/gr00t_finetune.py</a></p></li>
+<li><p>Evaluation: <a class="reference external" href="scripts/run_eval.py">scripts/run_eval.py</a></p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -449,12 +495,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../datasets/using_datasets.html"
+       href="benchmarking_overview.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Using Datasets</p>
+        <p class="prev-next-title">Overview of Benchmarking</p>
       </div>
     </a>
     <a class="right-next"
@@ -483,15 +529,21 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffusion-policy">Diffusion Policy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-system-specs">Recommended system specs</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relevant-scripts">Relevant scripts</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openpi">Openpi</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Recommended system specs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Relevant scripts</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Recommended system specs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Installation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Relevant scripts</a></li>
 </ul>
 </li>
 </ul>

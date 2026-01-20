@@ -73,6 +73,47 @@ We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretrainin
   </tbody>
 </table>
 
+### Model Checkpoints
+
+<table class="docutils rc-benchmark-table">
+  <thead>
+    <tr>
+      <th><strong>Model Checkpoint</strong></th>
+      <th><strong>Link</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pretraining Only</strong></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr class="checkpoint-section-divider">
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr class="checkpoint-section-divider">
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+  </tbody>
+</table>
+
 -------
 ## Benchmark instructions
 
@@ -97,19 +138,19 @@ python scripts/gr00t_finetune.py \
 python scripts/gr00t_finetune.py \
 --output-dir expdata/foundation_model_learning/target_task_finetuning/atomic_seen \
 --base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
---dataset_soup posttrain_atomic_seen \
+--dataset_soup target_atomic_seen \
 --max_steps 60000
 
 python scripts/gr00t_finetune.py \
 --output-dir expdata/foundation_model_learning/target_task_finetuning/composite_seen \
 --base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
---dataset_soup posttrain_composite_seen \
+--dataset_soup target_composite_seen \
 --max_steps 60000
 
 python scripts/gr00t_finetune.py \
 --output-dir expdata/foundation_model_learning/target_task_finetuning/composite_unseen \
 --base_model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
---dataset_soup posttrain_composite_unseen \
+--dataset_soup target_composite_unseen \
 --max_steps 60000
 ```
 

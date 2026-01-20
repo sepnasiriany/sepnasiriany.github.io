@@ -97,7 +97,7 @@ python diffusion_policy/scripts/get_eval_stats.py \
 #### Train model
 ```
 XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
-<your-ds-soup> \
+pretrain_human300 \
 --exp-name=<your-exp-name> \
 --overwrite
 ```
@@ -133,7 +133,7 @@ TODO
 ```
 python scripts/gr00t_finetune.py \
 --output-dir expdata/multitask_learning \
---dataset_soup <your-ds-soup> \
+--dataset_soup pretrain_human300 \
 --max_steps 120000
 ```
 
@@ -141,6 +141,7 @@ python scripts/gr00t_finetune.py \
 ```
 python scripts/run_eval.py \
 --model_path expdata/multitask_learning/checkpoint-120000/ \
+--task_soup atomic_seen composite_seen composite_unseen \
 --split pretrain
 ```
 

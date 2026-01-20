@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=12e2c56b" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8d1fec2c" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Foundation Model Learning" href="foundation_model_learning.html" />
-    <link rel="prev" title="Overview of Benchmarking" href="benchmarking_overview.html" />
+    <link rel="prev" title="Policy Learning Algorithms" href="policy_learning_algorithms.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -184,6 +184,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="benchmarking_overview.html">Overview of Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Multi-Task Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="foundation_model_learning.html">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lifelong_learning.html">Lifelong Learning</a></li>
@@ -515,7 +516,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="id2">
 <h4>Train model<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XLA_PYTHON_CLIENT_MEM_FRACTION</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span> \
+<span class="n">pretrain_human300</span> \
 <span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> \
 <span class="o">--</span><span class="n">overwrite</span>
 </pre></div>
@@ -558,7 +559,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Train model<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span> \
-<span class="o">--</span><span class="n">dataset_soup</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">pretrain_human300</span> \
 <span class="o">--</span><span class="n">max_steps</span> <span class="mi">120000</span>
 </pre></div>
 </div>
@@ -567,6 +568,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Evaluate model<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span><span class="o">/</span> \
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
 </div>
@@ -594,12 +596,12 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="benchmarking_overview.html"
+       href="policy_learning_algorithms.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Overview of Benchmarking</p>
+        <p class="prev-next-title">Policy Learning Algorithms</p>
       </div>
     </a>
     <a class="right-next"

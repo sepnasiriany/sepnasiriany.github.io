@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=12e2c56b" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css?v=8d1fec2c" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -184,6 +184,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Benchmarking</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="benchmarking_overview.html">Overview of Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="policy_learning_algorithms.html">Policy Learning Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multitask_learning.html">Multi-Task Learning</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Foundation Model Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lifelong_learning.html">Lifelong Learning</a></li>
@@ -373,7 +374,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-checkpoints">Model Checkpoints</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>
@@ -472,7 +476,47 @@ There are two phases of training:</p>
       <td><strong>51.1%</strong></td>
     </tr>
   </tbody>
+</table><section id="model-checkpoints">
+<h3>Model Checkpoints<a class="headerlink" href="#model-checkpoints" title="Link to this heading">#</a></h3>
+<table class="docutils rc-benchmark-table">
+  <thead>
+    <tr>
+      <th><strong>Model Checkpoint</strong></th>
+      <th><strong>Link</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Pretraining Only</strong></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr class="checkpoint-section-divider">
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr class="checkpoint-section-divider">
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+    <tr>
+      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="#">TODO</a></td>
+    </tr>
+  </tbody>
 </table></section>
+</section>
 <hr class="docutils" />
 <section id="benchmark-instructions">
 <h2>Benchmark instructions<a class="headerlink" href="#benchmark-instructions" title="Link to this heading">#</a></h2>
@@ -500,19 +544,19 @@ There are two phases of training:</p>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">atomic_seen</span> \
 <span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
-<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_atomic_seen</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">target_atomic_seen</span> \
 <span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
 
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_seen</span> \
 <span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
-<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_composite_seen</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">target_composite_seen</span> \
 <span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
 
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">gr00t_finetune</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">output</span><span class="o">-</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">base_model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">pretraining</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">80000</span> \
-<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">posttrain_composite_unseen</span> \
+<span class="o">--</span><span class="n">dataset_soup</span> <span class="n">target_composite_unseen</span> \
 <span class="o">--</span><span class="n">max_steps</span> <span class="mi">60000</span>
 </pre></div>
 </div>
@@ -601,7 +645,10 @@ There are two phases of training:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-checkpoints">Model Checkpoints</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>

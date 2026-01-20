@@ -1,42 +1,46 @@
 # Using Datasets
 
-We provide datasets in the lerobot format. There are broadly three types of datasets: **pretraining human** datasets, **pretraining MimicGen** datasets, and **target human** datasets (see [datasets overview](../datasets/datasets_overview.html) for details).
+We provide datasets in the lerobot format. There are broadly three types of datasets: **pretraining (human)** datasets, **pretraining (MimicGen)** datasets, and **target (human)** datasets (see [datasets overview](../datasets/datasets_overview.html) for details).
 
 ### Downloading datasets
 
 <div class="admonition note">
 <p class="admonition-title">Dataset storage location</p>
 
-By default, all datasets are stored under `datasets/` in the root robocasa directory. You can change the location for datasets by setting `DATASET_BASE_PATH` in `robocasa/macros_private.py`.
+By default, all datasets are stored under `datasets/` in the root RoboCasa directory. You can change the location for datasets by setting `DATASET_BASE_PATH` in `robocasa/macros_private.py`.
 
 </div>
 
 Here are a few examples to download datasets:
 
+<details>
+<summary><b>Click to expand download examples</b></summary>
+
 ```
 # downloads all datasets
-python -m robocasa.scripts.download_datasets --datasets all
+python -m robocasa.scripts.download_datasets --all
 
-# only download pretraining human datasets
-python -m robocasa.scripts.download_datasets --datasets pretrain_human
+# only download pretraining human data
+python -m robocasa.scripts.download_datasets --split pretrain --source human
 
-# only download pretraining mimicgen dataasets
-python -m robocasa.scripts.download_datasets --datasets pretrain_mg
+# only download pretraining MimicGen data
+python -m robocasa.scripts.download_datasets --split pretrain --source mimicgen
 
-# only download target human datasets
-python -m robocasa.scripts.download_datasets --datasets target_human
+# only download target human data
+python -m robocasa.scripts.download_datasets --split target --source human
 
-# only download datasets for a specific task
-python -m robocasa.scripts.download_datasets --datasets PickPlaceCounterToCabinet
+# download all datasets for specific task(s)
+python -m robocasa.scripts.download_datasets --tasks PickPlaceCounterToCabinet ArrangeBreadBasket
 ```
 
-Additionally you can specify the following optional arguments:
-```
---overwrite: overwrites existing datasets
-```
+You can specify `--overwrite` to overwrite existing datasets.
+</details>
 
 ### Dataset structure
 RoboCasa datasets follow the LeRobot format. Here is an overview of important elements of each dataset:
+
+<details>
+<summary><b>Click to expand dataset structure</b></summary>
 
 ```
 lerobot/
@@ -71,7 +75,9 @@ lerobot/
         └── states.npz                  # Raw MuJoCo states for replay (not for training)
 ```
 
-### Dataset registry
+</details>
+
+### Retrieving dataset metadata
 We track each dataset with metadata (paths, task horizon length, etc.) in the [dataset registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py). You can use the `get_ds_meta()` function to retrieve metadata for a specific task:
 
 ```py
@@ -79,30 +85,47 @@ from robocasa.utils.dataset_registry import get_ds_meta
 
 ds_meta = get_ds_meta(
     task="PickPlaceCounterToCabinet",
-    split="target_human", # or try pretrain_human, pretrain_mg
-    demo_fraction=1.0, # the fraction of available demos to use (default to 1.0)
+    split="target", # or try "pretrain"
+    source="human", # defaults to "human", try "mimicgen" for synthetic data
+    demo_fraction=1.0, # the fraction of available demos to use (default is 1.0)
 )
 ```
 
-The code above returns meta data for a single dataset. You can retrieve information for a soup of datasets using the `get_ds_soup()` function:
-
+### Creating environments from dataset metadata
+You can initialize a gym environment given the dataset metadata and run random rollouts:
 ```py
-from robocasa.utils.dataset_registry import get_ds_soup
+import gymnasium as gym
+import robocasa
+from robocasa.utils.env_utils import run_random_rollouts
 
-ds_soup = get_ds_soup(
-    task_soup="atomic_seen",
-    split="target_human", # or try pretrain_human, pretrain_mg
-    demo_fraction=1.0, # the fraction of available demos to use (default to 1.0)
+# gather relevant information from ds_meta from previous section
+task_name = ds_meta["task"]
+split = ds_meta["split"]
+horizon = ds_meta["horizon"]
+
+env = gym.make(
+    f"robocasa/{task_name}",
+    split=split,
+    seed=0 # seed environment as needed. set seed=None to run unseeded
+)
+
+# run rollouts with random actions and save video
+run_random_rollouts(
+    env, num_rollouts=3, num_steps=horizon, video_path=f"/tmp/{task_name}_{split}_rollouts.mp4"
 )
 ```
 
-### Basic usage
+### Creating datasets for training
+
 Here is an example script to access dataset elements:
 ```py
 from lerobot.datasets.lerobot_dataset import LeRobotDataset
 import random
 
-ds = LeRobotDataset(repo_id="robocasa365", root=DATASET_PATH)
+# get dataset path from ds_meta from previous section
+dataset_path = ds_meta["path"]
+
+ds = LeRobotDataset(repo_id="robocasa365", root=dataset_path)
 ep_idx = 5
 start = int(ds.episode_data_index["from"][ep_idx]) 
 end = int(ds.episode_data_index["to"][ep_idx])
@@ -113,6 +136,25 @@ right_img = sample["observation.images.robot0_agentview_right"]     # Accessing 
 action = sample["action"]                                           # Accessing the action taken    
 instruction = sample["task"]                                        # Accessing the instruction for the episode
 ```
+
+### Training beyond a single dataset
+
+The code above returns meta data for a single dataset. You can retrieve information for a collection of datasets using the `get_ds_soup()` function, which returns a list of dataset metadata:
+
+```py
+from robocasa.utils.dataset_registry import get_ds_soup
+
+ds_soup = get_ds_soup(
+    task_soup="atomic_seen", # the list of tasks
+    split="target", # or try "pretrain"
+    source="human", # defaults to "human", try "mimicgen" for synthetic data
+    demo_fraction=1.0, # the fraction of available demos to use (default is 1.0)
+)
+```
+
+Prominent dataset soups are registerd in [the dataset soup registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py).
+
+**TODO: discuss how to construct a mixture of datasets dataset**
 
 ### Inspecting and visualizing datasets
 
