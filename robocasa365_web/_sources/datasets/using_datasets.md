@@ -154,8 +154,6 @@ ds_soup = get_ds_soup(
 
 Prominent dataset soups are registerd in [the dataset soup registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py).
 
-**TODO: discuss how to construct a mixture of datasets dataset**
-
 ### Inspecting and visualizing datasets
 
 To get dataset statistics (filter keys, objects, task language, scenes):

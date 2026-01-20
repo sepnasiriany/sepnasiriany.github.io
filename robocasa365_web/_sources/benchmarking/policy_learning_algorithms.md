@@ -16,9 +16,27 @@ cd diffusion_policy
 pip install -e .
 ```
 
-### Relevant scripts
+### Key files
 - Training: [train.py](train.py)
 - Evaluation: [eval_robocasa.py](eval_robocasa.py)
+
+### Experiment workflow
+```
+# train model
+python train.py \
+--config-name=train_diffusion_transformer_bs192 \
+task=robocasa/<dataset-soup>
+
+# Evaluate model
+python eval_robocasa.py \
+--checkpoint <checkpoint-path> \
+--task_soup <task-soup> \
+--split <split>
+
+# Report evaluation results
+python diffusion_policy/scripts/get_eval_stats.py \
+--dir <outputs-dir>
+```
 
 
 -------
@@ -37,9 +55,36 @@ cd openpi
 pip install -e .
 ```
 
-### Relevant scripts
+### Key files
 - Training: [scripts/train.py](scripts/train.py)
 - Evaluation: [scripts/serve_policy.py](scripts/serve_policy.py) and [examples/robocasa/main.py](examples/robocasa/main.py)
+- Setting up configs: [src/openpi/training/config.py](src/openpi/training/config.py)
+
+### Experiment workflow
+```
+# train model
+XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
+<dataset-soup> \
+--exp-name=<exp-name>
+
+# evaluate model
+# part a: start inference server
+python scripts/serve_policy.py \
+--port=8000 policy:checkpoint \
+--policy.config=<dataset-soup> \
+--policy.dir=<checkpoint-path>
+
+# part b: run evals on server
+python examples/robocasa/main.py \
+--args.port 8000 \
+--args.task_soup <task-soup> \
+--args.split <split> \
+--args.log_dir <checkpoint-path>
+
+# report evaluation results
+python examples/robocasa/get_eval_stats.py \
+--dir <checkpoint-path>
+```
 
 -------
 ## GR00T
@@ -57,6 +102,25 @@ cd groot
 pip install -e .
 ```
 
-### Relevant scripts
+### Key files
 - Training: [scripts/gr00t_finetune.py](scripts/gr00t_finetune.py)
 - Evaluation: [scripts/run_eval.py](scripts/run_eval.py)
+
+### Experiment workflow
+```
+# train model
+python scripts/gr00t_finetune.py \
+--output-dir <experiment-path> \
+--dataset_soup <dataset-soup> \
+--max_steps <num-training-steps>
+
+# evaluate model
+python scripts/run_eval.py \
+--model_path <checkpoint-path> \
+--task_soup <task-soup> \
+--split <split>
+
+# report evaluation results
+python gr00t/eval/get_eval_stats.py \
+--dir <checkpoint-path>
+```

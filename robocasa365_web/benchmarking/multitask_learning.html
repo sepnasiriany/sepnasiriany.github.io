@@ -482,8 +482,8 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="train-model">
 <h4>Train model<a class="headerlink" href="#train-model" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">train</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">train_diffusion_transformer_xl_bs192</span> \
-<span class="n">task</span><span class="o">=</span><span class="n">robocasa</span><span class="o">/</span><span class="n">pretrain</span><span class="o">/</span><span class="n">pretrain300</span>
+<span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">train_diffusion_transformer_bs192</span> \
+<span class="n">task</span><span class="o">=</span><span class="n">robocasa</span><span class="o">/</span><span class="n">pretrain_human300</span>
 </pre></div>
 </div>
 </section>
@@ -491,7 +491,8 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Evaluate model<a class="headerlink" href="#evaluate-model" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">eval_robocasa</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">checkpoint</span> <span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span> \
-<span class="o">--</span><span class="n">split</span> <span class="n">train</span>
+<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
 </div>
 </section>
@@ -517,8 +518,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Train model<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XLA_PYTHON_CLIENT_MEM_FRACTION</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
 <span class="n">pretrain_human300</span> \
-<span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">=&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span> \
-<span class="o">--</span><span class="n">overwrite</span>
+<span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">multitask_learning</span>
 </pre></div>
 </div>
 </section>
@@ -527,20 +527,22 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># part a: start inference server</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">serve_policy</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">8000</span> <span class="n">policy</span><span class="p">:</span><span class="n">checkpoint</span> \
-<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">posttrain_atomic_seen</span> \
-<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">dir</span><span class="o">=&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">checkpoint</span><span class="o">&gt;</span>
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">pretrain_human300</span> \
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">dir</span><span class="o">=</span><span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 
 <span class="c1"># part b: run evals on server</span>
 <span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">port</span> <span class="mi">8000</span> \
-<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_soup</span> <span class="o">&lt;</span><span class="n">your</span><span class="o">-</span><span class="n">ds</span><span class="o">-</span><span class="n">soup</span><span class="o">&gt;</span> \
-<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">&lt;</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">checkpoint</span><span class="o">&gt;</span>
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">split</span> <span class="n">pretrain</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h4>Report evaluation results<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TODO</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
+<span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 </pre></div>
 </div>
 </section>
@@ -567,7 +569,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="id7">
 <h4>Evaluate model<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span><span class="o">/</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span> \
 <span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
@@ -576,7 +578,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="id8">
 <h4>Report evaluation results<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">gr00t</span><span class="o">/</span><span class="nb">eval</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span><span class="o">/</span>
+<span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span>
 </pre></div>
 </div>
 </section>

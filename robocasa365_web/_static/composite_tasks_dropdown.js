@@ -33,6 +33,14 @@
     );
   }
 
+  function isLifelongLearningPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return (
+      path.endsWith("/benchmarking/lifelong_learning.html") ||
+      path.endsWith("/benchmarking/lifelong_learning/")
+    );
+  }
+
   function initObjectsTableSorting() {
     const table = document.querySelector("table.rc-objects-table");
     if (!table) return;
@@ -3812,6 +3820,16 @@
   onReady(() => {
     if (!isFoundationModelLearningPage()) return;
     document.body.classList.add("rc-foundation-model-learning");
+  });
+
+  onReady(() => {
+    if (!isLifelongLearningPage()) return;
+    document.body.classList.add("rc-lifelong-learning");
+  });
+
+  onReady(() => {
+    if (!isLifelongLearningPage()) return;
+    document.body.classList.add("rc-lifelong-learning");
   });
 
   // Datasets overview page: make target task tables match the Composite Tasks look.

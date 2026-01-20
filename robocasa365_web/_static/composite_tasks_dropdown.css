@@ -1421,6 +1421,19 @@ body.rc-foundation-model-learning .bd-main .bd-content .bd-article-container {
   max-width: 95em;
 }
 
+/* Hide the right-side "Contents" (secondary TOC) on Lifelong Learning page */
+body.rc-lifelong-learning .bd-sidebar-secondary,
+body.rc-lifelong-learning .sidebar-toggle.secondary-toggle,
+body.rc-lifelong-learning label.overlay.overlay-secondary,
+body.rc-lifelong-learning #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+
+/* Use full page width (no secondary sidebar) on Lifelong Learning page */
+body.rc-lifelong-learning .bd-main .bd-content .bd-article-container {
+  max-width: none;
+}
+
 /* Use the freed space (no secondary sidebar) */
 body.rc-composite-tasks .bd-main .bd-content .bd-article-container {
   max-width: 95em;

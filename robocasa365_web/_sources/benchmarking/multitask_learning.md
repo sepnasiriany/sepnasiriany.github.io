@@ -70,15 +70,16 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
 #### Train model
 ```
 python train.py \
---config-name=train_diffusion_transformer_xl_bs192 \
-task=robocasa/pretrain/pretrain300
+--config-name=train_diffusion_transformer_bs192 \
+task=robocasa/pretrain_human300
 ```
 
 #### Evaluate model
 ```
 python eval_robocasa.py \
 --checkpoint <checkpoint-path> \
---split train
+--task_soup atomic_seen composite_seen composite_unseen \
+--split pretrain
 ```
 
 #### Report evaluation results
@@ -98,8 +99,7 @@ python diffusion_policy/scripts/get_eval_stats.py \
 ```
 XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
 pretrain_human300 \
---exp-name=<your-exp-name> \
---overwrite
+--exp-name=multitask_learning
 ```
 
 #### Evaluate model
@@ -107,19 +107,21 @@ pretrain_human300 \
 # part a: start inference server
 python scripts/serve_policy.py \
 --port=8000 policy:checkpoint \
---policy.config=posttrain_atomic_seen \
---policy.dir=<path-to-checkpoint>
+--policy.config=pretrain_human300 \
+--policy.dir=expdata/pretrain_human300/multitask_learning/75000
 
 # part b: run evals on server
 python examples/robocasa/main.py \
 --args.port 8000 \
---args.task_soup <your-ds-soup> \
---args.log_dir <path-to-checkpoint>
+--args.task_soup atomic_seen composite_seen composite_unseen \
+--args.split pretrain \
+--args.log_dir expdata/pretrain_human300/multitask_learning/75000
 ```
 
 #### Report evaluation results
 ```
-TODO
+python examples/robocasa/get_eval_stats.py \
+--dir expdata/pretrain_human300/multitask_learning/75000
 ```
 
 -------
@@ -140,7 +142,7 @@ python scripts/gr00t_finetune.py \
 #### Evaluate model
 ```
 python scripts/run_eval.py \
---model_path expdata/multitask_learning/checkpoint-120000/ \
+--model_path expdata/multitask_learning/checkpoint-120000 \
 --task_soup atomic_seen composite_seen composite_unseen \
 --split pretrain
 ```
@@ -148,5 +150,5 @@ python scripts/run_eval.py \
 #### Report evaluation results
 ```
 python gr00t/eval/get_eval_stats.py \
---dir expdata/multitask_learning/checkpoint-120000/
+--dir expdata/multitask_learning/checkpoint-120000
 ```

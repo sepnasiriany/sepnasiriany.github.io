@@ -24,6 +24,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <th><strong>2-3 Stage Tasks</strong></th>
       <th><strong>4-5 Stage Tasks</strong></th>
       <th><strong>6+ Stage Tasks</strong></th>
+      <th><strong>Checkpoint</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +34,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>-</td>
       <td>-</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase2</td>
@@ -40,6 +42,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>24.5</td>
       <td>-</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase3</td>
@@ -47,6 +50,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>4.8</td>
       <td>11.3</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase4</td>
@@ -54,6 +58,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>1.7</td>
       <td>2.7</td>
       <td>4.3</td>
+      <td><a href="#">TODO</a></td>
     </tr>
   </tbody>
 </table>
