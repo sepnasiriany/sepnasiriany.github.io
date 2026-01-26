@@ -1031,6 +1031,8 @@ details.rc-activity > summary {
   flex-direction: column;
   gap: 0.25rem;
   min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .rc-activity-meta {
@@ -1302,6 +1304,9 @@ details.rc-activity > summary:hover {
   align-items: center;
   gap: 0.5rem;
   font-weight: 800;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .rc-activity-badge {
@@ -1419,6 +1424,19 @@ body.rc-foundation-model-learning #pst-secondary-sidebar-checkbox {
 /* Use the freed space (no secondary sidebar) on Foundation Model Learning page */
 body.rc-foundation-model-learning .bd-main .bd-content .bd-article-container {
   max-width: 95em;
+}
+
+/* Hide the right-side "Contents" (secondary TOC) on Lifelong Learning page */
+body.rc-lifelong-learning .bd-sidebar-secondary,
+body.rc-lifelong-learning .sidebar-toggle.secondary-toggle,
+body.rc-lifelong-learning label.overlay.overlay-secondary,
+body.rc-lifelong-learning #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+
+/* Use full page width (no secondary sidebar) on Lifelong Learning page */
+body.rc-lifelong-learning .bd-main .bd-content .bd-article-container {
+  max-width: none;
 }
 
 /* Use the freed space (no secondary sidebar) */
