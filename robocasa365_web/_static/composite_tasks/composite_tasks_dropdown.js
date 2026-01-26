@@ -33,6 +33,14 @@
     );
   }
 
+  function isLifelongLearningPage() {
+    const path = window.location.pathname.replace(/\\/g, "/");
+    return (
+      path.endsWith("/benchmarking/lifelong_learning.html") ||
+      path.endsWith("/benchmarking/lifelong_learning/")
+    );
+  }
+
   function initObjectsTableSorting() {
     const table = document.querySelector("table.rc-objects-table");
     if (!table) return;
@@ -206,7 +214,7 @@
   let CACHED_TASK_ATTRIBUTES_JSON = null;
   async function loadTaskAttributesJson() {
     if (CACHED_TASK_ATTRIBUTES_JSON) return CACHED_TASK_ATTRIBUTES_JSON;
-    const url = `${getContentRoot()}_static/composite_tasks/task_attributes.json`;
+    const url = `${getContentRoot()}composite_tasks/task_attributes.json`;
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) {
       throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
@@ -259,7 +267,6 @@
 
   function folderTitleFromMultiStageFolder(folder) {
     // "adding_ice_to_beverages" -> "Adding Ice to Beverages"
-    if (folder === "baking_cookies_cakes") return "Baking Cookies and Cakes";
     return titleCaseActivity((folder || "").replace(/_/g, " "));
   }
 
@@ -279,7 +286,6 @@
     "arranging_cabinets",
     "arranging_condiments",
     "baking",
-    "baking_cookies_cakes",
     "boiling",
     "brewing",
     "broiling_fish",
@@ -292,6 +298,7 @@
     "filling_serving_dishes",
     "frying",
     "garnishing_dishes",
+    "loading_dishwasher",
     "loading_fridge",
     "making_juice",
     "making_salads",
@@ -361,9 +368,6 @@
     ["brewing coffee", "brewing"],
     ["frying foods", "frying"],
 
-    ["baking cookies and cakes", "baking_cookies_cakes"],
-    ["baking cookies/cakes", "baking_cookies_cakes"],
-
     ["microwaving foods", "microwaving_food"],
 
     ["preparing marinades", "preparing_marinade"],
@@ -381,7 +385,7 @@
     // More typos / legacy labels present in task_attributes.json
     ["boiilng water", "boiling"],
     ["cleaning appliacnes", "cleaning_appliances"],
-    ["loading dishwasher", "washing_dishes"],
+    ["loading dishwasher", "loading_dishwasher"],
     ["washing produce", "washing_fruits_and_vegetables"],
   ]);
 
@@ -467,8 +471,7 @@
     ["microwaving foods", "cooking"],
     ["toasting bread", "cooking"],
     ["slow cooking", "cooking"],
-    ["baking cookies/cakes", "cooking"],
-    ["baking cookies and cakes", "cooking"],
+    ["baking", "cooking"],
     ["broiling fish", "cooking"],
     ["simmering sauces", "cooking"],
 
@@ -532,7 +535,6 @@
       [n, n.replace("sanitize surface", "sanitizing surfaces")],
       [n, n.replace("sanitizing cutting board", "sanitizing cutting boards")],
       [n, n.replace("broiling fish", "broiling fish")],
-      [n, n.replace("baking cookies cakes", "baking cookies/cakes")],
       [n, n.replace("brewing", "brewing coffee")],
       [n, n.replace("frying", "frying foods")],
       [n, n.replace("boiling", "boiling water")],
@@ -884,7 +886,7 @@
     ["LemonSeasoningFish", ["PickPlace", "door_open"]],
     ["DeliverStraw", ["PickPlace", "drawer_open"]],
     ["PrepareCocktailStation", ["PickPlace", "door_open"]],
-    ["PrepareDishwasher", ["PickPlace", "rack_slide"]],
+    ["PrepareDishwasher", ["rack_slide"]],
     ["DrainVeggies", ["PickPlace", "lever_turn"]],
     ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
     ["WashFruitColander", ["PickPlace", "lever_turn"]],
@@ -3812,6 +3814,16 @@
   onReady(() => {
     if (!isFoundationModelLearningPage()) return;
     document.body.classList.add("rc-foundation-model-learning");
+  });
+
+  onReady(() => {
+    if (!isLifelongLearningPage()) return;
+    document.body.classList.add("rc-lifelong-learning");
+  });
+
+  onReady(() => {
+    if (!isLifelongLearningPage()) return;
+    document.body.classList.add("rc-lifelong-learning");
   });
 
   // Datasets overview page: make target task tables match the Composite Tasks look.

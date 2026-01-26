@@ -611,28 +611,28 @@
     },
     {
       "name": "CoolBakedCookies",
-      "activity": "Baking Cookies Cakes",
+      "activity": "Baking",
       "num_subtasks": 5,
       "moma_required": "Yes",
       "description": "Open the oven door and slide the top rack out. Then take the tray with baked cookies out of the oven and place it on the counter for cooling."
     },
     {
       "name": "CookieDoughPrep",
-      "activity": "Baking Cookies Cakes",
+      "activity": "Baking",
       "num_subtasks": 7,
       "moma_required": "Yes",
       "description": "Pick the egg and butter from the fridge and place them by the bowl for mixing."
     },
     {
       "name": "CoolBakedCake",
-      "activity": "Baking Cookies Cakes",
+      "activity": "Baking",
       "num_subtasks": 8,
       "moma_required": "Yes",
       "description": "Take the baked cake out of the oven and place it on the plate for cooling. Then close the oven door."
     },
     {
       "name": "MixCakeFrosting",
-      "activity": "Baking Cookies Cakes",
+      "activity": "Baking",
       "num_subtasks": 5,
       "moma_required": "Yes",
       "description": "Add butter and sugar cubes to the stand mixer bowl and then turn on the stand mixer to begin making frosting."
@@ -1143,14 +1143,14 @@
     },
     {
       "name": "LoadDishwasher",
-      "activity": "Washing Dishes",
+      "activity": "Loading Dishwasher",
       "num_subtasks": 3,
       "moma_required": "No",
       "description": "Pick up the items from the counter, place them in the dishwasher, and close the dishwasher door."
     },
     {
       "name": "PrepareDishwasher",
-      "activity": "Washing Dishes",
+      "activity": "Loading Dishwasher",
       "num_subtasks": 2,
       "moma_required": "Yes",
       "description": "Open the dishwasher door and pull out the top rack."
