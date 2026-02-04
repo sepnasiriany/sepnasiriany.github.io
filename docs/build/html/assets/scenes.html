@@ -610,7 +610,30 @@ html[data-theme="dark"] .scene-item img {
     0 0 0 10px rgba(255, 255, 255, 0.025);
   border-radius: 8px;
 }
-</style><!-- Modal HTML --><div id="sceneModal" class="scene-modal">
+</style><script>
+  // Sphinx copies assets from `html_static_path` into `_static/`.
+  // Ensure scene thumbnails point to the emitted `_static/` locations.
+  (function () {
+    function fixSceneStaticPaths() {
+      const rules = [
+        ["../pretrain_scenes/", "../_static/pretrain_scenes/"],
+        ["../target_scenes/", "../_static/target_scenes/"],
+      ];
+      const imgs = Array.from(document.querySelectorAll(".scene-item img"));
+      for (const img of imgs) {
+        const src = img.getAttribute("src") || "";
+        for (const [from, to] of rules) {
+          if (src.startsWith(from)) {
+            img.setAttribute("src", to + src.slice(from.length));
+            break;
+          }
+        }
+      }
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fixSceneStaticPaths);
+    else fixSceneStaticPaths();
+  })();
+</script><!-- Modal HTML --><div id="sceneModal" class="scene-modal">
   <span class="modal-close" onclick="closeModal()">&times;</span>
   <div class="modal-content">
     <img id="modalImage" src="" alt="Scene">

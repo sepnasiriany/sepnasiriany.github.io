@@ -17,6 +17,31 @@
   <button type="button" id="style-filter-clear" class="fixture-filter-clear" onclick="clearStyleFilter()" style="display: none;">Clear</button>
 </div>
 
+<script>
+  // Sphinx merges `html_static_path` folders into `_static/` root.
+  // Our fixture PNGs are emitted as `../_static/<category>/<id>.png` (NOT `../_static/fixtures/...`).
+  // Rewrite any legacy `../_static/fixtures/` paths at runtime so thumbnails render.
+  (function () {
+    function fixFixtureStaticPaths() {
+      const from = "../_static/fixtures/";
+      const to = "../_static/";
+      const viewers = Array.from(document.querySelectorAll(".fixture-viewer"));
+      for (const v of viewers) {
+        const base = v.getAttribute("data-base") || "";
+        if (base.includes(from)) v.setAttribute("data-base", base.replace(from, to));
+
+        const img = v.querySelector("img.fixture-preview-image");
+        if (img) {
+          const src = img.getAttribute("src") || "";
+          if (src.includes(from)) img.setAttribute("src", src.replace(from, to));
+        }
+      }
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", fixFixtureStaticPaths);
+    else fixFixtureStaticPaths();
+  })();
+</script>
+
 <!--
 <div class="fixtures-table-wrap">
   <table class="rc-benchmark-table rc-fixtures-table">
@@ -533,9 +558,9 @@ html[data-theme="dark"] .fixture-preview-image {
 <div class="fixtures-viewers-grid">
   <div class="fixture-card">
     <h2 class="fixture-card-title">Blender</h2>
-    <div class="fixture-viewer" data-name="Blender" data-base="../_static/fixtures/blender" data-ids="1,2,3,4,5,6,7,8,11,12,13,14,15,56,18,19,21,22,23,25,30,44" data-style-groups="1;2;3;4|9;5;6;7;8|10;11|28|48|51;12|35|39;13|29|31;14|16|36;15|20|32|49;17|27|53|56;18|24|52;19|26|40|54|58;21|37|60;22|41|42|59;23|38|43|46|47;25|45|50;30|33|34;44|55|57">
+    <div class="fixture-viewer" data-name="Blender" data-base="../_static/blender" data-ids="1,2,3,4,5,6,7,8,11,12,13,14,15,56,18,19,21,22,23,25,30,44" data-style-groups="1;2;3;4|9;5;6;7;8|10;11|28|48|51;12|35|39;13|29|31;14|16|36;15|20|32|49;17|27|53|56;18|24|52;19|26|40|54|58;21|37|60;22|41|42|59;23|38|43|46|47;25|45|50;30|33|34;44|55|57">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="../_static/fixtures/blender/1.png" alt="Blender">
+        <img class="fixture-preview-image" src="../_static/blender/1.png" alt="Blender">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -547,9 +572,9 @@ html[data-theme="dark"] .fixture-preview-image {
 
   <div class="fixture-card">
     <h2 class="fixture-card-title">Coffee Machine</h2>
-    <div class="fixture-viewer" data-name="Coffee Machine" data-base="../_static/fixtures/coffee_machine" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,32,20,21,22,23,24,25,27,28,29,30,31,34,35,36,37,38,42,43,44,45,47,48,50,51,53,56,58,59,60" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15|33;16|41;17;18|57;19|32;20;21|49;22|39;23|54;24|46|52;25|26;27;28;29;30|55;31;34|40;35;36;37;38;42;43;44;45;47;48;50;51;53;56;58;59;60">
+    <div class="fixture-viewer" data-name="Coffee Machine" data-base="../_static/coffee_machine" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,32,20,21,22,23,24,25,27,28,29,30,31,34,35,36,37,38,42,43,44,45,47,48,50,51,53,56,58,59,60" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15|33;16|41;17;18|57;19|32;20;21|49;22|39;23|54;24|46|52;25|26;27;28;29;30|55;31;34|40;35;36;37;38;42;43;44;45;47;48;50;51;53;56;58;59;60">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="../_static/fixtures/coffee_machine/1.png" alt="Coffee Machine">
+        <img class="fixture-preview-image" src="../_static/coffee_machine/1.png" alt="Coffee Machine">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
