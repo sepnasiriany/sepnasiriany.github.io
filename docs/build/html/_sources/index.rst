@@ -61,6 +61,12 @@ Welcome to RoboCasa's documentation!
    :caption: Source API
 
    api/robocasa
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Previous Versions
+
+   v0.2 <v0_2>
  
 
 
