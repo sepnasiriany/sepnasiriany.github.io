@@ -24,7 +24,6 @@ def _has_module(module_name: str) -> bool:
 try:
     import robocasa  # type: ignore
 except Exception:  # noqa: BLE001
-    # Docs build should not require full RoboCasa runtime deps.
     robocasa = None
 
 
@@ -44,13 +43,11 @@ extensions = [
     "sphinx.ext.autodoc",
 ]
 
-# Optional extensions (docs should still build without them)
 if _has_module("sphinx_markdown_tables"):
     extensions.append("sphinx_markdown_tables")
 
-# Markdown parser
 if _has_module("recommonmark"):
-    extensions.append("recommonmark")  # legacy markdown support
+    extensions.append("recommonmark")
 elif _has_module("myst_parser"):
     extensions.append("myst_parser")
 

@@ -136,25 +136,29 @@ html_logo = "robocasa_logo.svg"
 
 # Custom JS
 html_js_files = [
-    "composite_tasks/composite_task_attributes.js",
-    "composite_tasks/composite_episode_lengths.js",
-    "composite_tasks/composite_tasks_dropdown.js",
-    "atomic_tasks/atomic_task_attributes.js",
-    "atomic_tasks/atomic_episode_lengths.js",
-    "atomic_tasks/atomic_task_index.js",
-    "atomic_tasks/atomic_tasks.js",
+    # NOTE: `html_static_path` pulls from multiple source directories (including
+    # `atomic_tasks/` and `composite_tasks/`) and Sphinx merges them into the
+    # built `_static/` root (it does *not* preserve the directory name).
+    # Therefore these must be referenced as flat filenames here.
+    "composite_task_attributes.js",
+    "composite_episode_lengths.js",
+    "composite_tasks_dropdown.js",
+    "atomic_task_attributes.js",
+    "atomic_episode_lengths.js",
+    "atomic_task_index.js",
+    "atomic_tasks.js",
 ]
 
 # Custom CSS
 html_css_files = [
-    "composite_tasks/composite_tasks_dropdown.css",
-    "atomic_tasks/atomic_tasks.css",
+    "composite_tasks_dropdown.css",
+    "atomic_tasks.css",
 ]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["_static", "images"]
+html_static_path = ["_static", "images", "atomic_tasks", "composite_tasks", "fixtures"]
 
 # html_context = {
 #     'css_files': [

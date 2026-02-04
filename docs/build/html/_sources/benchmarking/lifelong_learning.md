@@ -12,8 +12,9 @@ Specifically we learn over four phases:
 After each phase, we evaluate the policy on all of the tasks learned from the first phase through the latest phase.
 The goal is to learn tasks in new phases effectively while retaining knowledge about all previous phases.
 
+-------
 ## Benchmark results and checkpoints
-We have performed the lifelong learning benchmark using GR00T N1.5. Here is a summary of our benchmarking results. We share the model checkpoints for reference.
+We have performed the lifelong learning benchmark using GR00T N1.5. Here is a summary of our benchmarking results **(average task success rate, in %)**. We share the model checkpoints for reference.
 
 <table class="docutils rc-benchmark-table">
   <thead>
@@ -23,6 +24,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <th><strong>2-3 Stage Tasks</strong></th>
       <th><strong>4-5 Stage Tasks</strong></th>
       <th><strong>6+ Stage Tasks</strong></th>
+      <th><strong>Checkpoint</strong></th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +34,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>-</td>
       <td>-</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase2</td>
@@ -39,6 +42,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>24.5</td>
       <td>-</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase3</td>
@@ -46,6 +50,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>4.8</td>
       <td>11.3</td>
       <td>-</td>
+      <td><a href="#">TODO</a></td>
     </tr>
     <tr>
       <td>Phase4</td>
@@ -53,46 +58,53 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>1.7</td>
       <td>2.7</td>
       <td>4.3</td>
+      <td><a href="#">TODO</a></td>
     </tr>
   </tbody>
 </table>
 
+-------
 ## Benchmark instructions
 
 ### GR00T
 
-#### guidelines
-- We use a batch size of 128 on a single NVIDIA GH200 gpu
+#### Guidelines
+- We use a batch size of 128
 - For the initial phase of training (phase 1), we train for 100k steps
-- For all subsequent phases of training (phase 2, 3, 4) we train for 60 steps
+- For all subsequent phases of training (phase 2, 3, 4) we train for 60k steps
+- We always evaluate the models in **pretrain** scenes
 
-#### train model
+#### Train model
 ```
 # phase 1 initial training
 python scripts/gr00t_finetune.py \
 --output-dir expdata/lifelong_learning/phase1 \
---dataset_soup lifelong_learning_phase1
+--dataset_soup lifelong_learning_phase1 \
+--max_steps 100000
 
 # phase 2 fine-tuning
 python scripts/gr00t_finetune.py \
 --output-dir expdata/lifelong_learning/phase2 \
 --base_model_path expdata/lifelong_learning/phase1/checkpoint-100000 \
---dataset_soup lifelong_learning_phase2
+--dataset_soup lifelong_learning_phase2 \
+--max_steps 60000
 
 # phase 3 fine-tuning
 python scripts/gr00t_finetune.py \
 --output-dir expdata/lifelong_learning/phase3 \
 --base_model_path expdata/lifelong_learning/phase2/checkpoint-60000 \
---dataset_soup lifelong_learning_phase3
+--dataset_soup lifelong_learning_phase3 \
+--max_steps 60000
 
 # phase 4 fine-tuning
 python scripts/gr00t_finetune.py \
 --output-dir expdata/lifelong_learning/phase4 \
 --base_model_path expdata/lifelong_learning/phase3/checkpoint-60000 \
---dataset_soup lifelong_learning_phase4
+--dataset_soup lifelong_learning_phase4 \
+--max_steps 60000
 ```
 
-#### evaluate model
+#### Evaluate model
 ```
 # evaluate model after phase1
 python scripts/run_eval.py \
@@ -119,7 +131,7 @@ python scripts/run_eval.py \
 --split pretrain
 ```
 
-#### report evaluation results
+#### Report evaluation results
 ```
 python gr00t/eval/get_eval_stats.py \
 --dir <your-ckpt>
