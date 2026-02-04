@@ -1263,7 +1263,15 @@
       if (opt) selectEl.appendChild(opt);
     }
     // Restore selection if possible
-    if (current && optById.has(current)) selectEl.value = current;
+    if (current && optById.has(current)) {
+      selectEl.value = current;
+    } else {
+      // Force placeholder when no valid selection (some browsers restore form state
+      // for dynamically-created selects, which can make the first option appear selected).
+      selectEl.value = "";
+      const def = selectEl.querySelector('option[value=""]');
+      if (def) def.selected = true;
+    }
   }
 
   function sortActivities(rootSectionEl, mode, selectEl) {
@@ -3792,6 +3800,10 @@
     updateSubtasksValidityAndNote();
     // Ensure initial sort is Activity
     sortActivities(rootSection, "activity", select);
+    // Keep the Activity dropdown on the placeholder by default
+    // (avoid browser form-state restoration selecting an activity on refresh).
+    select.value = "";
+    defaultOpt.selected = true;
     applyFilters();
     applyShowAllState();
 
