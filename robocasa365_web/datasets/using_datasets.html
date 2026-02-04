@@ -30,8 +30,8 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks/composite_tasks_dropdown.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks/atomic_tasks.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=b4af9463" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=3b575739" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -44,13 +44,13 @@
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'datasets/using_datasets';</script>
-    <script src="../_static/composite_tasks/composite_task_attributes.js"></script>
-    <script src="../_static/composite_tasks/composite_episode_lengths.js"></script>
-    <script src="../_static/composite_tasks/composite_tasks_dropdown.js"></script>
-    <script src="../_static/atomic_tasks/atomic_task_attributes.js"></script>
-    <script src="../_static/atomic_tasks/atomic_episode_lengths.js"></script>
-    <script src="../_static/atomic_tasks/atomic_task_index.js"></script>
-    <script src="../_static/atomic_tasks/atomic_tasks.js"></script>
+    <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
+    <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
+    <script src="../_static/composite_tasks_dropdown.js?v=5b8ca204"></script>
+    <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
+    <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
+    <script src="../_static/atomic_task_index.js?v=e7084057"></script>
+    <script src="../_static/atomic_tasks.js?v=76a95ff3"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Overview of Benchmarking" href="../benchmarking/benchmarking_overview.html" />
@@ -534,7 +534,90 @@ document.write(`
 </pre></div>
 </div>
 <p>Prominent dataset soups are registerd in <a class="reference external" href="https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py">the dataset soup registry</a>.</p>
-</section>
+<p>To construct a combined dataset from multiple datasets with custom weights, you can re-use the dataloader from GR00T-N1.5 codebase:</p>
+<details>
+<summary><b>Click to expand weighted dataset creation</b></summary><div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">robocasa.utils.dataset_registry</span> <span class="kn">import</span> <span class="n">DATASET_SOUP_REGISTRY</span>
+<span class="kn">from</span> <span class="nn">robocasa.utils.groot_utils.groot_dataset</span> <span class="kn">import</span> <span class="n">LeRobotMixtureDataset</span><span class="p">,</span> <span class="n">LeRobotSingleDataset</span><span class="p">,</span> <span class="n">ModalityConfig</span>
+<span class="kn">from</span> <span class="nn">robocasa.utils.groot_utils.schema</span> <span class="kn">import</span> <span class="n">EmbodimentTag</span>
+
+
+<span class="n">embodiment_tag</span> <span class="o">=</span> <span class="n">EmbodimentTag</span><span class="p">(</span><span class="s2">&quot;new_embodiment&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define configs needed for dataloader to fetch correct data</span>
+<span class="n">modality_configs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;video&quot;</span><span class="p">:</span> <span class="n">ModalityConfig</span><span class="p">(</span>
+        <span class="n">delta_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">modality_keys</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;video.robot0_agentview_left&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;video.robot0_agentview_right&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;video.robot0_eye_in_hand&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;state&quot;</span><span class="p">:</span> <span class="n">ModalityConfig</span><span class="p">(</span>
+        <span class="n">delta_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">modality_keys</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;state.end_effector_position_relative&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;state.end_effector_rotation_relative&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;state.gripper_qpos&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;state.base_position&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;state.base_rotation&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="n">ModalityConfig</span><span class="p">(</span>
+        <span class="n">delta_indices</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)),</span>
+        <span class="n">modality_keys</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;action.end_effector_position&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;action.end_effector_rotation&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;action.gripper_close&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;action.base_motion&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;action.control_mode&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">ModalityConfig</span><span class="p">(</span>
+        <span class="n">delta_indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">modality_keys</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;annotation.human.task_description&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+
+<span class="n">dataset_soup</span> <span class="o">=</span> <span class="s2">&quot;target_atomic_seen&quot;</span> <span class="c1"># specify which dataset soup to use</span>
+<span class="n">ds_soup_list</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">DATASET_SOUP_REGISTRY</span><span class="p">[</span><span class="n">dataset_soup</span><span class="p">])</span>
+<span class="n">single_datasets</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ds_meta</span> <span class="ow">in</span> <span class="n">ds_soup_list</span><span class="p">:</span>
+    <span class="n">ds_path</span> <span class="o">=</span> <span class="n">ds_meta</span><span class="p">[</span><span class="s2">&quot;path&quot;</span><span class="p">]</span>
+    <span class="n">ds_filter_key</span> <span class="o">=</span> <span class="n">ds_meta</span><span class="p">[</span><span class="s2">&quot;filter_key&quot;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ds_path</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Dataset path </span><span class="si">{</span><span class="n">ds_path</span><span class="si">}</span><span class="s2"> does not exist&quot;</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">LeRobotSingleDataset</span><span class="p">(</span>
+        <span class="n">dataset_path</span><span class="o">=</span><span class="n">ds_path</span><span class="p">,</span>
+        <span class="n">modality_configs</span><span class="o">=</span><span class="n">modality_configs</span><span class="p">,</span>
+        <span class="n">embodiment_tag</span><span class="o">=</span><span class="n">embodiment_tag</span><span class="p">,</span>
+        <span class="n">filter_key</span><span class="o">=</span><span class="n">ds_filter_key</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">single_datasets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="n">ds_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">single_datasets</span><span class="p">))</span> <span class="c1"># custom weights for datasets</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;dataset weights:&quot;</span><span class="p">,</span> <span class="n">ds_weights</span><span class="p">)</span>
+
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">LeRobotMixtureDataset</span><span class="p">(</span>
+    <span class="n">data_mixture</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ds_w</span><span class="p">)</span>  
+        <span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">ds_w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">single_datasets</span><span class="p">,</span> <span class="n">ds_weights</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">train_dataset</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">break</span>
+</pre></div>
+</div>
+</details></section>
 <section id="inspecting-and-visualizing-datasets">
 <h2>Inspecting and visualizing datasets<a class="headerlink" href="#inspecting-and-visualizing-datasets" title="Link to this heading">#</a></h2>
 <p>To get dataset statistics (filter keys, objects, task language, scenes):</p>

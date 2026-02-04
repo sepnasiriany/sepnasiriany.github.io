@@ -610,6 +610,13 @@
       "description": "Place the pastries on the plates."
     },
     {
+      "name": "CoolBakedCake",
+      "activity": "Baking Cookies Cakes",
+      "num_subtasks": 8,
+      "moma_required": "Yes",
+      "description": "Take the baked cake out of the oven and place it on the plate for cooling. Then close the oven door."
+    },
+    {
       "name": "CoolBakedCookies",
       "activity": "Baking Cookies Cakes",
       "num_subtasks": 5,
@@ -622,13 +629,6 @@
       "num_subtasks": 7,
       "moma_required": "Yes",
       "description": "Pick the egg and butter from the fridge and place them by the bowl for mixing."
-    },
-    {
-      "name": "CoolBakedCake",
-      "activity": "Baking Cookies Cakes",
-      "num_subtasks": 8,
-      "moma_required": "Yes",
-      "description": "Take the baked cake out of the oven and place it on the plate for cooling. Then close the oven door."
     },
     {
       "name": "MixCakeFrosting",

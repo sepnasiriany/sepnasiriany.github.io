@@ -429,6 +429,12 @@
       entry.title = prettyTitle;
       entry.tasks.push({ name, description });
     }
+    // Sort tasks alphabetically by name within each activity
+    for (const entry of map.values()) {
+      if (Array.isArray(entry.tasks)) {
+        entry.tasks.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      }
+    }
     return map;
   }
 

@@ -214,7 +214,9 @@
   let CACHED_TASK_ATTRIBUTES_JSON = null;
   async function loadTaskAttributesJson() {
     if (CACHED_TASK_ATTRIBUTES_JSON) return CACHED_TASK_ATTRIBUTES_JSON;
-    const url = `${getContentRoot()}composite_tasks/task_attributes.json`;
+    // In this docs build, static assets are served from `_static/`.
+    // (`html_static_path` merges several directories into `_static/` root.)
+    const url = `${getContentRoot()}_static/task_attributes.json`;
     const res = await fetch(url, { cache: "force-cache" });
     if (!res.ok) {
       throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
@@ -432,6 +434,12 @@
       const entry = map.get(folder);
       entry.title = prettyTitle;
       entry.tasks.push({ name, description });
+    }
+    // Sort tasks alphabetically by name within each activity
+    for (const entry of map.values()) {
+      if (Array.isArray(entry.tasks)) {
+        entry.tasks.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      }
     }
     return map;
   }

@@ -589,25 +589,11 @@
       "description": "There are various items on the counter. Only move the condiments/shakers into the cabinet."
     },
     {
-      "name": "CupcakeCleanup",
+      "name": "CoolBakedCake",
       "activity": "Baking",
-      "num_subtasks": 2,
-      "moma_required": "No",
-      "description": "Move the fresh-baked cupcake off the tray onto the counter, and place the bowl used for mixing into the sink."
-    },
-    {
-      "name": "OrganizeBakingIngredients",
-      "activity": "Baking",
-      "num_subtasks": 3,
+      "num_subtasks": 8,
       "moma_required": "Yes",
-      "description": "Gather the eggs and milk located in the vicinity of the sink area and place them right next to the bowl."
-    },
-    {
-      "name": "PastryDisplay",
-      "activity": "Baking",
-      "num_subtasks": 2,
-      "moma_required": "Yes",
-      "description": "Place the pastries on the plates."
+      "description": "Take the baked cake out of the oven and place it on the plate for cooling. Then close the oven door."
     },
     {
       "name": "CoolBakedCookies",
@@ -624,11 +610,11 @@
       "description": "Pick the egg and butter from the fridge and place them by the bowl for mixing."
     },
     {
-      "name": "CoolBakedCake",
+      "name": "CupcakeCleanup",
       "activity": "Baking",
-      "num_subtasks": 8,
-      "moma_required": "Yes",
-      "description": "Take the baked cake out of the oven and place it on the plate for cooling. Then close the oven door."
+      "num_subtasks": 2,
+      "moma_required": "No",
+      "description": "Move the fresh-baked cupcake off the tray onto the counter, and place the bowl used for mixing into the sink."
     },
     {
       "name": "MixCakeFrosting",
@@ -636,6 +622,20 @@
       "num_subtasks": 5,
       "moma_required": "Yes",
       "description": "Add butter and sugar cubes to the stand mixer bowl and then turn on the stand mixer to begin making frosting."
+    },
+    {
+      "name": "OrganizeBakingIngredients",
+      "activity": "Baking",
+      "num_subtasks": 3,
+      "moma_required": "Yes",
+      "description": "Gather the eggs and milk located in the vicinity of the sink area and place them right next to the bowl."
+    },
+    {
+      "name": "PastryDisplay",
+      "activity": "Baking",
+      "num_subtasks": 2,
+      "moma_required": "Yes",
+      "description": "Place the pastries on the plates."
     },
     {
       "name": "StartElectricKettle",
@@ -1615,7 +1615,7 @@
       "activity": "Portioning Meals",
       "num_subtasks": 7,
       "moma_required": "Yes",
-      "description": "Take the smaller bowl and place it next to the appetizer plate on the dining counter , and place the larger bowl next to the plate with cooked food."
+      "description": "Take the smaller bowl and place it next to the appetizer plate on the dining counter, and place the larger bowl next to the plate with cooked food."
     },
     {
       "name": "PortionYogurt",

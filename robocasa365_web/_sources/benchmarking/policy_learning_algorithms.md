@@ -53,6 +53,7 @@ For inference we recommend a GPU with at least 8 Gb of memory.
 git clone https://github.com/robocasa/openpi
 cd openpi
 pip install -e .
+pip install -e packages/openpi-client/
 ```
 
 ### Key files
