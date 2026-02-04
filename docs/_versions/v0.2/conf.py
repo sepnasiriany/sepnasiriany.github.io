@@ -122,17 +122,25 @@ todo_include_todos = False
 #
 html_theme = "sphinx_book_theme"
 html_logo = "robocasa_logo.svg"
+html_title = "RoboCasa 0.2 documentation"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "logo": {
+        "text": "RoboCasa 0.2 documentation",
+    }
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["images"]
+html_static_path = ["images", "static"]
+
+# Custom CSS to match robocasa-main/docs style (clean literals, purple/red code)
+html_css_files = ["theme_overrides.css"]
 
 # html_context = {
 #     'css_files': [
