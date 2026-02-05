@@ -8,8 +8,8 @@
 - **Benchmarking support**: popular policy learning methods including Diffusion Policy, pi, and GR00T
 
 <p align="center">
-  <img width="100.0%" src="../images/robocasa-banner.jpg">
- </p>
+  <img width="100.0%" src="../_static/robocasa-banner.jpg">
+</p>
 
 This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.
 

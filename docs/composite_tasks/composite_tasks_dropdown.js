@@ -895,6 +895,7 @@
     ["DeliverStraw", ["PickPlace", "drawer_open"]],
     ["PrepareCocktailStation", ["PickPlace", "door_open"]],
     ["PrepareDishwasher", ["rack_slide"]],
+    ["PreSoakPan", ["PickPlace", "lever_turn"]],
     ["DrainVeggies", ["PickPlace", "lever_turn"]],
     ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
     ["WashFruitColander", ["PickPlace", "lever_turn"]],
