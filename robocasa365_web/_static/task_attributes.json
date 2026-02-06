@@ -495,7 +495,7 @@
       "activity": "Arranging Buffet",
       "num_subtasks": 2,
       "moma_required": "Yes",
-      "description": "Take the pizza cutter from the drawer on the [*left/right*] and place it on the dining counter for cutting."
+      "description": "Take the pizza cutter from the drawer on the *left/right* and place it on the dining counter for cutting."
     },
     {
       "name": "DivideBuffetTrays",
@@ -516,7 +516,7 @@
       "activity": "Arranging Buffet",
       "num_subtasks": 4,
       "moma_required": "Yes",
-      "description": "Take the tongs from the drawer on the [*left/right*] and place them on the dining counter next to the tray containing the [*food*]."
+      "description": "Take the tongs from the drawer on the *left/right* and place them on the dining counter next to the tray containing the [*food*]."
     },
     {
       "name": "BeverageSorting",
@@ -733,7 +733,7 @@
       "activity": "Brewing",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "Pick the [*syrup bottle/cinnamon*] and honey bottle from the cabinet and place them next to the mug."
+      "description": "Pick the *syrup bottle/cinnamon* and honey bottle from the cabinet and place them next to the mug."
     },
     {
       "name": "ToasterOvenBroilFish",
@@ -747,7 +747,7 @@
       "activity": "Broiling Fish",
       "num_subtasks": 3,
       "moma_required": "Yes",
-      "description": "Place the fish on the [*bottom/top*] rack of the oven, and slide the tray back inside. Close the oven door."
+      "description": "Place the fish on the *bottom/top* rack of the oven, and slide the tray back inside. Close the oven door."
     },
     {
       "name": "PrepareBroilingStation",
@@ -817,14 +817,14 @@
       "activity": "Chopping Vegetables",
       "num_subtasks": 1,
       "moma_required": "Yes",
-      "description": "Place the appropriate cutting tool for cutting the [*fruit/vegetable*] skin on the cutting board."
+      "description": "Place the appropriate cutting tool for cutting the *fruit/vegetable* skin on the cutting board."
     },
     {
       "name": "GatherCuttingTools",
       "activity": "Chopping Vegetables",
       "num_subtasks": 3,
       "moma_required": "Yes",
-      "description": "Open the drawer on the [*left/right*] and place the cutting tools on the cutting board."
+      "description": "Open the drawer on the *left/right* and place the cutting tools on the cutting board."
     },
     {
       "name": "CleanBlenderJug",
@@ -950,7 +950,7 @@
       "activity": "Defrosting Food",
       "num_subtasks": 3,
       "moma_required": "Yes",
-      "description": "Pick the [*meat/vegetable*] from the fridge and place it on the plate on the counter."
+      "description": "Pick the [*frosted item*] from the fridge and place it on the plate on the counter."
     },
     {
       "name": "QuickThaw",
@@ -1104,7 +1104,7 @@
       "activity": "Loading Fridge",
       "num_subtasks": 7,
       "moma_required": "Yes",
-      "description": "Place the bowl with the [*vegetable*] on the [*top/second highest*] shelf of the fridge. Place the bowl with the [*meat*] on the [*second highest/top*] highest shelf of the fridge."
+      "description": "Place the bowl with the [*vegetable*] on the *top/second highest* shelf of the fridge. Place the bowl with the [*meat*] on the *second highest/top* highest shelf of the fridge."
     },
     {
       "name": "LoadFridgeFifo",
@@ -1118,7 +1118,7 @@
       "activity": "Loading Fridge",
       "num_subtasks": 4,
       "moma_required": "Yes",
-      "description": "Place the tupperware on the [*top/second highest*] shelf of the fridge. Make space for the tupperware among the existing items by rearranging them on the shelves if needed. Close the fridge door when finished."
+      "description": "Place the tupperware on the *top/second highest* shelf of the fridge. Make space for the tupperware among the existing items by rearranging them on the shelves if needed. Close the fridge door when finished."
     },
     {
       "name": "MoveFreezerToFridge",
@@ -1195,14 +1195,14 @@
       "activity": "Making Smoothies",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "Put the [*two/three*] ice cubes in the blender."
+      "description": "Put the *two/three* ice cubes in the blender."
     },
     {
       "name": "AddSweetener",
       "activity": "Making Smoothies",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "Put the [*two/three*] sugar cubes in the blender."
+      "description": "Put the *two/three* sugar cubes in the blender."
     },
     {
       "name": "BlendIngredients",
@@ -1216,7 +1216,7 @@
       "activity": "Making Smoothies",
       "num_subtasks": 2,
       "moma_required": "Yes",
-      "description": "Pick up the straw from the [*left/right*] drawer and put it inside the smoothie cup."
+      "description": "Pick up the straw from the *left/right* drawer and put it inside the smoothie cup."
     },
     {
       "name": "PrepareSmoothie",
@@ -1300,7 +1300,7 @@
       "activity": "Managing Freezer Space",
       "num_subtasks": 3,
       "moma_required": "Yes",
-      "description": "Take the [*source items*] from the [*highest/second highest*] rack and move them to the [*second highest/highest/*] rack where the [*target items*] are located, to maximize freezer space. Close the freezer door after rearranging."
+      "description": "Take the [*source items*] from the *highest/second highest* rack and move them to the *second highest/highest/* rack where the [*target items*] are located, to maximize freezer space. Close the freezer door after rearranging."
     },
     {
       "name": "MoveFridgeToFreezer",
@@ -1328,7 +1328,7 @@
       "activity": "Measuring Ingredients",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "Open the [*left/right*] drawer and place the [*larger/smaller*] measuring cup on the counter."
+      "description": "Open the *left/right* drawer and place the *larger/smaller* measuring cup on the counter."
     },
     {
       "name": "OrganizeMeasuringCups",
@@ -1517,7 +1517,7 @@
       "activity": "Organizing Utensils",
       "num_subtasks": 2,
       "moma_required": "Yes",
-      "description": "Pick up the fork from the counter and place it on the [*left/right*] side of the drawer. Then, pick up the spoon from the counter and place it on the [*left/right*] side of the drawer. Make sure that the utensils are clustered by type."
+      "description": "Pick up the fork from the counter and place it on the *left/right* side of the drawer. Then, pick up the spoon from the counter and place it on the *left/right* side of the drawer. Make sure that the utensils are clustered by type."
     },
     {
       "name": "OrganizeMetallicUtensils",
@@ -2273,7 +2273,7 @@
       "activity": "Tidying Cabinets and Drawers",
       "num_subtasks": 3,
       "moma_required": "Yes",
-      "description": "Open the [*left/right*] drawer and place the utensils inside it."
+      "description": "Open the *left/right* drawer and place the utensils inside it."
     },
     {
       "name": "OrganizeCleaningSupplies",
@@ -2343,14 +2343,14 @@
       "activity": "Toasting Bread",
       "num_subtasks": 7,
       "moma_required": "Yes",
-      "description": "Open the toaster oven door. Place the [*bread*] on the [*top/bottom*] rack in the toaster oven and place the [*meat*] on the [*bottom/top*] rack."
+      "description": "Open the toaster oven door. Place the [*bread*] on the *top/bottom* rack in the toaster oven and place the [*meat*] on the *bottom/top* rack."
     },
     {
       "name": "ToastOneSlotPair",
       "activity": "Toasting Bread",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "The toaster has a broken [*left/right*] slot-pair. Move the bread slice from the broken [*left/right*] slot to the working [*right/left*] slot-pair so both slices can toast together. Then press that lever to start toasting."
+      "description": "Move the bread slice from the broken *left/right* slot to the working *right/left* slot-pair so both slices can toast together. Then press that lever to start toasting."
     },
     {
       "name": "PlaceOnDishRack",

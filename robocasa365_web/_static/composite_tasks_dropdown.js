@@ -10,7 +10,7 @@
     else fn();
   }
 
-  /** Turn description text into HTML: {x} -> [<em>x</em>], [*x*] -> [<em>x</em>] (bracket + italic). */
+  /** {x} and [*x*] -> [<strong><em>x</em></strong>]; *x* or **x** -> <strong><em>x</em></strong> (bold+italic). */
   function formatDescriptionToHtml(desc) {
     if (!desc) return "";
     const escaped = String(desc)
@@ -18,8 +18,10 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
     return escaped
-      .replace(/\{([^}]+)\}/g, "[<em>$1</em>]")
-      .replace(/\[\*([^*]*?)\*\]/g, "[<em>$1</em>]");
+      .replace(/\{([^}]+)\}/g, "[<strong><em>$1</em></strong>]")
+      .replace(/\[\*([^*]*?)\*\]/g, "[<strong><em>$1</em></strong>]")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*([^*]+)\*/g, "<strong><em>$1</em></strong>");
   }
 
   function isCompositeTasksPage() {
@@ -2317,18 +2319,17 @@
     }
 
     // Replace templated variable braces in descriptions:
-    // "{left/right}" -> "[<em>left/right</em>]"
-    // "[*fruit*]" -> "[<em>fruit</em>]" (bracket + italic)
+    // "{x}" and [*x*] -> [<strong><em>x</em></strong>]; *x* or **x** -> <strong><em>x</em></strong>
     function formatCompositeDescriptionInPlace(rootEl) {
       if (!rootEl) return;
       const textNodes = [];
       const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
       for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
 
-      const re = /\{([^}]+)\}|\[\*([^*]*?)\*\]/g;
+      const re = /\{([^}]+)\}|\[\*([^*]*?)\*\]|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
       for (const node of textNodes) {
         const s = node.nodeValue || "";
-        if (!s.includes("{") && !s.includes("[*")) continue;
+        if (!s.includes("{") && !s.includes("*")) continue;
         re.lastIndex = 0;
 
         const frag = document.createDocumentFragment();
@@ -2336,19 +2337,15 @@
         let m;
         while ((m = re.exec(s)) !== null) {
           if (m.index > last) frag.appendChild(document.createTextNode(s.slice(last, m.index)));
-          if (m[1] !== undefined) {
-            frag.appendChild(document.createTextNode("["));
-            const em = document.createElement("em");
-            em.textContent = m[1];
-            frag.appendChild(em);
-            frag.appendChild(document.createTextNode("]"));
-          } else {
-            frag.appendChild(document.createTextNode("["));
-            const em = document.createElement("em");
-            em.textContent = m[2];
-            frag.appendChild(em);
-            frag.appendChild(document.createTextNode("]"));
-          }
+          const text = m[1] !== undefined ? m[1] : (m[2] !== undefined ? m[2] : (m[3] !== undefined ? m[3] : m[4]));
+          const withBrackets = m[1] !== undefined || m[2] !== undefined;
+          if (withBrackets) frag.appendChild(document.createTextNode("["));
+          const strong = document.createElement("strong");
+          const em = document.createElement("em");
+          em.textContent = text;
+          strong.appendChild(em);
+          frag.appendChild(strong);
+          if (withBrackets) frag.appendChild(document.createTextNode("]"));
           last = re.lastIndex;
         }
         if (last === 0) continue; // no matches
