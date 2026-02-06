@@ -1639,6 +1639,11 @@
       el.classList.toggle("rc-invalid", Boolean(isInvalid));
     }
 
+    /** Restrict to 1–2 positive digits only (no minus, no 100+). */
+    function sanitizeSubtasksInput(val) {
+      return String(val ?? "").replace(/[^0-9]/g, "").slice(0, 2);
+    }
+
     function syncMinMaxIfCrossed(changed) {
       const minP = parseBound(minInput.value);
       const maxP = parseBound(maxInput.value);
@@ -2038,10 +2043,14 @@
     navSelect.addEventListener("change", applyFilters);
 
     minInput.addEventListener("input", () => {
+      const sane = sanitizeSubtasksInput(minInput.value);
+      if (sane !== minInput.value) minInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
     maxInput.addEventListener("input", () => {
+      const sane = sanitizeSubtasksInput(maxInput.value);
+      if (sane !== maxInput.value) maxInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });

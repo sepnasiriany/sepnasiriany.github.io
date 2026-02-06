@@ -1273,7 +1273,7 @@ html[data-theme="dark"] body.rc-composite-tasks .rc-video-modal-close:hover {
   /* Neutral (theme-aware) text color */
   color: var(--pst-color-text-base, #111827);
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
