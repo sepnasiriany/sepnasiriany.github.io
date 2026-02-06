@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Multi-Task Learning &#8212; RoboCasa 1.0 Documentation</title>
+    <title>Multi-Task Learning &#8212; RoboCasa 0.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/multitask_learning';</script>
     <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks_dropdown.js?v=9291b301"></script>
+    <script src="../_static/composite_tasks_dropdown.js?v=26f2c3e8"></script>
     <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
     <script src="../_static/atomic_task_index.js?v=e7084057"></script>
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 Documentation - Home"/>
-    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 Documentation - Home"/>`);</script>
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -199,8 +199,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
 <ul class="nav bd-sidenav">
@@ -417,7 +415,7 @@ document.write(`
   <section id="multi-task-learning">
 <h1>Multi-Task Learning<a class="headerlink" href="#multi-task-learning" title="Link to this heading">#</a></h1>
 <p>In the multi-task learning benchmark, we study training on multi-task pretraining datasets.
-We do policy learning on the <a class="reference external" href="../datasets/pretraining_posttraining_datasets.html#human-datasets">Human Pretraining Datasets</a>, which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
+We do policy learning on the <a class="reference external" href="../datasets/datasets_overview.html#human-datasets">Human Pretraining Datasets</a>, which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
 For each task, we provide 100 task demonstrations per task, resulting in <strong>482 hours of total data</strong>.</p>
 <hr class="docutils" />
 <section id="benchmark-results-and-checkpoints">
@@ -495,7 +493,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Evaluate model<a class="headerlink" href="#evaluate-model" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">eval_robocasa</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">checkpoint</span> <span class="o">&lt;</span><span class="n">checkpoint</span><span class="o">-</span><span class="n">path</span><span class="o">&gt;</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
 </div>
@@ -537,7 +535,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <span class="c1"># part b: run evals on server</span>
 <span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">port</span> <span class="mi">8000</span> \
-<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_set</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">split</span> <span class="n">pretrain</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 </pre></div>
@@ -574,7 +572,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <h4>Evaluate model<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">120000</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
 </div>

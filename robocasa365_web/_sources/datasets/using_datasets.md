@@ -77,7 +77,7 @@ lerobot/
 </details>
 
 ### Retrieving dataset metadata
-We track each dataset with metadata (paths, task horizon length, etc.) in the [dataset registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py). You can use the `get_ds_meta()` function to retrieve metadata for a specific task:
+We track each dataset with metadata (paths, task horizon length, etc.) in the [dataset registry](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py). You can use the `get_ds_meta()` function to retrieve metadata for a specific task:
 
 ```py
 from robocasa.utils.dataset_registry import get_ds_meta
@@ -151,7 +151,7 @@ ds_soup = get_ds_soup(
 )
 ```
 
-Prominent dataset soups are registerd in [the dataset soup registry](https://github.com/robocasa/robocasa/blob/main/robocasa/utils/dataset_registry.py).
+Prominent dataset soups are registerd in [the dataset soup registry](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py).
 
 To construct a combined dataset from multiple datasets with custom weights, you can re-use the dataloader from GR00T-N1.5 codebase:
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Overview of Benchmarking &#8212; RoboCasa 1.0 Documentation</title>
+    <title>Overview of Benchmarking &#8212; RoboCasa 0.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/benchmarking_overview';</script>
     <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks_dropdown.js?v=9291b301"></script>
+    <script src="../_static/composite_tasks_dropdown.js?v=26f2c3e8"></script>
     <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
     <script src="../_static/atomic_task_index.js?v=e7084057"></script>
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 Documentation - Home"/>
-    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 Documentation - Home"/>`);</script>
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 0.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 0.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -199,8 +199,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
 <ul class="nav bd-sidenav">
@@ -416,10 +414,10 @@ A dataset soup simply specifies a list of dataset metadata, and embedded in this
 <p>We evaluate trained models on one or several tasks.
 To specify which tasks, you need to specify two variables:</p>
 <ul class="simple">
-<li><p><strong>task_soup</strong>: Which set of tasks to evaluate on. Typically, this corresponds to the same tasks represented in the dataset soup used to trained the model, but can be any arbitrary set of tasks. The list of registered task soups is specified in <a class="reference external" href="robocasa/utils/dataset_registry.py">dataset_registry.py</a>.</p></li>
+<li><p><strong>task set</strong>: Which set of tasks to evaluate on. Typically, this corresponds to the same tasks represented in the dataset soup used to trained the model, but can be any arbitrary set of tasks. The list of registered task sets is specified in <a class="reference external" href="https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py">dataset_registry.py</a>.</p></li>
 <li><p><strong>split</strong>: This specifies which evaluation split to run evaluations are. There are two options: <code class="docutils literal notranslate"><span class="pre">pretrain</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code>. The <code class="docutils literal notranslate"><span class="pre">pretrain</span></code> split features 2500 kitchen scenes and all of the pretraining objects, which the <code class="docutils literal notranslate"><span class="pre">target</span></code> split features a disjoint set of 10 target kitchen scenes and a disjoint set of target objects.</p></li>
 </ul>
-<p>For each benchmarking experiment we specify the specific task soup and split to evaluate on.
+<p>For each benchmarking experiment we specify the specific task set and split to evaluate on.
 For all experiments, we randomly sample 30 scenarios to run evaluation rollouts on.
 For each rollout, we recieve a binary task success signal for whether the task is successfully completed.
 We report average task success rates across these 30 rollouts.</p>

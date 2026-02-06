@@ -1,7 +1,7 @@
 # Multi-Task Learning
 
 In the multi-task learning benchmark, we study training on multi-task pretraining datasets.
-We do policy learning on the [Human Pretraining Datasets](../datasets/pretraining_posttraining_datasets.html#human-datasets), which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
+We do policy learning on the [Human Pretraining Datasets](../datasets/datasets_overview.html#human-datasets), which data across 300 tasks, comprising 65 atomic tasks and 235 composite tasks.
 For each task, we provide 100 task demonstrations per task, resulting in **482 hours of total data**.
 
 -------
@@ -78,7 +78,7 @@ task=robocasa/pretrain_human300
 ```
 python eval_robocasa.py \
 --checkpoint <checkpoint-path> \
---task_soup atomic_seen composite_seen composite_unseen \
+--task_set atomic_seen composite_seen composite_unseen \
 --split pretrain
 ```
 
@@ -113,7 +113,7 @@ python scripts/serve_policy.py \
 # part b: run evals on server
 python examples/robocasa/main.py \
 --args.port 8000 \
---args.task_soup atomic_seen composite_seen composite_unseen \
+--args.task_set atomic_seen composite_seen composite_unseen \
 --args.split pretrain \
 --args.log_dir expdata/pretrain_human300/multitask_learning/75000
 ```
@@ -143,7 +143,7 @@ python scripts/gr00t_finetune.py \
 ```
 python scripts/run_eval.py \
 --model_path expdata/multitask_learning/checkpoint-120000 \
---task_soup atomic_seen composite_seen composite_unseen \
+--task_set atomic_seen composite_seen composite_unseen \
 --split pretrain
 ```
 

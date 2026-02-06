@@ -4,21 +4,21 @@ We provide official support for benchmarking the following policy learning algor
 
 -------
 ## Diffusion Policy
-We fork the official Diffusion Policy code base, hosted at [https://github.com/robocasa/diffusion_policy](https://github.com/robocasa/diffusion_policy).
+We fork the official Diffusion Policy code base, hosted at [https://github.com/robocasa/diffusion_policy_dev](https://github.com/robocasa/diffusion_policy_dev).
 ### Recommended system specs
 For training we recommend a GPU with at least 24 Gb of memory, but 48 Gb+ is prefered.
 For inference we recommend a GPU with at least 8 Gb of memory.
 
 ### Installation
 ```
-git clone https://github.com/robocasa/diffusion_policy
+git clone https://github.com/robocasa/diffusion_policy_dev
 cd diffusion_policy
 pip install -e .
 ```
 
 ### Key files
-- Training: [train.py](train.py)
-- Evaluation: [eval_robocasa.py](eval_robocasa.py)
+- Training: [train.py](https://github.com/robocasa/diffusion_policy_dev/blob/main/train.py)
+- Evaluation: [eval_robocasa.py](https://github.com/robocasa/diffusion_policy_dev/blob/main/eval_robocasa.py)
 
 ### Experiment workflow
 ```
@@ -30,7 +30,7 @@ task=robocasa/<dataset-soup>
 # Evaluate model
 python eval_robocasa.py \
 --checkpoint <checkpoint-path> \
---task_soup <task-soup> \
+--task_set <task-set> \
 --split <split>
 
 # Report evaluation results
@@ -41,7 +41,7 @@ python diffusion_policy/scripts/get_eval_stats.py \
 
 -------
 ## Openpi
-We fork the official Openpi code base, hosted at [https://github.com/robocasa/openpi](https://github.com/robocasa/openpi). Our fork support training for **pi0 and pi0.5**.
+We fork the official Openpi code base, hosted at [https://github.com/robocasa/openpi-dev](https://github.com/robocasa/openpi-dev). Our fork support training for **pi0 and pi0.5**.
 
 ### Recommended system specs
 For training we recommend a GPU with at least 80 Gb of memory (H100, H200, etc).
@@ -50,16 +50,16 @@ For inference we recommend a GPU with at least 8 Gb of memory.
 
 ### Installation
 ```
-git clone https://github.com/robocasa/openpi
+git clone https://github.com/robocasa/openpi-dev
 cd openpi
 pip install -e .
 pip install -e packages/openpi-client/
 ```
 
 ### Key files
-- Training: [scripts/train.py](scripts/train.py)
-- Evaluation: [scripts/serve_policy.py](scripts/serve_policy.py) and [examples/robocasa/main.py](examples/robocasa/main.py)
-- Setting up configs: [src/openpi/training/config.py](src/openpi/training/config.py)
+- Training: [scripts/train.py](https://github.com/robocasa/openpi-dev/blob/main/scripts/train.py)
+- Evaluation: [scripts/serve_policy.py](https://github.com/robocasa/openpi-dev/blob/main/scripts/serve_policy.py) and [examples/robocasa/main.py](https://github.com/robocasa/openpi-dev/blob/main/examples/robocasa/main.py)
+- Setting up configs: [src/openpi/training/config.py](https://github.com/robocasa/openpi-dev/blob/main/src/openpi/training/config.py)
 
 ### Experiment workflow
 ```
@@ -78,7 +78,7 @@ python scripts/serve_policy.py \
 # part b: run evals on server
 python examples/robocasa/main.py \
 --args.port 8000 \
---args.task_soup <task-soup> \
+--args.task_set <task-set> \
 --args.split <split> \
 --args.log_dir <checkpoint-path>
 
@@ -104,8 +104,8 @@ pip install -e .
 ```
 
 ### Key files
-- Training: [scripts/gr00t_finetune.py](scripts/gr00t_finetune.py)
-- Evaluation: [scripts/run_eval.py](scripts/run_eval.py)
+- Training: [scripts/gr00t_finetune.py](https://github.com/robocasa/groot/blob/main/scripts/gr00t_finetune.py)
+- Evaluation: [scripts/run_eval.py](https://github.com/robocasa/groot/blob/main/scripts/run_eval.py)
 
 ### Experiment workflow
 ```
@@ -118,7 +118,7 @@ python scripts/gr00t_finetune.py \
 # evaluate model
 python scripts/run_eval.py \
 --model_path <checkpoint-path> \
---task_soup <task-soup> \
+--task_set <task-set> \
 --split <split>
 
 # report evaluation results
