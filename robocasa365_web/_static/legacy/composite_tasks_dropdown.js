@@ -1645,9 +1645,10 @@
       if (!minP.ok || !maxP.ok) return;
       if (minP.value == null || maxP.value == null) return;
       if (minP.value <= maxP.value) return;
-      // Keep them from crossing by moving the "other" endpoint.
+      // On blur only: fix the field that was edited so the other value is preserved
+      // (e.g. 5-1 after editing max → 5-5, so user's min is kept).
       if (changed === "min") maxInput.value = String(minP.value);
-      else minInput.value = String(maxP.value);
+      else maxInput.value = String(minP.value);
     }
 
     function getActiveLengthIntervals() {
@@ -2037,12 +2038,10 @@
     navSelect.addEventListener("change", applyFilters);
 
     minInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("min");
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
     maxInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("max");
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
