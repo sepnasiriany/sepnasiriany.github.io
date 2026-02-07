@@ -911,6 +911,7 @@
     ["PrepareDishwasher", ["rack_slide"]],
     ["PreSoakPan", ["PickPlace", "lever_turn"]],
     ["RinseBowls", ["PickPlace", "lever_turn"]],
+    ["SoakSponge", ["PickPlace", "lever_turn"]],
     ["DrainVeggies", ["PickPlace", "lever_turn"]],
     ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
     ["WashFruitColander", ["PickPlace", "lever_turn"]],
