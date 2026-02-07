@@ -21,8 +21,8 @@ This documentation guide contains information about installation, getting starte
 @inproceedings{robocasa365,
   title={RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots},
   author={Soroush Nasiriany and Sepehr Nasiriany and Abhiram Maddukuri and Yuke Zhu},
-  booktitle={In Submission},
-  year={2025}
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026}
 }
 ```
 
