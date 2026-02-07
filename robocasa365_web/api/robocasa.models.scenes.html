@@ -28,9 +28,9 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d17bcdfe" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=cachebust20260206" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=51f4a353" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -47,10 +47,10 @@
     <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
     <script src="../_static/composite_tasks_dropdown.js?v=dc61c8eb"></script>
-    <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
+    <script src="../_static/atomic_task_attributes.js?v=fb0a94a5"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
-    <script src="../_static/atomic_task_index.js?v=e7084057"></script>
-    <script src="../_static/atomic_tasks.js?v=76a95ff3"></script>
+    <script src="../_static/atomic_task_index.js?v=430b6c96"></script>
+    <script src="../_static/atomic_tasks.js?v=f8a45f4c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="robocasa.utils package" href="robocasa.utils.html" />
@@ -377,11 +377,168 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-kitchen-arena-module">robocasa.models.scenes.kitchen_arena module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-builder-module">robocasa.models.scenes.scene_builder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-registry-module">robocasa.models.scenes.scene_registry module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-utils-module">robocasa.models.scenes.scene_utils module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.kitchen_arena">robocasa.models.scenes.kitchen_arena module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.KitchenArena"><code class="docutils literal notranslate"><span class="pre">KitchenArena</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.KitchenArena.get_fixture_cfgs"><code class="docutils literal notranslate"><span class="pre">KitchenArena.get_fixture_cfgs()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.disable_clutter_in_config"><code class="docutils literal notranslate"><span class="pre">disable_clutter_in_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.enable_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">enable_fixtures_in_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.update_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">update_fixtures_in_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_builder">robocasa.models.scenes.scene_builder module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_builder.check_syntax"><code class="docutils literal notranslate"><span class="pre">check_syntax()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_builder.create_fixtures"><code class="docutils literal notranslate"><span class="pre">create_fixtures()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_registry">robocasa.models.scenes.scene_registry module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType"><code class="docutils literal notranslate"><span class="pre">LayoutType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.ALL"><code class="docutils literal notranslate"><span class="pre">LayoutType.ALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.DINING"><code class="docutils literal notranslate"><span class="pre">LayoutType.DINING</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.ISLAND</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT001"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT001</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT002"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT002</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT003"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT003</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT004"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT004</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT005"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT005</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT006"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT006</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT007"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT007</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT008"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT008</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT009"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT009</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT010"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT010</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT011"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT011</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT012"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT012</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT013"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT013</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT014"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT014</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT015"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT015</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT016"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT016</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT017"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT017</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT018"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT018</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT019"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT019</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT020"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT020</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT021"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT021</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT022"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT022</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT023"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT023</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT024"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT024</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT025"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT025</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT026"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT026</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT027"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT027</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT028"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT028</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT029"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT029</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT030"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT030</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT031"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT031</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT032"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT032</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT033"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT033</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT034"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT034</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT035"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT035</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT036"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT036</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT037"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT037</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT038"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT038</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT039"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT039</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT040"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT040</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT041"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT041</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT042"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT042</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT043"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT043</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT044"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT044</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT045"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT045</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT046"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT046</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT047"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT047</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT048"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT048</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT049"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT049</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT050"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT050</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT051"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT051</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT052"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT052</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT053"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT053</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT054"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT054</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT055"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT055</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT056"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT056</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT057"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT057</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT058"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT058</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT059"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT059</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT060"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT060</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.NO_ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.NO_ISLAND</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.TEST"><code class="docutils literal notranslate"><span class="pre">LayoutType.TEST</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.TRAIN"><code class="docutils literal notranslate"><span class="pre">LayoutType.TRAIN</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType"><code class="docutils literal notranslate"><span class="pre">StyleType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.ALL"><code class="docutils literal notranslate"><span class="pre">StyleType.ALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE001"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE001</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE002"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE002</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE003"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE003</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE004"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE004</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE005"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE005</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE006"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE006</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE007"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE007</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE008"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE008</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE009"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE009</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE010"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE010</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE011"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE011</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE012"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE012</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE013"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE013</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE014"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE014</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE015"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE015</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE016"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE016</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE017"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE017</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE018"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE018</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE019"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE019</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE020"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE020</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE021"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE021</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE022"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE022</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE023"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE023</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE024"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE024</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE025"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE025</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE026"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE026</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE027"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE027</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE028"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE028</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE029"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE029</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE030"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE030</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE031"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE031</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE032"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE032</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE033"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE033</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE034"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE034</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE035"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE035</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE036"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE036</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE037"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE037</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE038"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE038</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE039"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE039</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE040"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE040</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE041"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE041</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE042"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE042</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE043"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE043</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE044"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE044</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE045"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE045</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE046"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE046</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE047"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE047</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE048"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE048</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE049"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE049</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE050"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE050</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE051"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE051</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE052"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE052</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE053"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE053</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE054"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE054</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE055"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE055</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE056"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE056</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE057"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE057</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE058"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE058</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE059"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE059</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE060"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE060</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.get_layout_path"><code class="docutils literal notranslate"><span class="pre">get_layout_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.get_style_path"><code class="docutils literal notranslate"><span class="pre">get_style_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.unpack_layout_ids"><code class="docutils literal notranslate"><span class="pre">unpack_layout_ids()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.unpack_style_ids"><code class="docutils literal notranslate"><span class="pre">unpack_style_ids()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_utils">robocasa.models.scenes.scene_utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.get_relative_position"><code class="docutils literal notranslate"><span class="pre">get_relative_position()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.initialize_fixture"><code class="docutils literal notranslate"><span class="pre">initialize_fixture()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.load_style_config"><code class="docutils literal notranslate"><span class="pre">load_style_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes">Module contents</a></li>
 </ul>
             </nav>
         </div>
@@ -398,20 +555,834 @@ document.write(`
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="robocasa-models-scenes-kitchen-arena-module">
-<h2>robocasa.models.scenes.kitchen_arena module<a class="headerlink" href="#robocasa-models-scenes-kitchen-arena-module" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.models.scenes.kitchen_arena">
+<span id="robocasa-models-scenes-kitchen-arena-module"></span><h2>robocasa.models.scenes.kitchen_arena module<a class="headerlink" href="#module-robocasa.models.scenes.kitchen_arena" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.models.scenes.kitchen_arena.KitchenArena">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.kitchen_arena.</span></span><span class="sig-name descname"><span class="pre">KitchenArena</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_fixtures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clutter_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fxtr_cfg_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.kitchen_arena.KitchenArena" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Arena</span></code></p>
+<p>Kitchen arena class holding all of the fixtures</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layout_id</strong> (<em>int</em><em> or </em><a class="reference internal" href="#robocasa.models.scenes.scene_registry.LayoutType" title="robocasa.models.scenes.scene_registry.LayoutType"><em>LayoutType</em></a>) – layout of the kitchen to load</p></li>
+<li><p><strong>style_id</strong> (<em>int</em><em> or </em><a class="reference internal" href="#robocasa.models.scenes.scene_registry.StyleType" title="robocasa.models.scenes.scene_registry.StyleType"><em>StyleType</em></a>) – style of the kitchen to load</p></li>
+<li><p><strong>rng</strong> (<em>np.random.Generator</em>) – random number generator used for initializing
+fixture state in the KitchenArena</p></li>
+<li><p><strong>enable_fixtures</strong> (<em>list</em><em> of </em><em>str</em>) – any fixtures to enable (some are disabled by default)</p></li>
+<li><p><strong>clutter_mode</strong> (<em>int</em>) – sets clutter level. default is 0.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.models.scenes.kitchen_arena.KitchenArena.get_fixture_cfgs">
+<span class="sig-name descname"><span class="pre">get_fixture_cfgs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.kitchen_arena.KitchenArena.get_fixture_cfgs" title="Link to this definition">#</a></dt>
+<dd><p>Returns config data for all fixtures in the arena</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of fixture configurations</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.kitchen_arena.disable_clutter_in_config">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.kitchen_arena.</span></span><span class="sig-name descname"><span class="pre">disable_clutter_in_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.kitchen_arena.disable_clutter_in_config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.kitchen_arena.enable_fixtures_in_config">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.kitchen_arena.</span></span><span class="sig-name descname"><span class="pre">enable_fixtures_in_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.kitchen_arena.enable_fixtures_in_config" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.kitchen_arena.update_fixtures_in_config">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.kitchen_arena.</span></span><span class="sig-name descname"><span class="pre">update_fixtures_in_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.kitchen_arena.update_fixtures_in_config" title="Link to this definition">#</a></dt>
+<dd><p>Update the config of fixtures from what is given in the yaml file.
+Mostly helpful if we want to change the placement of auxiliary fixtures. For
+example, if we want the lid of a blender to not be on the blender, but next to it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – the config to update</p></li>
+<li><p><strong>update_dict</strong> (<em>dict</em>) – a dictionary with keys as fixture names and values as the
+new configuration for that fixture. The keys should match the names in the config.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="robocasa-models-scenes-scene-builder-module">
-<h2>robocasa.models.scenes.scene_builder module<a class="headerlink" href="#robocasa-models-scenes-scene-builder-module" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.models.scenes.scene_builder">
+<span id="robocasa-models-scenes-scene-builder-module"></span><h2>robocasa.models.scenes.scene_builder module<a class="headerlink" href="#module-robocasa.models.scenes.scene_builder" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_builder.check_syntax">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_builder.</span></span><span class="sig-name descname"><span class="pre">check_syntax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fixture</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_builder.check_syntax" title="Link to this definition">#</a></dt>
+<dd><p>Checks that specifications of a fixture follows syntax rules</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_builder.create_fixtures">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_builder.</span></span><span class="sig-name descname"><span class="pre">create_fixtures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_builder.create_fixtures" title="Link to this definition">#</a></dt>
+<dd><p>Initializes fixtures based on the given layout yaml file and style type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layout_config</strong> (<em>dict</em>) – layout of the kitchen to load</p></li>
+<li><p><strong>style_config</strong> (<em>dict</em>) – style of the kitchen to load</p></li>
+<li><p><strong>rng</strong> (<em>np.random.Generator</em>) – random number generator used for initializing fixture state</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="robocasa-models-scenes-scene-registry-module">
-<h2>robocasa.models.scenes.scene_registry module<a class="headerlink" href="#robocasa-models-scenes-scene-registry-module" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.models.scenes.scene_registry">
+<span id="robocasa-models-scenes-scene-registry-module"></span><h2>robocasa.models.scenes.scene_registry module<a class="headerlink" href="#module-robocasa.models.scenes.scene_registry" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">LayoutType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+<p>Enum for available layouts in RoboCasa environment</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.ALL">
+<span class="sig-name descname"><span class="pre">ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-3</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.ALL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.DINING">
+<span class="sig-name descname"><span class="pre">DINING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-6</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.DINING" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.ISLAND">
+<span class="sig-name descname"><span class="pre">ISLAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-5</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.ISLAND" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT001">
+<span class="sig-name descname"><span class="pre">LAYOUT001</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT001" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT002">
+<span class="sig-name descname"><span class="pre">LAYOUT002</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT002" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT003">
+<span class="sig-name descname"><span class="pre">LAYOUT003</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT003" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT004">
+<span class="sig-name descname"><span class="pre">LAYOUT004</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT004" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT005">
+<span class="sig-name descname"><span class="pre">LAYOUT005</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT005" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT006">
+<span class="sig-name descname"><span class="pre">LAYOUT006</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT006" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT007">
+<span class="sig-name descname"><span class="pre">LAYOUT007</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT007" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT008">
+<span class="sig-name descname"><span class="pre">LAYOUT008</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT008" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT009">
+<span class="sig-name descname"><span class="pre">LAYOUT009</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT009" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT010">
+<span class="sig-name descname"><span class="pre">LAYOUT010</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT010" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT011">
+<span class="sig-name descname"><span class="pre">LAYOUT011</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT011" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT012">
+<span class="sig-name descname"><span class="pre">LAYOUT012</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT012" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT013">
+<span class="sig-name descname"><span class="pre">LAYOUT013</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT013" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT014">
+<span class="sig-name descname"><span class="pre">LAYOUT014</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT014" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT015">
+<span class="sig-name descname"><span class="pre">LAYOUT015</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT015" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT016">
+<span class="sig-name descname"><span class="pre">LAYOUT016</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT016" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT017">
+<span class="sig-name descname"><span class="pre">LAYOUT017</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT017" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT018">
+<span class="sig-name descname"><span class="pre">LAYOUT018</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT018" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT019">
+<span class="sig-name descname"><span class="pre">LAYOUT019</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT019" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT020">
+<span class="sig-name descname"><span class="pre">LAYOUT020</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT020" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT021">
+<span class="sig-name descname"><span class="pre">LAYOUT021</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT021" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT022">
+<span class="sig-name descname"><span class="pre">LAYOUT022</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT022" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT023">
+<span class="sig-name descname"><span class="pre">LAYOUT023</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT023" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT024">
+<span class="sig-name descname"><span class="pre">LAYOUT024</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT024" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT025">
+<span class="sig-name descname"><span class="pre">LAYOUT025</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">25</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT025" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT026">
+<span class="sig-name descname"><span class="pre">LAYOUT026</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">26</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT026" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT027">
+<span class="sig-name descname"><span class="pre">LAYOUT027</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">27</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT027" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT028">
+<span class="sig-name descname"><span class="pre">LAYOUT028</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">28</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT028" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT029">
+<span class="sig-name descname"><span class="pre">LAYOUT029</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">29</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT029" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT030">
+<span class="sig-name descname"><span class="pre">LAYOUT030</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT030" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT031">
+<span class="sig-name descname"><span class="pre">LAYOUT031</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">31</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT031" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT032">
+<span class="sig-name descname"><span class="pre">LAYOUT032</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT032" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT033">
+<span class="sig-name descname"><span class="pre">LAYOUT033</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">33</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT033" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT034">
+<span class="sig-name descname"><span class="pre">LAYOUT034</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT034" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT035">
+<span class="sig-name descname"><span class="pre">LAYOUT035</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">35</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT035" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT036">
+<span class="sig-name descname"><span class="pre">LAYOUT036</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">36</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT036" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT037">
+<span class="sig-name descname"><span class="pre">LAYOUT037</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">37</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT037" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT038">
+<span class="sig-name descname"><span class="pre">LAYOUT038</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">38</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT038" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT039">
+<span class="sig-name descname"><span class="pre">LAYOUT039</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">39</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT039" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT040">
+<span class="sig-name descname"><span class="pre">LAYOUT040</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT040" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT041">
+<span class="sig-name descname"><span class="pre">LAYOUT041</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">41</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT041" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT042">
+<span class="sig-name descname"><span class="pre">LAYOUT042</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT042" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT043">
+<span class="sig-name descname"><span class="pre">LAYOUT043</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">43</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT043" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT044">
+<span class="sig-name descname"><span class="pre">LAYOUT044</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">44</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT044" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT045">
+<span class="sig-name descname"><span class="pre">LAYOUT045</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT045" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT046">
+<span class="sig-name descname"><span class="pre">LAYOUT046</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">46</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT046" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT047">
+<span class="sig-name descname"><span class="pre">LAYOUT047</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">47</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT047" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT048">
+<span class="sig-name descname"><span class="pre">LAYOUT048</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">48</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT048" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT049">
+<span class="sig-name descname"><span class="pre">LAYOUT049</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">49</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT049" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT050">
+<span class="sig-name descname"><span class="pre">LAYOUT050</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT050" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT051">
+<span class="sig-name descname"><span class="pre">LAYOUT051</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">51</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT051" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT052">
+<span class="sig-name descname"><span class="pre">LAYOUT052</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">52</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT052" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT053">
+<span class="sig-name descname"><span class="pre">LAYOUT053</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT053" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT054">
+<span class="sig-name descname"><span class="pre">LAYOUT054</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">54</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT054" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT055">
+<span class="sig-name descname"><span class="pre">LAYOUT055</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">55</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT055" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT056">
+<span class="sig-name descname"><span class="pre">LAYOUT056</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">56</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT056" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT057">
+<span class="sig-name descname"><span class="pre">LAYOUT057</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">57</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT057" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT058">
+<span class="sig-name descname"><span class="pre">LAYOUT058</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">58</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT058" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT059">
+<span class="sig-name descname"><span class="pre">LAYOUT059</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">59</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT059" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.LAYOUT060">
+<span class="sig-name descname"><span class="pre">LAYOUT060</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT060" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.NO_ISLAND">
+<span class="sig-name descname"><span class="pre">NO_ISLAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-4</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.NO_ISLAND" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.TEST">
+<span class="sig-name descname"><span class="pre">TEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.TEST" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.LayoutType.TRAIN">
+<span class="sig-name descname"><span class="pre">TRAIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-2</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.LayoutType.TRAIN" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">StyleType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></p>
+<p>Enums for available styles in RoboCasa environment</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.ALL">
+<span class="sig-name descname"><span class="pre">ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-3</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.ALL" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE001">
+<span class="sig-name descname"><span class="pre">STYLE001</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE001" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE002">
+<span class="sig-name descname"><span class="pre">STYLE002</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE002" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE003">
+<span class="sig-name descname"><span class="pre">STYLE003</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE003" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE004">
+<span class="sig-name descname"><span class="pre">STYLE004</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE004" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE005">
+<span class="sig-name descname"><span class="pre">STYLE005</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE005" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE006">
+<span class="sig-name descname"><span class="pre">STYLE006</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE006" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE007">
+<span class="sig-name descname"><span class="pre">STYLE007</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE007" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE008">
+<span class="sig-name descname"><span class="pre">STYLE008</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE008" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE009">
+<span class="sig-name descname"><span class="pre">STYLE009</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">9</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE009" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE010">
+<span class="sig-name descname"><span class="pre">STYLE010</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE010" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE011">
+<span class="sig-name descname"><span class="pre">STYLE011</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">11</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE011" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE012">
+<span class="sig-name descname"><span class="pre">STYLE012</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE012" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE013">
+<span class="sig-name descname"><span class="pre">STYLE013</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">13</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE013" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE014">
+<span class="sig-name descname"><span class="pre">STYLE014</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">14</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE014" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE015">
+<span class="sig-name descname"><span class="pre">STYLE015</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE015" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE016">
+<span class="sig-name descname"><span class="pre">STYLE016</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE016" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE017">
+<span class="sig-name descname"><span class="pre">STYLE017</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE017" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE018">
+<span class="sig-name descname"><span class="pre">STYLE018</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">18</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE018" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE019">
+<span class="sig-name descname"><span class="pre">STYLE019</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE019" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE020">
+<span class="sig-name descname"><span class="pre">STYLE020</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE020" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE021">
+<span class="sig-name descname"><span class="pre">STYLE021</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE021" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE022">
+<span class="sig-name descname"><span class="pre">STYLE022</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE022" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE023">
+<span class="sig-name descname"><span class="pre">STYLE023</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE023" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE024">
+<span class="sig-name descname"><span class="pre">STYLE024</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE024" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE025">
+<span class="sig-name descname"><span class="pre">STYLE025</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">25</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE025" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE026">
+<span class="sig-name descname"><span class="pre">STYLE026</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">26</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE026" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE027">
+<span class="sig-name descname"><span class="pre">STYLE027</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">27</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE027" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE028">
+<span class="sig-name descname"><span class="pre">STYLE028</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">28</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE028" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE029">
+<span class="sig-name descname"><span class="pre">STYLE029</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">29</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE029" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE030">
+<span class="sig-name descname"><span class="pre">STYLE030</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">30</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE030" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE031">
+<span class="sig-name descname"><span class="pre">STYLE031</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">31</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE031" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE032">
+<span class="sig-name descname"><span class="pre">STYLE032</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">32</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE032" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE033">
+<span class="sig-name descname"><span class="pre">STYLE033</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">33</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE033" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE034">
+<span class="sig-name descname"><span class="pre">STYLE034</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">34</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE034" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE035">
+<span class="sig-name descname"><span class="pre">STYLE035</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">35</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE035" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE036">
+<span class="sig-name descname"><span class="pre">STYLE036</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">36</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE036" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE037">
+<span class="sig-name descname"><span class="pre">STYLE037</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">37</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE037" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE038">
+<span class="sig-name descname"><span class="pre">STYLE038</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">38</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE038" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE039">
+<span class="sig-name descname"><span class="pre">STYLE039</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">39</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE039" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE040">
+<span class="sig-name descname"><span class="pre">STYLE040</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE040" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE041">
+<span class="sig-name descname"><span class="pre">STYLE041</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">41</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE041" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE042">
+<span class="sig-name descname"><span class="pre">STYLE042</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">42</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE042" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE043">
+<span class="sig-name descname"><span class="pre">STYLE043</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">43</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE043" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE044">
+<span class="sig-name descname"><span class="pre">STYLE044</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">44</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE044" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE045">
+<span class="sig-name descname"><span class="pre">STYLE045</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE045" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE046">
+<span class="sig-name descname"><span class="pre">STYLE046</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">46</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE046" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE047">
+<span class="sig-name descname"><span class="pre">STYLE047</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">47</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE047" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE048">
+<span class="sig-name descname"><span class="pre">STYLE048</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">48</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE048" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE049">
+<span class="sig-name descname"><span class="pre">STYLE049</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">49</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE049" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE050">
+<span class="sig-name descname"><span class="pre">STYLE050</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE050" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE051">
+<span class="sig-name descname"><span class="pre">STYLE051</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">51</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE051" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE052">
+<span class="sig-name descname"><span class="pre">STYLE052</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">52</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE052" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE053">
+<span class="sig-name descname"><span class="pre">STYLE053</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">53</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE053" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE054">
+<span class="sig-name descname"><span class="pre">STYLE054</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">54</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE054" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE055">
+<span class="sig-name descname"><span class="pre">STYLE055</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">55</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE055" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE056">
+<span class="sig-name descname"><span class="pre">STYLE056</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">56</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE056" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE057">
+<span class="sig-name descname"><span class="pre">STYLE057</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">57</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE057" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE058">
+<span class="sig-name descname"><span class="pre">STYLE058</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">58</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE058" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE059">
+<span class="sig-name descname"><span class="pre">STYLE059</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">59</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE059" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.StyleType.STYLE060">
+<span class="sig-name descname"><span class="pre">STYLE060</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE060" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.get_layout_path">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">get_layout_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.get_layout_path" title="Link to this definition">#</a></dt>
+<dd><p>Get corresponding blueprint filepath (yaml) for a layout</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>layout_id</strong> (<em>int</em><em> or </em><a class="reference internal" href="#robocasa.models.scenes.scene_registry.LayoutType" title="robocasa.models.scenes.scene_registry.LayoutType"><em>LayoutType</em></a>) – layout id (int or enum)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>yaml path for specified layout</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.get_style_path">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">get_style_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.get_style_path" title="Link to this definition">#</a></dt>
+<dd><p>Get corresponding blueprint filepath (yaml) for a style</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>style_id</strong> (<em>int</em><em> or </em><a class="reference internal" href="#robocasa.models.scenes.scene_registry.StyleType" title="robocasa.models.scenes.scene_registry.StyleType"><em>StyleType</em></a>) – style id (int or enum)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>yaml path for specified style</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.unpack_layout_ids">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">unpack_layout_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.unpack_layout_ids" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_registry.unpack_style_ids">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_registry.</span></span><span class="sig-name descname"><span class="pre">unpack_style_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_registry.unpack_style_ids" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="robocasa-models-scenes-scene-utils-module">
-<h2>robocasa.models.scenes.scene_utils module<a class="headerlink" href="#robocasa-models-scenes-scene-utils-module" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.models.scenes.scene_utils">
+<span id="robocasa-models-scenes-scene-utils-module"></span><h2>robocasa.models.scenes.scene_utils module<a class="headerlink" href="#module-robocasa.models.scenes.scene_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_utils.get_relative_position">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_utils.</span></span><span class="sig-name descname"><span class="pre">get_relative_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fixture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_fxtr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prev_fxtr_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_utils.get_relative_position" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the position of <cite>fixture</cite> based on a specified side
+and alignment relative to <cite>prev_fixture</cite></p>
+<p>This assumes that the fixtures are properly centered!</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_utils.initialize_fixture">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_utils.</span></span><span class="sig-name descname"><span class="pre">initialize_fixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cur_fixtures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_utils.initialize_fixture" title="Link to this definition">#</a></dt>
+<dd><p>initializes a fixture object based on the given configuration
+ignores positional arguments as it is changed later</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – dictionary containing the fixture configuration.
+Serves as the arguments to initialize the fixture</p></li>
+<li><p><strong>cur_fixtures</strong> (<em>dict</em>) – dictionary containing the current fixtures</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.models.scenes.scene_utils.load_style_config">
+<span class="sig-prename descclassname"><span class="pre">robocasa.models.scenes.scene_utils.</span></span><span class="sig-name descname"><span class="pre">load_style_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixture_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.models.scenes.scene_utils.load_style_config" title="Link to this definition">#</a></dt>
+<dd><p>Loads the style information for a given fixture. Style information can consist of
+which xml to use if there are multiple instances of a fixture, which texture to apply,
+which subcomponents to apply (panels/handles for a cab), etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>style</strong> (<em>dict</em>) – dictionary containing the style information for each fixture type</p></li>
+<li><p><strong>fixture_config</strong> (<em>dict</em>) – dictionary containing the fixture configuration</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.models.scenes">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.models.scenes" title="Link to this heading">#</a></h2>
 </section>
 </section>
 
@@ -461,11 +1432,168 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-kitchen-arena-module">robocasa.models.scenes.kitchen_arena module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-builder-module">robocasa.models.scenes.scene_builder module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-registry-module">robocasa.models.scenes.scene_registry module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-models-scenes-scene-utils-module">robocasa.models.scenes.scene_utils module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.kitchen_arena">robocasa.models.scenes.kitchen_arena module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.KitchenArena"><code class="docutils literal notranslate"><span class="pre">KitchenArena</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.KitchenArena.get_fixture_cfgs"><code class="docutils literal notranslate"><span class="pre">KitchenArena.get_fixture_cfgs()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.disable_clutter_in_config"><code class="docutils literal notranslate"><span class="pre">disable_clutter_in_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.enable_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">enable_fixtures_in_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.kitchen_arena.update_fixtures_in_config"><code class="docutils literal notranslate"><span class="pre">update_fixtures_in_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_builder">robocasa.models.scenes.scene_builder module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_builder.check_syntax"><code class="docutils literal notranslate"><span class="pre">check_syntax()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_builder.create_fixtures"><code class="docutils literal notranslate"><span class="pre">create_fixtures()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_registry">robocasa.models.scenes.scene_registry module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType"><code class="docutils literal notranslate"><span class="pre">LayoutType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.ALL"><code class="docutils literal notranslate"><span class="pre">LayoutType.ALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.DINING"><code class="docutils literal notranslate"><span class="pre">LayoutType.DINING</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.ISLAND</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT001"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT001</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT002"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT002</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT003"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT003</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT004"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT004</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT005"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT005</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT006"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT006</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT007"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT007</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT008"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT008</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT009"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT009</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT010"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT010</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT011"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT011</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT012"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT012</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT013"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT013</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT014"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT014</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT015"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT015</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT016"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT016</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT017"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT017</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT018"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT018</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT019"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT019</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT020"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT020</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT021"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT021</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT022"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT022</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT023"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT023</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT024"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT024</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT025"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT025</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT026"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT026</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT027"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT027</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT028"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT028</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT029"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT029</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT030"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT030</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT031"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT031</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT032"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT032</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT033"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT033</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT034"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT034</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT035"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT035</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT036"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT036</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT037"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT037</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT038"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT038</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT039"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT039</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT040"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT040</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT041"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT041</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT042"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT042</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT043"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT043</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT044"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT044</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT045"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT045</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT046"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT046</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT047"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT047</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT048"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT048</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT049"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT049</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT050"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT050</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT051"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT051</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT052"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT052</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT053"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT053</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT054"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT054</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT055"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT055</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT056"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT056</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT057"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT057</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT058"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT058</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT059"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT059</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.LAYOUT060"><code class="docutils literal notranslate"><span class="pre">LayoutType.LAYOUT060</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.NO_ISLAND"><code class="docutils literal notranslate"><span class="pre">LayoutType.NO_ISLAND</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.TEST"><code class="docutils literal notranslate"><span class="pre">LayoutType.TEST</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.LayoutType.TRAIN"><code class="docutils literal notranslate"><span class="pre">LayoutType.TRAIN</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType"><code class="docutils literal notranslate"><span class="pre">StyleType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.ALL"><code class="docutils literal notranslate"><span class="pre">StyleType.ALL</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE001"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE001</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE002"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE002</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE003"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE003</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE004"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE004</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE005"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE005</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE006"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE006</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE007"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE007</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE008"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE008</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE009"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE009</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE010"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE010</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE011"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE011</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE012"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE012</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE013"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE013</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE014"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE014</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE015"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE015</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE016"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE016</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE017"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE017</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE018"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE018</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE019"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE019</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE020"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE020</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE021"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE021</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE022"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE022</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE023"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE023</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE024"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE024</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE025"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE025</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE026"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE026</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE027"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE027</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE028"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE028</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE029"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE029</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE030"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE030</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE031"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE031</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE032"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE032</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE033"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE033</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE034"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE034</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE035"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE035</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE036"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE036</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE037"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE037</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE038"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE038</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE039"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE039</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE040"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE040</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE041"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE041</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE042"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE042</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE043"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE043</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE044"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE044</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE045"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE045</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE046"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE046</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE047"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE047</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE048"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE048</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE049"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE049</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE050"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE050</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE051"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE051</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE052"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE052</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE053"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE053</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE054"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE054</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE055"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE055</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE056"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE056</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE057"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE057</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE058"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE058</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE059"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE059</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.StyleType.STYLE060"><code class="docutils literal notranslate"><span class="pre">StyleType.STYLE060</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.get_layout_path"><code class="docutils literal notranslate"><span class="pre">get_layout_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.get_style_path"><code class="docutils literal notranslate"><span class="pre">get_style_path()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.unpack_layout_ids"><code class="docutils literal notranslate"><span class="pre">unpack_layout_ids()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_registry.unpack_style_ids"><code class="docutils literal notranslate"><span class="pre">unpack_style_ids()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes.scene_utils">robocasa.models.scenes.scene_utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.get_relative_position"><code class="docutils literal notranslate"><span class="pre">get_relative_position()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.initialize_fixture"><code class="docutils literal notranslate"><span class="pre">initialize_fixture()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.models.scenes.scene_utils.load_style_config"><code class="docutils literal notranslate"><span class="pre">load_style_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.models.scenes">Module contents</a></li>
 </ul>
   </nav></div>
 

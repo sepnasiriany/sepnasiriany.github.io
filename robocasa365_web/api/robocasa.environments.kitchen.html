@@ -28,10 +28,10 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d17bcdfe" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=51f4a353" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=62b304aa" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=1e6792ba" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -378,7 +378,31 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-environments-kitchen-kitchen-module">robocasa.environments.kitchen.kitchen module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.kitchen">robocasa.environments.kitchen.kitchen module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen"><code class="docutils literal notranslate"><span class="pre">Kitchen</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_STYLES"><code class="docutils literal notranslate"><span class="pre">Kitchen.EXCLUDE_STYLES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.FREEZER_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.FREEZER_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.ISLAND_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.ISLAND_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.OVEN_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.OVEN_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.PROBLEMATIC_BLENDER_LID_STYLES"><code class="docutils literal notranslate"><span class="pre">Kitchen.PROBLEMATIC_BLENDER_LID_STYLES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.edit_model_xml"><code class="docutils literal notranslate"><span class="pre">Kitchen.edit_model_xml()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_ep_meta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_fixture"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_fixture()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_obj_lang"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_obj_lang()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.register_fixture_ref"><code class="docutils literal notranslate"><span class="pre">Kitchen.register_fixture_ref()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.reward"><code class="docutils literal notranslate"><span class="pre">Kitchen.reward()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.sample_object"><code class="docutils literal notranslate"><span class="pre">Kitchen.sample_object()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.update_state"><code class="docutils literal notranslate"><span class="pre">Kitchen.update_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.visualize"><code class="docutils literal notranslate"><span class="pre">Kitchen.visualize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.KitchenEnvMeta"><code class="docutils literal notranslate"><span class="pre">KitchenEnvMeta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.register_kitchen_env"><code class="docutils literal notranslate"><span class="pre">register_kitchen_env()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen">Module contents</a></li>
 </ul>
             </nav>
@@ -912,8 +936,337 @@ document.write(`
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 </section>
-<section id="robocasa-environments-kitchen-kitchen-module">
-<h2>robocasa.environments.kitchen.kitchen module<a class="headerlink" href="#robocasa-environments-kitchen-kitchen-module" title="Link to this heading">#</a></h2>
+<section id="module-robocasa.environments.kitchen.kitchen">
+<span id="robocasa-environments-kitchen-kitchen-module"></span><h2>robocasa.environments.kitchen.kitchen module<a class="headerlink" href="#module-robocasa.environments.kitchen.kitchen" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.kitchen.</span></span><span class="sig-name descname"><span class="pre">Kitchen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">robots</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env_configuration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">controller_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gripper_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_types</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initialization_noise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_camera_obs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_object_obs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reward_shaping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">placement_initializer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_renderer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_offscreen_renderer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'robot0_agentview_center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_collision_mesh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_visual_mesh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_gpu_device_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">control_freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">horizon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_done</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'agentview'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_heights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_widths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_depths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mjviewer'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_robot_base_ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_and_style_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scene_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_fixtures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generative_textures</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_registries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('objaverse',</span> <span class="pre">'lightwheel')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_instance_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_distractors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translucent_robot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomize_cameras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_spawn_deviation_pos_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_spawn_deviation_pos_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">robot_spawn_deviation_rot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clutter_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_fxtr_cfg_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cotraining_cameras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_novel_instructions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ManipulationEnv</span></code></p>
+<p>Initialized a Base Kitchen environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>robots</strong> – Specification for specific robot arm(s) to be instantiated within this env
+(e.g: “Sawyer” would generate one arm; [“Panda”, “Panda”, “Sawyer”] would generate three robot arms)</p></li>
+<li><p><strong>env_configuration</strong> (<em>str</em>) – Specifies how to position the robot(s) within the environment. Default is “default”,
+which should be interpreted accordingly by any subclasses.</p></li>
+<li><p><strong>controller_configs</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>dict</em>) – If set, contains relevant controller parameters for creating a
+custom controller. Else, uses the default controller for this specific task. Should either be single
+dict if same controller is to be used for all robots or else it should be a list of the same length as
+“robots” param</p></li>
+<li><p><strong>base_types</strong> (<em>None</em><em> or </em><em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – type of base, used to instantiate base models from base factory.
+Default is “default”, which is the default base associated with the robot(s) the ‘robots’ specification.
+None results in no base, and any other (valid) model overrides the default base. Should either be
+single str if same base type is to be used for all robots or else it should be a list of the same
+length as “robots” param</p></li>
+<li><p><strong>gripper_types</strong> (<em>None</em><em> or </em><em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – type of gripper, used to instantiate
+gripper models from gripper factory. Default is “default”, which is the default grippers(s) associated
+with the robot(s) the ‘robots’ specification. None removes the gripper, and any other (valid) model
+overrides the default gripper. Should either be single str if same gripper type is to be used for all
+robots or else it should be a list of the same length as “robots” param</p></li>
+<li><p><strong>initialization_noise</strong> (<em>dict</em><em> or </em><em>list</em><em> of </em><em>dict</em>) – <p>Dict containing the initialization noise parameters.
+The expected keys and corresponding value types are specified below:</p>
+<dl class="field-list simple">
+<dt class="field-odd"><cite>’magnitude’</cite><span class="colon">:</span></dt>
+<dd class="field-odd"><p>The scale factor of uni-variate random noise applied to each of a robot’s given initial
+joint positions. Setting this value to <cite>None</cite> or 0.0 results in no noise being applied.
+If “gaussian” type of noise is applied then this magnitude scales the standard deviation applied,
+If “uniform” type of noise is applied then this magnitude sets the bounds of the sampling range</p>
+</dd>
+<dt class="field-even"><cite>’type’</cite><span class="colon">:</span></dt>
+<dd class="field-even"><p>Type of noise to apply. Can either specify “gaussian” or “uniform”</p>
+</dd>
+</dl>
+<p>Should either be single dict if same noise value is to be used for all robots or else it should be a
+list of the same length as “robots” param</p>
+<dl class="field-list simple">
+<dt class="field-odd">Note<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Specifying “default” will automatically use the default noise settings.
+Specifying None will automatically create the required dict with “magnitude” set to 0.0.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>use_camera_obs</strong> (<em>bool</em>) – if True, every observation includes rendered image(s)</p></li>
+<li><p><strong>placement_initializer</strong> (<a class="reference internal" href="robocasa.utils.html#robocasa.utils.placement_samplers.ObjectPositionSampler" title="robocasa.utils.placement_samplers.ObjectPositionSampler"><em>ObjectPositionSampler</em></a>) – if provided, will be used to place objects on every reset,
+else a UniformRandomSampler is used by default.</p></li>
+<li><p><strong>has_renderer</strong> (<em>bool</em>) – If true, render the simulation state in
+a viewer instead of headless mode.</p></li>
+<li><p><strong>has_offscreen_renderer</strong> (<em>bool</em>) – True if using off-screen rendering</p></li>
+<li><p><strong>render_camera</strong> (<em>str</em>) – Name of camera to render if <cite>has_renderer</cite> is True. Setting this value to ‘None’
+will result in the default angle being applied, which is useful as it can be dragged / panned by
+the user using the mouse</p></li>
+<li><p><strong>render_collision_mesh</strong> (<em>bool</em>) – True if rendering collision meshes in camera. False otherwise.</p></li>
+<li><p><strong>render_visual_mesh</strong> (<em>bool</em>) – True if rendering visual meshes in camera. False otherwise.</p></li>
+<li><p><strong>render_gpu_device_id</strong> (<em>int</em>) – corresponds to the GPU device id to use for offscreen rendering.
+Defaults to -1, in which case the device will be inferred from environment variables
+(GPUS or CUDA_VISIBLE_DEVICES).</p></li>
+<li><p><strong>control_freq</strong> (<em>float</em>) – how many control signals to receive in every second. This sets the abase of
+simulation time that passes between every action input.</p></li>
+<li><p><strong>horizon</strong> (<em>int</em>) – Every episode lasts for exactly &#64;horizon timesteps.</p></li>
+<li><p><strong>ignore_done</strong> (<em>bool</em>) – True if never terminating the environment (ignore &#64;horizon).</p></li>
+<li><p><strong>hard_reset</strong> (<em>bool</em>) – If True, re-loads model, sim, and render object upon a reset call, else,
+only calls sim.reset and resets all robosuite-internal variables</p></li>
+<li><p><strong>camera_names</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em>) – <p>name of camera to be rendered. Should either be single str if
+same name is to be used for all cameras’ rendering or else it should be a list of cameras to render.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Note<span class="colon">:</span></dt>
+<dd class="field-odd"><p>At least one camera must be specified if &#64;use_camera_obs is True.</p>
+</dd>
+<dt class="field-even">Note<span class="colon">:</span></dt>
+<dd class="field-even"><p>To render all robots’ cameras of a certain type (e.g.: “robotview” or “eye_in_hand”), use the
+convention “all-{name}” (e.g.: “all-robotview”) to automatically render all camera images from each
+robot’s camera list).</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>camera_heights</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em>) – height of camera frame. Should either be single int if
+same height is to be used for all cameras’ frames or else it should be a list of the same length as
+“camera names” param.</p></li>
+<li><p><strong>camera_widths</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em>) – width of camera frame. Should either be single int if
+same width is to be used for all cameras’ frames or else it should be a list of the same length as
+“camera names” param.</p></li>
+<li><p><strong>camera_depths</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em>) – True if rendering RGB-D, and RGB otherwise. Should either be single
+bool if same depth setting is to be used for all cameras or else it should be a list of the same length as
+“camera names” param.</p></li>
+<li><p><strong>renderer</strong> (<em>str</em>) – Specifies which renderer to use.</p></li>
+<li><p><strong>renderer_config</strong> (<em>dict</em>) – dictionary for the renderer configurations</p></li>
+<li><p><strong>init_robot_base_ref</strong> (<em>str</em>) – name of the fixture to place the near. If None, will randomly select a fixture.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – environment seed. Default is None, where environment is unseeded, ie. random</p></li>
+<li><p><strong>layout_and_style_ids</strong> (<em>list</em><em> of </em><em>list</em><em> of </em><em>int</em>) – list of layout and style ids to use for the kitchen.</p></li>
+<li><p><strong>layout_ids</strong> (<em>(</em><em>list of</em><em>) </em><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.LayoutType" title="robocasa.models.scenes.scene_registry.LayoutType"><em>LayoutType</em></a><em> or </em><em>int</em><em> or </em><em>dict</em>) – layout id(s) to use for the kitchen. -1 and None specify all layouts
+-2 specifies layouts not involving islands/wall stacks, -3 specifies layouts involving islands/wall stacks,
+-4 specifies layouts with dining areas.</p></li>
+<li><p><strong>enable_fixtures</strong> (<em>list</em><em> of </em><em>str</em>) – a list of fixtures to enable in the scene (some fixtures are disabled by default)</p></li>
+<li><p><strong>update_fxtr_cfg_dict</strong> (<em>dict</em>) – a dictionary which maps fixture names to dictionaries to update the fixture config specified in the layout yaml.</p></li>
+<li><p><strong>style_ids</strong> (<em>(</em><em>list of</em><em>) </em><a class="reference internal" href="robocasa.models.scenes.html#robocasa.models.scenes.scene_registry.StyleType" title="robocasa.models.scenes.scene_registry.StyleType"><em>StyleType</em></a><em> or </em><em>int</em><em> or </em><em>dict</em>) – style id(s) to use for the kitchen. -1 and None specify all styles.</p></li>
+<li><p><strong>generative_textures</strong> (<em>str</em>) – if set to “100p”, will use AI generated textures</p></li>
+<li><p><strong>obj_registries</strong> (<em>tuple</em><em> of </em><em>str</em>) – tuple containing the object registries to use for sampling objects.
+can contain “objaverse” and/or “aigen” to sample objects from objaverse, AI generated, or both.</p></li>
+<li><p><strong>obj_instance_split</strong> (<em>str</em>) – string for specifying a custom set of object instances to use. “train” specifies
+all but the last 4 object instances (or the first half - whichever is larger), “test” specifies the
+rest, and None specifies all.</p></li>
+<li><p><strong>use_distractors</strong> (<em>bool</em>) – if True, will add distractor objects to the scene</p></li>
+<li><p><strong>translucent_robot</strong> (<em>bool</em>) – if True, will make the robot appear translucent during rendering</p></li>
+<li><p><strong>randomize_cameras</strong> (<em>bool</em>) – if True, will add gaussian noise to the position and rotation of the
+wrist and agentview cameras</p></li>
+<li><p><strong>clutter_mode</strong> (<em>int</em>) – sets clutter level. default is 0.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS">
+<span class="sig-name descname"><span class="pre">DINING_COUNTER_EXCLUDED_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">18,</span> <span class="pre">20,</span> <span class="pre">36,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">47,</span> <span class="pre">50,</span> <span class="pre">52]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS">
+<span class="sig-name descname"><span class="pre">DOUBLE_CAB_EXCLUDED_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[32,</span> <span class="pre">41,</span> <span class="pre">59]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_LAYOUTS">
+<span class="sig-name descname"><span class="pre">EXCLUDE_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_STYLES">
+<span class="sig-name descname"><span class="pre">EXCLUDE_STYLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_STYLES" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.FREEZER_EXCLUDED_LAYOUTS">
+<span class="sig-name descname"><span class="pre">FREEZER_EXCLUDED_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">12,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">15,</span> <span class="pre">16,</span> <span class="pre">17,</span> <span class="pre">19,</span> <span class="pre">20,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">25,</span> <span class="pre">26,</span> <span class="pre">27,</span> <span class="pre">28,</span> <span class="pre">30,</span> <span class="pre">31,</span> <span class="pre">33,</span> <span class="pre">34,</span> <span class="pre">35,</span> <span class="pre">36,</span> <span class="pre">37,</span> <span class="pre">39,</span> <span class="pre">40,</span> <span class="pre">42,</span> <span class="pre">46,</span> <span class="pre">48,</span> <span class="pre">49,</span> <span class="pre">50,</span> <span class="pre">51,</span> <span class="pre">52,</span> <span class="pre">53,</span> <span class="pre">54,</span> <span class="pre">55,</span> <span class="pre">56,</span> <span class="pre">58,</span> <span class="pre">59,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.FREEZER_EXCLUDED_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.ISLAND_EXCLUDED_LAYOUTS">
+<span class="sig-name descname"><span class="pre">ISLAND_EXCLUDED_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">13,</span> <span class="pre">18,</span> <span class="pre">19,</span> <span class="pre">22,</span> <span class="pre">27,</span> <span class="pre">30,</span> <span class="pre">36,</span> <span class="pre">40,</span> <span class="pre">43,</span> <span class="pre">46,</span> <span class="pre">47,</span> <span class="pre">52,</span> <span class="pre">53,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.ISLAND_EXCLUDED_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.OVEN_EXCLUDED_LAYOUTS">
+<span class="sig-name descname"><span class="pre">OVEN_EXCLUDED_LAYOUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">10,</span> <span class="pre">11,</span> <span class="pre">13,</span> <span class="pre">14,</span> <span class="pre">16,</span> <span class="pre">19,</span> <span class="pre">20,</span> <span class="pre">21,</span> <span class="pre">22,</span> <span class="pre">23,</span> <span class="pre">24,</span> <span class="pre">25,</span> <span class="pre">26,</span> <span class="pre">27,</span> <span class="pre">28,</span> <span class="pre">30,</span> <span class="pre">32,</span> <span class="pre">33,</span> <span class="pre">36,</span> <span class="pre">38,</span> <span class="pre">40,</span> <span class="pre">41,</span> <span class="pre">43,</span> <span class="pre">44,</span> <span class="pre">45,</span> <span class="pre">46,</span> <span class="pre">47,</span> <span class="pre">48,</span> <span class="pre">49,</span> <span class="pre">50,</span> <span class="pre">51,</span> <span class="pre">52,</span> <span class="pre">53,</span> <span class="pre">54,</span> <span class="pre">55,</span> <span class="pre">56,</span> <span class="pre">57,</span> <span class="pre">58,</span> <span class="pre">59,</span> <span class="pre">60]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.OVEN_EXCLUDED_LAYOUTS" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.PROBLEMATIC_BLENDER_LID_STYLES">
+<span class="sig-name descname"><span class="pre">PROBLEMATIC_BLENDER_LID_STYLES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[13,</span> <span class="pre">29,</span> <span class="pre">31]</span></em><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.PROBLEMATIC_BLENDER_LID_STYLES" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.edit_model_xml">
+<span class="sig-name descname"><span class="pre">edit_model_xml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xml_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.edit_model_xml" title="Link to this definition">#</a></dt>
+<dd><p>This function postprocesses the model.xml collected from a MuJoCo demonstration
+for retrospective model changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>xml_str</strong> (<em>str</em>) – Mujoco sim demonstration XML file as string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Post-processed xml file as string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.get_ep_meta">
+<span class="sig-name descname"><span class="pre">get_ep_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_ep_meta" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dictionary containing episode meta data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.get_fixture">
+<span class="sig-name descname"><span class="pre">get_fixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.2,</span> <span class="pre">0.2)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_name_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_depth_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_fixture" title="Link to this definition">#</a></dt>
+<dd><p>search fixture by id (name, object, or type)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em><em>, </em><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture" title="robocasa.models.fixtures.fixture.Fixture"><em>Fixture</em></a><em>, </em><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType" title="robocasa.models.fixtures.fixture.FixtureType"><em>FixtureType</em></a>) – id of fixture to search for</p></li>
+<li><p><strong>ref</strong> (<em>str</em><em>, </em><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture" title="robocasa.models.fixtures.fixture.Fixture"><em>Fixture</em></a><em>, </em><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.FixtureType" title="robocasa.models.fixtures.fixture.FixtureType"><em>FixtureType</em></a>) – if specified, will search for fixture close to ref (within 0.10m)</p></li>
+<li><p><strong>size</strong> (<em>tuple</em>) – if sampling counter, minimum size (x,y) that the counter region must be</p></li>
+<li><p><strong>full_depth_region</strong> (<em>bool</em>) – if True, will only sample island counter regions that can be accessed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>fixture object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture" title="robocasa.models.fixtures.fixture.Fixture">Fixture</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.get_obj_lang">
+<span class="sig-name descname"><span class="pre">get_obj_lang</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'obj'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_preposition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_obj_lang" title="Link to this definition">#</a></dt>
+<dd><p>gets a formatted language string for the object (replaces underscores with spaces)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj_name</strong> (<em>str</em>) – name of object</p></li>
+<li><p><strong>get_preposition</strong> (<em>bool</em>) – if True, also returns preposition for object</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>language string for object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.register_fixture_ref">
+<span class="sig-name descname"><span class="pre">register_fixture_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.register_fixture_ref" title="Link to this definition">#</a></dt>
+<dd><p>Registers a fixture reference for later use. Initializes the fixture
+if it has not been initialized yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_name</strong> (<em>str</em>) – name of the reference</p></li>
+<li><p><strong>fn_kwargs</strong> (<em>dict</em>) – keyword arguments to pass to get_fixture</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>fixture object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="robocasa.models.fixtures.html#robocasa.models.fixtures.fixture.Fixture" title="robocasa.models.fixtures.fixture.Fixture">Fixture</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.reward">
+<span class="sig-name descname"><span class="pre">reward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.reward" title="Link to this definition">#</a></dt>
+<dd><p>Reward function for the task. The reward function is based on the task
+and to be implemented in the subclasses. By default, returns a sparse
+reward corresponding to task success.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Reward for the task</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.sample_object">
+<span class="sig-name descname"><span class="pre">sample_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graspable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microwavable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">washable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cookable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fridgable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freezable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dishwashable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_registries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(None,</span> <span class="pre">None,</span> <span class="pre">None)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rotate_upright</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.sample_object" title="Link to this definition">#</a></dt>
+<dd><p>Sample a kitchen object from the specified groups and within max_size bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>groups</strong> (<em>list</em><em> or </em><em>str</em>) – groups to sample from or the exact xml path of the object to spawn</p></li>
+<li><p><strong>exclude_groups</strong> (<em>str</em><em> or </em><em>list</em>) – groups to exclude</p></li>
+<li><p><strong>graspable</strong> (<em>bool</em>) – whether the sampled object must be graspable</p></li>
+<li><p><strong>washable</strong> (<em>bool</em>) – whether the sampled object must be washable</p></li>
+<li><p><strong>microwavable</strong> (<em>bool</em>) – whether the sampled object must be microwavable</p></li>
+<li><p><strong>cookable</strong> (<em>bool</em>) – whether whether the sampled object must be cookable</p></li>
+<li><p><strong>fridgable</strong> (<em>bool</em>) – whether whether the sampled object must be fridgable</p></li>
+<li><p><strong>freezable</strong> (<em>bool</em>) – whether whether the sampled object must be freezable</p></li>
+<li><p><strong>dishwashable</strong> (<em>bool</em>) – whether whether the sampled object must be dishwashable</p></li>
+<li><p><strong>split</strong> (<em>str</em>) – split to sample from. Split “pretrain” specifies all but the last 4 object instances
+(or the first half - whichever is larger), “target” specifies the rest, and None
+specifies all.</p></li>
+<li><p><strong>obj_registries</strong> (<em>tuple</em>) – registries to sample from</p></li>
+<li><p><strong>max_size</strong> (<em>tuple</em>) – max size of the object. If the sampled object is not within bounds of max size,
+function will resample</p></li>
+<li><p><strong>object_scale</strong> (<em>float</em>) – scale of the object. If set will multiply the scale of the sampled object by this value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>kwargs to apply to the MJCF model for the sampled object</p>
+<p>dict: info about the sampled object - the path of the mjcf, groups which the object’s category belongs to,
+the category of the object the sampling split the object came from, and the groups the object was sampled from</p>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.update_state">
+<span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.update_state" title="Link to this definition">#</a></dt>
+<dd><p>Updates the state of the environment.
+This involves updating the state of all fixtures in the environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.Kitchen.visualize">
+<span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vis_settings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.Kitchen.visualize" title="Link to this definition">#</a></dt>
+<dd><p>In addition to super call, make the robot semi-transparent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vis_settings</strong> (<em>dict</em>) – Visualization keywords mapped to T/F, determining whether that specific
+component should be visualized. Should have “grippers” keyword as well as any other relevant
+options specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.KitchenEnvMeta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.kitchen.</span></span><span class="sig-name descname"><span class="pre">KitchenEnvMeta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.KitchenEnvMeta" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EnvMeta</span></code></p>
+<p>Metaclass for registering robocasa environments</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="robocasa.environments.kitchen.kitchen.register_kitchen_env">
+<span class="sig-prename descclassname"><span class="pre">robocasa.environments.kitchen.kitchen.</span></span><span class="sig-name descname"><span class="pre">register_kitchen_env</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#robocasa.environments.kitchen.kitchen.register_kitchen_env" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-robocasa.environments.kitchen">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robocasa.environments.kitchen" title="Link to this heading">#</a></h2>
@@ -967,7 +1320,31 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa-environments-kitchen-kitchen-module">robocasa.environments.kitchen.kitchen module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen.kitchen">robocasa.environments.kitchen.kitchen module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen"><code class="docutils literal notranslate"><span class="pre">Kitchen</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.DINING_COUNTER_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.DOUBLE_CAB_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.EXCLUDE_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.EXCLUDE_STYLES"><code class="docutils literal notranslate"><span class="pre">Kitchen.EXCLUDE_STYLES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.FREEZER_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.FREEZER_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.ISLAND_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.ISLAND_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.OVEN_EXCLUDED_LAYOUTS"><code class="docutils literal notranslate"><span class="pre">Kitchen.OVEN_EXCLUDED_LAYOUTS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.PROBLEMATIC_BLENDER_LID_STYLES"><code class="docutils literal notranslate"><span class="pre">Kitchen.PROBLEMATIC_BLENDER_LID_STYLES</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.edit_model_xml"><code class="docutils literal notranslate"><span class="pre">Kitchen.edit_model_xml()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_ep_meta"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_ep_meta()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_fixture"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_fixture()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.get_obj_lang"><code class="docutils literal notranslate"><span class="pre">Kitchen.get_obj_lang()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.register_fixture_ref"><code class="docutils literal notranslate"><span class="pre">Kitchen.register_fixture_ref()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.reward"><code class="docutils literal notranslate"><span class="pre">Kitchen.reward()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.sample_object"><code class="docutils literal notranslate"><span class="pre">Kitchen.sample_object()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.update_state"><code class="docutils literal notranslate"><span class="pre">Kitchen.update_state()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.Kitchen.visualize"><code class="docutils literal notranslate"><span class="pre">Kitchen.visualize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.KitchenEnvMeta"><code class="docutils literal notranslate"><span class="pre">KitchenEnvMeta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#robocasa.environments.kitchen.kitchen.register_kitchen_env"><code class="docutils literal notranslate"><span class="pre">register_kitchen_env()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-robocasa.environments.kitchen">Module contents</a></li>
 </ul>
   </nav></div>

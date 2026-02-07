@@ -28,9 +28,9 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d17bcdfe" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=cachebust20260206" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=51f4a353" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -47,10 +47,10 @@
     <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
     <script src="../_static/composite_tasks_dropdown.js?v=dc61c8eb"></script>
-    <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
+    <script src="../_static/atomic_task_attributes.js?v=fb0a94a5"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
-    <script src="../_static/atomic_task_index.js?v=e7084057"></script>
-    <script src="../_static/atomic_tasks.js?v=76a95ff3"></script>
+    <script src="../_static/atomic_task_index.js?v=430b6c96"></script>
+    <script src="../_static/atomic_tasks.js?v=f8a45f4c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Objects" href="objects.html" />
@@ -398,8 +398,8 @@ Layouts define the basic floor plan of the kitchen, setting the arrangment of fi
 Styles define relevant textures and fixture attributes (cabinet handle types, door types, coffee machine types, etc).</p>
 <p>The list of layout definitions can he found <a class="reference external" href="https://github.com/robocasa/robocasa/tree/main/robocasa/models/assets/scenes/kitchen_layouts">here</a> and style definitions can be found <a class="reference external" href="https://github.com/robocasa/robocasa/tree/main/robocasa/models/assets/scenes/kitchen_styles">here</a>.</p>
 <p>Environments can be initialized with pretraining or target kitchens using the <code class="docutils literal notranslate"><span class="pre">split</span></code> argument. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">robocasa</span>
-<span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">robocasa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gymnasium</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gym</span>
 
 <span class="c1"># creates an environment with pretraining kitchen scenes</span>
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span>

@@ -290,12 +290,12 @@ table.rc-benchmark-table code.rc-benchmark-comp-unseen {
 }
 
 .rc-task-tag-drawer-open {
-  background: #a855f7; /* purple */
+  background: #bc31ce;
   color: #ffffff;
 }
 
 .rc-task-tag-drawer-close {
-  background: #9333ea; /* purple (darker) */
+  background: #8100ff; 
   color: #ffffff;
 }
 
@@ -315,7 +315,7 @@ table.rc-benchmark-table code.rc-benchmark-comp-unseen {
 }
 
 .rc-task-tag-rack-slide {
-  background: #475569; /* slate */
+  background: #64748b; /* slate (lighter) */
   color: #ffffff;
 }
 
@@ -325,7 +325,7 @@ table.rc-benchmark-table code.rc-benchmark-comp-unseen {
 }
 
 .rc-task-tag-stand-mixer-close {
-  background: #d946ef; /* fuchsia/magenta */
+  background: #E52B50;
   color: #ffffff;
 }
 
