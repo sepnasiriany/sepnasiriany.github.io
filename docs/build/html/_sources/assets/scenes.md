@@ -265,16 +265,16 @@ html[data-theme="dark"] .scene-item img {
 ## Target kitchens
 
 <div class="scene-grid" id="sceneGridTarget">
-  <div class="scene-item" data-layout="1" data-style="1"><img src="../target_scenes/layout1_style1.png"><div class="label">Layout 1 / Style 1</div></div>
-  <div class="scene-item" data-layout="2" data-style="2"><img src="../target_scenes/layout2_style2.png"><div class="label">Layout 2 / Style 2</div></div>
-  <div class="scene-item" data-layout="3" data-style="3"><img src="../target_scenes/layout3_style3.png"><div class="label">Layout 3 / Style 3</div></div>
-  <div class="scene-item" data-layout="4" data-style="4"><img src="../target_scenes/layout4_style4.png"><div class="label">Layout 4 / Style 4</div></div>
-  <div class="scene-item" data-layout="5" data-style="5"><img src="../target_scenes/layout5_style5.png"><div class="label">Layout 5 / Style 5</div></div>
-  <div class="scene-item" data-layout="6" data-style="6"><img src="../target_scenes/layout6_style6.png"><div class="label">Layout 6 / Style 6</div></div>
-  <div class="scene-item" data-layout="7" data-style="7"><img src="../target_scenes/layout7_style7.png"><div class="label">Layout 7 / Style 7</div></div>
-  <div class="scene-item" data-layout="8" data-style="8"><img src="../target_scenes/layout8_style8.png"><div class="label">Layout 8 / Style 8</div></div>
-  <div class="scene-item" data-layout="9" data-style="9"><img src="../target_scenes/layout9_style9.png"><div class="label">Layout 9 / Style 9</div></div>
-  <div class="scene-item" data-layout="10" data-style="10"><img src="../target_scenes/layout10_style10.png"><div class="label">Layout 10 / Style 10</div></div>
+  <div class="scene-item" data-layout="1" data-style="1"><img src="../target_scenes/layout1_style1.png"><div class="label">One Wall Layout / Industrial Style</div></div>
+  <div class="scene-item" data-layout="2" data-style="2"><img src="../target_scenes/layout2_style2.png"><div class="label">One Wall Island Layout / Scandinavian Style</div></div>
+  <div class="scene-item" data-layout="3" data-style="3"><img src="../target_scenes/layout3_style3.png"><div class="label">L-shaped Layout / Modern 1 Style</div></div>
+  <div class="scene-item" data-layout="4" data-style="4"><img src="../target_scenes/layout4_style4.png"><div class="label">L-shaped Island Layout / Farmhouse Style</div></div>
+  <div class="scene-item" data-layout="5" data-style="5"><img src="../target_scenes/layout5_style5.png"><div class="label">Galley Layout / Modern 2 Style</div></div>
+  <div class="scene-item" data-layout="6" data-style="6"><img src="../target_scenes/layout6_style6.png"><div class="label">U-shaped Layout / Traditional Style</div></div>
+  <div class="scene-item" data-layout="7" data-style="7"><img src="../target_scenes/layout7_style7.png"><div class="label">U-shaped Island Layout / Mediterranean Style</div></div>
+  <div class="scene-item" data-layout="8" data-style="8"><img src="../target_scenes/layout8_style8.png"><div class="label">G-shaped Layout / Rustic Style</div></div>
+  <div class="scene-item" data-layout="9" data-style="9"><img src="../target_scenes/layout9_style9.png"><div class="label">G-shaped Large Layout / Coastal Style</div></div>
+  <div class="scene-item" data-layout="10" data-style="10"><img src="../target_scenes/layout10_style10.png"><div class="label">Wraparound Layout / Transitional Style</div></div>
 </div>
 
 

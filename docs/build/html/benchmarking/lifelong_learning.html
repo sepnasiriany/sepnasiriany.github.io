@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Lifelong Learning &#8212; RoboCasa 1.0 Documentation</title>
+    <title>Lifelong Learning &#8212; RoboCasa 1.0 documentation</title>
   
   
   
@@ -28,17 +28,17 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=b4af9463" />
-    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=3b575739" />
+    <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d17bcdfe" />
+    <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=51f4a353" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=5a5bd864"></script>
+    <script src="../_static/documentation_options.js?v=a681ed88"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -46,11 +46,11 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'benchmarking/lifelong_learning';</script>
     <script src="../_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks_dropdown.js?v=5b8ca204"></script>
-    <script src="../_static/atomic_task_attributes.js?v=f414f7b2"></script>
+    <script src="../_static/composite_tasks_dropdown.js?v=dc61c8eb"></script>
+    <script src="../_static/atomic_task_attributes.js?v=fb0a94a5"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
-    <script src="../_static/atomic_task_index.js?v=e7084057"></script>
-    <script src="../_static/atomic_tasks.js?v=76a95ff3"></script>
+    <script src="../_static/atomic_task_index.js?v=430b6c96"></script>
+    <script src="../_static/atomic_tasks.js?v=f8a45f4c"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Scenes" href="../assets/scenes.html" />
@@ -146,8 +146,8 @@
       
     
     
-    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 Documentation - Home"/>
-    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 Documentation - Home"/>`);</script>
+    <img src="../_static/robocasa_logo.svg" class="logo__image only-light" alt="RoboCasa 1.0 documentation - Home"/>
+    <script>document.write(`<img src="../_static/robocasa_logo.svg" class="logo__image only-dark" alt="RoboCasa 1.0 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -199,8 +199,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_datasets.html">Creating Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/creating_tasks.html">Creating Tasks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../use_cases/mimicgen.html">Generating Data with MimicGen</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Source API</span></p>
 <ul class="nav bd-sidenav">
@@ -407,10 +405,10 @@ We do policy learning on a subset of the <a class="reference external" href="../
 We begin with learning on simple atomic tasks invovling the invokation of a single skill, and progressively learn longer horizon tasks which involve invoking a longer sequence of skills.
 Specifically we learn over four phases:</p>
 <ul class="simple">
-<li><p><strong>Phase 1</strong>: tasks with 1 stage, i.e., atomic tasks (we use all 65 atomic tasks; see <a class="reference external" href="#">here</a> for the list of tasks)</p></li>
-<li><p><strong>Phase 2</strong>: tasks with 2-3 stages (we use 20 tasks total; see <a class="reference external" href="#">here</a> for the list of tasks)</p></li>
-<li><p><strong>Phase 3</strong>: tasks with 4-5 stages (we use 20 tasks total; see <a class="reference external" href="#">here</a> for the list of tasks)</p></li>
-<li><p><strong>Phase 4</strong>: tasks with 6+ stages (we use 20 tasks total; see <a class="reference external" href="#">here</a> for the list of tasks)</p></li>
+<li><p><strong>Phase 1</strong>: tasks with 1 stage, i.e., atomic tasks (we use all 65 atomic tasks; see <a class="reference external" href="https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py">here</a> for the list of tasks)</p></li>
+<li><p><strong>Phase 2</strong>: tasks with 2-3 stages (we use 20 tasks total; see <a class="reference external" href="https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py">here</a> for the list of tasks)</p></li>
+<li><p><strong>Phase 3</strong>: tasks with 4-5 stages (we use 20 tasks total; see <a class="reference external" href="https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py">here</a> for the list of tasks)</p></li>
+<li><p><strong>Phase 4</strong>: tasks with 6+ stages (we use 20 tasks total; see <a class="reference external" href="https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py">here</a> for the list of tasks)</p></li>
 </ul>
 <p>After each phase, we evaluate the policy on all of the tasks learned from the first phase through the latest phase.
 The goal is to learn tasks in new phases effectively while retaining knowledge about all previous phases.</p>
@@ -514,25 +512,25 @@ The goal is to learn tasks in new phases effectively while retaining knowledge a
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># evaluate model after phase1</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">lifelong_learning</span><span class="o">/</span><span class="n">phase1</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">100000</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">lifelong_learning_phase1</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">lifelong_learning_phase1</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 
 <span class="c1"># evaluate model after phase2</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">lifelong_learning</span><span class="o">/</span><span class="n">phase2</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 
 <span class="c1"># evaluate model after phase3</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">lifelong_learning</span><span class="o">/</span><span class="n">phase3</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> <span class="n">lifelong_learning_phase3</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> <span class="n">lifelong_learning_phase3</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 
 <span class="c1"># evaluate model after phase4</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">lifelong_learning</span><span class="o">/</span><span class="n">phase4</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
-<span class="o">--</span><span class="n">task_soup</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> <span class="n">lifelong_learning_phase3</span> <span class="n">lifelong_learning_phase4</span> \
+<span class="o">--</span><span class="n">task_set</span> <span class="n">lifelong_learning_phase1</span> <span class="n">lifelong_learning_phase2</span> <span class="n">lifelong_learning_phase3</span> <span class="n">lifelong_learning_phase4</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">pretrain</span>
 </pre></div>
 </div>

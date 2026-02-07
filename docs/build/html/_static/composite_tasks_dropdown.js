@@ -10,6 +10,20 @@
     else fn();
   }
 
+  /** {x} and [*x*] -> [<strong><em>x</em></strong>]; *x* or **x** -> <strong><em>x</em></strong> (bold+italic). */
+  function formatDescriptionToHtml(desc) {
+    if (!desc) return "";
+    const escaped = String(desc)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    return escaped
+      .replace(/\{([^}]+)\}/g, "[<strong><em>$1</em></strong>]")
+      .replace(/\[\*([^*]*?)\*\]/g, "[<strong><em>$1</em></strong>]")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*([^*]+)\*/g, "<strong><em>$1</em></strong>");
+  }
+
   function isCompositeTasksPage() {
     const path = window.location.pathname.replace(/\\/g, "/");
     return path.endsWith("/tasks/composite_tasks.html") || path.endsWith("/tasks/composite_tasks/");
@@ -895,6 +909,7 @@
     ["DeliverStraw", ["PickPlace", "drawer_open"]],
     ["PrepareCocktailStation", ["PickPlace", "door_open"]],
     ["PrepareDishwasher", ["rack_slide"]],
+    ["PreSoakPan", ["PickPlace", "lever_turn"]],
     ["DrainVeggies", ["PickPlace", "lever_turn"]],
     ["PrewashFoodAssembly", ["PickPlace", "lever_turn"]],
     ["WashFruitColander", ["PickPlace", "lever_turn"]],
@@ -2205,7 +2220,7 @@
               tdTask.appendChild(code);
             }
             const tdDesc = document.createElement("td");
-            tdDesc.textContent = t.description || "";
+            tdDesc.innerHTML = formatDescriptionToHtml(t.description || "");
             tdTask.style.textAlign = "left";
             tdDesc.style.textAlign = "left";
             tr.appendChild(tdTask);
@@ -2304,32 +2319,34 @@
     }
 
     // Replace templated variable braces in descriptions:
-    // "{left/right}" -> "[<em>left/right</em>]"
+    // "{x}" and [*x*] -> [<strong><em>x</em></strong>]; *x* or **x** -> <strong><em>x</em></strong>
     function formatCompositeDescriptionInPlace(rootEl) {
       if (!rootEl) return;
       const textNodes = [];
       const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
       for (let n = walker.nextNode(); n; n = walker.nextNode()) textNodes.push(n);
 
-      const re = /\{([^}]+)\}/g;
+      const re = /\{([^}]+)\}|\[\*([^*]*?)\*\]|\*\*([^*]+)\*\*|\*([^*]+)\*/g;
       for (const node of textNodes) {
         const s = node.nodeValue || "";
-        if (!s.includes("{")) continue;
+        if (!s.includes("{") && !s.includes("*")) continue;
         re.lastIndex = 0;
 
         const frag = document.createDocumentFragment();
         let last = 0;
         let m;
-        while ((m = re.exec(s))) {
-          const start = m.index;
-          const end = start + m[0].length;
-          if (start > last) frag.appendChild(document.createTextNode(s.slice(last, start)));
-          frag.appendChild(document.createTextNode("["));
+        while ((m = re.exec(s)) !== null) {
+          if (m.index > last) frag.appendChild(document.createTextNode(s.slice(last, m.index)));
+          const text = m[1] !== undefined ? m[1] : (m[2] !== undefined ? m[2] : (m[3] !== undefined ? m[3] : m[4]));
+          const withBrackets = m[1] !== undefined || m[2] !== undefined;
+          if (withBrackets) frag.appendChild(document.createTextNode("["));
+          const strong = document.createElement("strong");
           const em = document.createElement("em");
-          em.textContent = m[1];
-          frag.appendChild(em);
-          frag.appendChild(document.createTextNode("]"));
-          last = end;
+          em.textContent = text;
+          strong.appendChild(em);
+          frag.appendChild(strong);
+          if (withBrackets) frag.appendChild(document.createTextNode("]"));
+          last = re.lastIndex;
         }
         if (last === 0) continue; // no matches
         if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
@@ -3100,15 +3117,21 @@
       el.classList.toggle("rc-invalid", Boolean(isInvalid));
     }
 
+    /** Restrict to 1–2 positive digits only (no minus, no 100+). */
+    function sanitizeSubtasksInput(val) {
+      return String(val ?? "").replace(/[^0-9]/g, "").slice(0, 2);
+    }
+
     function syncMinMaxIfCrossed(changed) {
       const minP = parseBound(minInput.value);
       const maxP = parseBound(maxInput.value);
       if (!minP.ok || !maxP.ok) return;
       if (minP.value == null || maxP.value == null) return;
       if (minP.value <= maxP.value) return;
-      // Keep them from crossing by moving the "other" endpoint.
+      // On blur only: fix the field that was edited so the other value is preserved
+      // (e.g. 5-1 after editing max → 5-5, so user's min is kept).
       if (changed === "min") maxInput.value = String(minP.value);
-      else minInput.value = String(maxP.value);
+      else maxInput.value = String(minP.value);
     }
 
     function getActiveLengthIntervals() {
@@ -3764,12 +3787,14 @@
     // Wire filters after search exists
 
     minInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("min");
+      const sane = sanitizeSubtasksInput(minInput.value);
+      if (sane !== minInput.value) minInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
     maxInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("max");
+      const sane = sanitizeSubtasksInput(maxInput.value);
+      if (sane !== maxInput.value) maxInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
@@ -4040,7 +4065,7 @@
         }
 
         const tdDesc = document.createElement("td");
-        tdDesc.textContent = info.description || "";
+        tdDesc.innerHTML = formatDescriptionToHtml(info.description || "");
 
         tr.appendChild(tdTask);
         tr.appendChild(tdDesc);

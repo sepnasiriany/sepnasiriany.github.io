@@ -16,10 +16,10 @@ A dataset soup simply specifies a list of dataset metadata, and embedded in this
 ### Evaluation
 We evaluate trained models on one or several tasks.
 To specify which tasks, you need to specify two variables:
-- **task_soup**: Which set of tasks to evaluate on. Typically, this corresponds to the same tasks represented in the dataset soup used to trained the model, but can be any arbitrary set of tasks. The list of registered task soups is specified in [dataset_registry.py](robocasa/utils/dataset_registry.py).
+- **task set**: Which set of tasks to evaluate on. Typically, this corresponds to the same tasks represented in the dataset soup used to trained the model, but can be any arbitrary set of tasks. The list of registered task sets is specified in [dataset_registry.py](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py).
 - **split**: This specifies which evaluation split to run evaluations are. There are two options: `pretrain` and `target`. The `pretrain` split features 2500 kitchen scenes and all of the pretraining objects, which the `target` split features a disjoint set of 10 target kitchen scenes and a disjoint set of target objects.
 
-For each benchmarking experiment we specify the specific task soup and split to evaluate on.
+For each benchmarking experiment we specify the specific task set and split to evaluate on.
 For all experiments, we randomly sample 30 scenarios to run evaluation rollouts on.
 For each rollout, we recieve a binary task success signal for whether the task is successfully completed.
 We report average task success rates across these 30 rollouts. 

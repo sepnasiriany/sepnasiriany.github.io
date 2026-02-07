@@ -5,9 +5,9 @@
 
 | Task                        | Description                                                                                                   | Class File                                                                                                                               |
 |:----------------------------|:--------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------|
-| `PastryDisplay`             | Place the pastries on the plates.                                                                               | [Source](https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/baking/pastry_display.py)              |
-| `OrganizeBakingIngredients` | Place the eggs and milk next to the bowl.                                                                 | [Source](https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/baking/organize_baking_ingredients.py) |
 | `CupcakeCleanup`            | Move the fresh-baked cupcake off the tray onto the counter, and place the bowl used for mixing into the sink. | [Source](https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/baking/cupcake_cleanup.py)             |
+| `OrganizeBakingIngredients` | Place the eggs and milk next to the bowl.                                                                 | [Source](https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/baking/organize_baking_ingredients.py) |
+| `PastryDisplay`             | Place the pastries on the plates.                                                                               | [Source](https://github.com/robocasa/robocasa/blob/main/robocasa/environments/kitchen/multi_stage/baking/pastry_display.py)              |
 
 
 ### Boiling

@@ -159,25 +159,25 @@ python scripts/gr00t_finetune.py \
 # Evaluate pretraining model
 python scripts/run_eval.py \
 --model_path expdata/foundation_model_learning/pretraining/checkpoint-80000 \
---task_soup atomic_seen composite_seen composite_unseen \
+--task_set atomic_seen composite_seen composite_unseen \
 --split target
 
 # evaluate target fine-tuning: atomic-seen tasks
 python scripts/run_eval.py \
 --model_path expdata/foundation_model_learning/target_task_finetuning/atomic_seen/checkpoint-60000 \
---task_soup atomic_seen \
+--task_set atomic_seen \
 --split target
 
 # evaluate target fine-tuning: composite-seen tasks
 python scripts/run_eval.py \
 --model_path expdata/foundation_model_learning/target_task_finetuning/composite_seen/checkpoint-60000 \
---task_soup composite_seen \
+--task_set composite_seen \
 --split target
 
 # evaluate target fine-tuning: composite-unseen tasks
 python scripts/run_eval.py \
 --model_path expdata/foundation_model_learning/target_task_finetuning/composite_unseen/checkpoint-60000 \
---task_soup composite_unseen \
+--task_set composite_unseen \
 --split target
 ```
 

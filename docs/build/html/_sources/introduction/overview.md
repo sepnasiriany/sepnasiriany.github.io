@@ -8,26 +8,26 @@
 - **Benchmarking support**: popular policy learning methods including Diffusion Policy, pi, and GR00T
 
 <p align="center">
-  <img width="100.0%" src="../images/robocasa-banner.jpg">
- </p>
+  <img width="100.0%" src="../_static/robocasa-banner.jpg">
+</p>
 
 This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.
 
 ### Citation
 
-RoboCasa365 release (2026):
+**RoboCasa365:**
+
 ```bibtex
 @inproceedings{robocasa365,
   title={RoboCasa365: A Large-Scale Simulation Framework for Training and Benchmarking Generalist Robots},
   author={Soroush Nasiriany and Sepehr Nasiriany and Abhiram Maddukuri and Yuke Zhu},
-  booktitle={In Submission},
+  booktitle={International Conference on Learning Representations (ICLR)},
   year={2026}
 }
 ```
 
-<br>
+**RoboCasa (Original Release):**
 
-Original RoboCasa release (2024):
 ```bibtex
 @inproceedings{robocasa2024,
   title={RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots},

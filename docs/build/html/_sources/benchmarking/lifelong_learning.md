@@ -4,10 +4,10 @@ In the lifelong learning benchmark, we study learning tasks over a sequence of p
 We do policy learning on a subset of the [Human Pretraining Datasets](../datasets/pretraining_posttraining_datasets.html#human-datasets), over 125 task total.
 We begin with learning on simple atomic tasks invovling the invokation of a single skill, and progressively learn longer horizon tasks which involve invoking a longer sequence of skills.
 Specifically we learn over four phases:
-- **Phase 1**: tasks with 1 stage, i.e., atomic tasks (we use all 65 atomic tasks; see [here]() for the list of tasks)
-- **Phase 2**: tasks with 2-3 stages (we use 20 tasks total; see [here]() for the list of tasks)
-- **Phase 3**: tasks with 4-5 stages (we use 20 tasks total; see [here]() for the list of tasks)
-- **Phase 4**: tasks with 6+ stages (we use 20 tasks total; see [here]() for the list of tasks)
+- **Phase 1**: tasks with 1 stage, i.e., atomic tasks (we use all 65 atomic tasks; see [here](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py) for the list of tasks)
+- **Phase 2**: tasks with 2-3 stages (we use 20 tasks total; see [here](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py) for the list of tasks)
+- **Phase 3**: tasks with 4-5 stages (we use 20 tasks total; see [here](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py) for the list of tasks)
+- **Phase 4**: tasks with 6+ stages (we use 20 tasks total; see [here](https://github.com/robocasa/robocasa-dev/blob/dev/robocasa/utils/dataset_registry.py) for the list of tasks)
 
 After each phase, we evaluate the policy on all of the tasks learned from the first phase through the latest phase.
 The goal is to learn tasks in new phases effectively while retaining knowledge about all previous phases.
@@ -109,25 +109,25 @@ python scripts/gr00t_finetune.py \
 # evaluate model after phase1
 python scripts/run_eval.py \
 --model_path expdata/lifelong_learning/phase1/checkpoint-100000 \
---task_soup lifelong_learning_phase1 \
+--task_set lifelong_learning_phase1 \
 --split pretrain
 
 # evaluate model after phase2
 python scripts/run_eval.py \
 --model_path expdata/lifelong_learning/phase2/checkpoint-60000 \
---task_soup lifelong_learning_phase1 lifelong_learning_phase2 \
+--task_set lifelong_learning_phase1 lifelong_learning_phase2 \
 --split pretrain
 
 # evaluate model after phase3
 python scripts/run_eval.py \
 --model_path expdata/lifelong_learning/phase3/checkpoint-60000 \
---task_soup lifelong_learning_phase1 lifelong_learning_phase2 lifelong_learning_phase3 \
+--task_set lifelong_learning_phase1 lifelong_learning_phase2 lifelong_learning_phase3 \
 --split pretrain
 
 # evaluate model after phase4
 python scripts/run_eval.py \
 --model_path expdata/lifelong_learning/phase4/checkpoint-60000 \
---task_soup lifelong_learning_phase1 lifelong_learning_phase2 lifelong_learning_phase3 lifelong_learning_phase4 \
+--task_set lifelong_learning_phase1 lifelong_learning_phase2 lifelong_learning_phase3 lifelong_learning_phase4 \
 --split pretrain
 ```
 

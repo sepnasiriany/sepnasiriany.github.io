@@ -1639,15 +1639,21 @@
       el.classList.toggle("rc-invalid", Boolean(isInvalid));
     }
 
+    /** Restrict to 1–2 positive digits only (no minus, no 100+). */
+    function sanitizeSubtasksInput(val) {
+      return String(val ?? "").replace(/[^0-9]/g, "").slice(0, 2);
+    }
+
     function syncMinMaxIfCrossed(changed) {
       const minP = parseBound(minInput.value);
       const maxP = parseBound(maxInput.value);
       if (!minP.ok || !maxP.ok) return;
       if (minP.value == null || maxP.value == null) return;
       if (minP.value <= maxP.value) return;
-      // Keep them from crossing by moving the "other" endpoint.
+      // On blur only: fix the field that was edited so the other value is preserved
+      // (e.g. 5-1 after editing max → 5-5, so user's min is kept).
       if (changed === "min") maxInput.value = String(minP.value);
-      else minInput.value = String(maxP.value);
+      else maxInput.value = String(minP.value);
     }
 
     function getActiveLengthIntervals() {
@@ -2037,12 +2043,14 @@
     navSelect.addEventListener("change", applyFilters);
 
     minInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("min");
+      const sane = sanitizeSubtasksInput(minInput.value);
+      if (sane !== minInput.value) minInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });
     maxInput.addEventListener("input", () => {
-      syncMinMaxIfCrossed("max");
+      const sane = sanitizeSubtasksInput(maxInput.value);
+      if (sane !== maxInput.value) maxInput.value = sane;
       updateSubtasksValidityAndNote();
       window.setTimeout(applyFilters, 0);
     });

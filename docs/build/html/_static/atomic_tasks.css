@@ -39,8 +39,9 @@ html[data-theme="dark"] body.rc-atomic-tasks {
   --rc-atomic-link-hover: rgba(191, 219, 254, 0.96); /* blue-200-ish */
 }
 
-/* Atomic Tasks: Horizon filter uses composite "length" dropdown classes */
-html[data-theme="dark"] body.rc-atomic-tasks .rc-length-dropdown-btn {
+/* Atomic Tasks: Horizon and Target Tasks buttons – same look in dark mode */
+html[data-theme="dark"] body.rc-atomic-tasks .rc-length-dropdown-btn,
+html[data-theme="dark"] body.rc-atomic-tasks .rc-task-attr-dropdown-btn {
   background: var(--rc-atomic-surface-2);
   border-color: var(--rc-atomic-border);
   color: var(--rc-atomic-text);
@@ -636,7 +637,7 @@ body.rc-atomic-tasks .rc-video-modal-close:focus-visible {
 body.rc-atomic-tasks .rc-video-modal-title {
   color: var(--rc-atomic-text);
   font-weight: 800;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

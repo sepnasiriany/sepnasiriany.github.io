@@ -54,8 +54,8 @@ Welcome to RoboCasa's documentation!
    :caption: Use Cases
 
    use_cases/creating_datasets
-   use_cases/creating_tasks
-   use_cases/mimicgen
+   .. use_cases/creating_tasks
+   .. use_cases/mimicgen
 
 .. toctree::
    :maxdepth: 4

@@ -128,7 +128,18 @@ html_title = "RoboCasa 0.2 documentation"
 html_theme_options = {
     "logo": {
         "text": "RoboCasa 0.2 documentation",
-    }
+    },
+}
+
+# Add "Current Version: v1.0" link to the left sidebar (not the page footer).
+html_sidebars = {
+    "**": [
+        "navbar-logo.html",
+        "icon-links.html",
+        "search-button-field.html",
+        "sbt-sidebar-nav.html",
+        "sidebar-current-version.html",
+    ]
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
