@@ -817,7 +817,7 @@
       "activity": "Chopping Vegetables",
       "num_subtasks": 1,
       "moma_required": "Yes",
-      "description": "Place the appropriate cutting tool for cutting the *fruit/vegetable* skin on the cutting board."
+      "description": "Place the appropriate cutting tool for cutting the [*fruit/vegetable*] skin on the cutting board."
     },
     {
       "name": "GatherCuttingTools",
