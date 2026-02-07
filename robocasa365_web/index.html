@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to RoboCasa’s documentation! &#8212; RoboCasa 1.0 documentation</title>
+    <title>RoboCasa documentation &#8212; RoboCasa 1.0 documentation</title>
   
   
   
@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/composite_tasks_dropdown.css?v=62b304aa" />
     <link rel="stylesheet" type="text/css" href="_static/atomic_tasks.css?v=1e6792ba" />
@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <script src="_static/composite_task_attributes.js?v=44a5f6a7"></script>
     <script src="_static/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="_static/composite_tasks_dropdown.js?v=cachebust20260207b"></script>
+    <script src="_static/composite_tasks_dropdown.js?v=a05364a8"></script>
     <script src="_static/atomic_task_attributes.js?v=f414f7b2"></script>
     <script src="_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
     <script src="_static/atomic_task_index.js?v=e7084057"></script>
@@ -367,7 +367,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to RoboCasa’s documentation!</h1>
+    <h1>RoboCasa documentation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -377,7 +377,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome to RoboCasa’s documentation!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">RoboCasa documentation</a><ul class="visible nav section-nav flex-column">
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
@@ -393,9 +393,28 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="welcome-to-robocasa-s-documentation">
-<h1>Welcome to RoboCasa’s documentation!<a class="headerlink" href="#welcome-to-robocasa-s-documentation" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
+  <section id="robocasa-documentation">
+<h1>RoboCasa documentation<a class="headerlink" href="#robocasa-documentation" title="Link to this heading">#</a></h1>
+<p>Welcome to RoboCasa’s documentation. Use the sections below to navigate the project.</p>
+<style>
+  /* Index-only: ensure toctree lists show bullet markers like the sample page. */
+  .bd-article .toctree-wrapper ul {
+    list-style-type: disc !important;
+    padding-left: 1.4rem !important;
+    margin-top: 0.4rem !important;
+  }
+  /* pydata/sphinx-book-theme often sets list-style: none on these; force it back. */
+  .bd-article .toctree-wrapper ul > li {
+    list-style-type: disc !important;
+    display: list-item !important;
+  }
+  .bd-article .toctree-wrapper ul > li::marker {
+    color: currentColor !important; /* ensure marker isn't "invisible" */
+  }
+  .bd-article .toctree-wrapper li {
+    margin: 0.25rem 0 !important;
+  }
+</style><div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction/overview.html">Overview</a></li>
@@ -450,12 +469,12 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/robocasa.environments.html">robocasa.environments package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.environments.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/robocasa.environments.html#module-robocasa.environments">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/robocasa.environments.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="api/robocasa.models.html">robocasa.models package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.models.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/robocasa.models.html#module-robocasa.models">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/robocasa.models.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="api/robocasa.utils.html">robocasa.utils package</a><ul>
@@ -464,7 +483,7 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.camera_utils">robocasa.utils.camera_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.config_utils">robocasa.utils.config_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.dataset_registry">robocasa.utils.dataset_registry module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.env_utils">robocasa.utils.env_utils module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#robocasa-utils-env-utils-module">robocasa.utils.env_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.errors">robocasa.utils.errors module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#robocasa-utils-eval-utils-module">robocasa.utils.eval_utils module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/robocasa.utils.html#module-robocasa.utils.object_utils">robocasa.utils.object_utils module</a></li>
@@ -481,7 +500,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#module-robocasa.macros">robocasa.macros module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#module-robocasa.macros_private">robocasa.macros_private module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#module-robocasa">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/robocasa.html#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -538,7 +557,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome to RoboCasa’s documentation!</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">RoboCasa documentation</a><ul class="visible nav section-nav flex-column">
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#indices-and-tables">Indices and tables</a></li>
