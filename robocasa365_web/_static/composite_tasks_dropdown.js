@@ -230,8 +230,9 @@
     if (CACHED_TASK_ATTRIBUTES_JSON) return CACHED_TASK_ATTRIBUTES_JSON;
     // In this docs build, static assets are served from `_static/`.
     // (`html_static_path` merges several directories into `_static/` root.)
-    const url = `${getContentRoot()}_static/task_attributes.json`;
-    const res = await fetch(url, { cache: "force-cache" });
+    // Append version to avoid stale cache when task list / activities change
+    const url = `${getContentRoot()}_static/task_attributes.json?v=2`;
+    const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) {
       throw new Error(`Failed to load ${url}: ${res.status} ${res.statusText}`);
     }
@@ -403,6 +404,8 @@
     ["cleaning appliacnes", "cleaning_appliances"],
     ["loading dishwasher", "loading_dishwasher"],
     ["washing produce", "washing_fruits_and_vegetables"],
+
+    ["organizing dishes and containers", "organizing_dishes_and_containers"],
   ]);
 
   function folderForActivityTitle(activityTitle) {
@@ -962,6 +965,8 @@
     ["ToastOneSlotPair", ["button_press"]],
     ["RinseSinkBasin", ["PickPlace"]],
     ["TurnOffSimmeredSauceHeat", ["PickPlace"]],
+    // Explicit: this task should be Pick & Place only (no inferred open/close door or navigation).
+    ["OrganizeMugsByHandle", ["nav", "door_open", "door_close"]],
   ]);
 
   // Tag display order (should match the Task Attributes dropdown order)

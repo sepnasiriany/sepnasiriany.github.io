@@ -214,7 +214,7 @@
   const FIXTURE_VIEW_MISC_TASKS = new Set([
     "CheesyBread",
     "MakeIcedCoffee",
-    "OrganizeMugsByHandle",
+    "PackDessert",
     "NavigateKitchen",
   ]);
 

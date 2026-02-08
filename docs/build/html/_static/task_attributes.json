@@ -212,9 +212,9 @@
     },
     {
       "name": "OrganizeMugsByHandle",
-      "activity": "Atomic",
-      "num_subtasks": 1,
-      "moma_required": "No",
+      "activity": "Organizing Dishes and Containers",
+      "num_subtasks": 2,
+      "moma_required": "Yes",
       "description": "Pick the mug on the counter and place it in the cabinet with the handle facing the right, like the mugs already inside."
     },
     {
@@ -1528,7 +1528,7 @@
     },
     {
       "name": "PackDessert",
-      "activity": "Packing Lunches",
+      "activity": "Atomic",
       "num_subtasks": 1,
       "moma_required": "No",
       "description": "Add the [*dessert*] to the tupperware that contains the [*food*]."
