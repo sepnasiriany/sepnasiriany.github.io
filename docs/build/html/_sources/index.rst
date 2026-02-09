@@ -4,7 +4,29 @@
    contain the root `toctree` directive.
 
 Welcome to RoboCasa's documentation!
-====================================
+===============================
+
+.. raw:: html
+
+   <style>
+     /* Index-only: ensure toctree lists show bullet markers like the sample page. */
+     .bd-article .toctree-wrapper ul {
+       list-style-type: disc !important;
+       padding-left: 1.4rem !important;
+       margin-top: 0.4rem !important;
+     }
+     /* pydata/sphinx-book-theme often sets list-style: none on these; force it back. */
+     .bd-article .toctree-wrapper ul > li {
+       list-style-type: disc !important;
+       display: list-item !important;
+     }
+     .bd-article .toctree-wrapper ul > li::marker {
+       color: currentColor !important; /* ensure marker isn't "invisible" */
+     }
+     .bd-article .toctree-wrapper li {
+       margin: 0.25rem 0 !important;
+     }
+   </style>
 
 .. toctree::
    :maxdepth: 1
