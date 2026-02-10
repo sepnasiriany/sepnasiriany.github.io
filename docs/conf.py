@@ -166,7 +166,7 @@ html_css_files = [
 _confdir = os.path.dirname(os.path.abspath(__file__))
 html_static_path = [
     p
-    for p in ["_static", "images", "atomic_tasks", "composite_tasks", "fixtures"]
+    for p in ["_static", "images", "atomic_tasks", "composite_tasks"]
     if os.path.isdir(os.path.join(_confdir, p))
 ]
 # Ensure _static exists so Sphinx doesn't warn (optional overrides go here).
