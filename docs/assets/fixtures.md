@@ -1074,12 +1074,19 @@ function initModalSlider() {
   if (!modalSlider) return;
   modalSlider.addEventListener('input', function() {
     const value = this.value;
+    const valueNum = parseInt(value, 10);
+    const currentNum = currentViewer ? parseInt(currentViewer.dataset.current || "1", 10) : 0;
     if (currentViewer) updateModalCounterOnly(currentViewer, value);
     if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
-    modalSliderDebounce = setTimeout(function() {
+    if (currentViewer && Math.abs(valueNum - currentNum) <= 2) {
       modalSliderDebounce = null;
       fixtureModalSliderChange(value);
-    }, 100);
+    } else {
+      modalSliderDebounce = setTimeout(function() {
+        modalSliderDebounce = null;
+        fixtureModalSliderChange(value);
+      }, 60);
+    }
   });
   modalSlider.addEventListener('change', function() {
     if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
@@ -1211,12 +1218,20 @@ function initFixtureViewers() {
       let sliderDebounce = null;
       slider.addEventListener('input', function() {
         const value = this.value;
+        const valueNum = parseInt(value, 10);
+        const currentNum = parseInt(viewer.dataset.current || "1", 10);
         updateViewerCounterOnly(viewer, value);
         if (sliderDebounce) clearTimeout(sliderDebounce);
-        sliderDebounce = setTimeout(function() {
+        // Small step (±2): update immediately so cached image shows instantly
+        if (Math.abs(valueNum - currentNum) <= 2) {
           sliderDebounce = null;
           setViewerIndex(viewer, value);
-        }, 100);
+        } else {
+          sliderDebounce = setTimeout(function() {
+            sliderDebounce = null;
+            setViewerIndex(viewer, value);
+          }, 60);
+        }
       });
       slider.addEventListener('change', function() {
         if (sliderDebounce) clearTimeout(sliderDebounce);

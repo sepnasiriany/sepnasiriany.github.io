@@ -34,7 +34,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>-</td>
       <td>-</td>
       <td>-</td>
-      <td><a href="#">TODO</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/lifelong_learning/phase1/checkpoint-100000">Link</a></td>
     </tr>
     <tr>
       <td>Phase2</td>
@@ -42,7 +42,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>24.5</td>
       <td>-</td>
       <td>-</td>
-      <td><a href="#">TODO</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/lifelong_learning/phase2/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td>Phase3</td>
@@ -50,7 +50,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>4.8</td>
       <td>11.3</td>
       <td>-</td>
-      <td><a href="#">TODO</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/lifelong_learning/phase3/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td>Phase4</td>
@@ -58,7 +58,7 @@ We have performed the lifelong learning benchmark using GR00T N1.5. Here is a su
       <td>1.7</td>
       <td>2.7</td>
       <td>4.3</td>
-      <td><a href="#">TODO</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/lifelong_learning/phase4/checkpoint-60000">Link</a></td>
     </tr>
   </tbody>
 </table>
