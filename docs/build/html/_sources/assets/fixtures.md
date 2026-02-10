@@ -18,7 +18,7 @@
 </div>
 
 <script>
-  // Fixture images: load from R2 CDN (same structure as docs/fixtures: <category>/<id>.png).
+  // Fixture images: load from R2 CDN (same structure as docs/fixtures: <category>/<id>.webp).
   const FIXTURE_IMAGE_BASE = "https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev";
   // Rewrite any static path (relative or absolute) to R2 base (covers Sphinx-built absolute paths).
   function toR2(path) {
@@ -556,7 +556,7 @@ html[data-theme="dark"] .fixture-preview-image {
   <div class="modal-slider-container">
     <button type="button" class="modal-arrow" id="fixtureModalPrev" aria-label="Previous style" onclick="fixtureModalStep(-1)">&#8249;</button>
     <span class="modal-counter" id="fixtureModalCounter">1 / 1</span>
-    <input type="range" class="modal-slider" id="fixtureModalSlider" min="1" value="1" onchange="fixtureModalSliderChange(this.value)" oninput="fixtureModalSliderChange(this.value)">
+    <input type="range" class="modal-slider" id="fixtureModalSlider" min="1" value="1">
     <button type="button" class="modal-arrow" id="fixtureModalNext" aria-label="Next style" onclick="fixtureModalStep(1)">&#8250;</button>
   </div>
 </div>
@@ -566,7 +566,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Blender</h2>
     <div class="fixture-viewer" data-name="Blender" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/blender" data-ids="1,2,3,4,5,6,7,8,11,12,13,14,15,56,18,19,21,22,23,25,30,44" data-style-groups="1;2;3;4|9;5;6;7;8|10;11|28|48|51;12|35|39;13|29|31;14|16|36;15|20|32|49;17|27|53|56;18|24|52;19|26|40|54|58;21|37|60;22|41|42|59;23|38|43|46|47;25|45|50;30|33|34;44|55|57">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/blender/1.png" alt="Blender">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/blender/1.webp" alt="Blender">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -580,7 +580,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Coffee Machine</h2>
     <div class="fixture-viewer" data-name="Coffee Machine" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/coffee_machine" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,32,20,21,22,23,24,25,27,28,29,30,31,34,35,36,37,38,42,43,44,45,47,48,50,51,53,56,58,59,60" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15|33;16|41;17;18|57;19|32;20;21|49;22|39;23|54;24|46|52;25|26;27;28;29;30|55;31;34|40;35;36;37;38;42;43;44;45;47;48;50;51;53;56;58;59;60">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/coffee_machine/1.png" alt="Coffee Machine">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/coffee_machine/1.webp" alt="Coffee Machine">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -594,7 +594,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Electric Kettle</h2>
     <div class="fixture-viewer" data-name="Electric Kettle" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/electric_kettle" data-ids="1,2,3,4,9,11,12,13,14,15,16,20,21,22,23,24,25,26,31,34,38,39,41,53,55" data-style-groups="1|6;2|7;3|8;4|5;9|10;11|17|43;12|18|47|59;13|29|35|50;14|36|40|44|60;15|19;16|45;20;21|37|49;22|28|56;23|51;24|48;25|27|54|57;26|30|33|42;31|32;34;38|52;39|46;41;53;55|58">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/electric_kettle/1.png" alt="Electric Kettle">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/electric_kettle/1.webp" alt="Electric Kettle">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -608,7 +608,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Dishwasher</h2>
     <div class="fixture-viewer" data-name="Dishwasher" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/dishwasher" data-ids="36,40,32,15,4,30,26,47,38,18,49,20,31,17,45,12,52,8,44,6,23,5,24,13,14" data-style-groups="1|6;2|8|9;3;4;5;7|10;11|28|33;12|27|29;13|39;14|16|24|36|53|59;15|17|41|44;18|35;19|55;20|40;21|37|43|45;22|46;23|30;25|34|47|48|52|56;26|54|60;31|42;32;38|57;49|51;50;58">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/dishwasher/36.png" alt="Dishwasher">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/dishwasher/36.webp" alt="Dishwasher">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -622,7 +622,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Fridge (Bottom Freezer)</h2>
     <div class="fixture-viewer" data-name="Fridge (Bottom Freezer)" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_bottom_freezer" data-ids="36,9,32,37,30,26,47,38,57,29,16,20,31,17,12,8,22" data-style-groups="1|5;2|8;3|4;6;7|9|10;11|45;12|36|59;13|24;14|16|23|49|53;15|34|51|60;17|27|32|40|46|57;18|21|43|52;19|29|35|48|58;20|30|37|41|44|55|56;22|33|39|50|54;25|26|31;28|38|42|47">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_bottom_freezer/36.png" alt="Fridge (Bottom Freezer)">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_bottom_freezer/36.webp" alt="Fridge (Bottom Freezer)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -636,7 +636,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Fridge (French Door)</h2>
     <div class="fixture-viewer" data-name="Fridge (French Door)" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_french_door" data-ids="1,8,10,4,6,11,12,13,15,17,19,20,22,25,30,51,44" data-style-groups="1;2|8;3|7|10;4;5|6|9;11|14|18|35;12|21|34|52|56;13|16|24|29|49|53;15|41|42;17|36|37|59;19|23|27|32|47|57;20|26|45|46|55;22|31|38;25|28|39|48|54|58;30|40|43;33|50|51|60;44">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_french_door/1.png" alt="Fridge (French Door)">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_french_door/1.webp" alt="Fridge (French Door)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -650,7 +650,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Fridge (Side by Side)</h2>
     <div class="fixture-viewer" data-name="Fridge (Side by Side)" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_side_by_side" data-ids="1,8,4,6,7,11,12,14,17,23,24,26,28,30,33,36" data-style-groups="1|5;2|8|10;3|4;6|9;7;11|15|18|22|34|45|49|52|53|54;12|13|16|31|41|42|46|58;14|19|21|43|55|60;17|20|29|50|59;23|27|38;24|25|47|56;26|32|48;28|37|40|44;30|39;33|35|51|57;36">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_side_by_side/1.png" alt="Fridge (Side by Side)">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/fridge_side_by_side/1.webp" alt="Fridge (Side by Side)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -664,7 +664,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Microwave</h2>
     <div class="fixture-viewer" data-name="Microwave" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/microwave" data-ids="36,40,15,4,37,30,9,42,26,47,38,18,49,57,16,20,31,17,45,12,33,8,44,55,22,11,1,6,23,46,60,34,28,41,48,50,56,27,21,54,59,13,29,19,7,2,58,39,14,3" data-style-groups="1;2|3;4;5;6;7|9;8;10;11;12|35|60;13|23;14;15;16;17;18;19;20;21|46;22;24;25;26;27|38|49;28;29;30;31;32;33;34;36;37|52;39;40;41|48;42;43;44;45;47;50;51;53;54;55;56;57;58;59">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/microwave/36.png" alt="Microwave">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/microwave/36.webp" alt="Microwave">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -678,7 +678,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Oven</h2>
     <div class="fixture-viewer" data-name="Oven" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/oven" data-ids="46,25,40,41,19,14,48,31,53,22,43,59,38,47,32,8,55,50,60,6,4" data-style-groups="1;2|7|8;3|9;4;5;6;10;11|15|18|44|50;12|30|33|41;13|31|57;14|27|35|39|55;16|25|46;17|60;19|26|29|37|45;20|23|32|52;21|22|40|58;24|28|34|38|59;36|54|56;42|47|51;43|49;48|53">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/oven/46.png" alt="Oven">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/oven/46.webp" alt="Oven">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -692,7 +692,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Sink</h2>
     <div class="fixture-viewer" data-name="Sink" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/sink" data-ids="1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,34,35,37,38,40,42,43,44,45,46,47,48,50,51,53,54,57,58" data-style-groups="1;2;3|4;5;6;7;8;9;10;11|56;12;13;14;15;16;17;18;19;20;21;22;23;24|39|55;25;26|36;27;28;29;30;31|33;32|41;34;35;37;38|52;40;42|49;43;44;45;46;47;48;50;51;53;54;57|59;58|60">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/sink/1.png" alt="Sink">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/sink/1.webp" alt="Sink">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -706,7 +706,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Stand Mixer</h2>
     <div class="fixture-viewer" data-name="Stand Mixer" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stand_mixer" data-ids="1,2,4,5,7,10,11,12,13,16,17,18,19,20,21,23,24,26,29,35,38,39,42,48,51" data-style-groups="1|8|9;2|3;4;5|6;7;10;11|14|15|22|59;12|37|50;13|49|52|56;16|27|45|57;17|47;18|32;19|25;20;21|30;23|28|33|46;24|40|43|53;26|31|34|55;29|41|44;35|36|60;38;39|54;42;48;51|58">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stand_mixer/1.png" alt="Stand Mixer">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stand_mixer/1.webp" alt="Stand Mixer">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -720,7 +720,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Stove (classic)</h2>
     <div class="fixture-viewer" data-name="Stove (classic)" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_classic" data-ids="36,40,32,30,9,26,38,29,16,20,31,53,8,44,6,2,58" data-style-groups="1|4|6;2|5;3|10;7|9;8;11|12|32|35|39|57;13|15|37|44|59;14|16|22|27|30|51;17|23|58;18|20|21|38|41|46|52;19|34|45;24|40|60;25|42|48|54;26|33|43|47;28|31|36|50;29|49|55;53|56">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_classic/36.png" alt="Stove (classic)">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_classic/36.webp" alt="Stove (classic)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -734,7 +734,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Stove (wide)</h2>
     <div class="fixture-viewer" data-name="Stove (wide)" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_wide" data-ids="1,60,12,13,55,16,19,18,28" data-style-groups="1|2|3|4|5|6|7|8|9|10;11|41|50|60;12|20|21|22|24|25|36|39|48|52;13|14|30|38|44|45|46|51|58;15|23|35|43|55|57;16|26|29|32|33|34|47|54|56|59;17|19|42;18|27|49;28|31|37|40|53">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_wide/1.png" alt="Stove (wide)">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stove_wide/1.webp" alt="Stove (wide)">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -748,7 +748,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Stovetop</h2>
     <div class="fixture-viewer" data-name="Stovetop" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stovetop" data-ids="1,2,5,6,7,8,9,10,35,12,13,14,56,16,17,18,49,20,21,25,55,36,48,51" data-style-groups="1|3;2|4;5;6;7;8;9;10;11|35|38|39|45|53;12|31|42|46;13|24|27|41|54;14|37|44|58;15|56;16|23|60;17;18|28|30|33;19|49;20|43;21|22;25|34|52;26|29|32|40|50|55|59;36|47|57;48;51">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stovetop/1.png" alt="Stovetop">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/stovetop/1.webp" alt="Stovetop">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -762,7 +762,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Toaster</h2>
     <div class="fixture-viewer" data-name="Toaster" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster" data-ids="1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,27,28,29,30,32,33,34,35,37,39,41,42,43,44,47,48,50,53,55,58,60" data-style-groups="1;2;3;4|5;6;7;8;9;10;11|26|45;12|51;13;14|40;15;16|23|57|59;17|49;18;19;20;21|36;22|31;24;25;27;28|46;29;30|38;32;33;34;35;37;39|56;41;42|52;43|54;44;47;48;50;53;55;58;60">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster/1.png" alt="Toaster">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster/1.webp" alt="Toaster">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -776,7 +776,7 @@ html[data-theme="dark"] .fixture-preview-image {
     <h2 class="fixture-card-title">Toaster Oven</h2>
     <div class="fixture-viewer" data-name="Toaster Oven" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,32,34,35,37,38,40,41,43,44,45,46,50,52,53,54,55,57,59" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16|22;17|31;33|47;18|49;19|48;20;21|39;23;24;25;26|60;27;28|36;29|42;30;32;34|58;35;37;38;40;41;43;44;45;46|51;50;52;53;54|56;55;57;59">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
-        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven/1.png" alt="Toaster Oven">
+        <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven/1.webp" alt="Toaster Oven">
         <div class="label fixture-preview-label">Style</div>
       </div>
       <div class="fixture-inline-slider-container">
@@ -795,31 +795,38 @@ let currentViewer = null;
 // Current style filter value (for highlighting)
 let currentStyleFilter = null;
 
-// Simple image preloading using browser-native <link rel="prefetch">
-// This is more stable than manual Image object caching
+// Preload range: Image() for immediate neighbors (reliable cache), link prefetch for wider range
+const PRELOAD_IMAGE_RANGE = 4;  // ±4 with Image() so next few steps are cached
+const PRELOAD_LINK_RANGE = 8;   // ±8 with <link rel="prefetch"> for faster drags
+
 function prefetchAdjacentImages(viewer, currentPos) {
   const base = viewer.dataset.base;
   const ids = getViewerIds(viewer);
   const count = ids.length;
-  const PRELOAD_RANGE = 2; // Prefetch next 2 images in each direction
-  
+
   // Remove old prefetch links
   const oldLinks = document.querySelectorAll('link[data-fixture-prefetch]');
   oldLinks.forEach(link => link.remove());
-  
-  // Add prefetch links for adjacent images
-  for (let offset = -PRELOAD_RANGE; offset <= PRELOAD_RANGE; offset++) {
+
+  for (let offset = -PRELOAD_LINK_RANGE; offset <= PRELOAD_LINK_RANGE; offset++) {
     const targetPos = currentPos + offset;
-    if (targetPos >= 1 && targetPos <= count && targetPos !== currentPos) {
-      const imageId = ids[targetPos - 1];
-      const src = `${base}/${imageId}.png`;
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.as = 'image';
-      link.href = src;
-      link.setAttribute('data-fixture-prefetch', 'true');
-      document.head.appendChild(link);
+    if (targetPos < 1 || targetPos > count || targetPos === currentPos) continue;
+    const imageId = ids[targetPos - 1];
+    const src = `${base}/${imageId}.webp`;
+
+    // Immediate neighbors: force load with Image() for reliable cache (works well cross-origin)
+    if (Math.abs(offset) <= PRELOAD_IMAGE_RANGE) {
+      const img = new Image();
+      img.src = src;
     }
+
+    // Wider range: hint via prefetch link
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'image';
+    link.href = src;
+    link.setAttribute('data-fixture-prefetch', 'true');
+    document.head.appendChild(link);
   }
 }
 
@@ -928,7 +935,7 @@ function setViewerIndex(viewer, index) {
   const counter = viewer.querySelector('.fixture-inline-counter');
   const slider = viewer.querySelector('.fixture-inline-slider');
 
-  const src = `${base}/${imageId}.png`;
+  const src = `${base}/${imageId}.webp`;
   const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
   
   // Prefetch adjacent images using browser-native prefetch
@@ -959,10 +966,39 @@ function setViewerIndex(viewer, index) {
 
   viewer.dataset.current = String(pos);
 
-  // Keep modal in sync if it's open for this viewer
-  if (currentViewer === viewer) {
-    setModalIndex(pos);
-  }
+  if (currentViewer === viewer) setModalIndex(pos);
+}
+
+// Update only counter and label (no image load) for responsive feedback while dragging
+function updateViewerCounterOnly(viewer, index) {
+  const ids = getViewerIds(viewer);
+  const count = ids.length;
+  const pos = clamp(parseInt(index, 10) || 1, 1, count);
+  const imageId = ids[pos - 1];
+  const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
+  const label = viewer.querySelector('.fixture-preview-label');
+  const counter = viewer.querySelector('.fixture-inline-counter');
+  const slider = viewer.querySelector('.fixture-inline-slider');
+  if (label) label.innerHTML = styleLabel;
+  if (counter) counter.textContent = `${pos} / ${count}`;
+  if (slider) slider.value = String(pos);
+  viewer.dataset.current = String(pos);
+}
+
+function updateModalCounterOnly(viewer, index) {
+  const ids = getViewerIds(viewer);
+  const count = ids.length;
+  const pos = clamp(parseInt(index, 10) || 1, 1, count);
+  const imageId = ids[pos - 1];
+  const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
+  const modalLabel = document.getElementById('fixtureModalLabel');
+  const modalCounter = document.getElementById('fixtureModalCounter');
+  const modalSlider = document.getElementById('fixtureModalSlider');
+  if (modalLabel) modalLabel.innerHTML = styleLabel;
+  if (modalCounter) modalCounter.textContent = `${pos} / ${count}`;
+  if (modalSlider) modalSlider.value = String(pos);
+  viewer.dataset.current = String(pos);
+  updateViewerCounterOnly(viewer, index);
 }
 
 function setModalIndex(index) {
@@ -980,7 +1016,7 @@ function setModalIndex(index) {
   const modalPrev = document.getElementById('fixtureModalPrev');
   const modalNext = document.getElementById('fixtureModalNext');
 
-  const src = `${base}/${imageId}.png`;
+  const src = `${base}/${imageId}.webp`;
   const styleLabel = getStyleLabelForPos(currentViewer, pos, imageId);
   
   // Prefetch adjacent images using browser-native prefetch
@@ -1028,9 +1064,28 @@ function openFixtureModalForViewer(viewer) {
 
 function fixtureModalSliderChange(value) {
   if (!currentViewer) return;
-  // Update both modal and preview (no arrows; slider is the only navigator)
   setModalIndex(value);
   setViewerIndex(currentViewer, value);
+}
+
+let modalSliderDebounce = null;
+function initModalSlider() {
+  const modalSlider = document.getElementById('fixtureModalSlider');
+  if (!modalSlider) return;
+  modalSlider.addEventListener('input', function() {
+    const value = this.value;
+    if (currentViewer) updateModalCounterOnly(currentViewer, value);
+    if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
+    modalSliderDebounce = setTimeout(function() {
+      modalSliderDebounce = null;
+      fixtureModalSliderChange(value);
+    }, 100);
+  });
+  modalSlider.addEventListener('change', function() {
+    if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
+    modalSliderDebounce = null;
+    fixtureModalSliderChange(this.value);
+  });
 }
 
 function fixtureModalStep(delta) {
@@ -1151,10 +1206,21 @@ function initFixtureViewers() {
     const slider = viewer.querySelector('.fixture-inline-slider');
     const preview = viewer.querySelector('.fixture-preview');
     if (slider) {
-      // Ensure slider max matches the actual id list length (if provided)
       const ids = getViewerIds(viewer);
       slider.max = String(ids.length);
+      let sliderDebounce = null;
       slider.addEventListener('input', function() {
+        const value = this.value;
+        updateViewerCounterOnly(viewer, value);
+        if (sliderDebounce) clearTimeout(sliderDebounce);
+        sliderDebounce = setTimeout(function() {
+          sliderDebounce = null;
+          setViewerIndex(viewer, value);
+        }, 100);
+      });
+      slider.addEventListener('change', function() {
+        if (sliderDebounce) clearTimeout(sliderDebounce);
+        sliderDebounce = null;
         setViewerIndex(viewer, this.value);
       });
     }
@@ -1221,10 +1287,12 @@ function initStyleFilter() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function() {
     initFixtureViewers();
+    initModalSlider();
     initStyleFilter();
   });
 } else {
   initFixtureViewers();
+  initModalSlider();
   initStyleFilter();
 }
 </script>
