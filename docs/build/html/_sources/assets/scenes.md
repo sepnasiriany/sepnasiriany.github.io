@@ -65,6 +65,13 @@ env = gym.make(
   color: inherit;
   opacity: 0.8;
 }
+.scene-item .layout-style {
+  font-size: 11px;
+  margin-top: 6px;
+  color: inherit;
+  opacity: 0.6;
+  font-weight: 500;
+}
 
 /* Modal/Lightbox styles */
 .scene-modal {
@@ -265,16 +272,16 @@ html[data-theme="dark"] .scene-item img {
 ## Target kitchens
 
 <div class="scene-grid" id="sceneGridTarget">
-  <div class="scene-item" data-layout="1" data-style="1"><img src="../target_scenes/layout1_style1.png"><div class="label">One Wall Layout / Industrial Style</div></div>
-  <div class="scene-item" data-layout="2" data-style="2"><img src="../target_scenes/layout2_style2.png"><div class="label">One Wall Island Layout / Scandinavian Style</div></div>
-  <div class="scene-item" data-layout="3" data-style="3"><img src="../target_scenes/layout3_style3.png"><div class="label">L-shaped Layout / Modern 1 Style</div></div>
-  <div class="scene-item" data-layout="4" data-style="4"><img src="../target_scenes/layout4_style4.png"><div class="label">L-shaped Island Layout / Farmhouse Style</div></div>
-  <div class="scene-item" data-layout="5" data-style="5"><img src="../target_scenes/layout5_style5.png"><div class="label">Galley Layout / Modern 2 Style</div></div>
-  <div class="scene-item" data-layout="6" data-style="6"><img src="../target_scenes/layout6_style6.png"><div class="label">U-shaped Layout / Traditional Style</div></div>
-  <div class="scene-item" data-layout="7" data-style="7"><img src="../target_scenes/layout7_style7.png"><div class="label">U-shaped Island Layout / Mediterranean Style</div></div>
-  <div class="scene-item" data-layout="8" data-style="8"><img src="../target_scenes/layout8_style8.png"><div class="label">G-shaped Layout / Rustic Style</div></div>
-  <div class="scene-item" data-layout="9" data-style="9"><img src="../target_scenes/layout9_style9.png"><div class="label">G-shaped Large Layout / Coastal Style</div></div>
-  <div class="scene-item" data-layout="10" data-style="10"><img src="../target_scenes/layout10_style10.png"><div class="label">Wraparound Layout / Transitional Style</div></div>
+  <div class="scene-item" data-layout="1" data-style="1"><img src="../target_scenes/layout1_style1.png"><div class="label">One Wall Layout / Industrial Style<br><span class="layout-style">layout 1 / style 1</span></div></div>
+  <div class="scene-item" data-layout="2" data-style="2"><img src="../target_scenes/layout2_style2.png"><div class="label">One Wall Island Layout / Scandinavian Style<br><span class="layout-style">layout 2 / style 2</span></div></div>
+  <div class="scene-item" data-layout="3" data-style="3"><img src="../target_scenes/layout3_style3.png"><div class="label">L-shaped Layout / Modern 1 Style<br><span class="layout-style">layout 3 / style 3</span></div></div>
+  <div class="scene-item" data-layout="4" data-style="4"><img src="../target_scenes/layout4_style4.png"><div class="label">L-shaped Island Layout / Farmhouse Style<br><span class="layout-style">layout 4 / style 4</span></div></div>
+  <div class="scene-item" data-layout="5" data-style="5"><img src="../target_scenes/layout5_style5.png"><div class="label">Galley Layout / Modern 2 Style<br><span class="layout-style">layout 5 / style 5</span></div></div>
+  <div class="scene-item" data-layout="6" data-style="6"><img src="../target_scenes/layout6_style6.png"><div class="label">U-shaped Layout / Traditional Style<br><span class="layout-style">layout 6 / style 6</span></div></div>
+  <div class="scene-item" data-layout="7" data-style="7"><img src="../target_scenes/layout7_style7.png"><div class="label">U-shaped Island Layout / Mediterranean Style<br><span class="layout-style">layout 7 / style 7</span></div></div>
+  <div class="scene-item" data-layout="8" data-style="8"><img src="../target_scenes/layout8_style8.png"><div class="label">G-shaped Layout / Rustic Style<br><span class="layout-style">layout 8 / style 8</span></div></div>
+  <div class="scene-item" data-layout="9" data-style="9"><img src="../target_scenes/layout9_style9.png"><div class="label">G-shaped Large Layout / Coastal Style<br><span class="layout-style">layout 9 / style 9</span></div></div>
+  <div class="scene-item" data-layout="10" data-style="10"><img src="../target_scenes/layout10_style10.png"><div class="label">Wraparound Layout / Transitional Style<br><span class="layout-style">layout 10 / style 10</span></div></div>
 </div>
 
 
@@ -374,7 +381,7 @@ function updateModalContent() {
   const label = item.querySelector('.label');
   
   document.getElementById('modalImage').src = img.src;
-  document.getElementById('modalLabel').textContent = label.textContent;
+  document.getElementById('modalLabel').innerHTML = label.innerHTML;
   document.getElementById('modalSlider').value = currentIndex;
   document.getElementById('modalCounter').textContent = (currentIndex + 1) + ' / ' + currentScenes.length;
   

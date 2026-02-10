@@ -50,10 +50,10 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
     </tr>
     <tr>
       <td><strong>Model Checkpoint</strong></td>
-      <td><a href="">TODO Link</a></td>
-      <td><a href="">TODO Link</a></td>
-      <td><a href="">TODO Link</a></td>
-      <td><a href="">TODO Link</a></td>
+      <td><a href="">TBD</a></td>
+      <td><a href="">TBD</a></td>
+      <td><a href="">TBD</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/multitask_learning/checkpoint-120000">Link</a></td>
     </tr>
   </tbody>
 </table>

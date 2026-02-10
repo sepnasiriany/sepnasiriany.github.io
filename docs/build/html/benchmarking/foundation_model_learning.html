@@ -490,31 +490,31 @@ There are two phases of training:</p>
   <tbody>
     <tr>
       <td><strong>Pretraining Only</strong></td>
-      <td><a href="#">TODO</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/pretraining/checkpoint-80000">Link</a></td>
     </tr>
     <tr class="checkpoint-section-divider">
-      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/atomic_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
-      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
-      <td><strong>Target Task Learning Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_unseen/checkpoint-60000">Link</a></td>
     </tr>
     <tr class="checkpoint-section-divider">
-      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/atomic_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
-      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
-      <td><strong>Pretraining + Target Task Learning (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
-      <td><a href="#">TODO</a></td>
+      <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_unseen/checkpoint-60000">Link</a></td>
     </tr>
   </tbody>
 </table></section>
@@ -573,19 +573,19 @@ There are two phases of training:</p>
 
 <span class="c1"># evaluate target fine-tuning: atomic-seen tasks</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">atomic_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_posttraining</span><span class="o">/</span><span class="n">atomic_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
 <span class="o">--</span><span class="n">task_set</span> <span class="n">atomic_seen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">target</span>
 
 <span class="c1"># evaluate target fine-tuning: composite-seen tasks</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_posttraining</span><span class="o">/</span><span class="n">composite_seen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
 <span class="o">--</span><span class="n">task_set</span> <span class="n">composite_seen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">target</span>
 
 <span class="c1"># evaluate target fine-tuning: composite-unseen tasks</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">run_eval</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_task_finetuning</span><span class="o">/</span><span class="n">composite_unseen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
+<span class="o">--</span><span class="n">model_path</span> <span class="n">expdata</span><span class="o">/</span><span class="n">foundation_model_learning</span><span class="o">/</span><span class="n">target_posttraining</span><span class="o">/</span><span class="n">composite_unseen</span><span class="o">/</span><span class="n">checkpoint</span><span class="o">-</span><span class="mi">60000</span> \
 <span class="o">--</span><span class="n">task_set</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">split</span> <span class="n">target</span>
 </pre></div>
