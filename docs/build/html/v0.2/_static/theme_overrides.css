@@ -167,3 +167,21 @@ html[data-theme="dark"] .admonition.attention p,
 html[data-theme="dark"] .admonition.warning p {
   color: #e8e0d8;
 }
+
+/* Nicer link underlines: sit below descenders (g, y, p) so the line doesn't cut through letters */
+.bd-content a[href],
+.bd-article-content a[href],
+.content a[href],
+div.body a[href] {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+
+/* Reduce whitespace above the Citation section on overview */
+section#citation > h2,
+section#citation > h3,
+h2#citation,
+h3#citation {
+  margin-top: 0.75rem !important;
+}

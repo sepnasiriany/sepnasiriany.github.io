@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=fa93ebfc" />
     <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=62b304aa" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=1e6792ba" />
   
@@ -193,7 +194,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../assets/scenes.html">Scenes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../assets/objects.html">Objects</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="../assets/fixtures.html">Fixtures</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Use Cases</span></p>
@@ -427,7 +427,6 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
       <th><strong>Task Split</strong></th>
       <th><strong>Diffusion Policy</strong></th>
       <th><strong>π<span class="rc-pi-subnum">0</span></strong></th>
-      <th><strong>π<span class="rc-pi-subnum">0</span><span class="rc-pi-subdot">.</span><span class="rc-pi-subnum">5</span></strong></th>
       <th><strong>GR00T N1.5</strong></th>
     </tr>
   </thead>
@@ -436,36 +435,31 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
       <td><code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
       <td>15.7%</td>
       <td>34.6%</td>
-      <td>48.0%</td>
       <td>43.0%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
       <td>0.2%</td>
       <td>6.1%</td>
-      <td>16.5%</td>
       <td>9.6%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
       <td>1.25%</td>
       <td>1.1%</td>
-      <td>5.0%</td>
       <td>4.4%</td>
     </tr>
     <tr>
       <td><strong>Average</strong></td>
       <td>6.1%</td>
       <td>14.8%</td>
-      <td>24.2%</td>
       <td>20.0%</td>
     </tr>
     <tr>
       <td><strong>Model Checkpoint</strong></td>
       <td><a href="">TBD</a></td>
       <td><a href="">TBD</a></td>
-      <td><a href="">TBD</a></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/multitask_learning/checkpoint-120000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/multitask_learning/checkpoint-120000">Link</a></td>
     </tr>
   </tbody>
 </table></section>
@@ -477,7 +471,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="guidelines">
 <h4>Guidelines<a class="headerlink" href="#guidelines" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>We use a batch size of 192 and train for 500k steps</p></li>
+<li><p>We use a batch size of 192 and train for 250k steps</p></li>
 <li><p>We evaluate the model in <strong>pretrain</strong> scenes</p></li>
 </ul>
 </section>
@@ -519,7 +513,7 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <section id="id2">
 <h4>Train model<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XLA_PYTHON_CLIENT_MEM_FRACTION</span><span class="o">=</span><span class="mf">1.0</span> <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> \
-<span class="n">pretrain_human300</span> \
+<span class="n">pi0_robocasa_pretrain_human300</span> \
 <span class="o">--</span><span class="n">exp</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">multitask_learning</span>
 </pre></div>
 </div>
@@ -529,22 +523,22 @@ For each task, we provide 100 task demonstrations per task, resulting in <strong
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># part a: start inference server</span>
 <span class="n">python</span> <span class="n">scripts</span><span class="o">/</span><span class="n">serve_policy</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">port</span><span class="o">=</span><span class="mi">8000</span> <span class="n">policy</span><span class="p">:</span><span class="n">checkpoint</span> \
-<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">pretrain_human300</span> \
-<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">dir</span><span class="o">=</span><span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">config</span><span class="o">=</span><span class="n">pi0_robocasa_pretrain_human300</span> \
+<span class="o">--</span><span class="n">policy</span><span class="o">.</span><span class="n">dir</span><span class="o">=</span><span class="n">expdata</span><span class="o">/</span><span class="n">pi0_robocasa_pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 
 <span class="c1"># part b: run evals on server</span>
 <span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">py</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">port</span> <span class="mi">8000</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">task_set</span> <span class="n">atomic_seen</span> <span class="n">composite_seen</span> <span class="n">composite_unseen</span> \
 <span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">split</span> <span class="n">pretrain</span> \
-<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
+<span class="o">--</span><span class="n">args</span><span class="o">.</span><span class="n">log_dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pi0_robocasa_pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 </pre></div>
 </div>
 </section>
 <section id="id4">
 <h4>Report evaluation results<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">robocasa</span><span class="o">/</span><span class="n">get_eval_stats</span><span class="o">.</span><span class="n">py</span> \
-<span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
+<span class="o">--</span><span class="nb">dir</span> <span class="n">expdata</span><span class="o">/</span><span class="n">pi0_robocasa_pretrain_human300</span><span class="o">/</span><span class="n">multitask_learning</span><span class="o">/</span><span class="mi">75000</span>
 </pre></div>
 </div>
 </section>

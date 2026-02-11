@@ -41,7 +41,7 @@ python diffusion_policy/scripts/get_eval_stats.py \
 
 -------
 ## Openpi
-We fork the official Openpi code base, hosted at [https://github.com/robocasa/openpi-dev](https://github.com/robocasa/openpi-dev). Our fork support training for **pi0 and pi0.5**.
+We fork the official Openpi code base, hosted at [https://github.com/robocasa/openpi-dev](https://github.com/robocasa/openpi-dev). Our fork support training for **pi0**.
 
 ### Recommended system specs
 For training we recommend a GPU with at least 80 Gb of memory (H100, H200, etc).

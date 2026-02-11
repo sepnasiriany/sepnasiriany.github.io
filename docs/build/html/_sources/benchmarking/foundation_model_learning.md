@@ -85,31 +85,31 @@ We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretrainin
   <tbody>
     <tr>
       <td><strong>Pretraining Only</strong></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/pretraining/checkpoint-80000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/pretraining/checkpoint-80000">Link</a></td>
     </tr>
     <tr class="checkpoint-section-divider">
       <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/atomic_seen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/atomic_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_seen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td><strong>Target Only (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_unseen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_only/composite_unseen/checkpoint-60000">Link</a></td>
     </tr>
     <tr class="checkpoint-section-divider">
       <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/atomic_seen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/atomic_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_seen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_seen/checkpoint-60000">Link</a></td>
     </tr>
     <tr>
       <td><strong>Pretraining + Target Post-Training (100%)</strong> - <code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_unseen/checkpoint-60000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_unseen/checkpoint-60000">Link</a></td>
     </tr>
   </tbody>
 </table>
