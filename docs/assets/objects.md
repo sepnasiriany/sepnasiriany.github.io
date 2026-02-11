@@ -8,7 +8,7 @@ RoboCasa offers over 3,200 objects across over 150 object categories. They are s
     document.body.classList.add("rc-objects-page");
   });
 </script>
-## Object Categories
+### Object Categories
 
 <table class="docutils rc-objects-table">
 <thead><tr><th>Category</th><th>Groups</th><th>Objaverse</th><th>Lightwheel</th><th>AI Gen</th></tr></thead>

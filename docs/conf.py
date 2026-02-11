@@ -156,6 +156,7 @@ html_js_files = [
 
 # Custom CSS
 html_css_files = [
+    "theme_overrides.css",
     "composite_tasks_dropdown.css",
     "atomic_tasks.css",
 ]

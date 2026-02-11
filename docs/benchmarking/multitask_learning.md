@@ -15,7 +15,6 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
       <th><strong>Task Split</strong></th>
       <th><strong>Diffusion Policy</strong></th>
       <th><strong>π<span class="rc-pi-subnum">0</span></strong></th>
-      <th><strong>π<span class="rc-pi-subnum">0</span><span class="rc-pi-subdot">.</span><span class="rc-pi-subnum">5</span></strong></th>
       <th><strong>GR00T N1.5</strong></th>
     </tr>
   </thead>
@@ -24,36 +23,31 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
       <td><code class="rc-benchmark-split rc-benchmark-atomic">Atomic-Seen</code></td>
       <td>15.7%</td>
       <td>34.6%</td>
-      <td>48.0%</td>
       <td>43.0%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-seen">Composite-Seen</code></td>
       <td>0.2%</td>
       <td>6.1%</td>
-      <td>16.5%</td>
       <td>9.6%</td>
     </tr>
     <tr>
       <td><code class="rc-benchmark-split rc-benchmark-comp-unseen">Composite-Unseen</code></td>
       <td>1.25%</td>
       <td>1.1%</td>
-      <td>5.0%</td>
       <td>4.4%</td>
     </tr>
     <tr>
       <td><strong>Average</strong></td>
       <td>6.1%</td>
       <td>14.8%</td>
-      <td>24.2%</td>
       <td>20.0%</td>
     </tr>
     <tr>
       <td><strong>Model Checkpoint</strong></td>
       <td><a href="">TBD</a></td>
       <td><a href="">TBD</a></td>
-      <td><a href="">TBD</a></td>
-      <td><a href="https://huggingface.co/robocasa/robocasa365_gr00t_checkpoints/tree/main/gr00t_n1-5/multitask_learning/checkpoint-120000">Link</a></td>
+      <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/multitask_learning/checkpoint-120000">Link</a></td>
     </tr>
   </tbody>
 </table>
@@ -64,7 +58,7 @@ We provide support for benchmarking across Diffusion Policy, Openpi, and GR00T N
 ### Diffusion Policy
 
 #### Guidelines
-* We use a batch size of 192 and train for 500k steps
+* We use a batch size of 192 and train for 250k steps
 * We evaluate the model in **pretrain** scenes
 
 #### Train model
@@ -98,7 +92,7 @@ python diffusion_policy/scripts/get_eval_stats.py \
 #### Train model
 ```
 XLA_PYTHON_CLIENT_MEM_FRACTION=1.0 python scripts/train.py \
-pretrain_human300 \
+pi0_robocasa_pretrain_human300 \
 --exp-name=multitask_learning
 ```
 
@@ -107,21 +101,21 @@ pretrain_human300 \
 # part a: start inference server
 python scripts/serve_policy.py \
 --port=8000 policy:checkpoint \
---policy.config=pretrain_human300 \
---policy.dir=expdata/pretrain_human300/multitask_learning/75000
+--policy.config=pi0_robocasa_pretrain_human300 \
+--policy.dir=expdata/pi0_robocasa_pretrain_human300/multitask_learning/75000
 
 # part b: run evals on server
 python examples/robocasa/main.py \
 --args.port 8000 \
 --args.task_set atomic_seen composite_seen composite_unseen \
 --args.split pretrain \
---args.log_dir expdata/pretrain_human300/multitask_learning/75000
+--args.log_dir expdata/pi0_robocasa_pretrain_human300/multitask_learning/75000
 ```
 
 #### Report evaluation results
 ```
 python examples/robocasa/get_eval_stats.py \
---dir expdata/pretrain_human300/multitask_learning/75000
+--dir expdata/pi0_robocasa_pretrain_human300/multitask_learning/75000
 ```
 
 -------
