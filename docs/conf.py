@@ -132,6 +132,7 @@ elif _has_module("pydata_sphinx_theme"):
 else:
     html_theme = "alabaster"
 html_logo = "robocasa_logo.svg"
+html_favicon = "images/Robocasa_web_logo.svg"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

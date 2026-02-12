@@ -119,6 +119,7 @@ todo_include_todos = False
 #
 html_theme = "sphinx_book_theme"
 html_logo = "robocasa_logo.svg"
+html_favicon = "images/Robocasa_web_logo.svg"
 html_title = "RoboCasa 0.2 documentation"
 
 # Theme options are theme-specific and customize the look and feel of a theme
