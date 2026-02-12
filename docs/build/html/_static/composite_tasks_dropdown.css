@@ -1570,10 +1570,31 @@ html[data-theme="dark"] body.rc-composite-tasks,
 html[data-theme="dark"] body.rc-datasets-overview {
   --rc-surface: rgba(255, 255, 255, 0.05);
   --rc-surface-2: rgba(255, 255, 255, 0.035);
+  /* Opaque equivalent of --rc-surface-2 for dropdowns (0% transparency), neutral gray (no blue). */
+  --rc-surface-2-solid: #1e1e1e;
   --rc-border: rgba(255, 255, 255, 0.14);
   --rc-hover: rgba(255, 255, 255, 0.08);
   --rc-text: rgba(255, 255, 255, 0.92);
   --rc-muted: rgba(255, 255, 255, 0.70);
+}
+
+/* Dark mode: force same dropdown color on ALL pages (Composite + Atomic/datasets). Single source of truth. */
+html[data-theme="dark"] .rc-length-dropdown,
+html[data-theme="dark"] .rc-length-header,
+html[data-theme="dark"] .rc-task-attr-dropdown,
+html[data-theme="dark"] .rc-task-attr-header,
+html[data-theme="dark"] .rc-category-dropdown {
+  background: #1e1e1e !important;
+  border-color: var(--rc-border);
+  color: var(--rc-text);
+}
+
+/* Dark mode: force same video modal background on ALL pages (Composite + Atomic/datasets). */
+html[data-theme="dark"] .rc-video-modal,
+html[data-theme="dark"] .rc-video-modal-instruction {
+  background: #1e1e1e !important;
+  border-color: var(--rc-border);
+  color: var(--rc-text);
 }
 
 /* Composite Tasks: top controls + filters card */
@@ -1605,16 +1626,22 @@ html[data-theme="dark"] body.rc-composite-tasks .rc-activity-group select:invali
   color: var(--rc-muted);
 }
 
-/* Dark mode: unify filter dropdown popup background across Atomic + Composite.
-   Midpoint between Atomic (#111827) and theme on-background (#222832) is #1a202c. */
+/* Dark mode: dropdown popup solid (0% transparency), same perceived color as trigger button. */
 html[data-theme="dark"] body.rc-composite-tasks .rc-length-dropdown,
 html[data-theme="dark"] body.rc-composite-tasks .rc-length-header,
 html[data-theme="dark"] body.rc-composite-tasks .rc-task-attr-dropdown,
 html[data-theme="dark"] body.rc-composite-tasks .rc-task-attr-header,
 html[data-theme="dark"] body.rc-composite-tasks .rc-category-dropdown {
-  background: #1a202c;
+  background: var(--rc-surface-2-solid);
   border-color: var(--rc-border);
   color: var(--rc-text);
+}
+
+/* Dark mode: checkbox accent same as light mode (theme primary blue). */
+html[data-theme="dark"] body.rc-composite-tasks .rc-length-dropdown input[type="checkbox"],
+html[data-theme="dark"] body.rc-composite-tasks .rc-task-attr-dropdown input[type="checkbox"],
+html[data-theme="dark"] body.rc-composite-tasks .rc-category-dropdown input[type="checkbox"] {
+  accent-color: var(--pst-color-primary, #2563eb);
 }
 
 html[data-theme="dark"] body.rc-composite-tasks .rc-filter-range-sep {
@@ -1669,9 +1696,9 @@ html[data-theme="dark"] body.rc-composite-tasks .rc-activity-body table.docutils
   background: var(--rc-hover);
 }
 
-/* Dark mode: video modal should be solid (not translucent) */
+/* Dark mode: video modal same solid gray as dropdown boxes */
 html[data-theme="dark"] body.rc-composite-tasks .rc-video-modal {
-  background: #111827;
+  background: var(--rc-surface-2-solid);
   border-color: var(--rc-border);
 }
 
@@ -1683,6 +1710,12 @@ html[data-theme="dark"] body.rc-composite-tasks .rc-video-modal-download {
 
 html[data-theme="dark"] body.rc-composite-tasks .rc-video-modal-download:hover {
   background: var(--rc-hover);
+}
+
+html[data-theme="dark"] body.rc-composite-tasks .rc-video-modal-instruction {
+  background: var(--rc-surface-2-solid);
+  border-color: var(--rc-border);
+  color: var(--rc-text);
 }
 
 /* Composite Tasks: in dark mode, keep category coloring but soften it,
@@ -1807,6 +1840,55 @@ html[data-theme="dark"] body.rc-datasets-overview table.docutils th {
 
 html[data-theme="dark"] body.rc-datasets-overview table.docutils tbody tr:hover td {
   background: var(--rc-hover);
+}
+
+/* Atomic Tasks (datasets overview): same dropdown + video modal dark styling as Composite Tasks (explicit hex so it always matches). */
+html[data-theme="dark"] body.rc-datasets-overview .rc-length-dropdown,
+html[data-theme="dark"] body.rc-datasets-overview .rc-length-header,
+html[data-theme="dark"] body.rc-datasets-overview .rc-task-attr-dropdown,
+html[data-theme="dark"] body.rc-datasets-overview .rc-task-attr-header,
+html[data-theme="dark"] body.rc-datasets-overview .rc-category-dropdown {
+  background: var(--rc-surface-2-solid, #1e1e1e) !important;
+  border-color: var(--rc-border);
+  color: var(--rc-text);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-length-dropdown input[type="checkbox"],
+html[data-theme="dark"] body.rc-datasets-overview .rc-task-attr-dropdown input[type="checkbox"],
+html[data-theme="dark"] body.rc-datasets-overview .rc-category-dropdown input[type="checkbox"] {
+  accent-color: var(--pst-color-primary, #2563eb);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal {
+  background: var(--rc-surface-2-solid, #1e1e1e) !important;
+  border-color: var(--rc-border);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal-close {
+  background: var(--rc-surface-2);
+  border-color: var(--rc-border);
+  color: var(--rc-muted);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal-close:hover {
+  background: var(--rc-hover);
+  color: var(--rc-text);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal-download {
+  background: var(--rc-surface-2);
+  border-color: var(--rc-border);
+  color: var(--rc-text);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal-download:hover {
+  background: var(--rc-hover);
+}
+
+html[data-theme="dark"] body.rc-datasets-overview .rc-video-modal-instruction {
+  background: var(--rc-surface-2-solid, #1e1e1e) !important;
+  border-color: var(--rc-border);
+  color: var(--rc-text);
 }
 
 /* Datasets overview: keep split coloring in dark mode, but soften it
