@@ -47,7 +47,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'assets/fixtures';</script>
     <script src="../_static/composite_task_attributes.js?v=7a345916"></script>
     <script src="../_static/composite_episode_lengths.js?v=c082499d"></script>
-    <script src="../_static/composite_tasks_dropdown.js?v=0ae852df"></script>
+    <script src="../_static/composite_tasks_dropdown.js?v=485f1775"></script>
     <script src="../_static/atomic_task_attributes.js?v=89e5ef6b"></script>
     <script src="../_static/atomic_episode_lengths.js?v=5f9a20d6"></script>
     <script src="../_static/atomic_task_index.js?v=cda800ea"></script>
@@ -520,8 +520,8 @@ table.rc-fixtures-table td:nth-child(2) {
 .style-highlight {
   background-color: #ffeb3b;
   color: #000;
-  padding: 2px 2px;
-  border-radius: 3px;
+  padding: 2px 1px;
+  border-radius: 2px;
   font-weight: 600;
 }
 
@@ -1144,7 +1144,18 @@ const BACKFILL_CHUNK_SIZE = 10;         // backfill rest of card in chunks of th
 let activeViewer = null;
 let activeViewerTimeout = null;
 
+const PREFETCH_THROTTLE_MS = 90;  // during drag, run prefetch at most this often to avoid lag on large fixtures
+
 function prefetchAdjacentImages(viewer, currentPos, isActive) {
+  // When slider is active (many styles), throttle to avoid blocking: we were re-running this on every
+  // input event, removing/re-adding 50+ link elements and creating 30+ Image() each time.
+  if (isActive) {
+    const now = typeof performance !== 'undefined' && performance.now ? performance.now() : Date.now();
+    const last = viewer._rcLastPrefetchTime;
+    if (last != null && (now - last) < PREFETCH_THROTTLE_MS) return;
+    viewer._rcLastPrefetchTime = now;
+  }
+
   const base = viewer.dataset.base;
   const ids = getViewerIds(viewer);
   const count = ids.length;
@@ -1334,7 +1345,7 @@ function getStyleLabelForPos(viewer, pos, fallbackId) {
   return `Style ${styleNumbers}`;
 }
 
-function setViewerIndex(viewer, index) {
+function setViewerIndex(viewer, index, skipPrefetch) {
   const base = viewer.dataset.base;
   const ids = getViewerIds(viewer);
   const count = ids.length;
@@ -1349,21 +1360,25 @@ function setViewerIndex(viewer, index) {
   const src = `${base}/${imageId}.webp`;
   const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
   
-  // Prefetch adjacent images; use wider range when this viewer is active (modal or inline slider)
-  const isActive = (viewer === currentViewer || viewer === activeViewer);
-  prefetchAdjacentImages(viewer, pos, isActive);
+  if (!skipPrefetch) {
+    const isActive = (viewer === currentViewer || viewer === activeViewer);
+    prefetchAdjacentImages(viewer, pos, isActive);
+  }
   
   if (img) {
-    // Simple loading state - browser handles caching naturally
-    if (img.src !== src) {
+    if (!viewer._rcCachedPositions) viewer._rcCachedPositions = new Set();
+    const alreadySeen = viewer._rcCachedPositions.has(pos);
+    // Only show loading dim when switching to an image we haven't displayed yet
+    if (img.src !== src && !alreadySeen) {
       img.style.opacity = '0.6';
       img.style.transition = 'opacity 0.2s';
     }
     img.src = src;
     img.alt = styleLabel;
     
-    // Fade in when loaded (browser will use cache if available)
-    if (!img.complete) {
+    if (alreadySeen) {
+      img.style.opacity = '1';
+    } else if (!img.complete) {
       img.onload = function() {
         this.style.opacity = '1';
         this.onload = null;
@@ -1371,6 +1386,7 @@ function setViewerIndex(viewer, index) {
     } else {
       img.style.opacity = '1';
     }
+    viewer._rcCachedPositions.add(pos);
   }
   if (label) label.innerHTML = styleLabel;
   if (counter) counter.textContent = `${pos} / ${count}`;
@@ -1435,15 +1451,17 @@ function setModalIndex(index) {
   prefetchAdjacentImages(currentViewer, pos, true);
   
   if (modalImg) {
-    // Simple loading state - browser handles caching naturally
-    if (modalImg.src !== src) {
+    if (!currentViewer._rcCachedPositions) currentViewer._rcCachedPositions = new Set();
+    const alreadySeen = currentViewer._rcCachedPositions.has(pos);
+    if (modalImg.src !== src && !alreadySeen) {
       modalImg.style.opacity = '0.6';
       modalImg.style.transition = 'opacity 0.2s';
     }
     modalImg.src = src;
     
-    // Fade in when loaded (browser will use cache if available)
-    if (!modalImg.complete) {
+    if (alreadySeen) {
+      modalImg.style.opacity = '1';
+    } else if (!modalImg.complete) {
       modalImg.onload = function() {
         this.style.opacity = '1';
         this.onload = null;
@@ -1451,6 +1469,7 @@ function setModalIndex(index) {
     } else {
       modalImg.style.opacity = '1';
     }
+    currentViewer._rcCachedPositions.add(pos);
   }
   if (modalLabel) modalLabel.innerHTML = styleLabel;
   if (modalCounter) modalCounter.textContent = `${pos} / ${count}`;
@@ -1481,32 +1500,20 @@ function fixtureModalSliderChange(value) {
   setViewerIndex(currentViewer, value);
 }
 
-let modalSliderDebounce = null;
 function initModalSlider() {
   const modalSlider = document.getElementById('fixtureModalSlider');
   if (!modalSlider) return;
   modalSlider.addEventListener('input', function() {
     const value = this.value;
     const valueNum = parseInt(value, 10);
-    const currentNum = currentViewer ? parseInt(currentViewer.dataset.current || "1", 10) : 0;
     if (currentViewer) {
       updateModalCounterOnly(currentViewer, value);
       ensureImageCached(currentViewer, valueNum);
-    }
-    if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
-    if (currentViewer && Math.abs(valueNum - currentNum) <= 2) {
-      modalSliderDebounce = null;
       fixtureModalSliderChange(value);
-    } else {
-      modalSliderDebounce = setTimeout(function() {
-        modalSliderDebounce = null;
-        fixtureModalSliderChange(value);
-      }, 60);
     }
   });
   modalSlider.addEventListener('change', function() {
-    if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
-    modalSliderDebounce = null;
+    if (currentViewer) currentViewer._rcLastPrefetchTime = undefined;
     fixtureModalSliderChange(this.value);
   });
 }
@@ -1532,7 +1539,7 @@ function filterFixturesByStyle(styleNumber) {
     document.querySelectorAll('.fixture-card').forEach(card => {
       card.classList.remove('hidden-by-filter');
       const viewer = card.querySelector('.fixture-viewer');
-      if (viewer) setViewerIndex(viewer, 1);
+      if (viewer) setViewerIndex(viewer, 1, true);
     });
     const clearBtn = document.getElementById('style-filter-clear');
     const input = document.getElementById('style-filter-input');
@@ -1566,20 +1573,9 @@ function filterFixturesByStyle(styleNumber) {
     }
 
     card.classList.remove('hidden-by-filter');
-    // viewer indices are 1-based
-    setViewerIndex(viewer, matchIdx + 1);
+    setViewerIndex(viewer, matchIdx + 1, true);
   });
   
-  // Refresh all visible labels to show highlighting
-  document.querySelectorAll('.fixture-card:not(.hidden-by-filter)').forEach(card => {
-    const viewer = card.querySelector('.fixture-viewer');
-    if (viewer) {
-      const currentPos = parseInt(viewer.dataset.current || "1", 10) || 1;
-      setViewerIndex(viewer, currentPos);
-    }
-  });
-  
-  // Update modal label if modal is open
   if (currentViewer) {
     const modalPos = parseInt(currentViewer.dataset.current || "1", 10) || 1;
     setModalIndex(modalPos);
@@ -1633,7 +1629,6 @@ function initFixtureViewers() {
     if (slider) {
       const ids = getViewerIds(viewer);
       slider.max = String(ids.length);
-      let sliderDebounce = null;
       function setActiveAndBackfill() {
         activeViewer = viewer;
         if (activeViewerTimeout) clearTimeout(activeViewerTimeout);
@@ -1645,25 +1640,13 @@ function initFixtureViewers() {
         setActiveAndBackfill();
         const value = this.value;
         const valueNum = parseInt(value, 10);
-        const currentNum = parseInt(viewer.dataset.current || "1", 10);
         updateViewerCounterOnly(viewer, value);
-        // Always cache the image at current slider position so sliding back is instant
         ensureImageCached(viewer, valueNum);
-        if (sliderDebounce) clearTimeout(sliderDebounce);
-        // Small step (±2): update immediately so cached image shows instantly
-        if (Math.abs(valueNum - currentNum) <= 2) {
-          sliderDebounce = null;
-          setViewerIndex(viewer, value);
-        } else {
-          sliderDebounce = setTimeout(function() {
-            sliderDebounce = null;
-            setViewerIndex(viewer, value);
-          }, 60);
-        }
+        // Update image every time; prefetch is throttled inside setViewerIndex so fast drags stay smooth
+        setViewerIndex(viewer, value);
       });
       slider.addEventListener('change', function() {
-        if (sliderDebounce) clearTimeout(sliderDebounce);
-        sliderDebounce = null;
+        viewer._rcLastPrefetchTime = undefined;  // force prefetch for final position when drag ends
         setViewerIndex(viewer, this.value);
       });
       slider.addEventListener('blur', function() {

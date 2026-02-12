@@ -1149,6 +1149,141 @@
     taskTd.appendChild(line);
   }
 
+  function rcCanMeasureSkillPack(el) {
+    // If the activity <details> is closed, the table isn't laid out yet and
+    // offsetTop measurements will all be 0. Defer packing until visible.
+    try {
+      return !!(el && el.isConnected && el.getClientRects && el.getClientRects().length > 0 && el.offsetWidth > 0);
+    } catch {
+      return false;
+    }
+  }
+
+  function rcPackSkillTagsInWrap(tagWrap) {
+    if (!tagWrap) return;
+    // Fast path: 0-2 tags can't benefit from reordering.
+    const pills = Array.from(tagWrap.children || []).filter((n) => n && n.nodeType === 1);
+    if (pills.length <= 2) return;
+
+    function render(order) {
+      tagWrap.innerHTML = "";
+      for (const p of order) tagWrap.appendChild(p);
+    }
+
+    function layoutInfo(order) {
+      const tops = [];
+      for (const p of order) tops.push(p.offsetTop);
+      const uniqueTops = Array.from(new Set(tops)).sort((a, b) => a - b);
+      const lineByIdx = tops.map((t) => uniqueTops.indexOf(t));
+      const lineCounts = new Array(uniqueTops.length).fill(0);
+      for (const li of lineByIdx) if (li >= 0) lineCounts[li] += 1;
+      const lineCount = uniqueTops.length;
+      const orphanLines = lineCounts.reduce((acc, c) => acc + (c === 1 ? 1 : 0), 0);
+      const firstLineCount = lineCounts.length ? lineCounts[0] : 0;
+      return { lineCount, orphanLines, firstLineCount, lineByIdx, lineCounts };
+    }
+
+    function sameLineForClasses(info, ord, classA, classB) {
+      const a = ord.find((p) => p.classList && p.classList.contains(classA));
+      const b = ord.find((p) => p.classList && p.classList.contains(classB));
+      if (!a || !b) return null;
+      const ai = ord.indexOf(a);
+      const bi = ord.indexOf(b);
+      const al = info.lineByIdx[ai];
+      const bl = info.lineByIdx[bi];
+      if (!Number.isFinite(al) || !Number.isFinite(bl)) return null;
+      return al === bl;
+    }
+
+    function isBetter(aInfo, aOrder, bInfo, bOrder) {
+      // Prefer fewer total lines.
+      if (aInfo.lineCount !== bInfo.lineCount) return aInfo.lineCount < bInfo.lineCount;
+      // If lines tie, prefer coupling "Navigation" + "Twist Knob" when possible.
+      const aCoupled = sameLineForClasses(aInfo, aOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
+      const bCoupled = sameLineForClasses(bInfo, bOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
+      if (aCoupled != null && bCoupled != null && aCoupled !== bCoupled) return aCoupled === true;
+      // Then fewer 1-tag lines, then more tags on first line.
+      if (aInfo.orphanLines !== bInfo.orphanLines) return aInfo.orphanLines < bInfo.orphanLines;
+      if (aInfo.firstLineCount !== bInfo.firstLineCount) return aInfo.firstLineCount > bInfo.firstLineCount;
+      return false;
+    }
+
+    function moveItem(arr, fromIdx, toIdx) {
+      if (fromIdx === toIdx) return arr.slice();
+      const out = arr.slice();
+      const [item] = out.splice(fromIdx, 1);
+      out.splice(toIdx, 0, item);
+      return out;
+    }
+
+    // Start with the current (canonical) order.
+    let order = pills.slice();
+    render(order);
+    let best = layoutInfo(order);
+    let bestOrder = order;
+    if (best.lineCount <= 1) return;
+
+    // Record baseline Navigation line index (if present); keep Navigation from
+    // moving to a later line than it started on.
+    let navBaselineLine = null;
+    const navEl = order.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
+    if (navEl) navBaselineLine = layoutInfo(order).lineByIdx[order.indexOf(navEl)] ?? null;
+
+    function navOk(info, ord) {
+      if (navBaselineLine == null) return true;
+      const nav = ord.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
+      if (!nav) return true;
+      const idx = ord.indexOf(nav);
+      const line = info.lineByIdx[idx];
+      return Number.isFinite(line) ? line <= navBaselineLine : true;
+    }
+
+    // Iteratively improve by pulling a later tag upward to fill earlier lines.
+    const maxIters = Math.max(8, order.length * order.length);
+    let iter = 0;
+    while (iter < maxIters) {
+      iter += 1;
+      render(order);
+      const cur = layoutInfo(order);
+      if (cur.lineCount <= 1) break;
+
+      const lineToIdxs = new Map();
+      for (let i = 0; i < order.length; i += 1) {
+        const li = cur.lineByIdx[i];
+        if (li < 0) continue;
+        if (!lineToIdxs.has(li)) lineToIdxs.set(li, []);
+        lineToIdxs.get(li).push(i);
+      }
+
+      let improved = false;
+      let bestCandidate = null;
+      for (let line = 0; line < cur.lineCount - 1; line += 1) {
+        const idxs = lineToIdxs.get(line) || [];
+        if (idxs.length === 0) continue;
+        const insertAfter = idxs[idxs.length - 1];
+        const insertPos = insertAfter + 1;
+        for (let from = insertPos; from < order.length; from += 1) {
+          const trialOrder = moveItem(order, from, insertPos);
+          render(trialOrder);
+          const info = layoutInfo(trialOrder);
+          if (!navOk(info, trialOrder)) continue;
+          if (info.lineCount > best.lineCount) continue;
+          if (isBetter(info, trialOrder, best, bestOrder)) {
+            bestCandidate = { order: trialOrder, info };
+            best = info;
+            bestOrder = trialOrder;
+            improved = true;
+          }
+        }
+      }
+
+      if (improved && bestCandidate) order = bestCandidate.order;
+      else break;
+    }
+
+    render(order);
+  }
+
   function renderTaskTagsIntoCell(taskName, containerTd, navigationVal, descText) {
     if (!taskName || !containerTd) return;
     if (containerTd.querySelector(".rc-task-tags")) return; // idempotent
@@ -1263,160 +1398,17 @@
 
     // Insert into the provided container cell (needed for layout measurements)
     containerTd.appendChild(wrap);
+    // First render in canonical order.
+    for (const p of pills) wrap.appendChild(p);
 
-    // Display all tags (no "+N" collapsing), but try to pack them into fewer
-    // "orphan" lines by only pulling later tags upward (never "dragging" early
-    // tags like Navigation downward).
-    //
-    // Important: DO NOT change any pill attributes (size/width/padding). We only
-    // change the order of existing DOM nodes.
-    (function appendPillsWithPacking() {
-      // Fast path: 0-2 tags can't benefit from reordering.
-      if (pills.length <= 2) {
-        for (const p of pills) wrap.appendChild(p);
-        return;
-      }
-
-      function render(order) {
-        // Avoid replaceChildren for older browsers; keep it simple/portable.
-        wrap.innerHTML = "";
-        for (const p of order) wrap.appendChild(p);
-      }
-
-      function layoutInfo(order) {
-        // Assumes `order` is already rendered into `wrap`.
-        const tops = [];
-        for (const p of order) tops.push(p.offsetTop);
-        const uniqueTops = Array.from(new Set(tops)).sort((a, b) => a - b);
-        const lineByIdx = tops.map((t) => uniqueTops.indexOf(t));
-        const lineCounts = new Array(uniqueTops.length).fill(0);
-        for (const li of lineByIdx) if (li >= 0) lineCounts[li] += 1;
-        const lineCount = uniqueTops.length;
-        const orphanLines = lineCounts.reduce((acc, c) => acc + (c === 1 ? 1 : 0), 0);
-        const firstLineCount = lineCounts.length ? lineCounts[0] : 0;
-        return { lineCount, orphanLines, firstLineCount, lineByIdx, lineCounts };
-      }
-
-      function sameLineForClasses(info, ord, classA, classB) {
-        const a = ord.find((p) => p.classList && p.classList.contains(classA));
-        const b = ord.find((p) => p.classList && p.classList.contains(classB));
-        if (!a || !b) return null;
-        const ai = ord.indexOf(a);
-        const bi = ord.indexOf(b);
-        const al = info.lineByIdx[ai];
-        const bl = info.lineByIdx[bi];
-        if (!Number.isFinite(al) || !Number.isFinite(bl)) return null;
-        return al === bl;
-      }
-
-      function isBetter(aInfo, aOrder, bInfo, bOrder) {
-        // Prefer fewer total lines.
-        if (aInfo.lineCount !== bInfo.lineCount) return aInfo.lineCount < bInfo.lineCount;
-        // If lines tie, prefer coupling "Navigation" + "Twist Knob" when possible.
-        // (This is the most common "paired" skill users look for.)
-        const aCoupled = sameLineForClasses(aInfo, aOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
-        const bCoupled = sameLineForClasses(bInfo, bOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
-        if (aCoupled != null && bCoupled != null && aCoupled !== bCoupled) return aCoupled === true;
-        // Then fewer 1-tag lines, then more tags on first line.
-        if (aInfo.orphanLines !== bInfo.orphanLines) return aInfo.orphanLines < bInfo.orphanLines;
-        if (aInfo.firstLineCount !== bInfo.firstLineCount) return aInfo.firstLineCount > bInfo.firstLineCount;
-        return false;
-      }
-
-      function moveItem(arr, fromIdx, toIdx) {
-        if (fromIdx === toIdx) return arr.slice();
-        const out = arr.slice();
-        const [item] = out.splice(fromIdx, 1);
-        out.splice(toIdx, 0, item);
-        return out;
-      }
-
-      // Start with the current (canonical) order.
-      let order = pills.slice();
-      render(order);
-      let best = layoutInfo(order);
-      let bestOrder = order;
-      if (best.lineCount <= 1) return;
-
-      // Record baseline Navigation line index (if present); keep Navigation from
-      // moving to a later line than it started on.
-      let navBaselineLine = null;
-      const navEl = order.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
-      if (navEl) {
-        navBaselineLine = layoutInfo(order).lineByIdx[order.indexOf(navEl)] ?? null;
-      }
-
-      function navOk(info, ord) {
-        if (navBaselineLine == null) return true;
-        const nav = ord.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
-        if (!nav) return true;
-        const idx = ord.indexOf(nav);
-        const line = info.lineByIdx[idx];
-        return Number.isFinite(line) ? line <= navBaselineLine : true;
-      }
-
-      // Iteratively improve by pulling a later tag upward to fill earlier lines.
-      const maxIters = Math.max(8, order.length * order.length);
-      let iter = 0;
-      while (iter < maxIters) {
-        iter += 1;
-
-        // Ensure we're measuring the current layout.
-        render(order);
-        const cur = layoutInfo(order);
-        if (cur.lineCount <= 1) break;
-
-        // Build line -> [indices] mapping.
-        const lineToIdxs = new Map();
-        for (let i = 0; i < order.length; i += 1) {
-          const li = cur.lineByIdx[i];
-          if (li < 0) continue;
-          if (!lineToIdxs.has(li)) lineToIdxs.set(li, []);
-          lineToIdxs.get(li).push(i);
-        }
-
-        let improved = false;
-        let bestCandidate = null;
-
-        // For each earlier line, try pulling a later pill up just after that line's last pill.
-        for (let line = 0; line < cur.lineCount - 1; line += 1) {
-          const idxs = lineToIdxs.get(line) || [];
-          if (idxs.length === 0) continue;
-          const insertAfter = idxs[idxs.length - 1];
-          const insertPos = insertAfter + 1;
-
-          // Consider candidates only from later positions (pull upward).
-          for (let from = insertPos; from < order.length; from += 1) {
-            const trialOrder = moveItem(order, from, insertPos);
-            render(trialOrder);
-            const info = layoutInfo(trialOrder);
-            if (!navOk(info, trialOrder)) continue;
-
-            // Prefer any improvement, but never increase total lines.
-            if (info.lineCount > best.lineCount) continue;
-
-            if (isBetter(info, trialOrder, best, bestOrder)) {
-              bestCandidate = { order: trialOrder, info };
-              // Update "best" for subsequent comparisons during this pass.
-              best = info;
-              bestOrder = trialOrder;
-              improved = true;
-              // Keep scanning; there might be an even better pull-up in same pass.
-            }
-          }
-        }
-
-        if (improved && bestCandidate) {
-          order = bestCandidate.order;
-          // continue loop to see if further pull-ups help
-        } else {
-          break;
-        }
-      }
-
-      // Final render.
-      render(order);
-    })();
+    // Then, if the activity is visible (table laid out), pack tags by only pulling later tags upward.
+    // If not visible (closed <details>), defer until it is opened.
+    if (rcCanMeasureSkillPack(wrap)) {
+      // Defer one frame so the browser computes the initial line wraps.
+      window.requestAnimationFrame(() => rcPackSkillTagsInWrap(wrap));
+    } else {
+      wrap.dataset.rcNeedsSkillPack = "1";
+    }
   }
 
   function reorderActivityDropdownOptions(selectEl, detailsEls) {
@@ -2536,6 +2528,34 @@
 
     // Page-scoped styling hooks
     document.body.classList.add("rc-composite-tasks");
+
+    // Pack "Skills Involved" tags when their <details> becomes visible.
+    // (When <details> is closed, we can't measure wrap layout, so initial packing is deferred.)
+    function packDeferredSkillTags(scopeEl) {
+      const scope = scopeEl || document;
+      const wraps = Array.from(scope.querySelectorAll('.rc-task-tags[data-rc-needs-skill-pack="1"]'));
+      for (const w of wraps) {
+        if (!rcCanMeasureSkillPack(w)) continue;
+        try {
+          delete w.dataset.rcNeedsSkillPack;
+        } catch {}
+        rcPackSkillTagsInWrap(w);
+      }
+    }
+    document.addEventListener(
+      "toggle",
+      (e) => {
+        const d = e && e.target;
+        if (!d || d.tagName !== "DETAILS" || !d.classList.contains("rc-activity") || !d.open) return;
+        window.requestAnimationFrame(() => packDeferredSkillTags(d));
+      },
+      true
+    );
+    let packResizeTimer = null;
+    window.addEventListener("resize", () => {
+      if (packResizeTimer) window.clearTimeout(packResizeTimer);
+      packResizeTimer = window.setTimeout(() => packDeferredSkillTags(document), 120);
+    });
 
     // Sphinx Book Theme main content wrapper
     const content =
