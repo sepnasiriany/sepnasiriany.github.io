@@ -484,6 +484,7 @@ table.rc-fixtures-table td:nth-child(2) {
 .fixture-card {
   border: 1px solid var(--pst-color-border, rgba(128, 128, 128, 0.3));
   border-radius: 12px;
+  /* Match docs styling (as in deployed fixtures page) */
   padding: 14px 14px 16px;
   background: var(--pst-color-surface, rgba(127, 127, 127, 0.04));
 }
@@ -1119,7 +1120,9 @@ function filterFixturesByStyle(styleNumber) {
       if (viewer) setViewerIndex(viewer, 1);
     });
     const clearBtn = document.getElementById('style-filter-clear');
-    if (clearBtn) clearBtn.style.display = 'none';
+    const input = document.getElementById('style-filter-input');
+    const hasValue = input && String(input.value || '').trim().length > 0;
+    if (clearBtn) clearBtn.style.display = hasValue ? 'inline-block' : 'none';
     return;
   }
   
@@ -1281,7 +1284,7 @@ function initStyleFilter() {
       const invalid = v.length > 0 && (!Number.isFinite(n) || n < 1 || n > 60);
       e.target.classList.toggle('rc-invalid', invalid);
 
-      if (!invalid) filterFixturesByStyle(v);
+      filterFixturesByStyle(v);
     });
     filterInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
@@ -1292,7 +1295,7 @@ function initStyleFilter() {
         const n = parseInt(v, 10);
         const invalid = v.length > 0 && (!Number.isFinite(n) || n < 1 || n > 60);
         e.target.classList.toggle('rc-invalid', invalid);
-        if (!invalid) filterFixturesByStyle(v);
+        filterFixturesByStyle(v);
       }
     });
   }

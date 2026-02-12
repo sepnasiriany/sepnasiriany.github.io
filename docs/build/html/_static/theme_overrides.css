@@ -19,3 +19,29 @@ h2#citation,
 h3#citation {
   margin-top: 0.75rem !important;
 }
+
+/* Tighter spacing between sections: less gap above h2/h3 so sections sit closer to content above */
+.bd-content h2:not(.fixture-card-title),
+.bd-article-content h2:not(.fixture-card-title),
+.bd-content h3,
+.bd-article-content h3,
+.content h2:not(.fixture-card-title),
+.content h3,
+div.body h2:not(.fixture-card-title),
+div.body h3 {
+  margin-top: 1.25rem !important;
+}
+
+/* Overview banner: prevent theme from darkening image in dark mode (same as fixture images) */
+@media (prefers-color-scheme: dark) {
+  .overview-banner-image {
+    filter: none;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+}
+html[data-theme="dark"] .overview-banner-image {
+  filter: none !important;
+  opacity: 1 !important;
+  background-color: rgba(255, 255, 255, 0.06);
+}

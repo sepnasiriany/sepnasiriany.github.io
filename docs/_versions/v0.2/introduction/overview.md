@@ -8,7 +8,7 @@
 - **High-quality human demonstrations** in addition to **massive robot datasets** created with automated trajectory tools
 
 <p align="center">
-  <img width="100.0%" src="../../_static/robocasa-banner.png">
+  <img class="overview-banner-image" width="100.0%" src="../_static/robocasa-banner_v0.2.jpg">
 </p>
 
 This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.
