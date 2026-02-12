@@ -1264,8 +1264,159 @@
     // Insert into the provided container cell (needed for layout measurements)
     containerTd.appendChild(wrap);
 
-    // Display all tags (no "+N" collapsing)
-    for (const p of pills) wrap.appendChild(p);
+    // Display all tags (no "+N" collapsing), but try to pack them into fewer
+    // "orphan" lines by only pulling later tags upward (never "dragging" early
+    // tags like Navigation downward).
+    //
+    // Important: DO NOT change any pill attributes (size/width/padding). We only
+    // change the order of existing DOM nodes.
+    (function appendPillsWithPacking() {
+      // Fast path: 0-2 tags can't benefit from reordering.
+      if (pills.length <= 2) {
+        for (const p of pills) wrap.appendChild(p);
+        return;
+      }
+
+      function render(order) {
+        // Avoid replaceChildren for older browsers; keep it simple/portable.
+        wrap.innerHTML = "";
+        for (const p of order) wrap.appendChild(p);
+      }
+
+      function layoutInfo(order) {
+        // Assumes `order` is already rendered into `wrap`.
+        const tops = [];
+        for (const p of order) tops.push(p.offsetTop);
+        const uniqueTops = Array.from(new Set(tops)).sort((a, b) => a - b);
+        const lineByIdx = tops.map((t) => uniqueTops.indexOf(t));
+        const lineCounts = new Array(uniqueTops.length).fill(0);
+        for (const li of lineByIdx) if (li >= 0) lineCounts[li] += 1;
+        const lineCount = uniqueTops.length;
+        const orphanLines = lineCounts.reduce((acc, c) => acc + (c === 1 ? 1 : 0), 0);
+        const firstLineCount = lineCounts.length ? lineCounts[0] : 0;
+        return { lineCount, orphanLines, firstLineCount, lineByIdx, lineCounts };
+      }
+
+      function sameLineForClasses(info, ord, classA, classB) {
+        const a = ord.find((p) => p.classList && p.classList.contains(classA));
+        const b = ord.find((p) => p.classList && p.classList.contains(classB));
+        if (!a || !b) return null;
+        const ai = ord.indexOf(a);
+        const bi = ord.indexOf(b);
+        const al = info.lineByIdx[ai];
+        const bl = info.lineByIdx[bi];
+        if (!Number.isFinite(al) || !Number.isFinite(bl)) return null;
+        return al === bl;
+      }
+
+      function isBetter(aInfo, aOrder, bInfo, bOrder) {
+        // Prefer fewer total lines.
+        if (aInfo.lineCount !== bInfo.lineCount) return aInfo.lineCount < bInfo.lineCount;
+        // If lines tie, prefer coupling "Navigation" + "Twist Knob" when possible.
+        // (This is the most common "paired" skill users look for.)
+        const aCoupled = sameLineForClasses(aInfo, aOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
+        const bCoupled = sameLineForClasses(bInfo, bOrder, "rc-task-tag-nav", "rc-task-tag-knob-twist");
+        if (aCoupled != null && bCoupled != null && aCoupled !== bCoupled) return aCoupled === true;
+        // Then fewer 1-tag lines, then more tags on first line.
+        if (aInfo.orphanLines !== bInfo.orphanLines) return aInfo.orphanLines < bInfo.orphanLines;
+        if (aInfo.firstLineCount !== bInfo.firstLineCount) return aInfo.firstLineCount > bInfo.firstLineCount;
+        return false;
+      }
+
+      function moveItem(arr, fromIdx, toIdx) {
+        if (fromIdx === toIdx) return arr.slice();
+        const out = arr.slice();
+        const [item] = out.splice(fromIdx, 1);
+        out.splice(toIdx, 0, item);
+        return out;
+      }
+
+      // Start with the current (canonical) order.
+      let order = pills.slice();
+      render(order);
+      let best = layoutInfo(order);
+      let bestOrder = order;
+      if (best.lineCount <= 1) return;
+
+      // Record baseline Navigation line index (if present); keep Navigation from
+      // moving to a later line than it started on.
+      let navBaselineLine = null;
+      const navEl = order.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
+      if (navEl) {
+        navBaselineLine = layoutInfo(order).lineByIdx[order.indexOf(navEl)] ?? null;
+      }
+
+      function navOk(info, ord) {
+        if (navBaselineLine == null) return true;
+        const nav = ord.find((p) => p.classList && p.classList.contains("rc-task-tag-nav"));
+        if (!nav) return true;
+        const idx = ord.indexOf(nav);
+        const line = info.lineByIdx[idx];
+        return Number.isFinite(line) ? line <= navBaselineLine : true;
+      }
+
+      // Iteratively improve by pulling a later tag upward to fill earlier lines.
+      const maxIters = Math.max(8, order.length * order.length);
+      let iter = 0;
+      while (iter < maxIters) {
+        iter += 1;
+
+        // Ensure we're measuring the current layout.
+        render(order);
+        const cur = layoutInfo(order);
+        if (cur.lineCount <= 1) break;
+
+        // Build line -> [indices] mapping.
+        const lineToIdxs = new Map();
+        for (let i = 0; i < order.length; i += 1) {
+          const li = cur.lineByIdx[i];
+          if (li < 0) continue;
+          if (!lineToIdxs.has(li)) lineToIdxs.set(li, []);
+          lineToIdxs.get(li).push(i);
+        }
+
+        let improved = false;
+        let bestCandidate = null;
+
+        // For each earlier line, try pulling a later pill up just after that line's last pill.
+        for (let line = 0; line < cur.lineCount - 1; line += 1) {
+          const idxs = lineToIdxs.get(line) || [];
+          if (idxs.length === 0) continue;
+          const insertAfter = idxs[idxs.length - 1];
+          const insertPos = insertAfter + 1;
+
+          // Consider candidates only from later positions (pull upward).
+          for (let from = insertPos; from < order.length; from += 1) {
+            const trialOrder = moveItem(order, from, insertPos);
+            render(trialOrder);
+            const info = layoutInfo(trialOrder);
+            if (!navOk(info, trialOrder)) continue;
+
+            // Prefer any improvement, but never increase total lines.
+            if (info.lineCount > best.lineCount) continue;
+
+            if (isBetter(info, trialOrder, best, bestOrder)) {
+              bestCandidate = { order: trialOrder, info };
+              // Update "best" for subsequent comparisons during this pass.
+              best = info;
+              bestOrder = trialOrder;
+              improved = true;
+              // Keep scanning; there might be an even better pull-up in same pass.
+            }
+          }
+        }
+
+        if (improved && bestCandidate) {
+          order = bestCandidate.order;
+          // continue loop to see if further pull-ups help
+        } else {
+          break;
+        }
+      }
+
+      // Final render.
+      render(order);
+    })();
   }
 
   function reorderActivityDropdownOptions(selectEl, detailsEls) {
@@ -1701,7 +1852,7 @@
     titleCode.textContent = "";
     title.appendChild(titleCode);
 
-    const video = document.createElement("video");
+    let video = document.createElement("video");
     video.className = "rc-video-modal-player";
     video.controls = true;
     video.playsInline = true;
@@ -1722,25 +1873,135 @@
     instruction.appendChild(instructionLabel);
     instruction.appendChild(instructionText);
 
+    // Optional debug logging.
+    // Enable in DevTools console:
+    //   window.ROBOCASA_DEBUG_VIDEO_LOGS = true
+    //   window.ROBOCASA_DEBUG_VIDEO_LOGS_TO_SERVER = true
+    // When enabled, this will:
+    // - console.debug(...) a detailed timeline, and
+    // - "print" to a simple Python static server by requesting:
+    //     {content_root}/__rc_video_log?...  (will typically 404, but still logs the request)
+    function rcVideoDebugEnabled() {
+      return !!window.ROBOCASA_DEBUG_VIDEO_LOGS || window.ROBOCASA_DEBUG_VIDEO_LOGS === "server";
+    }
+    function rcVideoDebugServerEnabled() {
+      return !!window.ROBOCASA_DEBUG_VIDEO_LOGS_TO_SERVER || window.ROBOCASA_DEBUG_VIDEO_LOGS === "server";
+    }
+    function rcVideoDebugPing(params) {
+      if (!rcVideoDebugServerEnabled()) return;
+      try {
+        const q = new URLSearchParams();
+        for (const [k, v] of Object.entries(params || {})) {
+          if (v == null) continue;
+          q.set(k, String(v).slice(0, 500));
+        }
+        // Use content_root so this works for local hosting under subpaths / versioned docs.
+        const url = `${getContentRoot()}__rc_video_log?${q.toString()}`;
+        const img = new Image();
+        img.src = url;
+      } catch {}
+    }
+    function rcVideoDebugLog(event, params) {
+      if (!rcVideoDebugEnabled()) return;
+      const payload = { event, t: Date.now(), ...(params || {}) };
+      try {
+        // eslint-disable-next-line no-console
+        console.debug("[robocasa video]", payload);
+      } catch {}
+      rcVideoDebugPing(payload);
+    }
+
+    function rcVideoSnapshot() {
+      try {
+        const snap = {
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          currentTime: Number.isFinite(video.currentTime) ? Number(video.currentTime.toFixed(3)) : "",
+          duration: Number.isFinite(video.duration) ? Number(video.duration.toFixed(3)) : "",
+          errorCode: video.error ? video.error.code : "",
+        };
+        try {
+          const b = video.buffered;
+          if (b && typeof b.length === "number") {
+            // Keep this small: only the last buffered range.
+            if (b.length > 0) {
+              snap.buffered = `${b.start(b.length - 1).toFixed(3)}-${b.end(b.length - 1).toFixed(3)}`;
+            } else {
+              snap.buffered = "0";
+            }
+          }
+        } catch {}
+        return snap;
+      } catch {
+        return {};
+      }
+    }
+
+    function rcAttachVideoDebugEvents(session, taskName) {
+      if (!rcVideoDebugEnabled()) return () => {};
+      const events = [
+        "loadstart",
+        "loadedmetadata",
+        "loadeddata",
+        "canplay",
+        "canplaythrough",
+        "progress",
+        "stalled",
+        "suspend",
+        "waiting",
+        "playing",
+        "pause",
+        "abort",
+        "emptied",
+        "error",
+      ];
+
+      const handlers = new Map();
+      for (const ev of events) {
+        const handler = () => {
+          if (overlay._rcVideoSession !== session) return;
+          rcVideoDebugLog(`video_${ev}`, { task: taskName || "", ...rcVideoSnapshot() });
+        };
+        handlers.set(ev, handler);
+        video.addEventListener(ev, handler);
+      }
+
+      return () => {
+        for (const [ev, handler] of handlers.entries()) {
+          video.removeEventListener(ev, handler);
+        }
+      };
+    }
+
+    // Monotonically increasing token; used to ignore stale events from prior opens.
+    overlay._rcVideoSession = 0;
+
       function doClose() {
       overlay.hidden = true;
       document.body.classList.remove("rc-modal-open");
       try {
         video.pause();
       } catch {}
-      if (loadTimeout) {
-        clearTimeout(loadTimeout);
-        loadTimeout = null;
+      // Swallow any pending play() rejection when we abort the load (avoids "Uncaught (in promise) DOMException").
+      if (overlay._rcLastPlayPromise) {
+        overlay._rcLastPlayPromise.catch(function () {});
+        overlay._rcLastPlayPromise = null;
       }
-      hasLoadedMetadata = false;
+      if (overlay._rcLoadTimeout != null) {
+        clearTimeout(overlay._rcLoadTimeout);
+        overlay._rcLoadTimeout = null;
+      }
       instruction.hidden = true;
       instructionLabel.textContent = "";
       instructionText.textContent = "";
       error.hidden = true;
       error.textContent = "";
       titleCode.textContent = "";
-      video.removeAttribute("src");
-      video.load();
+      try {
+        video.removeAttribute("src");
+        video.load();
+      } catch (_) {}
     }
 
     close.addEventListener("click", doClose);
@@ -1760,7 +2021,56 @@
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 
+    function replaceVideoElement() {
+      // Firefox in particular can get "stuck" after many sequential MP4 loads.
+      // Replacing the <video> element forces a full reset of the media pipeline.
+      const next = document.createElement("video");
+      next.className = "rc-video-modal-player";
+      next.controls = true;
+      next.playsInline = true;
+      next.preload = "metadata";
+
+      try {
+        video.pause();
+      } catch {}
+      if (overlay._rcLastPlayPromise) {
+        overlay._rcLastPlayPromise.catch(function () {});
+        overlay._rcLastPlayPromise = null;
+      }
+      try {
+        video.removeAttribute("src");
+        video.load();
+      } catch {}
+
+      modal.replaceChild(next, video);
+      video = next;
+    }
+
     overlay._rcOpen = (sources, taskName, taskDescription) => {
+      overlay._rcVideoSession = (overlay._rcVideoSession || 0) + 1;
+      const session = overlay._rcVideoSession;
+      // Some cross-origin video requests can get stuck in an edge/cache hiccup state.
+      // If that happens, we retry the *same* URL once with a cache-busting query param.
+      let didCacheBustRetry = false;
+      if (overlay._rcLoadTimeout != null) {
+        clearTimeout(overlay._rcLoadTimeout);
+        overlay._rcLoadTimeout = null;
+      }
+      // Hard reset media element (prevents Firefox "stuck" loads).
+      replaceVideoElement();
+      if (typeof overlay._rcVideoDebugCleanup === "function") {
+        try {
+          overlay._rcVideoDebugCleanup();
+        } catch {}
+      }
+      // Attach debug listeners to the *current* video element.
+      overlay._rcVideoDebugCleanup = rcAttachVideoDebugEvents(session, taskName);
+
+      rcVideoDebugLog("open", {
+        task: taskName || "",
+        sources: Array.isArray(sources) ? sources.join(" | ") : String(sources || ""),
+      });
+
       overlay.hidden = false;
       document.body.classList.add("rc-modal-open");
       error.hidden = true;
@@ -1774,6 +2084,15 @@
       function showUnavailable() {
         video.removeAttribute("src");
         video.load();
+
+        rcVideoDebugLog("unavailable", {
+          task: taskName || "",
+          attempt,
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          errorCode: video.error ? video.error.code : "",
+        });
 
         error.hidden = false;
         const hasCustomBase = typeof window.ROBOCASA_VIDEO_BASE_URL === "string" && window.ROBOCASA_VIDEO_BASE_URL.trim();
@@ -1795,10 +2114,23 @@
           showUnavailable();
           return;
         }
+        const srcIndex = attempt;
         const src = srcs[attempt++];
         hasLoadedMetadata = false;
+        overlay._rcActiveVideoSrc = src;
+
+        rcVideoDebugLog("try_source", {
+          task: taskName || "",
+          srcIndex,
+          src,
+          ...rcVideoSnapshot(),
+        });
         
-        // Clear any existing timeout
+        // Clear any existing timeout (and stale timeouts from a previous open)
+        if (overlay._rcLoadTimeout != null) {
+          clearTimeout(overlay._rcLoadTimeout);
+          overlay._rcLoadTimeout = null;
+        }
         if (loadTimeout) {
           clearTimeout(loadTimeout);
           loadTimeout = null;
@@ -1806,13 +2138,25 @@
 
         // Safari: use canplay or loadedmetadata to detect successful load
         const onCanPlay = () => {
+          if (overlay._rcVideoSession !== session) return;
           hasLoadedMetadata = true;
+          if (overlay._rcLoadTimeout != null) {
+            clearTimeout(overlay._rcLoadTimeout);
+            overlay._rcLoadTimeout = null;
+          }
           if (loadTimeout) {
             clearTimeout(loadTimeout);
             loadTimeout = null;
           }
           video.removeEventListener("canplay", onCanPlay);
           video.removeEventListener("loadedmetadata", onCanPlay);
+
+          rcVideoDebugLog("loaded_metadata", {
+            task: taskName || "",
+            readyState: video.readyState,
+            networkState: video.networkState,
+            currentSrc: video.currentSrc || "",
+          });
         };
         video.addEventListener("canplay", onCanPlay);
         video.addEventListener("loadedmetadata", onCanPlay);
@@ -1820,30 +2164,94 @@
         // Set and attempt playback (may require user gesture; that's fine)
         video.src = src;
         video.load();
+        rcVideoDebugLog("set_src", { task: taskName || "", src, ...rcVideoSnapshot() });
         
         // Safari: give it more time before assuming error (especially for R2/CDN)
         // Increased timeout for Safari which can be slower with cross-origin video loading
+        // 5s is too aggressive for cross-origin video metadata on some networks / browsers.
+        // A longer timeout avoids false "unavailable" errors when R2 is slow to respond.
         loadTimeout = window.setTimeout(() => {
+          if (overlay._rcVideoSession !== session) return;
           if (!hasLoadedMetadata) {
-            // Safari may not fire error immediately; try next source
-            video.removeEventListener("canplay", onCanPlay);
-            video.removeEventListener("loadedmetadata", onCanPlay);
-            tryNextSource();
+            rcVideoDebugLog("timeout", {
+              task: taskName || "",
+              src,
+              ...rcVideoSnapshot(),
+            });
+
+            // If the primary URL is valid but stuck, retry once with cache-busting.
+            // This can recover from transient Cloudflare edge/cache issues.
+            if (!didCacheBustRetry && srcIndex === 0 && !String(src).includes("cb=")) {
+              didCacheBustRetry = true;
+              const cbSrc = `${src}${String(src).includes("?") ? "&" : "?"}cb=${Date.now()}`;
+              overlay._rcActiveVideoSrc = cbSrc;
+              rcVideoDebugLog("retry_cache_bust", { task: taskName || "", from: src, to: cbSrc, ...rcVideoSnapshot() });
+
+              // Reset listeners + src and try again.
+              video.removeEventListener("canplay", onCanPlay);
+              video.removeEventListener("loadedmetadata", onCanPlay);
+              try {
+                video.pause();
+              } catch {}
+              video.removeAttribute("src");
+              video.load();
+              video.src = cbSrc;
+              video.load();
+              rcVideoDebugLog("set_src", { task: taskName || "", src: cbSrc, ...rcVideoSnapshot() });
+
+              // Arm a fresh timeout for the retry.
+              if (overlay._rcLoadTimeout != null) {
+                clearTimeout(overlay._rcLoadTimeout);
+                overlay._rcLoadTimeout = null;
+              }
+              loadTimeout = window.setTimeout(() => {
+                if (overlay._rcVideoSession !== session) return;
+                if (!hasLoadedMetadata) {
+                  rcVideoDebugLog("timeout_retry", { task: taskName || "", src: cbSrc, ...rcVideoSnapshot() });
+                }
+              }, 20000);
+              overlay._rcLoadTimeout = loadTimeout;
+
+              const p2 = video.play();
+              overlay._rcLastPlayPromise = p2;
+              if (p2 && typeof p2.catch === "function") p2.catch(() => {});
+              return;
+            }
+            // Do NOT fail over on timeout. For R2, the "prefix" layout is often a 404,
+            // so timing out and switching sources can create a false "unavailable"
+            // even when the primary URL would have loaded if given more time.
+            //
+            // We only try the next source on a real `error` event.
           }
-        }, 5000);
+        }, 20000);
+        overlay._rcLoadTimeout = loadTimeout;
 
         const p = video.play();
+        overlay._rcLastPlayPromise = p;
         if (p && typeof p.catch === "function") p.catch(() => {});
       }
 
       // If a source fails to load, try the next one.
       // Safari: only treat as error if we haven't loaded metadata yet
       video.onerror = () => {
+        if (overlay._rcVideoSession !== session) return;
+        rcVideoDebugLog("error", {
+          task: taskName || "",
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          errorCode: video.error ? video.error.code : "",
+        });
+        if (overlay._rcLoadTimeout != null) {
+          clearTimeout(overlay._rcLoadTimeout);
+          overlay._rcLoadTimeout = null;
+        }
         if (loadTimeout) {
           clearTimeout(loadTimeout);
           loadTimeout = null;
         }
-        if (!hasLoadedMetadata) {
+        // Only fail over if the error is for the currently active src.
+        if (!hasLoadedMetadata && (!overlay._rcActiveVideoSrc || video.currentSrc === overlay._rcActiveVideoSrc)) {
           tryNextSource();
         }
       };

@@ -973,28 +973,29 @@ body.rc-composite-tasks .rc-activity-body table.docutils {
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(1),
 body.rc-composite-tasks .rc-activity-body table.docutils td:nth-child(1) {
-  width: 24%;
+  width: 23.5%;
   overflow-wrap: anywhere;
 }
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(2),
 body.rc-composite-tasks .rc-activity-body table.docutils td:nth-child(2) {
-  width: 36.75%;
+  width: 37.05%;
 }
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(3),
 body.rc-composite-tasks .rc-activity-body table.docutils td:nth-child(3) {
-  width: 17.75%;
+  width: 18.25%;
+  /* font-size: 0.98em; */
 }
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(4),
 body.rc-composite-tasks .rc-activity-body table.docutils td:nth-child(4) {
-  width: 8.25%;
+  width: 8.15%;
 }
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(5),
 body.rc-composite-tasks .rc-activity-body table.docutils td:nth-child(5) {
-  width: 7%;
+  width: 6.8%;
 }
 
 body.rc-composite-tasks .rc-activity-body table.docutils th:nth-child(6),
@@ -1339,7 +1340,8 @@ body.rc-composite-tasks .rc-activity-body table.docutils {
 body.rc-composite-tasks .rc-activity-body table.docutils th,
 body.rc-composite-tasks .rc-activity-body table.docutils td {
   border-bottom: 1px solid rgba(17, 24, 39, 0.08);
-  padding: 0.55rem 0.6rem;
+  /* Slightly reduce column padding to prevent early wrapping */
+  padding: 0.55rem 0.35rem;
   vertical-align: top;
   background: #f8fafc;
 }
@@ -1363,6 +1365,12 @@ body.rc-composite-tasks .rc-activity-body table.docutils tbody tr:hover td {
 
 .rc-activity-body td.rc-episode-length {
   white-space: nowrap;
+}
+
+/* Composite Tasks: nudge numeric cells slightly right (content only) */
+body.rc-composite-tasks .rc-activity-body table.docutils tbody td.rc-subtasks,
+body.rc-composite-tasks .rc-activity-body table.docutils tbody td.rc-episode-length {
+  padding-left: 0.63rem;
 }
 
 .rc-activity-body td.rc-video {

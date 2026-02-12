@@ -779,7 +779,7 @@
     title.className = "rc-video-modal-title";
     title.textContent = "";
 
-    const video = document.createElement("video");
+    let video = document.createElement("video");
     video.className = "rc-video-modal-player";
     video.controls = true;
     video.playsInline = true;
@@ -801,6 +801,108 @@
     instruction.appendChild(document.createTextNode(" "));
     instruction.appendChild(instructionText);
 
+    // Optional debug logging.
+    // Enable in DevTools console:
+    //   window.ROBOCASA_DEBUG_VIDEO_LOGS = true
+    //   window.ROBOCASA_DEBUG_VIDEO_LOGS_TO_SERVER = true
+    // When enabled, this will:
+    // - console.debug(...) a detailed timeline, and
+    // - "print" to a simple Python static server by requesting:
+    //     {content_root}/__rc_video_log?...  (will typically 404, but still logs the request)
+    function rcVideoDebugEnabled() {
+      return !!window.ROBOCASA_DEBUG_VIDEO_LOGS || window.ROBOCASA_DEBUG_VIDEO_LOGS === "server";
+    }
+    function rcVideoDebugServerEnabled() {
+      return !!window.ROBOCASA_DEBUG_VIDEO_LOGS_TO_SERVER || window.ROBOCASA_DEBUG_VIDEO_LOGS === "server";
+    }
+    function rcVideoDebugPing(params) {
+      if (!rcVideoDebugServerEnabled()) return;
+      try {
+        const q = new URLSearchParams();
+        for (const [k, v] of Object.entries(params || {})) {
+          if (v == null) continue;
+          q.set(k, String(v).slice(0, 500));
+        }
+        const url = `${getContentRoot()}__rc_video_log?${q.toString()}`;
+        const img = new Image();
+        img.src = url;
+      } catch {}
+    }
+    function rcVideoDebugLog(event, params) {
+      if (!rcVideoDebugEnabled()) return;
+      const payload = { event, t: Date.now(), ...(params || {}) };
+      try {
+        // eslint-disable-next-line no-console
+        console.debug("[robocasa video]", payload);
+      } catch {}
+      rcVideoDebugPing(payload);
+    }
+
+    function rcVideoSnapshot() {
+      try {
+        const snap = {
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          currentTime: Number.isFinite(video.currentTime) ? Number(video.currentTime.toFixed(3)) : "",
+          duration: Number.isFinite(video.duration) ? Number(video.duration.toFixed(3)) : "",
+          errorCode: video.error ? video.error.code : "",
+        };
+        try {
+          const b = video.buffered;
+          if (b && typeof b.length === "number") {
+            if (b.length > 0) {
+              snap.buffered = `${b.start(b.length - 1).toFixed(3)}-${b.end(b.length - 1).toFixed(3)}`;
+            } else {
+              snap.buffered = "0";
+            }
+          }
+        } catch {}
+        return snap;
+      } catch {
+        return {};
+      }
+    }
+
+    function rcAttachVideoDebugEvents(session, taskName) {
+      if (!rcVideoDebugEnabled()) return () => {};
+      const events = [
+        "loadstart",
+        "loadedmetadata",
+        "loadeddata",
+        "canplay",
+        "canplaythrough",
+        "progress",
+        "stalled",
+        "suspend",
+        "waiting",
+        "playing",
+        "pause",
+        "abort",
+        "emptied",
+        "error",
+      ];
+
+      const handlers = new Map();
+      for (const ev of events) {
+        const handler = () => {
+          if (overlay._rcVideoSession !== session) return;
+          rcVideoDebugLog(`video_${ev}`, { task: taskName || "", ...rcVideoSnapshot() });
+        };
+        handlers.set(ev, handler);
+        video.addEventListener(ev, handler);
+      }
+
+      return () => {
+        for (const [ev, handler] of handlers.entries()) {
+          video.removeEventListener(ev, handler);
+        }
+      };
+    }
+
+    // Monotonically increasing token; used to ignore stale events from prior opens.
+    overlay._rcVideoSession = 0;
+
     let loadTimeout = null;
     let hasLoadedMetadata = false;
 
@@ -810,9 +912,13 @@
       try {
         video.pause();
       } catch {}
-      if (loadTimeout) {
-        clearTimeout(loadTimeout);
-        loadTimeout = null;
+      if (overlay._rcLastPlayPromise) {
+        overlay._rcLastPlayPromise.catch(function () {});
+        overlay._rcLastPlayPromise = null;
+      }
+      if (overlay._rcLoadTimeout != null) {
+        clearTimeout(overlay._rcLoadTimeout);
+        overlay._rcLoadTimeout = null;
       }
       hasLoadedMetadata = false;
       instruction.hidden = true;
@@ -821,8 +927,10 @@
       error.hidden = true;
       error.textContent = "";
       title.textContent = "";
-      video.removeAttribute("src");
-      video.load();
+      try {
+        video.removeAttribute("src");
+        video.load();
+      } catch (_) {}
     }
 
     close.addEventListener("click", doClose);
@@ -842,7 +950,56 @@
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 
+    function replaceVideoElement() {
+      // Firefox in particular can get "stuck" after many sequential MP4 loads.
+      // Replacing the <video> element forces a full reset of the media pipeline.
+      const next = document.createElement("video");
+      next.className = "rc-video-modal-player";
+      next.controls = true;
+      next.playsInline = true;
+      next.preload = "metadata";
+
+      try {
+        video.pause();
+      } catch {}
+      if (overlay._rcLastPlayPromise) {
+        overlay._rcLastPlayPromise.catch(function () {});
+        overlay._rcLastPlayPromise = null;
+      }
+      try {
+        video.removeAttribute("src");
+        video.load();
+      } catch {}
+
+      modal.replaceChild(next, video);
+      video = next;
+    }
+
     overlay._rcOpen = (sources, taskName, taskDescription) => {
+      overlay._rcVideoSession = (overlay._rcVideoSession || 0) + 1;
+      const session = overlay._rcVideoSession;
+      // Some cross-origin video requests can get stuck in an edge/cache hiccup state.
+      // If that happens, we retry the *same* URL once with a cache-busting query param.
+      let didCacheBustRetry = false;
+      if (overlay._rcLoadTimeout != null) {
+        clearTimeout(overlay._rcLoadTimeout);
+        overlay._rcLoadTimeout = null;
+      }
+      // Hard reset media element (prevents Firefox "stuck" loads).
+      replaceVideoElement();
+      if (typeof overlay._rcVideoDebugCleanup === "function") {
+        try {
+          overlay._rcVideoDebugCleanup();
+        } catch {}
+      }
+      // Attach debug listeners to the *current* video element.
+      overlay._rcVideoDebugCleanup = rcAttachVideoDebugEvents(session, taskName);
+
+      rcVideoDebugLog("open", {
+        task: taskName || "",
+        sources: Array.isArray(sources) ? sources.join(" | ") : String(sources || ""),
+      });
+
       overlay.hidden = false;
       document.body.classList.add("rc-modal-open");
       error.hidden = true;
@@ -858,6 +1015,15 @@
       function showUnavailable() {
         video.removeAttribute("src");
         video.load();
+
+        rcVideoDebugLog("unavailable", {
+          task: taskName || "",
+          attempt,
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          errorCode: video.error ? video.error.code : "",
+        });
 
         error.hidden = false;
         const hasCustomBase = typeof window.ROBOCASA_VIDEO_BASE_URL === "string" && window.ROBOCASA_VIDEO_BASE_URL.trim();
@@ -876,10 +1042,23 @@
           showUnavailable();
           return;
         }
+        const srcIndex = attempt;
         const src = srcs[attempt++];
         hasLoadedMetadata = false;
+        overlay._rcActiveVideoSrc = src;
+
+        rcVideoDebugLog("try_source", {
+          task: taskName || "",
+          srcIndex,
+          src,
+          ...rcVideoSnapshot(),
+        });
         
-        // Clear any existing timeout
+        // Clear any existing timeout (and stale timeouts from a previous open)
+        if (overlay._rcLoadTimeout != null) {
+          clearTimeout(overlay._rcLoadTimeout);
+          overlay._rcLoadTimeout = null;
+        }
         if (loadTimeout) {
           clearTimeout(loadTimeout);
           loadTimeout = null;
@@ -887,13 +1066,25 @@
 
         // Safari: use canplay or loadedmetadata to detect successful load
         const onCanPlay = () => {
+          if (overlay._rcVideoSession !== session) return;
           hasLoadedMetadata = true;
+          if (overlay._rcLoadTimeout != null) {
+            clearTimeout(overlay._rcLoadTimeout);
+            overlay._rcLoadTimeout = null;
+          }
           if (loadTimeout) {
             clearTimeout(loadTimeout);
             loadTimeout = null;
           }
           video.removeEventListener("canplay", onCanPlay);
           video.removeEventListener("loadedmetadata", onCanPlay);
+
+          rcVideoDebugLog("loaded_metadata", {
+            task: taskName || "",
+            readyState: video.readyState,
+            networkState: video.networkState,
+            currentSrc: video.currentSrc || "",
+          });
         };
         video.addEventListener("canplay", onCanPlay);
         video.addEventListener("loadedmetadata", onCanPlay);
@@ -901,30 +1092,94 @@
         // Set and attempt playback (may require user gesture; that's fine)
         video.src = src;
         video.load();
+        rcVideoDebugLog("set_src", { task: taskName || "", src, ...rcVideoSnapshot() });
         
         // Safari: give it more time before assuming error (especially for R2/CDN)
         // Increased timeout for Safari which can be slower with cross-origin video loading
+        // 5s is too aggressive for cross-origin video metadata on some networks / browsers.
+        // A longer timeout avoids false "unavailable" errors when R2 is slow to respond.
         loadTimeout = window.setTimeout(() => {
+          if (overlay._rcVideoSession !== session) return;
           if (!hasLoadedMetadata) {
-            // Safari may not fire error immediately; try next source
-            video.removeEventListener("canplay", onCanPlay);
-            video.removeEventListener("loadedmetadata", onCanPlay);
-            tryNextSource();
+            rcVideoDebugLog("timeout", {
+              task: taskName || "",
+              src,
+              ...rcVideoSnapshot(),
+            });
+
+            // If the primary URL is valid but stuck, retry once with cache-busting.
+            // This can recover from transient Cloudflare edge/cache issues.
+            if (!didCacheBustRetry && srcIndex === 0 && !String(src).includes("cb=")) {
+              didCacheBustRetry = true;
+              const cbSrc = `${src}${String(src).includes("?") ? "&" : "?"}cb=${Date.now()}`;
+              overlay._rcActiveVideoSrc = cbSrc;
+              rcVideoDebugLog("retry_cache_bust", { task: taskName || "", from: src, to: cbSrc, ...rcVideoSnapshot() });
+
+              // Reset listeners + src and try again.
+              video.removeEventListener("canplay", onCanPlay);
+              video.removeEventListener("loadedmetadata", onCanPlay);
+              try {
+                video.pause();
+              } catch {}
+              video.removeAttribute("src");
+              video.load();
+              video.src = cbSrc;
+              video.load();
+              rcVideoDebugLog("set_src", { task: taskName || "", src: cbSrc, ...rcVideoSnapshot() });
+
+              // Arm a fresh timeout for the retry.
+              if (overlay._rcLoadTimeout != null) {
+                clearTimeout(overlay._rcLoadTimeout);
+                overlay._rcLoadTimeout = null;
+              }
+              loadTimeout = window.setTimeout(() => {
+                if (overlay._rcVideoSession !== session) return;
+                if (!hasLoadedMetadata) {
+                  rcVideoDebugLog("timeout_retry", { task: taskName || "", src: cbSrc, ...rcVideoSnapshot() });
+                }
+              }, 20000);
+              overlay._rcLoadTimeout = loadTimeout;
+
+              const p2 = video.play();
+              overlay._rcLastPlayPromise = p2;
+              if (p2 && typeof p2.catch === "function") p2.catch(() => {});
+              return;
+            }
+            // Do NOT fail over on timeout. For R2, the "prefix" layout is often a 404,
+            // so timing out and switching sources can create a false "unavailable"
+            // even when the primary URL would have loaded if given more time.
+            //
+            // We only try the next source on a real `error` event.
           }
-        }, 5000);
+        }, 20000);
+        overlay._rcLoadTimeout = loadTimeout;
 
         const p = video.play();
+        overlay._rcLastPlayPromise = p;
         if (p && typeof p.catch === "function") p.catch(() => {});
       }
 
       // If a source fails to load, try the next one.
       // Safari: only treat as error if we haven't loaded metadata yet
       video.onerror = () => {
+        if (overlay._rcVideoSession !== session) return;
+        rcVideoDebugLog("error", {
+          task: taskName || "",
+          readyState: video.readyState,
+          networkState: video.networkState,
+          currentSrc: video.currentSrc || "",
+          errorCode: video.error ? video.error.code : "",
+        });
+        if (overlay._rcLoadTimeout != null) {
+          clearTimeout(overlay._rcLoadTimeout);
+          overlay._rcLoadTimeout = null;
+        }
         if (loadTimeout) {
           clearTimeout(loadTimeout);
           loadTimeout = null;
         }
-        if (!hasLoadedMetadata) {
+        // Only fail over if the error is for the currently active src.
+        if (!hasLoadedMetadata && (!overlay._rcActiveVideoSrc || video.currentSrc === overlay._rcActiveVideoSrc)) {
           tryNextSource();
         }
       };
