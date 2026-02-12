@@ -797,26 +797,36 @@ let currentViewer = null;
 let currentStyleFilter = null;
 
 // Preload range: Image() for immediate neighbors (reliable cache), link prefetch for wider range
-const PRELOAD_IMAGE_RANGE = 4;  // ±4 with Image() so next few steps are cached
-const PRELOAD_LINK_RANGE = 8;   // ±8 with <link rel="prefetch"> for faster drags
+const PRELOAD_IMAGE_RANGE = 4;   // ±4 with Image() when card not actively used
+const PRELOAD_LINK_RANGE = 8;   // ±8 with <link rel="prefetch"> when card not actively used
+const PRELOAD_IMAGE_RANGE_ACTIVE = 15;  // ±15 when user is using this card (slider/modal)
+const PRELOAD_LINK_RANGE_ACTIVE = 25;  // ±25 prefetch when active
+const HOVER_PREFETCH_COUNT = 30;       // prefetch this many images when hovering a card
+const BACKFILL_CHUNK_SIZE = 10;         // backfill rest of card in chunks of this size
 
-function prefetchAdjacentImages(viewer, currentPos) {
+// Which viewer is "active" (inline slider in use); modal viewer uses currentViewer
+let activeViewer = null;
+let activeViewerTimeout = null;
+
+function prefetchAdjacentImages(viewer, currentPos, isActive) {
   const base = viewer.dataset.base;
   const ids = getViewerIds(viewer);
   const count = ids.length;
+  const imageRange = isActive ? PRELOAD_IMAGE_RANGE_ACTIVE : PRELOAD_IMAGE_RANGE;
+  const linkRange = isActive ? PRELOAD_LINK_RANGE_ACTIVE : PRELOAD_LINK_RANGE;
 
   // Remove old prefetch links
   const oldLinks = document.querySelectorAll('link[data-fixture-prefetch]');
   oldLinks.forEach(link => link.remove());
 
-  for (let offset = -PRELOAD_LINK_RANGE; offset <= PRELOAD_LINK_RANGE; offset++) {
+  for (let offset = -linkRange; offset <= linkRange; offset++) {
     const targetPos = currentPos + offset;
     if (targetPos < 1 || targetPos > count || targetPos === currentPos) continue;
     const imageId = ids[targetPos - 1];
     const src = `${base}/${imageId}.webp`;
 
     // Immediate neighbors: force load with Image() for reliable cache (works well cross-origin)
-    if (Math.abs(offset) <= PRELOAD_IMAGE_RANGE) {
+    if (Math.abs(offset) <= imageRange) {
       const img = new Image();
       img.src = src;
     }
@@ -828,6 +838,70 @@ function prefetchAdjacentImages(viewer, currentPos) {
     link.href = src;
     link.setAttribute('data-fixture-prefetch', 'true');
     document.head.appendChild(link);
+  }
+}
+
+// Prefetch a range of images for a viewer (e.g. on hover or backfill)
+function prefetchViewerRange(viewer, fromPos, toPos) {
+  const base = viewer.dataset.base;
+  const ids = getViewerIds(viewer);
+  const count = ids.length;
+  const from = Math.max(1, Math.min(fromPos, count));
+  const to = Math.max(from, Math.min(toPos, count));
+  for (let i = from; i <= to; i++) {
+    const imageId = ids[i - 1];
+    const img = new Image();
+    img.src = `${base}/${imageId}.webp`;
+  }
+}
+
+// Ensure the image at this position is loaded into cache (so going back to it is instant)
+function ensureImageCached(viewer, pos) {
+  const count = getViewerIds(viewer).length;
+  if (pos < 1 || pos > count) return;
+  if (!viewer._rcCachedPositions) viewer._rcCachedPositions = new Set();
+  if (viewer._rcCachedPositions.has(pos)) return;
+  viewer._rcCachedPositions.add(pos);
+  const base = viewer.dataset.base;
+  const ids = getViewerIds(viewer);
+  const imageId = ids[pos - 1];
+  const img = new Image();
+  img.src = `${base}/${imageId}.webp`;
+}
+
+function scheduleBackfill(viewer) {
+  if (viewer._rcBackfillScheduled) return;
+  viewer._rcBackfillScheduled = true;
+  const run = function() {
+    const ids = getViewerIds(viewer);
+    const count = ids.length;
+    let pos = 1;
+    function doChunk() {
+      const end = Math.min(pos + BACKFILL_CHUNK_SIZE - 1, count);
+      for (let i = pos; i <= end; i++) {
+        const imageId = ids[i - 1];
+        const img = new Image();
+        img.src = `${viewer.dataset.base}/${imageId}.webp`;
+      }
+      pos = end + 1;
+      if (pos <= count) {
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(doChunk, { timeout: 500 });
+        } else {
+          setTimeout(doChunk, 50);
+        }
+      }
+    }
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(doChunk, { timeout: 2000 });
+    } else {
+      setTimeout(doChunk, 100);
+    }
+  };
+  if (typeof requestIdleCallback !== 'undefined') {
+    requestIdleCallback(run, { timeout: 2000 });
+  } else {
+    setTimeout(run, 500);
   }
 }
 
@@ -939,8 +1013,9 @@ function setViewerIndex(viewer, index) {
   const src = `${base}/${imageId}.webp`;
   const styleLabel = getStyleLabelForPos(viewer, pos, imageId);
   
-  // Prefetch adjacent images using browser-native prefetch
-  prefetchAdjacentImages(viewer, pos);
+  // Prefetch adjacent images; use wider range when this viewer is active (modal or inline slider)
+  const isActive = (viewer === currentViewer || viewer === activeViewer);
+  prefetchAdjacentImages(viewer, pos, isActive);
   
   if (img) {
     // Simple loading state - browser handles caching naturally
@@ -1020,8 +1095,8 @@ function setModalIndex(index) {
   const src = `${base}/${imageId}.webp`;
   const styleLabel = getStyleLabelForPos(currentViewer, pos, imageId);
   
-  // Prefetch adjacent images using browser-native prefetch
-  prefetchAdjacentImages(currentViewer, pos);
+  // Prefetch adjacent images; modal viewer is always active (wider range)
+  prefetchAdjacentImages(currentViewer, pos, true);
   
   if (modalImg) {
     // Simple loading state - browser handles caching naturally
@@ -1061,6 +1136,7 @@ function openFixtureModalForViewer(viewer) {
   setModalIndex(pos);
   document.getElementById('fixtureModal').classList.add('active');
   document.body.style.overflow = 'hidden';
+  scheduleBackfill(viewer);
 }
 
 function fixtureModalSliderChange(value) {
@@ -1077,7 +1153,10 @@ function initModalSlider() {
     const value = this.value;
     const valueNum = parseInt(value, 10);
     const currentNum = currentViewer ? parseInt(currentViewer.dataset.current || "1", 10) : 0;
-    if (currentViewer) updateModalCounterOnly(currentViewer, value);
+    if (currentViewer) {
+      updateModalCounterOnly(currentViewer, value);
+      ensureImageCached(currentViewer, valueNum);
+    }
     if (modalSliderDebounce) clearTimeout(modalSliderDebounce);
     if (currentViewer && Math.abs(valueNum - currentNum) <= 2) {
       modalSliderDebounce = null;
@@ -1219,11 +1298,21 @@ function initFixtureViewers() {
       const ids = getViewerIds(viewer);
       slider.max = String(ids.length);
       let sliderDebounce = null;
+      function setActiveAndBackfill() {
+        activeViewer = viewer;
+        if (activeViewerTimeout) clearTimeout(activeViewerTimeout);
+        activeViewerTimeout = setTimeout(function() { activeViewer = null; }, 3000);
+        scheduleBackfill(viewer);
+      }
+      slider.addEventListener('focus', setActiveAndBackfill);
       slider.addEventListener('input', function() {
+        setActiveAndBackfill();
         const value = this.value;
         const valueNum = parseInt(value, 10);
         const currentNum = parseInt(viewer.dataset.current || "1", 10);
         updateViewerCounterOnly(viewer, value);
+        // Always cache the image at current slider position so sliding back is instant
+        ensureImageCached(viewer, valueNum);
         if (sliderDebounce) clearTimeout(sliderDebounce);
         // Small step (±2): update immediately so cached image shows instantly
         if (Math.abs(valueNum - currentNum) <= 2) {
@@ -1241,6 +1330,11 @@ function initFixtureViewers() {
         sliderDebounce = null;
         setViewerIndex(viewer, this.value);
       });
+      slider.addEventListener('blur', function() {
+        activeViewer = null;
+        if (activeViewerTimeout) clearTimeout(activeViewerTimeout);
+        activeViewerTimeout = null;
+      });
     }
 
     // Click (or Enter/Space) opens modal. Slider stays usable both inline & in modal.
@@ -1252,6 +1346,27 @@ function initFixtureViewers() {
         if (ev.key === 'Enter' || ev.key === ' ') {
           ev.preventDefault();
           openFixtureModalForViewer(viewer);
+        }
+      });
+    }
+
+    // Prefetch first N images when user hovers over the card (once per card)
+    const card = viewer.closest('.fixture-card');
+    if (card && !card._rcHoverPrefetchAttached) {
+      card._rcHoverPrefetchAttached = true;
+      card.addEventListener('mouseenter', function() {
+        if (viewer._rcHoverPrefetched) return;
+        viewer._rcHoverPrefetched = true;
+        const count = getViewerIds(viewer).length;
+        const to = Math.min(HOVER_PREFETCH_COUNT, count);
+        if (to < 1) return;
+        function run() {
+          prefetchViewerRange(viewer, 1, to);
+        }
+        if (typeof requestIdleCallback !== 'undefined') {
+          requestIdleCallback(run, { timeout: 1000 });
+        } else {
+          setTimeout(run, 100);
         }
       });
     }
