@@ -1,3 +1,8 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("rc-overview-page");
+  });
+</script>
 
 # Overview
 
@@ -8,7 +13,7 @@
 - **Benchmarking support**: popular policy learning methods including Diffusion Policy, pi, and GR00T
 
 <p align="center">
-  <img class="overview-banner-image" width="100.0%" src="../_static/robocasa-banner.png">
+  <img class="overview-banner-image" width="100%" src="../_static/robocasa-banner.png" alt="RoboCasa 365 overview">
 </p>
 
 This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.

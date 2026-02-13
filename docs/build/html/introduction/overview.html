@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=dbcc78a5" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=c544027b" />
     <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d05820ef" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=1e6792ba" />
   
@@ -389,7 +389,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="overview">
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.add("rc-overview-page");
+  });
+</script><section id="overview">
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
 <p><strong>RoboCasa</strong> is a large-scale simulation framework for training generally capable robots to perform everyday tasks. It was <a class="reference external" href="https://robocasa.ai/assets/robocasa_rss24.pdf">originally released</a> in 2024 by UT Austin researchers. The latest iteration, <strong>RoboCasa365</strong>, builds upon the original release with significant new functionalities to support large-scale training and benchmarking in sim. Four pillars underlie RoboCasa365:</p>
 <ul class="simple">
@@ -399,7 +403,7 @@ document.write(`
 <li><p><strong>Benchmarking support</strong>: popular policy learning methods including Diffusion Policy, pi, and GR00T</p></li>
 </ul>
 <p align="center">
-  <img class="overview-banner-image" width="100.0%" src="../_static/robocasa-banner.png">
+  <img class="overview-banner-image" width="100%" src="../_static/robocasa-banner.png" alt="RoboCasa 365 overview">
 </p><p>This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.</p>
 <section id="citation">
 <h2>Citation<a class="headerlink" href="#citation" title="Link to this heading">#</a></h2>

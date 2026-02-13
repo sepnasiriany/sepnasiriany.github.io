@@ -775,7 +775,7 @@ html[data-theme="dark"] .fixture-preview-image {
 
   <div class="fixture-card">
     <h2 class="fixture-card-title">Toaster Oven</h2>
-    <div class="fixture-viewer" data-name="Toaster Oven" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,32,34,35,37,38,40,41,43,44,45,46,50,52,53,54,55,57,59" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16|22;17|31;33|47;18|49;19|48;20;21|39;23;24;25;26|60;27;28|36;29|42;30;32;34|58;35;37;38;40;41;43;44;45;46|51;50;52;53;54|56;55;57;59">
+    <div class="fixture-viewer" data-name="Toaster Oven" data-base="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven" data-ids="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,32,34,35,37,38,40,41,43,44,45,46,50,52,53,54,55,57,59" data-style-groups="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16|22;17|31|33|47;18|49;19|48;20;21|39;23;24;25;26|60;27;28|36;29|42;30;32;34|58;35;37;38;40;41;43;44;45;46|51;50;52;53;54|56;55;57;59">
       <div class="fixture-item fixture-preview" role="button" tabindex="0">
         <img class="fixture-preview-image" src="https://pub-74eb5884b9764cdf86b3352f8597995d.r2.dev/toaster_oven/1.webp" alt="Toaster Oven">
         <div class="label fixture-preview-label">Style</div>
