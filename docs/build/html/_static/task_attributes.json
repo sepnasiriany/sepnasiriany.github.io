@@ -712,7 +712,7 @@
       "activity": "Brewing",
       "num_subtasks": 2,
       "moma_required": "No",
-      "description": "Pick the item from the cabinet, place it under the coffee machine dispenser, and press the start button."
+      "description": "Pick the mug from the cabinet, place it under the coffee machine dispenser, and press the start button."
     },
     {
       "name": "DeliverBrewedCoffee",
@@ -978,7 +978,7 @@
       "activity": "Filling Serving Dishes",
       "num_subtasks": 11,
       "moma_required": "Yes",
-      "description": "Retrieve item, item, and item from the fridge and place them on the serving tray on the dining counter."
+      "description": "Retrieve the chicken, shrimp, and steak from the fridge and place them on the serving tray on the dining counter."
     },
     {
       "name": "MeatSkewerAssembly",
@@ -992,7 +992,7 @@
       "activity": "Filling Serving Dishes",
       "num_subtasks": 7,
       "moma_required": "Yes",
-      "description": "Pick up each item from the fridge and place one item on each plate on the dining counter."
+      "description": "Pick up the [*fruit items*] from the fridge and place one fruit on each plate on the dining counter."
     },
     {
       "name": "AssembleCookingArray",
@@ -1062,7 +1062,7 @@
       "activity": "Garnishing Dishes",
       "num_subtasks": 4,
       "moma_required": "Yes",
-      "description": "Take the item from the fridge and place it on the plate with item on the dining counter."
+      "description": "Take the lemon from the fridge and place it on the plate with fish on the dining counter."
     },
     {
       "name": "AddSugarCubes",
@@ -1517,7 +1517,7 @@
       "activity": "Organizing Utensils",
       "num_subtasks": 2,
       "moma_required": "Yes",
-      "description": "Pick up the fork from the counter and place it on the *left/right* side of the drawer. Then, pick up the spoon from the counter and place it on the *left/right* side of the drawer. Make sure that the utensils are clustered by type."
+      "description": "Pick up the fork from the counter and place it on the *left/right* side of the drawer. Then, pick up the spoon from the counter and place it on the *right/left* side of the drawer. Make sure that the utensils are clustered by type."
     },
     {
       "name": "OrganizeMetallicUtensils",
