@@ -43,6 +43,75 @@ body.rc-overview-page .bd-main .bd-content .bd-article-container {
   max-width: none;
 }
 
+/* Installation page: use full width (same as overview) */
+body.rc-installation-page .bd-sidebar-secondary,
+body.rc-installation-page .sidebar-toggle.secondary-toggle,
+body.rc-installation-page label.overlay.overlay-secondary,
+body.rc-installation-page #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+body.rc-installation-page .bd-main .bd-content .bd-article-container {
+  max-width: none;
+}
+
+/* Citation copy button (overview page) – line-art icon, transparent background */
+.rc-citation-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #555;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.rc-citation-copy-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #333;
+}
+.rc-citation-copy-btn.rc-copied {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+}
+.rc-citation-copy-btn .rc-citation-copy-icon {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+html[data-theme="dark"] .rc-citation-copy-btn {
+  background: transparent;
+  color: #e0e0e0;
+}
+html[data-theme="dark"] .rc-citation-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+html[data-theme="dark"] .rc-citation-copy-btn.rc-copied {
+  background: rgba(46, 125, 50, 0.2);
+  color: #81c784;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .rc-citation-copy-btn {
+    background: transparent;
+    color: #e0e0e0;
+  }
+  html:not([data-theme="light"]) .rc-citation-copy-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+  html:not([data-theme="light"]) .rc-citation-copy-btn.rc-copied {
+    background: rgba(46, 125, 50, 0.2);
+    color: #81c784;
+  }
+}
+
 /* Overview banner: prevent theme from darkening image in dark mode (same as fixture images) */
 @media (prefers-color-scheme: dark) {
   .overview-banner-image {
