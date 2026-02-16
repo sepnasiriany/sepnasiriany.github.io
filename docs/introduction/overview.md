@@ -1,3 +1,5 @@
+<!-- Add class immediately so secondary sidebar is hidden from first paint (no flash) -->
+<script>document.body.classList.add("rc-overview-page");</script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("rc-overview-page");
@@ -45,7 +47,7 @@
 - **Benchmarking support**: popular policy learning methods including Diffusion Policy, pi, and GR00T
 
 <p align="center">
-  <img class="overview-banner-image" width="100%" src="../_static/robocasa-banner.webp" alt="RoboCasa 365 overview">
+  <img class="overview-banner-image" style="width: 95%" src="../_static/robocasa-banner.webp" alt="RoboCasa 365 overview">
 </p>
 
 This documentation guide contains information about installation, getting started, and additional use cases such as accessing datasets, policy learning, and API docs.

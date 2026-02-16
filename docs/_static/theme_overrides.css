@@ -32,13 +32,19 @@ div.body h3 {
   margin-top: 1.25rem !important;
 }
 
-/* Overview page: hide contents (secondary) sidebar and use full width */
+/* Overview page: hide contents (secondary) sidebar and use full width.
+   :has() ensures hide from first paint (no flash); .rc-overview-page is set by JS as backup. */
+body:has(section#overview) .bd-sidebar-secondary,
+body:has(section#overview) .sidebar-toggle.secondary-toggle,
+body:has(section#overview) label.overlay.overlay-secondary,
+body:has(section#overview) #pst-secondary-sidebar-checkbox,
 body.rc-overview-page .bd-sidebar-secondary,
 body.rc-overview-page .sidebar-toggle.secondary-toggle,
 body.rc-overview-page label.overlay.overlay-secondary,
 body.rc-overview-page #pst-secondary-sidebar-checkbox {
   display: none !important;
 }
+body:has(section#overview) .bd-main .bd-content .bd-article-container,
 body.rc-overview-page .bd-main .bd-content .bd-article-container {
   max-width: none;
 }
