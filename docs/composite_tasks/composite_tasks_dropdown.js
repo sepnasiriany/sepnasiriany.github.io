@@ -818,13 +818,15 @@
         const tds = tr.querySelectorAll("td");
         // With Task Skills column after Description, Description is the 2nd cell
         const descText = (tds.length >= 2 ? tds[1]?.textContent : "") || "";
+        // Prefer dataset values (fast path) so filtering/indexing doesn't depend on JS-inserted columns.
         const mobileTd = tr.querySelector("td.rc-mobile");
         const subtasksTd = tr.querySelector("td.rc-subtasks");
         const episodeLengthTd = tr.querySelector("td.rc-episode-length");
-        const mobile = (tr.dataset.rcMobile || (mobileTd ? mobileTd.textContent : "")).trim();
-        const subtasks = Number.parseInt((subtasksTd ? subtasksTd.textContent : "").trim(), 10);
-        const lengthText = (episodeLengthTd ? episodeLengthTd.textContent : "").trim();
-        // Extract numeric value from "32s" or "—"
+        const mobile = (tr.dataset.rcMobile || (mobileTd ? mobileTd.textContent : "") || "").trim();
+        const subtasksText = (tr.dataset.rcSubtasks || (subtasksTd ? subtasksTd.textContent : "") || "").trim();
+        const subtasks = Number.parseInt(subtasksText, 10);
+        const lengthText = (tr.dataset.rcLength || (episodeLengthTd ? episodeLengthTd.textContent : "") || "").trim();
+        // Extract numeric value from "32" or "32s"
         let length = null;
         if (lengthText && lengthText !== "—") {
           const match = lengthText.match(/^(\d+)s?$/);
@@ -841,7 +843,7 @@
           mobile: mobile === "Yes" || mobile === "No" ? mobile : null,
           tagKeys: getTaskTagKeys(task, mobile === "Yes" || mobile === "No" ? mobile : null, descText),
           subtasks: Number.isFinite(subtasks) ? subtasks : null,
-          length: length,
+          length: Number.isFinite(length) ? length : null,
           metaCategory,
           activityId,
           activityTitle,
@@ -2547,6 +2549,8 @@
       (e) => {
         const d = e && e.target;
         if (!d || d.tagName !== "DETAILS" || !d.classList.contains("rc-activity") || !d.open) return;
+        // Lazily enrich the activity table (adds columns/tags) when opened.
+        ensureDetailsTableEnriched(d);
         window.requestAnimationFrame(() => packDeferredSkillTags(d));
       },
       true
@@ -2576,7 +2580,33 @@
     const activities = [];
 
     const placeholderRoot = rootSection.querySelector("#rc-composite-tasks-root");
-    if (placeholderRoot) {
+    const existingDetails = Array.from(rootSection.querySelectorAll(":scope > details.rc-activity"));
+
+    if (existingDetails.length > 0) {
+      // Build activities list from existing <details> (pre-rendered at build time).
+      for (const details of existingDetails) {
+        const title = getActivityTitleFromDetails(details);
+        if (!details.id) {
+          const anchorId = anchorIdFromActivityTitle(title);
+          if (anchorId) details.id = anchorId;
+        }
+
+        // Ensure meta pill exists for consistent UI
+        const summaryLeft = details.querySelector("summary .rc-activity-summary-left");
+        const hasMeta = !!details.querySelector("summary .rc-activity-meta");
+        const metaCategory = metaCategoryForActivityTitle(title);
+        details.dataset.metaCategory = metaCategory;
+        if (summaryLeft && !hasMeta) {
+          const metaTag = document.createElement("span");
+          metaTag.className = "rc-activity-meta";
+          metaTag.dataset.meta = metaCategory;
+          metaTag.textContent = categoryLabel(metaCategory);
+          summaryLeft.appendChild(metaTag);
+        }
+
+        activities.push({ title, id: details.id });
+      }
+    } else if (placeholderRoot) {
       try {
         const data = await loadTaskAttributesJson();
         const grouped = groupTasksByActivity(data && data.tasks ? data.tasks : []);
@@ -2789,9 +2819,13 @@
       }
     }
 
-    for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
-      const table = d.querySelector("table");
-      if (!table) continue;
+    // Lazily enrich a table the first time its activity opens.
+    function ensureDetailsTableEnriched(detailsEl) {
+      if (!detailsEl || detailsEl.dataset.rcEnriched === "1") return;
+      const table = detailsEl.querySelector("table");
+      if (!table) return;
+
+      // Apply description formatting (braces/asterisks) once
       const ths = Array.from(table.querySelectorAll("thead tr th")).map((th) => (th.textContent || "").trim());
       const descIdx = ths.indexOf("Description");
       const idx = descIdx >= 0 ? descIdx : 1;
@@ -2799,14 +2833,13 @@
         const td = tr.children?.[idx];
         if (td) formatCompositeDescriptionInPlace(td);
       }
-    }
 
-    // After accordions exist, enrich tables with attributes if available
-    if (attrsMap || episodeLengthMap) {
-      for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
-        const table = d.querySelector("table");
-        if (table) addAttributesToTable(table, attrsMap, episodeLengthMap);
+      // Add computed attribute columns once (Skills/Subtasks/Horizon/Video)
+      if (attrsMap || episodeLengthMap) {
+        addAttributesToTable(table, attrsMap, episodeLengthMap);
       }
+
+      detailsEl.dataset.rcEnriched = "1";
     }
 
     // Insert a selector at the top
@@ -3447,6 +3480,23 @@
       applyFilters();
     });
     filtersWrap.appendChild(resetBtn);
+
+    // Pre-fill per-row datasets so indexing/filtering doesn't depend on JS-inserted columns.
+    if (attrsMap || episodeLengthMap) {
+      for (const d of Array.from(content.querySelectorAll("details.rc-activity"))) {
+        for (const tr of Array.from(d.querySelectorAll("table tbody tr"))) {
+          const name = taskNameFromRow(tr);
+          if (!name) continue;
+          const attrs = attrsMap ? attrsMap.get(name) : null;
+          const mobileVal = attrs?.mobile;
+          tr.dataset.rcMobile = mobileVal === "Yes" || mobileVal === "No" ? mobileVal : "";
+          const st = attrs?.subtasks;
+          if (Number.isFinite(st)) tr.dataset.rcSubtasks = String(st);
+          const len = episodeLengthMap ? episodeLengthMap.get(name) : null;
+          if (len != null && Number.isFinite(len)) tr.dataset.rcLength = String(Math.round(len));
+        }
+      }
+    }
 
     // Build task search + suggestions
     const taskIndex = buildTaskIndex(content);

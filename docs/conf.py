@@ -10,11 +10,155 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
+import json
 import os
 import sys
 import importlib.util
 
 sys.path.insert(0, os.path.abspath("."))
+
+# --- Build-time generation ---------------------------------------------------
+#
+# Composite Tasks page should not "pop in" after JS runs. We generate the
+# activity <details> markup at build time and include it from the page source.
+#
+_CONF_DIR = os.path.dirname(os.path.abspath(__file__))
+_COMPOSITE_TASK_ATTRS_JSON = os.path.join(
+    _CONF_DIR, "composite_tasks", "task_attributes.json"
+)
+_COMPOSITE_TASKS_GEN_DIR = os.path.join(_CONF_DIR, "tasks", "_generated")
+_COMPOSITE_TASKS_DETAILS_RST = os.path.join(
+    _COMPOSITE_TASKS_GEN_DIR, "composite_tasks_details.rst"
+)
+
+
+def _rc_anchor_id_from_activity_title(title: str) -> str:
+    # Match the JS slugging logic in composite_tasks_dropdown.js (roughly Sphinx defaults)
+    s = (title or "").lower().replace("&", " and ")
+    out = []
+    for ch in s:
+        if ch.isalnum() or ch in [" ", "-"]:
+            out.append(ch)
+    s = "".join(out).strip()
+    s = "-".join([p for p in s.split() if p])
+    while "--" in s:
+        s = s.replace("--", "-")
+    return s
+
+
+def _rc_escape_html(s: str) -> str:
+    return (
+        (s or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+    )
+
+
+def _rc_format_desc_html(desc: str) -> str:
+    # Mirrors the JS formatting enough for nice initial render:
+    # {x} -> [<strong><em>x</em></strong>]
+    esc = _rc_escape_html(desc or "")
+    # lightweight brace formatting
+    out = []
+    i = 0
+    while i < len(esc):
+        if esc[i] == "{":
+            j = esc.find("}", i + 1)
+            if j != -1:
+                inner = esc[i + 1 : j]
+                out.append("[<strong><em>")
+                out.append(inner)
+                out.append("</em></strong>]")
+                i = j + 1
+                continue
+        out.append(esc[i])
+        i += 1
+    return "".join(out)
+
+
+def _generate_composite_tasks_details() -> None:
+    os.makedirs(_COMPOSITE_TASKS_GEN_DIR, exist_ok=True)
+    if not os.path.isfile(_COMPOSITE_TASK_ATTRS_JSON):
+        with open(_COMPOSITE_TASKS_DETAILS_RST, "w", encoding="utf-8") as f:
+            f.write(
+                ".. raw:: html\n\n   <!-- composite_tasks/task_attributes.json not found -->\n"
+            )
+        return
+
+    with open(_COMPOSITE_TASK_ATTRS_JSON, encoding="utf-8") as f:
+        data = json.load(f)
+
+    tasks = data.get("tasks", []) if isinstance(data, dict) else []
+    # Keep only composite (exclude the "Atomic" activity rows in this JSON)
+    tasks = [
+        t
+        for t in tasks
+        if isinstance(t, dict) and (t.get("activity") or "").strip().lower() != "atomic"
+    ]
+
+    grouped: dict[str, list[dict]] = {}
+    for t in tasks:
+        activity = str(t.get("activity") or "").strip()
+        if not activity:
+            continue
+        grouped.setdefault(activity, []).append(t)
+
+    activities_sorted = sorted(grouped.keys(), key=lambda s: s.lower())
+
+    # Emit raw HTML via an RST raw directive (works regardless of markdown parser).
+    lines: list[str] = []
+    lines.append(".. raw:: html")
+    lines.append("")
+    lines.append(
+        "   <!-- Auto-generated. Do not edit; edit composite_tasks/task_attributes.json instead. -->"
+    )
+    for activity in activities_sorted:
+        rows = grouped.get(activity) or []
+        rows_sorted = sorted(rows, key=lambda r: str(r.get("name") or ""))
+        anchor_id = _rc_anchor_id_from_activity_title(activity) or _rc_escape_html(
+            activity
+        )
+        n = len(rows_sorted)
+        lines.append(f'   <details class="rc-activity" id="{anchor_id}">')
+        lines.append("     <summary>")
+        lines.append('       <div class="rc-activity-summary-left">')
+        lines.append(
+            f'         <span class="rc-activity-title">{_rc_escape_html(activity)}</span>'
+        )
+        # meta/category pill is added/enhanced by JS; omit here to keep generator simple
+        lines.append("       </div>")
+        lines.append(
+            f'       <span class="rc-activity-badge">{n} task{"s" if n != 1 else ""}</span>'
+        )
+        lines.append("     </summary>")
+        lines.append('     <div class="rc-activity-body">')
+        lines.append('       <table class="docutils" border="1">')
+        lines.append(
+            "         <thead><tr><th>Task</th><th>Description</th></tr></thead>"
+        )
+        lines.append("         <tbody>")
+        for t in rows_sorted:
+            name = str(t.get("name") or "").strip()
+            desc = str(t.get("description") or "").strip()
+            if not name:
+                continue
+            lines.append("           <tr>")
+            lines.append(f"             <td><code>{_rc_escape_html(name)}</code></td>")
+            lines.append(f"             <td>{_rc_format_desc_html(desc)}</td>")
+            lines.append("           </tr>")
+        lines.append("         </tbody>")
+        lines.append("       </table>")
+        lines.append("     </div>")
+        lines.append("   </details>")
+
+    with open(_COMPOSITE_TASKS_DETAILS_RST, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+
+_generate_composite_tasks_details()
 
 # Optional: avoid importing robocasa so docs build without full runtime (numpy, cv2, robosuite).
 robocasa = None
