@@ -688,39 +688,65 @@
     const ths = Array.from(theadRow.querySelectorAll("th")).map((th) => (th.textContent || "").trim());
     const taskIdx = ths.indexOf("Task");
     const classIdx = ths.indexOf("Class File");
-    if (taskIdx < 0 || classIdx < 0) return;
+    if (taskIdx < 0) return;
 
     const rows = Array.from(table.querySelectorAll("tbody tr"));
-    for (const tr of rows) {
-      const tds = Array.from(tr.children);
-      const taskTd = tds[taskIdx];
-      const classTd = tds[classIdx];
-      if (!taskTd || !classTd) continue;
 
-      const srcLink = classTd.querySelector("a[href]");
-      if (srcLink && !taskTd.querySelector("a[href]")) {
-        const a = document.createElement("a");
-        a.href = srcLink.href;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
+    function ensureLinkedTaskCell(taskTd, href) {
+      if (!taskTd || !href) return;
+      if (taskTd.querySelector("a[href]")) return;
 
-        const code = taskTd.querySelector("code");
-        if (code) {
-          a.appendChild(code);
-          taskTd.textContent = "";
-          taskTd.appendChild(a);
-        } else {
-          a.textContent = (taskTd.textContent || "").trim();
-          taskTd.textContent = "";
-          taskTd.appendChild(a);
-        }
+      const code = taskTd.querySelector("code");
+      const a = document.createElement("a");
+      a.href = href;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+
+      if (code) {
+        // Insert the link right where the code element is, then move the code into it.
+        taskTd.insertBefore(a, code);
+        a.appendChild(code);
+        return;
       }
+
+      // Fallback: wrap plain text content (best-effort).
+      const txt = (taskTd.textContent || "").trim();
+      if (!txt) return;
+      a.textContent = txt;
+      taskTd.textContent = "";
+      taskTd.appendChild(a);
     }
 
-    // Remove header + cells (delete column)
-    theadRow.children[classIdx]?.remove();
+    if (classIdx >= 0) {
+      // Legacy tables: "Class File" column contains the canonical source link.
+      for (const tr of rows) {
+        const tds = Array.from(tr.children);
+        const taskTd = tds[taskIdx];
+        const classTd = tds[classIdx];
+        if (!taskTd || !classTd) continue;
+
+        const srcLink = classTd.querySelector("a[href]");
+        if (srcLink) ensureLinkedTaskCell(taskTd, srcLink.href);
+      }
+
+      // Remove header + cells (delete column)
+      theadRow.children[classIdx]?.remove();
+      for (const tr of rows) {
+        tr.children[classIdx]?.remove();
+      }
+      return;
+    }
+
+    // JSON-rendered / auto-generated tables: no "Class File" column.
+    // Synthesize a link from (activity title, task name).
+    const details = table.closest("details.rc-activity");
+    const activityTitle = details ? getActivityTitleFromDetails(details) : "";
     for (const tr of rows) {
-      tr.children[classIdx]?.remove();
+      const taskTd = tr.children?.[taskIdx] || null;
+      const taskName = taskNameFromRow(tr);
+      if (!taskTd || !taskName) continue;
+      const href = sourceUrlForTask(activityTitle, taskName);
+      if (href) ensureLinkedTaskCell(taskTd, href);
     }
   }
 
