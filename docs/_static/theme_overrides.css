@@ -60,6 +60,30 @@ body.rc-installation-page .bd-main .bd-content .bd-article-container {
   max-width: none;
 }
 
+/* Multi-Task Learning page: hide right "Contents" sidebar and use full width */
+body.rc-multitask-learning .bd-sidebar-secondary,
+body.rc-multitask-learning .sidebar-toggle.secondary-toggle,
+body.rc-multitask-learning label.overlay.overlay-secondary,
+body.rc-multitask-learning #pst-secondary-sidebar-checkbox {
+  display: none !important;
+}
+body.rc-multitask-learning .bd-main .bd-content .bd-article-container {
+  max-width: none;
+}
+
+/* Multi-Task Learning benchmark table: equal width for DP, π₀, GR00T N1.5 columns */
+body.rc-multitask-learning table.rc-benchmark-table {
+  table-layout: fixed;
+}
+body.rc-multitask-learning table.rc-benchmark-table th:nth-child(2),
+body.rc-multitask-learning table.rc-benchmark-table th:nth-child(3),
+body.rc-multitask-learning table.rc-benchmark-table th:nth-child(4),
+body.rc-multitask-learning table.rc-benchmark-table td:nth-child(2),
+body.rc-multitask-learning table.rc-benchmark-table td:nth-child(3),
+body.rc-multitask-learning table.rc-benchmark-table td:nth-child(4) {
+  width: 25%;
+}
+
 /* Citation copy button (overview page) – line-art icon, transparent background */
 .rc-citation-copy-btn {
   position: absolute;

@@ -20,7 +20,7 @@ To specify which tasks, you need to specify two variables:
 - **split**: This specifies which evaluation split to run evaluations are. There are two options: `pretrain` and `target`. The `pretrain` split features 2500 kitchen scenes and all of the pretraining objects, which the `target` split features a disjoint set of 10 target kitchen scenes and a disjoint set of target objects.
 
 For each benchmarking experiment we specify the specific task set and split to evaluate on.
-For all experiments, we randomly sample 30 scenarios to run evaluation rollouts on.
+For all experiments, we randomly sample 50 scenarios to run evaluation rollouts on.
 For each rollout, we recieve a binary task success signal for whether the task is successfully completed.
-We report average task success rates across these 30 rollouts. 
+We report average task success rates across these 50 rollouts. 
 

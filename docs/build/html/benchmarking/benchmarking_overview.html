@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=b4840b38" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=175757bf" />
     <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d05820ef" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=1e6792ba" />
   
@@ -419,9 +419,9 @@ To specify which tasks, you need to specify two variables:</p>
 <li><p><strong>split</strong>: This specifies which evaluation split to run evaluations are. There are two options: <code class="docutils literal notranslate"><span class="pre">pretrain</span></code> and <code class="docutils literal notranslate"><span class="pre">target</span></code>. The <code class="docutils literal notranslate"><span class="pre">pretrain</span></code> split features 2500 kitchen scenes and all of the pretraining objects, which the <code class="docutils literal notranslate"><span class="pre">target</span></code> split features a disjoint set of 10 target kitchen scenes and a disjoint set of target objects.</p></li>
 </ul>
 <p>For each benchmarking experiment we specify the specific task set and split to evaluate on.
-For all experiments, we randomly sample 30 scenarios to run evaluation rollouts on.
+For all experiments, we randomly sample 50 scenarios to run evaluation rollouts on.
 For each rollout, we recieve a binary task success signal for whether the task is successfully completed.
-We report average task success rates across these 30 rollouts.</p>
+We report average task success rates across these 50 rollouts.</p>
 </section>
 </section>
 </section>

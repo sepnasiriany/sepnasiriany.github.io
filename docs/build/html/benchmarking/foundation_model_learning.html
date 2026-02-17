@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=b4840b38" />
+    <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=175757bf" />
     <link rel="stylesheet" type="text/css" href="../_static/composite_tasks_dropdown.css?v=d05820ef" />
     <link rel="stylesheet" type="text/css" href="../_static/atomic_tasks.css?v=1e6792ba" />
   
@@ -377,10 +377,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-checkpoints">Model Checkpoints</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>
@@ -417,9 +413,9 @@ There are two phases of training:</p>
 </li>
 </ul>
 <hr class="docutils" />
-<section id="benchmark-results-and-checkpoints">
-<h2>Benchmark results and checkpoints<a class="headerlink" href="#benchmark-results-and-checkpoints" title="Link to this heading">#</a></h2>
-<p>We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results <strong>(average task success rate, in %)</strong>. We share the model checkpoints for reference.</p>
+<!-- ## Benchmark results and checkpoints
+We perform a benchmark featruing the GR00T N1.5 algorithm. We compare pretraining only, target training only, and pretraining following by target task fine-tuning. Here is a summary of our benchmarking results **(average task success rate, in %)**. We share the model checkpoints for reference.
+
 <table class="docutils rc-benchmark-table">
   <thead>
     <tr>
@@ -479,8 +475,10 @@ There are two phases of training:</p>
       <td><strong>51.1%</strong></td>
     </tr>
   </tbody>
-</table><section id="model-checkpoints">
-<h3>Model Checkpoints<a class="headerlink" href="#model-checkpoints" title="Link to this heading">#</a></h3>
+</table>
+
+### Model Checkpoints
+
 <table class="docutils rc-benchmark-table">
   <thead>
     <tr>
@@ -518,10 +516,9 @@ There are two phases of training:</p>
       <td><a href="https://huggingface.co/robocasa/robocasa365_checkpoints/tree/main/gr00t_n1-5/foundation_model_learning/target_posttraining/composite_unseen/checkpoint-60000">Link</a></td>
     </tr>
   </tbody>
-</table></section>
-</section>
-<hr class="docutils" />
-<section id="benchmark-instructions">
+</table>
+
+------- --><section id="benchmark-instructions">
 <h2>Benchmark instructions<a class="headerlink" href="#benchmark-instructions" title="Link to this heading">#</a></h2>
 <section id="gr00t">
 <h3>GR00T<a class="headerlink" href="#gr00t" title="Link to this heading">#</a></h3>
@@ -648,10 +645,6 @@ There are two phases of training:</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-results-and-checkpoints">Benchmark results and checkpoints</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-checkpoints">Model Checkpoints</a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#benchmark-instructions">Benchmark instructions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gr00t">GR00T</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#guidelines">Guidelines</a></li>
