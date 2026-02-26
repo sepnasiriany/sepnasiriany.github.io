@@ -838,7 +838,30 @@ a {
   color: #819198; }
 
 .page-header {
-  background-image: linear-gradient(120deg, #7F00FF, #b772fc); }
+  background-image: linear-gradient(120deg, #7F00FF, #b772fc);
+  padding-top: 2rem;
+  padding-bottom: 1rem; }
+  @media screen and (min-width: 64em) {
+    .page-header {
+      padding-top: 2.5rem;
+      padding-bottom: 1.25rem; } }
+  @media screen and (min-width: 42em) and (max-width: 64em) {
+    .page-header {
+      padding-top: 2rem;
+      padding-bottom: 1rem; } }
+  @media screen and (max-width: 42em) {
+    .page-header {
+      padding-top: 1.5rem;
+      padding-bottom: 0.75rem; } }
+
+.main-content {
+  padding-top: 1.2rem; }
+
+.main-content > *:first-child {
+  margin-top: 0; }
+
+.main-content p:first-of-type {
+  margin-top: 0; }
 
 .github-fork-ribbon.rc-release-ribbon {
   z-index: 9999; }
@@ -871,14 +894,23 @@ figure figcaption {
   font-size: 0.9em;
   margin-bottom: 10px; }
 
-.project-tagline {
-  opacity: 1.0; }
+.rc-scene-collage {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left; }
+  .rc-scene-collage .figure__main,
+  .rc-scene-collage .figure__main video {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    display: block; }
 
 .project-tagline {
+  opacity: 1.0;
   max-width: 60rem;
   margin-left: auto;
-  margin-right: auto;
-}
+  margin-right: auto; }
 
 .project-subtitle {
   margin-top: 0;
