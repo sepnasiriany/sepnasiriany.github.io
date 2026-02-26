@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  {% include base.html %}
+  <head>
+
+    {% if site.google_analytics %}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site.google_analytics }}');
+      </script>
+    {% endif %}
+    <meta charset="UTF-8">
+
+    <link rel="icon" href="{{ site.baseurl }}/assets/images/Robocasa_web_logo.svg" type="image/svg+xml">
+
+    {% seo %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | absolute_url }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+  </head>
+  
+  <body>
+    {% if page.url == "/" %}
+      <a
+        class="github-fork-ribbon right-top rc-release-ribbon"
+        href="#robocasa365-release"
+        data-ribbon="New Release!"
+        title="New Release!"
+      >
+        New Release!
+      </a>
+    {% endif %}
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h1 class="project-subtitle">{{ page.subtitle }}</h1>
+      <h2 class="project-tagline">{{ page.project_tagline }}</h2>
+      <a href="{{ site.baseurl }}/assets/robocasa_rss24.pdf" class="btn">Paper (RoboCasa)</a>
+      <a href="https://openreview.net/pdf?id=tQJYKwc3n4" class="btn">Paper (RoboCasa365)</a>
+      <a href="https://github.com/robocasa/robocasa" class="btn">Code</a>
+      <a href="{{ '/docs/build/html/introduction/overview.html' | relative_url }}" class="btn">Documentation</a>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+
+      <footer class="site-footer">
+        <span class="site-footer-owner">
+            &copy; Copyright the RoboCasa Team 2026
+        </span>
+      </footer>
+    </main>
+  </body>
+</html>
