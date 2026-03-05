@@ -80,11 +80,54 @@ hr.thin {
 
 .paper-title {
   font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 1.05em;
+  margin-bottom: 8px;
+  line-height: 1.35;
 }
 
 .paper-line {
-  margin-top: 3px;
+  margin-top: 4px;
+}
+
+.paper-authors {
+  color: #333;
+}
+
+.paper-venue {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.paper-links {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.paper-link {
+  color: #1a5fb4;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.95em;
+}
+
+.paper-link:hover {
+  text-decoration: underline;
+}
+
+.paper-link i {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+.paper-link-sep {
+  color: #999;
+  font-weight: 300;
+  user-select: none;
 }
 
 .paper-desc {
